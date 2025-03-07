@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeEvents - Forge Framework Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="introduction.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="installation.html" class="sidebar-topic">
+                        Installation
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="directory-structure.html" class="sidebar-topic">
+                        Directory Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="framework-structure.html" class="sidebar-topic">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="modules.html" class="sidebar-topic">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Core Concepts</h5>
+                    <a href="#" class="sidebar-topic">
+                        Middleware
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Modules</h5>
+                    <a href="database.html" class="sidebar-topic">
+                        Database
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-orm.html" class="sidebar-topic">
+                        ForgeOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-explicit-orm.html" class="sidebar-topic ">
+                        ForgeExplicitOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-debug-bar.html" class="sidebar-topic">
+                        ForgeDebugBar
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-error-handler.html" class="sidebar-topic">
+                        ForgeErrorHandler
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-events.html" class="sidebar-topic active">
+                        ForgeEvents
+                        <span class="sidebar-topic-toggle">→</span>
+                        <div class="sidebar-subitems">
+                            <a href="#overview" class="sidebar-subitem">Overview</a>
+                            <a href="#features" class="sidebar-subitem">Features</a>
+                            <a href="#configuration" class="sidebar-subitem">Configuration</a>
+                            <a href="#usage" class="sidebar-subitem">Usage Examples</a>
+                        </div>
+                    </a>
+                    <a href="forge-logger.html" class="sidebar-topic">
+                        ForgeLogger
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-mark-down.html" class="sidebar-topic">
+                        ForgeMarkDown
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    
+                    <a href="forge-router.html" class="sidebar-topic">
+                        ForgeRouter
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                   
+                    <a href="forge-static-gen.html" class="sidebar-topic">
+                        ForgeStaticGen
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-html.html" class="sidebar-topic">
+                        ForgeStaticHtml
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-storage.html" class="sidebar-topic">
+                        ForgeStorage
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-view-engine.html" class="sidebar-topic">
+                        ForgeViewEngine
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#" class="sidebar-topic">
+                        Helpers
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#" class="sidebar-topic">
+                        Authentication
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Engine API Reference</h5>
+                    <a href="#" class="sidebar-topic">
+                        Core Components
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+        
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">ForgeEvents Module</h1>
+
+                <section class="mb-12" id="overview">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Overview</h2>
+                    <p class="text-gray-600 mb-4">ForgeEvents is a powerful event system module that implements the publish-subscribe pattern, allowing for decoupled communication between different parts of your application. It provides a robust foundation for event-driven architecture with support for synchronous and asynchronous event handling.</p>
+                </section>
+
+                <section class="mb-12" id="features">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Features</h2>
+                    <p class="text-gray-600 mb-4">The event system offers a comprehensive set of features for event management:</p>
+                    
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2 mb-4">
+                        <li><strong>Event Dispatching:</strong> Simple and intuitive event dispatching mechanism</li>
+                        <li><strong>Event Listeners:</strong> Support for multiple listeners per event</li>
+                        <li><strong>Queue Integration:</strong> Optional queue-based event processing</li>
+                        <li><strong>Retry Mechanism:</strong> Configurable retry attempts for failed event handling</li>
+                        <li><strong>Async Processing:</strong> Support for asynchronous event processing</li>
+                        <li><strong>Event Subscribers:</strong> Organize related event listeners in subscriber classes</li>
+                        <li><strong>Error Handling:</strong> Robust error handling for event processing</li>
+                    </ul>
+                </section>
+
+                <section class="mb-12" id="configuration">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Configuration</h2>
+                    <p class="text-gray-600 mb-4">Configure the event system through the <code>config/forge_events.php</code> file:</p>
+                    
+                    <pre><code class="language-php">// config/forge_events.php
+return [
+    'queue_driver' => App::env('FORGE_EVENT_QUEUE_DRIVER', 'sync'),
+    'max_retries' => 3,
+    'listeners' => [
+        'user.created' => [
+            function (\Forge\Core\Contracts\Modules\ForgeEventInterface $event) {
+                $userData = $event->getPayload();
+                $logger = App::getContainer()->get(LoggerInterface::class);
+                $logger->log("User created " . json_encode($userData));
+            }
+        ]
+    ]
+];</code></pre>
+
+                    <div class="mt-4 space-y-2">
+                        <p class="text-gray-600"><strong>queue_driver:</strong> Specifies the queue driver for event processing ('sync' or 'async').</p>
+                        <p class="text-gray-600"><strong>max_retries:</strong> Maximum number of retry attempts for failed event processing.</p>
+                        <p class="text-gray-600"><strong>listeners:</strong> Array of event listeners mapped to event names.</p>
+                    </div>
+                </section>
+
+                <section class="mb-12" id="usage">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Usage Examples</h2>
+                    <p class="text-gray-600 mb-4">Here are practical examples of using the event system:</p>
+
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <h3 class="text-xl font-semibold mb-4">1. Creating and Dispatching Events</h3>
+                        <pre><code class="language-php">use Forge\Core\Contracts\Events\EventInterface;
+
+class DatabaseQueryExecuted implements EventInterface
+{
+    public function __construct(
+        public readonly string $query,
+        public readonly array $bindings,
+        public readonly float $timeInMilliseconds
+    ) {}
+}
+
+// Dispatching the event
+$eventDispatcher->dispatch(new DatabaseQueryExecuted(
+    $query,
+    $bindings,
+    $executionTime
+));</code></pre>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <h3 class="text-xl font-semibold mb-4">2. Event Listeners</h3>
+                        <pre><code class="language-php">use Forge\Modules\ForgeDebugbar\Listeners\DatabaseQueryListener;
+
+class DebugBarModule extends ModulesInterface
+{
+    public function onAfterModuleRegister(Container $container): void
+    {
+        $eventDispatcher = $container->get(EventDispatcherInterface::class);
+        
+        if ($container->has(DebugBarInterface::class)) {
+            $debugBarInterface = $container->get(DebugBarInterface::class);
+            $databaseQueryListener = new DatabaseQueryListener($debugBarInterface);
+            $eventDispatcher->listen(DatabaseQueryExecuted::class, $databaseQueryListener);
+        }
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold mb-4">3. Using Events in Core Components</h3>
+                        <pre><code class="language-php">// Example from Bootstrap.php
+public function handleRequest(Request $request): Response
+{
+    $response = $this->middlewareStack->run($request, $coreHandler);
+
+    if (!$this->isCli && $this->container->has(DebugBarInterface::class)) {
+        $eventDispatcher = $this->container->get(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(new ResponseReadyForDebugBarInjection(
+            $response,
+            $this->container
+        ));
+    }
+
+    return $response;
+}</code></pre>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>

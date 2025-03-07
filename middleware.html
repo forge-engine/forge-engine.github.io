@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Middleware - Forge Framework Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="introduction.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="installation.html" class="sidebar-topic">
+                        Installation
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="directory-structure.html" class="sidebar-topic">
+                        Directory Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="framework-structure.html" class="sidebar-topic">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="modules.html" class="sidebar-topic">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Core Concepts</h5>
+                    <a href="#" class="sidebar-topic active">
+                        Middleware
+                        <span class="sidebar-topic-toggle">↓</span>
+                    </a>
+                    <div class="sidebar-subitems">
+                        <a href="#overview" class="sidebar-subitem">Overview</a>
+                        <a href="#creating-middleware" class="sidebar-subitem">Creating Middleware</a>
+                        <a href="#middleware-pipeline" class="sidebar-subitem">Middleware Pipeline</a>
+                        <a href="#global-middleware" class="sidebar-subitem">Global Middleware</a>
+                        <a href="#route-middleware" class="sidebar-subitem">Route Middleware</a>
+                        <a href="#core-middleware" class="sidebar-subitem">Core Middleware</a>
+                    </div>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Modules</h5>
+                    <a href="database.html" class="sidebar-topic">
+                        Database
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-orm.html" class="sidebar-topic">
+                        ForgeOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-explicit-orm.html" class="sidebar-topic">
+                        ForgeExplicitOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-debug-bar.html" class="sidebar-topic">
+                        ForgeDebugBar
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-error-handler.html" class="sidebar-topic">
+                        ForgeErrorHandler
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-events.html" class="sidebar-topic">
+                        ForgeEvents
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-logger.html" class="sidebar-topic">
+                        ForgeLogger
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-mark-down.html" class="sidebar-topic">
+                        ForgeMarkDown
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-router.html" class="sidebar-topic">
+                        ForgeRouter
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-gen.html" class="sidebar-topic">
+                        ForgeStaticGen
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-html.html" class="sidebar-topic">
+                        ForgeStaticHtml
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-package-manager.html" class="sidebar-topic">
+                        ForgePackageManager
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-storage.html" class="sidebar-topic">
+                        ForgeStorage
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-view-engine.html" class="sidebar-topic">
+                        ForgeViewEngine
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-helpers.html" class="sidebar-topic">
+                        Helpers
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="auth.html" class="sidebar-topic">
+                        Authentication
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Engine API Reference</h5>
+                    <a href="api.html" class="sidebar-topic">
+                        Core Components
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+        
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">Middleware</h1>
+
+                <section class="mb-12" id="overview">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Overview</h2>
+                    <p class="text-gray-600 mb-4">Middleware provides a convenient mechanism for filtering HTTP requests entering your application. For example, Forge includes middleware that verifies the user is authenticated. If the user is not authenticated, the middleware will redirect them to the login page. However, if the user is authenticated, the middleware will allow the request to proceed further into the application.</p>
+                </section>
+
+                <section class="mb-12" id="creating-middleware">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Creating Middleware</h2>
+                    <p class="text-gray-600 mb-4">To create a new middleware, implement the MiddlewareInterface. Each middleware must have a handle method that receives the request and a closure for the next middleware in the pipeline:</p>
+
+                    <pre><code class="language-php">namespace App\Middleware;
+
+use Forge\Core\Http\Request;
+use Forge\Core\Http\Response;
+use Forge\Core\Contracts\Middleware\MiddlewareInterface;
+
+class CustomMiddleware implements MiddlewareInterface
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        // Perform actions before the request is handled
+        
+        $response = $next($request);
+        
+        // Perform actions after the request is handled
+        
+        return $response;
+    }
+}</code></pre>
+                </section>
+
+                <section class="mb-12" id="middleware-pipeline">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Middleware Pipeline</h2>
+                    <p class="text-gray-600 mb-4">Middleware executes in a pipeline, allowing multiple middleware to handle the request in sequence. Each middleware can either pass the request to the next middleware in the pipeline or terminate the request processing:</p>
+
+                    <pre><code class="language-php">class LogRequestMiddleware implements MiddlewareInterface
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        Log::info('Incoming request', [
+            'method' => $request->getMethod(),
+            'uri' => $request->getUri()
+        ]);
+
+        return $next($request);
+    }
+}</code></pre>
+                </section>
+
+                <section class="mb-12" id="global-middleware">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Global Middleware</h2>
+                    <p class="text-gray-600 mb-4">Global middleware runs on every HTTP request to your application. Register global middleware in your application's kernel:</p>
+
+                    <pre><code class="language-php">// In app/Bootstrap/Kernel.php
+
+protected array $middleware = [
+    \App\Middleware\TrimStrings::class,
+    \App\Middleware\ConvertEmptyStringsToNull::class,
+];</code></pre>
+                </section>
+
+                <section class="mb-12" id="route-middleware">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Route Middleware</h2>
+                    <p class="text-gray-600 mb-4">Route middleware can be assigned to specific routes or route groups:</p>
+
+                    <pre><code class="language-php">// Single route middleware
+$router->get('/profile', [ProfileController::class, 'show'])
+    ->middleware(AuthMiddleware::class);
+
+// Route group middleware
+$router->group('/admin', function (RouterInterface $router) {
+    $router->middleware([AuthMiddleware::class, AdminMiddleware::class]);
+    
+    $router->get('/dashboard', [AdminController::class, 'dashboard']);
+    $router->get('/users', [AdminController::class, 'users']);
+});</code></pre>
+                </section>
+
+                <section class="mb-12" id="core-middleware">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Core Middleware</h2>
+                    <p class="text-gray-600 mb-4">Forge includes several core middleware components that handle common tasks:</p>
+
+                    <pre><code class="language-php">// Session middleware
+class SessionMiddleware implements MiddlewareInterface
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if (!$request->hasSession()) {
+            $request->setSession(new Session());
+        }
+
+        return $next($request);
+    }
+}
+
+// CSRF protection middleware
+class VerifyCsrfToken implements MiddlewareInterface
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if ($this->isReading($request) || $this->tokensMatch($request)) {
+            return $next($request);
+        }
+
+        throw new TokenMismatchException('CSRF token mismatch');
+    }
+}</code></pre>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-4">
+                        <p class="text-blue-700"><strong>Note:</strong> Core middleware is automatically registered by the framework. You can override or extend their functionality by creating your own middleware implementations.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - Forge Framework</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="introduction.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#" class="sidebar-topic active">
+                        Installation
+                        <span class="sidebar-topic-toggle">↓</span>
+                    </a>
+                    <div class="sidebar-subitems">
+                        <a href="#installation-methods" class="sidebar-subitem">Installation Methods</a>
+                        <a href="#module-installation" class="sidebar-subitem">Module Installation</a>
+                        <a href="#framework-structure" class="sidebar-subitem">Framework Structure</a>
+                    </div>
+                    <a href="directory-structure.html" class="sidebar-topic ">
+                        Directory Structure 
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+               
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="framework-structure.html" class="sidebar-topic">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="modules.html" class="sidebar-topic">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Core Concepts</h5>
+                    <a href="middleware.html" class="sidebar-topic">
+                        Middleware
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Modules</h5>
+                    <a href="database.html" class="sidebar-topic">
+                        Database
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-orm.html" class="sidebar-topic">
+                        ForgeOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-explicit-orm.html" class="sidebar-topic">
+                        ForgeExplicitOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-debug-bar.html" class="sidebar-topic">
+                        ForgeDebugBar
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-error-handler.html" class="sidebar-topic">
+                        ForgeErrorHandler
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-events.html" class="sidebar-topic">
+                        ForgeEvents
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-logger.html" class="sidebar-topic">
+                        ForgeLogger
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-mark-down.html" class="sidebar-topic">
+                        ForgeMarkDown
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-router.html" class="sidebar-topic">
+                        ForgeRouter
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                   
+                    <a href="forge-static-gen.html" class="sidebar-topic">
+                        ForgeStaticGen
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-html.html" class="sidebar-topic">
+                        ForgeStaticHtml
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-package-manager.html" class="sidebar-topic">
+                        ForgePackageManager
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-storage.html" class="sidebar-topic">
+                        ForgeStorage
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-view-engine.html" class="sidebar-topic">
+                        ForgeViewEngine
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-helpers.html" class="sidebar-topic">
+                        Helpers
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="auth.html" class="sidebar-topic">
+                        Authentication
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Engine API Reference</h5>
+                    <a href="api.html" class="sidebar-topic">
+                        Core Components
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+        
+                </div>
+
+                
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">Installation Guide</h1>
+
+                <section id="installation-methods" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Installation Methods</h2>
+                    <p class="text-gray-600 mb-6">There are two primary ways to install the Forge framework:</p>
+
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">1. Using the Installer Script (Recommended)</h3>
+                        <p class="text-gray-600 mb-4">The easiest way to install Forge is using the installer script, which takes care of everything for you:</p>
+                        <pre class="bg-gray-100 rounded-lg p-4 mb-4"><code class="language-bash">bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/refs/heads/main/installer.sh)</code></pre>
+                        <p class="text-gray-600">Note: Windows support for the installer script is currently in development.</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">2. Manual Installation</h3>
+                        <p class="text-gray-600 mb-4">You can also start with a blank project:</p>
+                        <ol class="list-decimal pl-6 text-gray-600 space-y-2 mb-4">
+                            <li>Clone the starter repository:
+                                <pre class="bg-gray-100 rounded-lg p-4 mt-2"><code class="language-bash">git clone https://github.com/forge-engine/forge-starter</code></pre>
+                            </li>
+                            <li>Navigate to the project directory:
+                                <pre class="bg-gray-100 rounded-lg p-4 mt-2"><code class="language-bash">cd forge-starter</code></pre>
+                            </li>
+                            <li>Run the installation command:
+                                <pre class="bg-gray-100 rounded-lg p-4 mt-2"><code class="language-bash">php forge.php install:project</code></pre>
+                            </li>
+                        </ol>
+                        <p class="text-gray-600">This will set up your project, install required modules, generate an app key, and create the .env file.</p>
+                    </div>
+                </section>
+
+                <section id="module-installation" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Module Installation</h2>
+                    <p class="text-gray-600 mb-6">The base installation is very lightweight (less than 500KB) and comes with essential modules. You can add or remove modules as needed.</p>
+
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Default Modules</h3>
+                        <p class="text-gray-600 mb-4">The framework comes with these core modules:</p>
+                        <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                            <li><code>forge-package-manager</code> - Manages package dependencies</li>
+                            <li><code>forge-router</code> - Handles routing</li>
+                            <li><code>forge-view-engine</code> - Template rendering</li>
+                            <li><code>forge-error-handler</code> - Error handling and reporting</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Installing Additional Modules</h3>
+                        <p class="text-gray-600 mb-4">You can install modules in two ways:</p>
+
+                        <h4 class="text-xl font-semibold text-gray-800 mt-6 mb-3">1. Using the CLI Command</h4>
+                        <pre class="bg-gray-100 rounded-lg p-4 mb-4"><code class="language-bash">php forge.php install:module module-name@version</code></pre>
+                        <p class="text-gray-600 mb-6">The version parameter is optional. If omitted, the latest version will be installed.</p>
+
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">2. Manual Installation</h4>
+                        <p class="text-gray-600">You can manually download modules from the GitHub repository and place them in your <code>/modules/</code> directory:</p>
+                        <pre class="bg-gray-100 rounded-lg p-4 mt-2"><code>https://github.com/forge-engine/modules</code></pre>
+                    </div>
+                </section>
+
+                <section id="framework-structure" class="mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Framework Structure</h2>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Directory Structure</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-xl font-semibold text-gray-800 mb-3">Core Directories</h4>
+                                <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                    <li><code>/apps</code> - Application code</li>
+                                    <li><code>/engine</code> - Framework core</li>
+                                    <li><code>/modules</code> - Installed modules</li>
+                                    <li><code>/public</code> - Public assets</li>
+                                    <li><code>/storage</code> - File storage</li>
+                                    <li><code>/cache</code> - Cached files</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-gray-800 mb-3">App Structure</h4>
+                                <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                    <li><code>MyApp.php</code> - App bootstrap</li>
+                                    <li><code>Controllers/</code> - Controllers</li>
+                                    <li><code>config/</code> - Configuration</li>
+                                    <li><code>routes/</code> - Route definitions</li>
+                                    <li><code>resources/</code> - Views & assets</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Configuration Files</h3>
+                        <p class="text-gray-600 mb-4">Key configuration files in your project:</p>
+                        <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                            <li><code>forge.json</code> - Framework configuration</li>
+                            <li><code>forge-lock.json</code> - Package dependencies</li>
+                            <li><code>apps.php</code> - Application definitions</li>
+                            <li><code>.env</code> - Environment variables</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engine API Reference - Forge Framework</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="introduction.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="installation.html" class="sidebar-topic">
+                        Installation
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="framework-structure.html" class="sidebar-topic">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="modules.html" class="sidebar-topic">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Core Concepts</h5>
+                    <a href="middleware.html" class="sidebar-topic">
+                        Middleware
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Modules</h5>
+                    <a href="database.html" class="sidebar-topic">
+                        Database
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-orm.html" class="sidebar-topic">
+                        ForgeOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-explicit-orm.html" class="sidebar-topic">
+                        ForgeExplicitOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-debug-bar.html" class="sidebar-topic">
+                        ForgeDebugBar
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-error-handler.html" class="sidebar-topic">
+                        ForgeErrorHandler
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-events.html" class="sidebar-topic">
+                        ForgeEvents
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-logger.html" class="sidebar-topic">
+                        ForgeLogger
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-mark-down.html" class="sidebar-topic">
+                        ForgeMarkDown
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-router.html" class="sidebar-topic">
+                        ForgeRouter
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                   
+                    <a href="forge-static-gen.html" class="sidebar-topic">
+                        ForgeStaticGen
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-html.html" class="sidebar-topic">
+                        ForgeStaticHtml
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-storage.html" class="sidebar-topic">
+                        ForgeStorage
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-view-engine.html" class="sidebar-topic">
+                        ForgeViewEngine
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-helpers.html" class="sidebar-topic">
+                        Helpers
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="auth.html" class="sidebar-topic">
+                        Authentication
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Engine API Reference</h5>
+                    <a href="#" class="sidebar-topic active">
+                        Core Components
+                        <span class="sidebar-topic-toggle">↓</span>
+                    </a>
+                    <div class="sidebar-subitems">
+                        <a href="#overview" class="sidebar-subitem">Overview</a>
+                        <a href="#container" class="sidebar-subitem">Container</a>
+                        <a href="#http" class="sidebar-subitem">HTTP Components</a>
+                        <a href="#routing" class="sidebar-subitem">Routing</a>
+                        <a href="#config" class="sidebar-subitem">Configuration</a>
+                        <a href="#events" class="sidebar-subitem">Events</a>
+                        <a href="#services" class="sidebar-subitem">Services</a>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">Engine API Reference</h1>
+
+                <section class="mb-12" id="overview">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Overview</h2>
+                    <p class="text-gray-600 mb-4">The Forge Framework Engine provides a robust set of core classes and interfaces for building web applications. This documentation covers the essential components, their methods, and usage patterns.</p>
+                </section>
+
+                <section class="mb-12" id="container">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Container</h2>
+                    <p class="text-gray-600 mb-4">The Dependency Injection Container is the core of the Forge Framework, managing service instantiation and resolution.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-6 mb-4">Core\DependencyInjection\Container</h3>
+                    <pre><code class="language-php">namespace Forge\Core\DependencyInjection;
+
+class Container implements ContainerInterface
+{
+    public function get(string $id);
+    public function has(string $id): bool;
+    public function set(string $id, $concrete);
+    public function singleton(string $id, $concrete);
+}</code></pre>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-4">
+                        <p class="text-blue-700"><strong>Usage:</strong> The container is used to manage dependencies throughout your application.</p>
+                    </div>
+                </section>
+
+                <section class="mb-12" id="http">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">HTTP Components</h2>
+                    <p class="text-gray-600 mb-4">Core HTTP classes for handling requests and responses.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-6 mb-4">Http\Request</h3>
+                    <pre><code class="language-php">namespace Forge\Http;
+
+class Request
+{
+    public function getMethod(): string;
+    public function getUri(): string;
+    public function getHeaders(): array;
+    public function getBody(): array;
+    public function input(string $key, $default = null);
+}</code></pre>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-6 mb-4">Http\Response</h3>
+                    <pre><code class="language-php">namespace Forge\Http;
+
+class Response
+{
+    public function setStatusCode(int $code): self;
+    public function setHeader(string $name, string $value): self;
+    public function setContent($content): self;
+    public function json($data, int $status = 200): self;
+}</code></pre>
+                </section>
+
+                <section class="mb-12" id="routing">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Routing</h2>
+                    <p class="text-gray-600 mb-4">The routing system handles URL matching and request dispatching.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-6 mb-4">Core\Routing\Router</h3>
+                    <pre><code class="language-php">namespace Forge\Core\Routing;
+
+class Router
+{
+    public function get(string $path, $handler);
+    public function post(string $path, $handler);
+    public function put(string $path, $handler);
+    public function delete(string $path, $handler);
+    public function group(array $attributes, callable $callback);
+}</code></pre>
+                </section>
+
+                <section class="mb-12" id="config">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Configuration</h2>
+                    <p class="text-gray-600 mb-4">Configuration management system for your application.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-6 mb-4">Core\Configuration\Config</h3>
+                    <pre><code class="language-php">namespace Forge\Core\Configuration;
+
+class Config
+{
+    public function get(string $key, $default = null);
+    public function set(string $key, $value);
+    public function has(string $key): bool;
+    public function load(string $path);
+}</code></pre>
+                </section>
+
+                <section class="mb-12" id="events">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Events</h2>
+                    <p class="text-gray-600 mb-4">The event system provides a robust way to handle and dispatch events throughout your application.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-6 mb-4">Core\Events\EventDispatcher</h3>
+                    <pre><code class="language-php">namespace Forge\Core\Events;
+
+class EventDispatcher implements EventDispatcherInterface
+{
+    public function dispatch(object $event);
+    public function addListener(string $eventName, callable $listener, int $priority = 0);
+    public function removeListener(string $eventName, callable $listener);
+    public function getListeners(?string $eventName = null): array;
+}</code></pre>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-4">
+                        <p class="text-blue-700"><strong>Usage:</strong> Register event listeners and dispatch events to handle various application scenarios.</p>
+                    </div>
+                </section>
+
+                <section class="mb-12" id="services">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Services</h2>
+                    <p class="text-gray-600 mb-4">Service providers are responsible for bootstrapping and configuring your application's core services.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-6 mb-4">Core\Services\ServiceProvider</h3>
+                    <pre><code class="language-php">namespace Forge\Core\Services;
+
+abstract class ServiceProvider
+{
+    protected Container $container;
+
+    public function register(): void;
+    public function boot(): void;
+    public function provides(): array;
+}</code></pre>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-4">
+                        <p class="text-blue-700"><strong>Usage:</strong> Extend this class to create custom service providers for your application components.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>

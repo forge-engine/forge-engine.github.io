@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeStaticHtml - Forge Framework Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="introduction.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="installation.html" class="sidebar-topic">
+                        Installation
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="directory-structure.html" class="sidebar-topic">
+                        Directory Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="framework-structure.html" class="sidebar-topic">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="modules.html" class="sidebar-topic">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Core Concepts</h5>
+                    <a href="middleware.html" class="sidebar-topic">
+                        Middleware
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Modules</h5>
+                    <a href="database.html" class="sidebar-topic">
+                        Database
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-orm.html" class="sidebar-topic">
+                        ForgeOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-explicit-orm.html" class="sidebar-topic ">
+                        ForgeExplicitOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-debug-bar.html" class="sidebar-topic">
+                        ForgeDebugBar
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-error-handler.html" class="sidebar-topic">
+                        ForgeErrorHandler
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    
+                    <a href="forge-events.html" class="sidebar-topic">
+                        ForgeEvents
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-logger.html" class="sidebar-topic">
+                        ForgeLogger
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    
+                    <a href="forge-mark-down.html" class="sidebar-topic">
+                        ForgeMarkDown
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-router.html" class="sidebar-topic">
+                        ForgeRouter
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-gen.html" class="sidebar-topic">
+                        ForgeStaticGen
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#" class="sidebar-topic active">
+                        ForgeStaticHtml
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <div class="sidebar-subitems">
+                        <a href="#overview" class="sidebar-subitem">Overview</a>
+                        <a href="#configuration" class="sidebar-subitem">Configuration</a>
+                        <a href="#usage" class="sidebar-subitem">Usage</a>
+                        <a href="#examples" class="sidebar-subitem">Examples</a>
+                    </div>
+                    <a href="forge-package-manager.html" class="sidebar-topic">
+                        ForgePackageManager
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-storage.html" class="sidebar-topic">
+                        ForgeStorage
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-view-engine.html" class="sidebar-topic">
+                        ForgeViewEngine
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-helpers.html" class="sidebar-topic">
+                        Helpers
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="auth.html" class="sidebar-topic">
+                        Authentication
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Engine API Reference</h5>
+                    <a href="api.html" class="sidebar-topic">
+                        Core Components
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+        
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">ForgeStaticHtml Module</h1>
+
+                <section class="mb-12" id="overview">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Overview</h2>
+                    <p class="text-gray-600 mb-4">ForgeStaticHtml is a powerful module that converts your dynamic PHP application into static HTML files. This is particularly useful for improving performance, security, and enabling easy deployment to static hosting platforms.</p>
+                </section>
+
+                <section class="mb-12" id="configuration">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Configuration</h2>
+                    <p class="text-gray-600 mb-4">Configure the static site generation through the <code>forge_static_html.php</code> configuration file in your application:</p>
+
+                    <pre><code class="language-php">return [
+    'output_dir' => 'public/static',  // Directory where static files will be generated
+    'base_url' => '/',                 // Base URL for the static site
+    'clean_build' => true,             // Clean the output directory before building
+    'copy_assets' => true,             // Copy asset files to the output directory
+    'asset_dirs' => [                  // Directories containing assets to copy
+        'public/assets',
+        'public/images'
+    ],
+    'include_paths' => [               // URLs to generate static pages for
+        '/',
+    ],
+];</code></pre>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Configuration Options</h3>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li><code>output_dir</code>: Specifies where the generated static files will be saved</li>
+                        <li><code>base_url</code>: The base URL path for the static site</li>
+                        <li><code>clean_build</code>: Whether to clean the output directory before generation</li>
+                        <li><code>copy_assets</code>: Whether to copy asset files to the output directory</li>
+                        <li><code>asset_dirs</code>: List of directories containing assets to be copied</li>
+                        <li><code>include_paths</code>: List of URL paths to generate static pages for</li>
+                    </ul>
+                </section>
+
+                <section class="mb-12" id="usage">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Usage</h2>
+                    <p class="text-gray-600 mb-4">Generate static HTML files using the provided command:</p>
+
+                    <pre><code class="language-bash">php forge.php static:generate:html</code></pre>
+
+                    <p class="text-gray-600 mt-4">This command will:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Process all configured routes</li>
+                        <li>Generate static HTML files</li>
+                        <li>Copy assets to the output directory</li>
+                        <li>Maintain directory structure</li>
+                    </ul>
+                </section>
+
+                <section class="mb-12" id="examples">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Examples</h2>
+                    <p class="text-gray-600 mb-4">Here's an example of a typical setup with routes and controllers:</p>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Controller Example</h3>
+                    <pre><code class="language-php">namespace MyApp\Controllers;
+
+use Forge\Core\Helpers\App;
+use Forge\Http\Request;
+use Forge\Http\Response;
+use Forge\Core\Contracts\Modules\ViewEngineInterface;
+
+class HomeController
+{
+    /**
+     * @inject
+     */
+    private ViewEngineInterface $view;
+
+    public function index(Request $request): Response
+    {
+        return $this->view->render(view: 'home.index', layout: 'base');
+    }
+
+    public function install(Request $request): Response
+    {
+        return $this->view->render(view: 'home.installation', layout: 'base');
+    }
+}</code></pre>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Route Configuration</h3>
+                    <pre><code class="language-php">use Forge\Core\Helpers\App;
+use MyApp\Controllers\HomeController;
+
+$router = App::router();
+
+$router->get('/', [HomeController::class, 'index']);
+$router->get('/installation', [HomeController::class, 'install']);</code></pre>
+
+                    <p class="text-gray-600 mt-4">When you run the static generation command, it will:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Generate <code>index.html</code> from the home page route</li>
+                        <li>Generate <code>installation.html</code> from the installation route</li>
+                        <li>Copy all assets, including CSS and images</li>
+                        <li>Maintain the layout structure defined in your views</li>
+                    </ul>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mt-4">
+                        <p class="text-blue-700"><strong>Note:</strong> Make sure your views use relative paths for assets and links to ensure proper functionality in the static version.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>

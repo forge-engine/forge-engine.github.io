@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Structure - Forge Framework Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="introduction.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="installation.html" class="sidebar-topic">
+                        Installation
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="directory-structure.html" class="sidebar-topic">
+                        Directory Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="#" class="sidebar-topic active">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <div class="sidebar-subitems">
+                        <a href="#overview" class="sidebar-subitem">Overview</a>
+                        <a href="#bootstrap-process" class="sidebar-subitem">Bootstrap Process</a>
+                        <a href="#module-system" class="sidebar-subitem">Module System</a>
+                        <a href="#application-lifecycle" class="sidebar-subitem">Application Lifecycle</a>
+                    </div>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="modules.html" class="sidebar-topic">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Core Concepts</h5>
+                    <a href="middleware.html" class="sidebar-topic">
+                        Middleware
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Modules</h5>
+                    <a href="database.html" class="sidebar-topic">
+                        Database
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-orm.html" class="sidebar-topic">
+                        ForgeOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-explicit-orm.html" class="sidebar-topic">
+                        ForgeExplicitOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-debug-bar.html" class="sidebar-topic">
+                        ForgeDebugBar
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-error-handler.html" class="sidebar-topic">
+                        ForgeErrorHandler
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-events.html" class="sidebar-topic">
+                        ForgeEvents
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-logger.html" class="sidebar-topic">
+                        ForgeLogger
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-mark-down.html" class="sidebar-topic">
+                        ForgeMarkDown
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-router.html" class="sidebar-topic">
+                        ForgeRouter
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-gen.html" class="sidebar-topic">
+                        ForgeStaticGen
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-html.html" class="sidebar-topic">
+                        ForgeStaticHtml
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-package-manager.html" class="sidebar-topic">
+                        ForgePackageManager
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-storage.html" class="sidebar-topic">
+                        ForgeStorage
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-view-engine.html" class="sidebar-topic">
+                        ForgeViewEngine
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-helpers.html" class="sidebar-topic">
+                        Helpers
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="auth.html" class="sidebar-topic">
+                        Authentication
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Engine API Reference</h5>
+                    <a href="api.html" class="sidebar-topic">
+                        Core Components
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+        
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">Framework Structure</h1>
+
+                <section class="mb-12" id="overview">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Overview</h2>
+                    <p class="text-gray-600 mb-4">The Forge Framework is built with modularity and flexibility in mind. Its architecture consists of several key components that work together to provide a robust foundation for your applications.</p>
+                </section>
+
+                <section class="mb-12" id="bootstrap-process">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Bootstrap Process</h2>
+                    <p class="text-gray-600 mb-4">The framework's bootstrap process is handled by two main classes:</p>
+                    
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">SimpleBootstrap</h3>
+                    <p class="text-gray-600 mb-4">The SimpleBootstrap class serves as the entry point for the application, handling the initial setup:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Defines core paths and directories</li>
+                        <li>Initializes the application bootstrap</li>
+                        <li>Sets up session configuration</li>
+                        <li>Creates and handles the request/response cycle</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Bootstrap</h3>
+                    <p class="text-gray-600 mb-4">The Bootstrap class is responsible for:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Initializing the dependency injection container</li>
+                        <li>Setting up the environment</li>
+                        <li>Registering core services</li>
+                        <li>Managing modules and applications</li>
+                        <li>Configuring the middleware pipeline</li>
+                    </ul>
+                </section>
+
+                <section class="mb-12" id="module-system">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Module System</h2>
+                    <p class="text-gray-600 mb-4">The module system is a core feature of Forge, allowing for modular and extensible applications.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">ModuleLoader</h3>
+                    <p class="text-gray-600 mb-4">The ModuleLoader is responsible for:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Discovering and loading modules from the modules directory</li>
+                        <li>Validating module compatibility</li>
+                        <li>Managing module dependencies</li>
+                        <li>Triggering module lifecycle events</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">ModuleManifest</h3>
+                    <p class="text-gray-600 mb-4">Each module includes a manifest (forge.json) that defines:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Module name and version</li>
+                        <li>Framework compatibility requirements</li>
+                        <li>Module dependencies</li>
+                        <li>Service providers and interfaces</li>
+                        <li>Configuration defaults</li>
+                    </ul>
+                </section>
+
+                <section class="mb-12" id="application-lifecycle">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Application Lifecycle</h2>
+                    <p class="text-gray-600 mb-4">The AppManager class manages the application lifecycle and coordinates between different components:</p>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Lifecycle Events</h3>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>beforeBoot/afterBoot</li>
+                        <li>beforeAppRegister/afterAppRegister</li>
+                        <li>beforeAppBoot/afterAppBoot</li>
+                        <li>beforeRequest/afterRequest</li>
+                        <li>beforeModuleLoad/afterModuleLoad</li>
+                        <li>beforeModuleRegister/afterModuleRegister</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Application Management</h3>
+                    <p class="text-gray-600 mb-4">The AppManager provides:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Application registration and boot process</li>
+                        <li>Event handling and lifecycle hooks</li>
+                        <li>Service container integration</li>
+                        <li>Module coordination</li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>

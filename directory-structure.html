@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory Structure - Forge Framework</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="introduction.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="installation.html" class="sidebar-topic">
+                        Installation
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#directory-structure" class="sidebar-topic active">
+                        Directory Structure 
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <div class="sidebar-subitems">
+                        <a href="#root-structure" class="sidebar-subitem">Root Structure</a>
+                        <a href="#app-structure" class="sidebar-subitem">App Structure</a>
+                        <a href="#configuration" class="sidebar-subitem">Configuration</a>
+                        <a href="#customization" class="sidebar-subitem">Customization</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="framework-structure.html" class="sidebar-topic">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="modules.html" class="sidebar-topic">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Core Concepts</h5>
+                    <a href="middleware.html" class="sidebar-topic">
+                        Middleware
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Modules</h5>
+                    <a href="database.html" class="sidebar-topic">
+                        Database
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-orm.html" class="sidebar-topic">
+                        ForgeOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-explicit-orm.html" class="sidebar-topic">
+                        ForgeExplicitOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-debug-bar.html" class="sidebar-topic">
+                        ForgeDebugBar
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-error-handler.html" class="sidebar-topic">
+                        ForgeErrorHandler
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-events.html" class="sidebar-topic">
+                        ForgeEvents
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-logger.html" class="sidebar-topic">
+                        ForgeLogger
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-mark-down.html" class="sidebar-topic">
+                        ForgeMarkDown
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-router.html" class="sidebar-topic">
+                        ForgeRouter
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                   
+                    <a href="forge-static-gen.html" class="sidebar-topic">
+                        ForgeStaticGen
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-html.html" class="sidebar-topic">
+                        ForgeStaticHtml
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-storage.html" class="sidebar-topic">
+                        ForgeStorage
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-view-engine.html" class="sidebar-topic">
+                        ForgeViewEngine
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#" class="sidebar-topic">
+                        Helpers
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#" class="sidebar-topic">
+                        Authentication
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Engine API Reference</h5>
+                    <a href="#" class="sidebar-topic">
+                        Core Components
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+        
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">Directory Structure</h1>
+                
+                <section id="directory-structure" class="mb-12">
+                    <p class="text-gray-600 mb-4">Forge follows a clear and organized directory structure that promotes modularity and maintainability. This guide explains the default structure and how you can customize it to fit your needs.</p>
+
+                    <h2 id="root-structure" class="text-3xl font-bold text-gray-900 mt-8 mb-4">Root Structure</h2>
+                    <p class="text-gray-600 mb-4">At the root level, Forge organizes code into several key directories:</p>
+                    
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+/
+├── apps/              # Application code
+├── cache/             # Cached files (compiled views, etc.)
+├── docs/              # Documentation
+├── engine/            # Core framework code
+├── modules/           # Installed modules
+├── modules-registry/  # Module registry
+├── public/            # Publicly accessible files
+│   ├── assets/        # CSS, JavaScript, images
+│   ├── modules/       # Module public assets
+│   └── index.php      # Front controller
+└── storage/           # Application storage
+    ├── app/           # Application files
+    ├── compiled_views/# Compiled view templates
+    ├── framework/     # Framework storage
+    └── logs/          # Log files</pre>
+
+                    <h2 id="app-structure" class="text-3xl font-bold text-gray-900 mt-8 mb-4">Application Structure</h2>
+                    <p class="text-gray-600 mb-4">The <code>apps/MyApp</code> directory contains your application code. By default, it includes the following structure:</p>
+                    
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+/apps/MyApp/
+├── Bootstrap/           # Application bootstrap files
+├── Commands/            # Custom console commands
+├── Contracts/           # Interfaces and contracts
+├── Controllers/         # HTTP controllers
+├── DataTransferObjects/ # DTOs for data transfer
+├── Database/            # Database migrations and seeders
+│   ├── Migrations/      # Database migration files
+│   └── Seeders/         # Database seeder files
+├── Events/              # Event classes
+├── Helpers/             # Helper functions
+├── Jobs/                # Queue jobs
+├── Middleware/          # HTTP middleware
+├── Models/              # Database models
+├── MyApp.php            # Application entry point
+├── Repositories/        # Repository pattern implementations
+├── Services/            # Business logic services
+├── Traits/              # Reusable traits
+├── ValueObjects/        # Value objects
+├── config/              # Application configuration files
+├── resources/           # Views, assets, and other resources
+│   ├── components/      # Reusable view components
+│   ├── layouts/         # Layout templates
+│   ├── spark/           # Spark templates
+│   └── views/           # View templates
+└── routes/              # Route definitions</pre>
+
+                    <h2 id="configuration" class="text-3xl font-bold text-gray-900 mt-8 mb-4">Configuration</h2>
+                    <p class="text-gray-600 mb-4">The directory paths are configurable in your <code>apps/MyApp/config/app.php</code> file. Here's the default configuration:</p>
+
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+"paths" => [
+    "resources" => [
+        "views" => "apps/MyApp/resources/views",
+        "components" => "apps/MyApp/resources/components",
+        "layouts" => "apps/MyApp/resources/layouts",
+        "spark" => "apps/MyApp/resources/spark",
+    ],
+    "public" => [
+        "assets" => "public/assets",
+        "modules" => "public/modules",
+        "uploads" => "public/uploads"
+    ],
+    "database" => [
+        "migrations" => "apps/MyApp/Database/Migrations",
+        "seeders" => "apps/MyApp/Database/Seeders"
+    ],
+    "controllers" => "apps/MyApp/Controllers",
+    "models" => "apps/MyApp/Models",
+    "respositories" => "apps/MyApp/Repositories",
+    "routes" => "app/MyApp/routes",
+    "events" => "apps/MyApp/Events",
+    "helpers" => "apps/MyApp/Helpers",
+    "middlewares" => "apps/MyApp/Middleware",
+    "commands" => "apps/MyApp/Commands",
+    "config" => "apps/MyApp/config",
+    "interfaces" => "apps/MyApp/Contracts",
+    "services" => "apps/MyApp/Services",
+    "traits" => "apps/MyApp/Traits",
+    "dtos" => "apps/MyApp/DataTransferObjects",
+]</pre>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+                        <p class="text-yellow-700"><strong>Important:</strong> If you change the location of your migrations or seeders, make sure to update the paths in your configuration file.</p>
+                    </div>
+
+                    <h2 id="customization" class="text-3xl font-bold text-gray-900 mt-8 mb-4">Customization</h2>
+                    <p class="text-gray-600 mb-4">You can customize the directory structure to match your preferred architecture. Common approaches include:</p>
+                    
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Domain-Driven Design (DDD)</h3>
+                    <p class="text-gray-600 mb-4">Organize by domain instead of technical concerns:</p>
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+/apps/MyApp/
+├── Domain/
+│   ├── User/
+│   │   ├── Controllers/
+│   │   ├── Models/
+│   │   ├── Repositories/
+│   │   ├── Services/
+│   │   └── Events/
+│   ├── Product/
+│   │   ├── Controllers/
+│   │   ├── Models/
+│   │   └── ...
+│   └── ...
+├── Infrastructure/
+│   ├── Database/
+│   ├── Queue/
+│   └── ...
+└── Application/
+    ├── Middleware/
+    ├── Commands/
+    └── ...</pre>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Clean Architecture</h3>
+                    <p class="text-gray-600 mb-4">Separate core business logic from infrastructure concerns:</p>
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+/apps/MyApp/
+├── Core/
+│   ├── Entities/
+│   ├── UseCases/
+│   └── Interfaces/
+├── Infrastructure/
+│   ├── Database/
+│   ├── ExternalServices/
+│   └── Repositories/
+└── Presentation/
+    ├── Controllers/
+    ├── Middleware/
+    └── Views/</pre>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                        <p class="text-blue-700"><strong>Note:</strong> While Forge provides a default directory structure, you're free to organize your code in a way that best suits your project's needs. Just remember to update the paths in your configuration accordingly.</p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Updating Configuration</h3>
+                    <p class="text-gray-600 mb-4">When you customize your directory structure, make sure to update your <code>app.php</code> configuration file to reflect the new paths:</p>
+
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+// Example for DDD approach
+"paths" => [
+    "resources" => [
+        "views" => "apps/MyApp/Presentation/Views",
+        "components" => "apps/MyApp/Presentation/Components",
+        "layouts" => "apps/MyApp/Presentation/Layouts",
+    ],
+    "database" => [
+        "migrations" => "apps/MyApp/Infrastructure/Database/Migrations",
+        "seeders" => "apps/MyApp/Infrastructure/Database/Seeders"
+    ],
+    "controllers" => "apps/MyApp/Presentation/Controllers",
+    // ...
+]</pre>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Engine Directory Structure</h3>
+                    <p class="text-gray-600 mb-4">The <code>engine/</code> directory contains the core framework code that powers Forge. Understanding this structure can help you extend or modify the framework:</p>
+                    
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+/engine/
+├── Console/            # Command-line functionality
+│   ├── Commands/       # Built-in console commands
+│   └── ConsoleKernel.php # Console application kernel
+├── Core/               # Core framework components
+│   ├── Bootstrap/      # Framework bootstrap process
+│   ├── Configuration/  # Configuration management
+│   ├── Contracts/      # Core interfaces
+│   ├── DependencyInjection/ # Service container
+│   ├── Events/         # Event system
+│   ├── Helpers/        # Helper functions
+│   ├── Models/         # Base model classes
+│   ├── Module/         # Module management
+│   ├── Pagination/     # Pagination utilities
+│   ├── Resources/      # Resource management
+│   ├── Routing/        # Routing system
+│   ├── Schema/         # Schema definitions
+│   ├── Services/       # Core services
+│   ├── Templates/      # Template files
+│   └── Traits/         # Reusable traits
+├── Enums/              # Enumeration classes
+└── Http/               # HTTP layer
+    ├── Exceptions/     # HTTP exceptions
+    ├── Middleware/     # HTTP middleware
+    ├── HttpKernel.php  # HTTP application kernel
+    ├── Request.php     # HTTP request handling
+    ├── Response.php    # HTTP response handling
+    ├── Session.php     # Session management
+    └── Validator.php   # Input validation</pre>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Module Structure</h3>
+                    <p class="text-gray-600 mb-4">Forge's modular architecture allows you to extend functionality through modules. Each module follows a consistent structure:</p>
+                    
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+/modules/ModuleName/
+├── Commands/           # Module-specific commands
+├── Contracts/          # Interfaces and contracts
+├── Database/           # Database migrations and seeders
+├── ModuleNameModule.php # Module entry point
+├── config/             # Module configuration
+├── resources/          # Module resources
+│   ├── assets/         # CSS, JavaScript, images
+│   └── views/          # View templates
+└── forge.json          # Module manifest</pre>
+
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+                        <p class="text-green-700"><strong>Best Practice:</strong> When developing your own modules, follow this structure to maintain compatibility with the Forge module system and make your modules easier to understand for other developers.</p>
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Storage Directory</h3>
+                    <p class="text-gray-600 mb-4">The <code>storage/</code> directory is used for storing application-generated files:</p>
+                    
+                    <pre class="bg-gray-100 p-4 rounded-lg mb-4 overflow-x-auto">
+/storage/
+├── app/                # Application storage
+│   ├── images/         # Uploaded images
+│   └── uploads/        # User uploads
+├── compiled_views/     # Compiled view templates
+├── framework/          # Framework storage
+│   ├── modules/        # Module-specific storage
+│   ├── tmp/            # Temporary files
+│   └── views/          # Cached views
+└── logs/               # Application logs</pre>
+
+                    <p class="text-gray-600 mb-4">Make sure your web server has write permissions to the storage directory, as Forge needs to write to these locations during normal operation.</p>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>

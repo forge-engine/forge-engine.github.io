@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module System - Forge Framework Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="introduction.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="installation.html" class="sidebar-topic">
+                        Installation
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="directory-structure.html" class="sidebar-topic">
+                        Directory Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="framework-structure.html" class="sidebar-topic">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#" class="sidebar-topic active">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <div class="sidebar-subitems">
+                        <a href="#overview" class="sidebar-subitem">Overview</a>
+                        <a href="#official-modules" class="sidebar-subitem">Official Modules</a>
+                        <a href="#creating-modules" class="sidebar-subitem">Creating Modules</a>
+                        <a href="#private-registries" class="sidebar-subitem">Private Registries</a>
+                        <a href="#module-development" class="sidebar-subitem">Module Development</a>
+                        <a href="#publishing-modules" class="sidebar-subitem">Publishing Modules</a>
+                    </div>
+                    <div class="sidebar-nav-group">
+                        <h5 class="sidebar-category">Modules</h5>
+                        <a href="database.html" class="sidebar-topic">
+                            Database
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-orm.html" class="sidebar-topic">
+                            ForgeOrm
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-explicit-orm.html" class="sidebar-topic">
+                            ForgeExplicitOrm
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-debug-bar.html" class="sidebar-topic">
+                            ForgeDebugBar
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-error-handler.html" class="sidebar-topic">
+                            ForgeErrorHandler
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-events.html" class="sidebar-topic">
+                            ForgeEvents
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-logger.html" class="sidebar-topic">
+                            ForgeLogger
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-mark-down.html" class="sidebar-topic">
+                            ForgeMarkDown
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-router.html" class="sidebar-topic">
+                            ForgeRouter
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-static-gen.html" class="sidebar-topic">
+                            ForgeStaticGen
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-static-html.html" class="sidebar-topic">
+                            ForgeStaticHtml
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-package-manager.html" class="sidebar-topic">
+                            ForgePackageManager
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-storage.html" class="sidebar-topic">
+                            ForgeStorage
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-view-engine.html" class="sidebar-topic">
+                            ForgeViewEngine
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="forge-helpers.html" class="sidebar-topic">
+                            Helpers
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                        <a href="auth.html" class="sidebar-topic">
+                            Authentication
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+                    </div>
+                    <div class="sidebar-nav-group">
+                        <h5 class="sidebar-category">Engine API Reference</h5>
+                        <a href="api.html" class="sidebar-topic">
+                            Core Components
+                            <span class="sidebar-topic-toggle">→</span>
+                        </a>
+            
+                    </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">Module System</h1>
+
+                <section class="mb-12" id="overview">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Overview</h2>
+                    <p class="text-gray-600 mb-4">The Forge Framework's module system provides a flexible and powerful way to extend your application's functionality. Modules are self-contained packages that can be easily installed, updated, and removed without affecting the core framework or other modules.</p>
+                    
+                    <p class="text-gray-600 mb-4">One of the key philosophies behind Forge modules is that they don't rely on external dependencies or packages like Composer. This approach keeps modules lightweight, reduces potential conflicts, and simplifies the installation process.</p>
+                </section>
+
+                <section class="mb-12" id="official-modules">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Official Modules</h2>
+                    <p class="text-gray-600 mb-4">Forge provides several official modules that extend the framework's functionality. Here's a list of the currently available official modules:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeAuth</h3>
+                            <p class="text-gray-600 text-sm">Authentication and authorization system with support for multiple authentication methods.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeDatabase</h3>
+                            <p class="text-gray-600 text-sm">Database abstraction layer with support for multiple database systems.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeDebugBar</h3>
+                            <p class="text-gray-600 text-sm">Development tool that provides debugging information for your application.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeErrorHandler</h3>
+                            <p class="text-gray-600 text-sm">Advanced error handling and reporting system.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeEvents</h3>
+                            <p class="text-gray-600 text-sm">Event dispatching and handling system for building event-driven applications.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeExplicitOrm</h3>
+                            <p class="text-gray-600 text-sm">Object-relational mapping system with explicit relationship definitions.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeLogger</h3>
+                            <p class="text-gray-600 text-sm">Logging system with support for multiple logging channels and formats.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeMarkDown</h3>
+                            <p class="text-gray-600 text-sm">Markdown parsing and rendering system.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeOrm</h3>
+                            <p class="text-gray-600 text-sm">Full-featured ORM system for database interaction.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgePackageManager</h3>
+                            <p class="text-gray-600 text-sm">Module and package management system for Forge applications.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeRouter</h3>
+                            <p class="text-gray-600 text-sm">Routing system for handling HTTP requests.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeStaticGen</h3>
+                            <p class="text-gray-600 text-sm">Static site generation tools for creating static websites.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeStaticHtml</h3>
+                            <p class="text-gray-600 text-sm">HTML generation and manipulation tools.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeStorage</h3>
+                            <p class="text-gray-600 text-sm">File storage system with support for multiple storage drivers.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeTesting</h3>
+                            <p class="text-gray-600 text-sm">Testing framework for unit and integration testing.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">ForgeViewEngine</h3>
+                            <p class="text-gray-600 text-sm">Template rendering system with support for multiple view engines.</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-600 mt-6">The Forge team is continuously working on developing new modules to extend the framework's capabilities. Check the official repository for the latest modules.</p>
+                </section>
+
+                <section class="mb-12" id="creating-modules">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Creating Modules</h2>
+                    <p class="text-gray-600 mb-4">Forge makes it easy to create your own modules using the built-in scaffolding command. This command will generate the basic structure and files needed for a new module.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Using the Module Scaffolding Command</h3>
+                    <p class="text-gray-600 mb-4">To create a new module, run the following command in your terminal:</p>
+                    <pre class="language-bash"><code>php forge.php make:module</code></pre>
+
+                    <p class="text-gray-600 mt-4 mb-4">This command will guide you through the process of creating a new module by asking for details such as:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Module name</li>
+                        <li>Description</li>
+                        <li>Version</li>
+                        <li>Author information</li>
+                        <li>Dependencies (if any)</li>
+                    </ul>
+
+                    <p class="text-gray-600 mb-4">After completing the prompts, the command will create a new module in the <code>modules/</code> directory with the appropriate structure. You can then begin developing your module's functionality.</p>
+                </section>
+
+                <section class="mb-12" id="private-registries">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Private Registries</h2>
+                    <p class="text-gray-600 mb-4">Forge allows you to create and use private module registries. This is useful for organizations that want to maintain their own set of modules or use modules from trusted third-party developers.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Configuring Private Registries</h3>
+                    <p class="text-gray-600 mb-4">To configure a private registry, you need to edit the <code>config/package_manager.php</code> file in your application:</p>
+
+                    <pre class="language-php"><code>// config/package_manager.php
+return [
+    "registry" => [
+        [
+            "name" => "my-private-registry",
+            "url" => "https://github.com/username/my-private-modules",
+            "branch" => "main",
+            "private" => false,
+            "ssh" => false
+        ]
+    ],
+    "cache_ttl" => 3600
+];</code></pre>
+
+                    <p class="text-gray-600 mt-4 mb-4">You can define multiple registries in the configuration file. The framework will search for modules in all configured registries.</p>
+                </section>
+
+                <section class="mb-12" id="module-development">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Module Development</h2>
+                    <p class="text-gray-600 mb-4">One of the core philosophies of the Forge Framework is that modules should be lightweight and self-contained. Unlike many other frameworks, Forge modules do not rely on external dependencies or packages like Composer. This approach has several benefits:</p>
+
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Smaller file sizes and reduced overhead</li>
+                        <li>Fewer potential conflicts between dependencies</li>
+                        <li>Simplified installation and update processes</li>
+                        <li>Better control over the codebase</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Module Structure</h3>
+                    <p class="text-gray-600 mb-4">A typical Forge module has the following structure:</p>
+
+                    <pre class="language-plaintext"><code>ModuleName/
+  ├── ModuleNameModule.php  # Main module class that implements ModuleContract
+  ├── forge.json            # Module metadata and configuration
+  ├── config/               # Module-specific configuration
+  ├── resources/            # Assets, views, and other resources
+  └── src/                  # Module source code</code></pre>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Module Main Class</h3>
+                    <p class="text-gray-600 mb-4">Every module must have a main class that implements the <code>ModuleContract</code> interface. This class is responsible for registering the module's services with the framework's dependency injection container.</p>
+
+                    <pre class="language-php"><code>namespace MyModule;
+
+use Forge\Core\Contracts\ModuleContract;
+use Forge\Core\DependencyInjection\Container;
+
+class MyModuleModule implements ModuleContract
+{
+    public function register(Container $container): void
+    {
+        // Register module services
+        $container->singleton(MyService::class);
+    }
+
+    public function boot(): void
+    {
+        // Perform any necessary bootstrapping
+    }
+}</code></pre>
+                </section>
+
+                <section class="mb-12" id="publishing-modules">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Publishing Modules</h2>
+                    <p class="text-gray-600 mb-4">If you're developing modules using the Forge repository, you can use the <code>modules.php</code> tool to help with versioning and publishing your modules.</p>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Creating Module Versions</h3>
+                    <p class="text-gray-600 mb-4">To create a new version of a module, use the following command:</p>
+
+                    <pre class="language-bash"><code>php modules.php create-version module-name@version</code></pre>
+
+                    <p class="text-gray-600 mt-4 mb-4">For example:</p>
+
+                    <pre class="language-bash"><code>php modules.php create-version my-module@1.0.0</code></pre>
+
+                    <p class="text-gray-600 mt-4 mb-4">This command will:</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Create a ZIP archive of your module</li>
+                        <li>Calculate an integrity hash for the archive</li>
+                        <li>Update the module manifest file</li>
+                        <li>Commit the changes to the module registry</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold text-gray-800 mt-6 mb-3">Publishing to a Registry</h3>
+                    <p class="text-gray-600 mb-4">After creating a version, you can publish it to your registry with:</p>
+
+                    <pre class="language-bash"><code>php modules.php publish</code></pre>
+
+                    <p class="text-gray-600 mt-4 mb-4">This will push the changes to the remote repository specified in your registry configuration.</p>
+
+                    <p class="text-gray-600 mt-4">Remember to update the repository URL in the modules-registry to point to your own registry URL if you're maintaining a private registry.</p>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Helpers - Forge Framework Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0 left-0">
+        <div class="max-w-full px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <button class="mobile-menu-button md:hidden mr-4 text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="text-xl font-semibold text-gray-800">Forge Framework</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search documentation..." class="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <a href="https://github.com/forge-engine/forge" class="text-gray-600 hover:text-gray-900">
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- Left Sidebar -->
+        <aside class="sidebar pb-4">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Forge Documentation</div>
+            </div>
+            <nav class="p-4">
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Getting Started</h5>
+                    <a href="index.html#introduction" class="sidebar-topic">
+                        Introduction
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="installation.html" class="sidebar-topic">
+                        Installation
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Architecture</h5>
+                    <a href="framework-structure.html" class="sidebar-topic">
+                        Framework Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="app-structure.html" class="sidebar-topic">
+                        Application Structure
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="dependency-injection.html" class="sidebar-topic">
+                        Dependency Injection
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="configuration.html" class="sidebar-topic">
+                        Configuration
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="modules.html" class="sidebar-topic">
+                        Module System
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Core Concepts</h5>
+                    <a href="middleware.html" class="sidebar-topic">
+                        Middleware
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Modules</h5>
+                    <a href="database.html" class="sidebar-topic">
+                        Database
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-orm.html" class="sidebar-topic">
+                        ForgeOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-explicit-orm.html" class="sidebar-topic">
+                        ForgeExplicitOrm
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-debug-bar.html" class="sidebar-topic">
+                        ForgeDebugBar
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-error-handler.html" class="sidebar-topic">
+                        ForgeErrorHandler
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-events.html" class="sidebar-topic">
+                        ForgeEvents
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-logger.html" class="sidebar-topic">
+                        ForgeLogger
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-mark-down.html" class="sidebar-topic">
+                        ForgeMarkDown
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-router.html" class="sidebar-topic">
+                        ForgeRouter
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                   
+                    <a href="forge-static-gen.html" class="sidebar-topic">
+                        ForgeStaticGen
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-static-html.html" class="sidebar-topic">
+                        ForgeStaticHtml
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-storage.html" class="sidebar-topic">
+                        ForgeStorage
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="forge-view-engine.html" class="sidebar-topic">
+                        ForgeViewEngine
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                    <a href="#" class="sidebar-topic active">
+                        Helpers
+                        <span class="sidebar-topic-toggle">↓</span>
+                    </a>
+                    <div class="sidebar-subitems">
+                        <a href="#overview" class="sidebar-subitem">Overview</a>
+                        <a href="#app-helper" class="sidebar-subitem">App Helper</a>
+                        <a href="#asset-helper" class="sidebar-subitem">Asset Helper</a>
+                        <a href="#date-helper" class="sidebar-subitem">Date Helper</a>
+                        <a href="#debug-helper" class="sidebar-subitem">Debug Helper</a>
+                        <a href="#framework-helper" class="sidebar-subitem">Framework Helper</a>
+                        <a href="#hash-helper" class="sidebar-subitem">Hash Helper</a>
+                        <a href="#path-helper" class="sidebar-subitem">Path Helper</a>
+                        <a href="#redirect-helper" class="sidebar-subitem">Redirect Helper</a>
+                        <a href="#strings-helper" class="sidebar-subitem">Strings Helper</a>
+                        <a href="#transform-helper" class="sidebar-subitem">Transform Helper</a>
+                        <a href="#uuid-helper" class="sidebar-subitem">UUID Helper</a>
+                        <a href="#view-helper" class="sidebar-subitem">View Helper</a>
+                    </div>
+                    <a href="auth.html" class="sidebar-topic">
+                        Authentication
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+                </div>
+                <div class="sidebar-nav-group">
+                    <h5 class="sidebar-category">Engine API Reference</h5>
+                    <a href="api.html" class="sidebar-topic">
+                        Core Components
+                        <span class="sidebar-topic-toggle">→</span>
+                    </a>
+        
+                </div>
+                
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl font-bold text-gray-900 mb-8">Forge Helpers</h1>
+
+                <section class="mb-12" id="overview">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Overview</h2>
+                    <p class="text-gray-600 mb-4">Forge Framework provides a collection of helper classes that simplify common tasks and provide utility functions for your application. These helpers are designed to be easy to use and can be accessed statically throughout your application.</p>
+                </section>
+
+                <section class="mb-12" id="app-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">App Helper</h2>
+                    <p class="text-gray-600 mb-4">The App helper provides convenient methods to access core application services and components:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\App;
+
+// Get application environment
+$env = App::environment();
+
+// Access service container
+$service = App::make('ServiceName');
+
+// Get configuration values
+$value = App::config('app.key');
+
+// Access storage service
+$storage = App::storage();
+
+// Get cache instance
+$cache = App::cache();</code></pre>
+                </section>
+
+                <section class="mb-12" id="asset-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Asset Helper</h2>
+                    <p class="text-gray-600 mb-4">The Asset helper manages application assets and generates proper URLs:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Asset;
+
+// Generate URL for CSS file
+$cssUrl = Asset::css('main.css');
+
+// Generate URL for JavaScript file
+$jsUrl = Asset::js('app.js');
+
+// Generate URL for image
+$imageUrl = Asset::image('logo.png');
+
+// Generate URL for any asset
+$assetUrl = Asset::url('files/document.pdf');</code></pre>
+                </section>
+
+                <section class="mb-12" id="date-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Date Helper</h2>
+                    <p class="text-gray-600 mb-4">The Date helper provides methods for date and time manipulation:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Date;
+
+// Get current timestamp
+$now = Date::now();
+
+// Format date
+$formatted = Date::format('Y-m-d');
+
+// Add days to date
+$future = Date::addDays(5);
+
+// Compare dates
+$diff = Date::diff('2023-01-01', '2023-12-31');</code></pre>
+                </section>
+
+                <section class="mb-12" id="debug-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Debug Helper</h2>
+                    <p class="text-gray-600 mb-4">The Debug helper provides debugging utilities:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Debug;
+
+// Dump variable
+Debug::dump($variable);
+
+// Dump and die
+Debug::dd($variable);
+
+// Get debug backtrace
+$trace = Debug::backtrace();</code></pre>
+                </section>
+
+                <section class="mb-12" id="framework-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Framework Helper</h2>
+                    <p class="text-gray-600 mb-4">The Framework helper provides access to framework-specific functionality:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Framework;
+
+// Get framework version
+$version = Framework::version();
+
+// Check if running in console
+$isConsole = Framework::isConsole();
+
+// Get framework root path
+$path = Framework::path();</code></pre>
+                </section>
+
+                <section class="mb-12" id="hash-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Hash Helper</h2>
+                    <p class="text-gray-600 mb-4">The Hash helper provides secure hashing functionality:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Hash;
+
+// Create password hash
+$hash = Hash::make('password');
+
+// Verify password
+$valid = Hash::verify('password', $hash);
+
+// Generate random string
+$random = Hash::random(16);</code></pre>
+                </section>
+
+                <section class="mb-12" id="path-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Path Helper</h2>
+                    <p class="text-gray-600 mb-4">The Path helper manages application paths:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Path;
+
+// Get application root path
+$root = Path::root();
+
+// Get storage path
+$storage = Path::storage('files');
+
+// Get public path
+$public = Path::public('assets');
+
+// Get config path
+$config = Path::config();</code></pre>
+                </section>
+
+                <section class="mb-12" id="redirect-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Redirect Helper</h2>
+                    <p class="text-gray-600 mb-4">The Redirect helper manages HTTP redirects:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Redirect;
+
+// Redirect to URL
+Redirect::to('/dashboard');
+
+// Redirect with flash message
+Redirect::with('success', 'Operation completed')->to('/home');
+
+// Redirect back
+Redirect::back();
+
+// Redirect with input
+Redirect::withInput()->to('/form');</code></pre>
+                </section>
+
+                <section class="mb-12" id="strings-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Strings Helper</h2>
+                    <p class="text-gray-600 mb-4">The Strings helper provides string manipulation methods:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Strings;
+
+// Convert to camel case
+$camel = Strings::camel('hello_world');
+
+// Convert to snake case
+$snake = Strings::snake('helloWorld');
+
+// Generate slug
+$slug = Strings::slug('Hello World');
+
+// Random string
+$random = Strings::random(10);</code></pre>
+                </section>
+
+                <section class="mb-12" id="transform-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">Transform Helper</h2>
+                    <p class="text-gray-600 mb-4">The Transform helper provides data transformation utilities:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\Transform;
+
+// Transform array to object
+$object = Transform::toObject($array);
+
+// Transform object to array
+$array = Transform::toArray($object);
+
+// Transform to JSON
+$json = Transform::toJson($data);</code></pre>
+                </section>
+
+                <section class="mb-12" id="uuid-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">UUID Helper</h2>
+                    <p class="text-gray-600 mb-4">The UUID helper generates and validates UUIDs:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\UUID;
+
+// Generate UUID
+$uuid = UUID::generate();
+
+// Validate UUID
+$valid = UUID::isValid($uuid);
+
+// Generate UUID v4
+$uuidV4 = UUID::v4();</code></pre>
+                </section>
+
+                <section class="mb-12" id="view-helper">
+                    <h2 class="text-3xl font-bold text-gray-900 mt-8 mb-4">View Helper</h2>
+                    <p class="text-gray-600 mb-4">The View helper provides methods for rendering views and managing view-related functionality:</p>
+
+                    <pre><code class="language-php">use Forge\Core\Helpers\View;
+
+// Render a view
+$html = View::render('pages.home');
+
+// Render with data
+$html = View::render('user.profile', ['user' => $user]);
+
+// Set view layout
+View::setLayout('layouts.main');
+
+// Share data with all views
+View::share('siteName', 'My Website');
+
+// Check if view exists
+$exists = View::exists('pages.about');</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"></script>
+    <script src="./assets/js/script.js" ></script>
+</body>
+</html>
