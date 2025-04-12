@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,60 +14,79 @@
             background: #f9f9f9;
             color: #222;
         }
+
         .container {
             max-width: 720px;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
+
         header {
             margin-bottom: 2rem;
             text-align: center;
         }
+
         header h1 {
-            font-size: 2.5rem;
+            font-size: 4rem;
+            font-weight: 200;
             margin-bottom: 0.5rem;
         }
+
         header p {
+            font-size: 1.5rem;
             color: #555;
         }
+
         nav {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
+
         nav a {
             text-decoration: none;
             color: #0055aa;
+            font-size: 1.1rem;
             font-weight: 500;
         }
+
         section {
             margin-top: 3rem;
         }
+
         section h2 {
-            font-size: 1.25rem;
+            font-size: 1.75rem;
             margin-bottom: 1rem;
         }
+
+        section p, ul {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
         pre {
             background: #eee;
             padding: 1rem;
             border-radius: 4px;
             overflow-x: auto;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
         }
+
         footer {
             text-align: center;
             margin-top: 4rem;
             padding: 2rem 0;
             color: #888;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
-            <h1>Forge Framework</h1>
+            <h1>Forge</h1>
             <p>a simple php framework for people who like to build things their way</p>
             <nav>
                 <a href="installation.html">get started</a>
@@ -74,6 +94,19 @@
                 <a href="https://github.com/forge-engine/forge">github</a>
             </nav>
         </header>
+
+        <section>
+            <h2>philosophy</h2>
+            <p>
+                Forge isn’t trying to compete with large frameworks. It’s for developers who want complete control,
+                who enjoy understanding every line of their stack, and who value simplicity over trends. 
+                It’s built around a clear idea: use what you need, nothing more.
+            </p>
+            <p>
+                We built Forge to support real-world projects, not hypothetical features. It’s a personal toolbox 
+                that just happens to be open source — no bloat, no dependencies, just the essentials.
+            </p>
+        </section>
 
         <section>
             <h2>install</h2>
@@ -95,4 +128,5 @@
         </footer>
     </div>
 </body>
+
 </html>
