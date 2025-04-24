@@ -55,6 +55,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update the URL hash
             window.location.hash = this.getAttribute('href');
+
+            // Close the mobile menu if it's open
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar && sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+            }
         });
     });
 
@@ -67,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
             sidebar.classList.toggle('open');
         });
 
-        // Close sidebar when clicking outside on mobile
         document.addEventListener('click', function (event) {
             const isClickInsideSidebar = sidebar.contains(event.target);
             const isClickOnMenuButton = mobileMenuButton.contains(event.target);
@@ -78,9 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Open the sidebar topic based on the initial URL hash
     openSidebarTopicBasedOnHash();
-
-    // Listen for hash changes and open the corresponding sidebar topic
     window.addEventListener('hashchange', openSidebarTopicBasedOnHash);
 });
