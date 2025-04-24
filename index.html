@@ -1,144 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forge Framework</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <style>
-        body {
-            font-family: system-ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f9f9f9;
-            color: #222;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Forge Framework</title>
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                margin: 0;
+                padding: 0;
+                background: #f9f9f9;
+                color: #222;
+            }
 
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
+            .container {
+                max-width: 100%;
+                margin: 0 auto;
+                padding: 2rem 1rem;
+            }
 
-        header {
-            margin-bottom: 2rem;
-            text-align: center;
-        }
+            header {
+                margin-bottom: 2rem;
+                text-align: center;
+            }
 
-        header h1 {
-            font-size: 4rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
+            header h1 {
+                font-size: 4rem;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+            }
 
-        header p {
-            font-size: 1.5rem;
-            color: #555;
-        }
+            header p {
+                font-size: 1.5rem;
+                color: #555;
+            }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
+            nav {
+                display: flex;
+                justify-content: center;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
 
-        nav a {
-            text-decoration: none;
-            color: #0055aa;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
+            nav a {
+                text-decoration: none;
+                color: #0055aa;
+                font-size: 1.1rem;
+                font-weight: 500;
+            }
 
-        section {
-            margin-top: 3rem;
-            padding-right: 0.5rem;
-            padding-left: 0.5rem;
-        }
+            section {
+                margin-top: 3rem;
+                padding-right: 0.5rem;
+                padding-left: 0.5rem;
+            }
 
-        section h2 {
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
-        }
+            section h2 {
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
 
-        section p, ul {
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
+            section p, ul {
+                font-size: 1.2rem;
+                line-height: 1.6;
+            }
 
-        pre {
-            background: #eee;
-            padding: 1rem;
-            border-radius: 4px;
-            overflow-x: auto;
-            font-size: 1.1rem;
-        }
+            pre {
+                background: #eee;
+                padding: 1rem;
+                border-radius: 4px;
+                overflow-x: auto;
+                font-size: 1.1rem;
+            }
 
-        footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 2rem 0;
-            color: #888;
-            font-size: 1rem;
-        }
-    </style>
-</head>
+            footer {
+                text-align: center;
+                margin-top: 4rem;
+                padding: 2rem 0;
+                color: #888;
+                font-size: 1rem;
+            }
+        </style>
+    </head>
 
-<body>
-    <div class="container">
-        <header>
-            <h1>Forge Engine</h1>
-            <p>a toolbox for builders who like to do things their way.</p>
-            <nav>
-                <a href="installation.html">Get Started</a>
-                <a href="introduction.html">Docs</a>
-                <a href="https://github.com/forge-engine">Github</a>
-            </nav>
-        </header>
-        
-        <section>
-            <h2>install</h2>
-            <pre><code>bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/main/installer.sh)</code></pre>
-        </section>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Forge Engine</h1>
+                <p>a toolbox for builders who like to do things their way.</p>
+                <nav>
+                    <a href="introduction.html#installation">Get Started</a>
+                    <a href="introduction.html#introduction">Docs</a>
+                    <a href="https://github.com/forge-engine">Github</a>
+                </nav>
+            </header>
 
-        <section>
-            <p>
-                Forge is a simple PHP framework and module system I built to serve my own projects. It’s fully open source under the MIT license. <br />— take what helps, ignore what doesn’t, fork it if you need to.
-            </p>
-            <h3>This organization contains:</h3>
-            <ul>
-                <li>🧱 The Forge Engine — a minimal, dependency-free PHP framework.</li>
-                <li>🧩 Forge Modules — self-contained, optional packages that extend functionality.</li>
-                <li>🛠️ Utilities & Installers — scripts and helpers for easier setup and tooling.</li>
-            </ul>
-        </section>
-        
-        <section>
-            <h2>philosophy</h2>
-            <p>
-               This isn’t a product. There’s no company behind it. No support SLA. No roadmap you should depend on.
-            </p>
-            <p>
-               Forge exists because I like to understand and own my stack. If others find value in it — awesome. If not — that’s cool too.
-            </p>
-            <h3>You’re not a user here. You’re a builder.</h3>
-            <ul>
-                <li>If you use Forge, it’s yours now. Your rules. Your path.</li>
-                <li>If I publish updates, they’re for my use case. Pull them in if they help.</li>
-                <li>If my direction doesn’t match yours, fork it. Change everything. That’s the point.</li>
-            </ul>
-        </section>
-        
-        <section>
-            <h2>want to build your own thing?</h2>
-            <p>You can fork the entire framework and module ecosystem to start your own direction. Check out <a href="https://github.com/forge-engine/forge/blob/main/docs/FORGING-YOUR-OWN.md">FORGING-YOUR-OWN.md</a> in the main repo for notes on how everything is structured and how to get started.</p>
-        </section>
+            <section>
+                <h2>install</h2>
+                <pre><code>bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/main/installer.sh)</code></pre>
+            </section>
 
-        <footer>
-            Forge Engine is open source. licensed under MIT.
-        </footer>
-    </div>
-</body>
+            <section>
+                <p>
+                    Forge is a simple PHP framework and module system I built to serve my own projects. It’s fully open source under the MIT license. <br/>— take what helps, ignore what doesn’t, fork it if you need to.
+                </p>
+                <h3>This organization contains:</h3>
+                <ul>
+                    <li>🧱 The Forge Engine — a minimal, dependency-free PHP framework.</li>
+                    <li>🧩 Forge Modules — self-contained, optional packages that extend functionality.</li>
+                    <li>🛠️ Utilities & Installers — scripts and helpers for easier setup and tooling.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>philosophy</h2>
+                <p>
+                    This isn’t a product. There’s no company behind it. No support SLA. No roadmap you should depend on.
+                </p>
+                <p>
+                    Forge exists because I like to understand and own my stack. If others find value in it — awesome. If not — that’s cool too.
+                </p>
+                <h3>You’re not a user here. You’re a builder.</h3>
+                <ul>
+                    <li>If you use Forge, it’s yours now. Your rules. Your path.</li>
+                    <li>If I publish updates, they’re for my use case. Pull them in if they help.</li>
+                    <li>If my direction doesn’t match yours, fork it. Change everything. That’s the point.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>want to build your own thing?</h2>
+                <p>You can fork the entire framework and module ecosystem to start your own direction. Check out <a href="https://github.com/forge-engine/forge/blob/main/docs/FORGING-YOUR-OWN.md">FORGING-YOUR-OWN.md</a> in the main repo for notes on how everything is structured and how to get started.</p>
+            </section>
+
+            <footer>
+                Forge Engine is open source. licensed under MIT.
+            </footer>
+        </div>
+    </body>
 
 </html>
