@@ -280,7 +280,7 @@ final class ForgeWireModule
                                 <h4 class="font-semibold text-sm mb-2">Manual (ModuleResources)</h4>
                                 <p class="text-xs text-gray-600 mb-2">Requires layout changes:</p>
                                 <div class="code-block p-3 text-white rounded text-xs">
-                                    <pre><code class="language-php"><?= ModuleResources::loadScripts("forge-ui") ?></code></pre>
+                                    <pre><code class="language-php">&lt;?= ModuleResources::loadScripts("forge-ui") ?&gt;</code></pre>
                                 </div>
                             </div>
                             <div class="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -317,16 +317,16 @@ final class ForgeWireModule
                             <pre><code class="language-php">use App\Components\Wire\Counter;
 
 // Render with default props
-<?= wire(Counter::class) ?>
+&lt;?= wire(Counter::class) ?&gt;
 
 // Render with props
-<?= wire(Counter::class, ['start' => 10]) ?>
+&lt;?= wire(Counter::class, ['start' => 10]) ?&gt;
 
 // Render with custom ID
-<?= wire(Counter::class, 'counter-1') ?>
+&lt;?= wire(Counter::class, 'counter-1') ?&gt;
 
 // Render with props and custom ID
-<?= wire(Counter::class, ['start' => 10], 'counter-1') ?></code></pre>
+&lt;?= wire(Counter::class, ['start' => 10], 'counter-1') ?&gt;</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Using w() Alias</h3>
@@ -335,7 +335,7 @@ final class ForgeWireModule
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">// Same as wire()
-<?= w(Counter::class, ['start' => 10]) ?></code></pre>
+&lt;?= w(Counter::class, ['start' => 10]) ?&gt;</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Using wire_name() Function</h3>
@@ -344,19 +344,19 @@ final class ForgeWireModule
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">// Converts 'counter' to App\Components\Wire\Counter
-<?= wire_name('counter') ?>
+&lt;?= wire_name('counter') ?&gt;
 
 // With props
-<?= wire_name('counter', ['start' => 10]) ?>
+&lt;?= wire_name('counter', ['start' => 10]) ?&gt;
 
 // With custom ID
-<?= wire_name('counter', [], 'counter-1') ?>
+&lt;?= wire_name('counter', [], 'counter-1') ?&gt;
 
 // Nested: 'products-table' → App\Components\Wire\ProductsTable
-<?= wire_name('products-table') ?>
+&lt;?= wire_name('products-table') ?&gt;
 
 // Module components: 'module:component' → App\Modules\Module\Resources\Components\Wire\Component
-<?= wire_name('module:component') ?></code></pre>
+&lt;?= wire_name('module:component') ?&gt;</code></pre>
                         </div>
 
                         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
