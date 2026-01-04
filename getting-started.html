@@ -11,85 +11,10 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .code-block {
-            background: #2d3748;
-            border-radius: 0.5rem;
-        }
-
-        .sidebar {
-            position: sticky;
-            top: 80px;
-            height: calc(100vh - 80px);
-            overflow-y: auto;
-        }
-
-        .nav-link {
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover {
-            background-color: #f3f4f6;
-            padding-left: 1.5rem;
-        }
-
-        .nav-link.active {
-            background-color: #e0e7ff;
-            color: #4338ca;
-            border-left: 4px solid #6366f1;
-        }
-
-        .section-anchor {
-            scroll-margin-top: 2rem;
-        }
-
-        /* Mobile menu styles */
-        #mobile-menu {
-            display: none;
-        }
-
-        #mobile-menu:not(.hidden) {
-            display: block;
-        }
-
-        @media (max-width: 767px) {
-            .lg\:w-1\/4 {
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                width: 80%;
-                max-width: 320px;
-                z-index: 50;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                background: white;
-                overflow-y: auto;
-            }
-
-            .lg\:w-1\/4.mobile-menu-open {
-                transform: translateX(0);
-            }
-
-            .mobile-menu-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 40;
-                display: none;
-            }
-
-            .mobile-menu-overlay.active {
-                display: block;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/docs.css">
 </head>
 
-<body class="bg-gray-50 text-gray-900" style="font-size: 17px;">
+<body class="bg-gray-50 text-gray-900">
     <!-- Navigation -->
     <nav class="bg-white shadow-sm border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,7 +40,7 @@
                         </a>
                         <a href="modules.html"
                             class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
-                            Modules
+                            Capabilities
                         </a>
                         <a href="api-reference.html"
                             class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
@@ -149,7 +74,7 @@
                 </a>
                 <a href="modules.html"
                     class="block px-3 py-2 text-gray-900 hover:text-blue-600">
-                    Modules
+                    Capabilities
                 </a>
                 <a href="api-reference.html"
                     class="block px-3 py-2 text-gray-900 hover:text-blue-600">

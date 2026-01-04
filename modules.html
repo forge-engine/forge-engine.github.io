@@ -11,63 +11,10 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .code-block {
-            background: #2d3748;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin: 1rem 0;
-            overflow-x: auto;
-        }
-
-        .nav-link.active {
-            background-color: #e0e7ff;
-            color: #4338ca;
-            border-left: 4px solid #4338ca;
-        }
-
-        .section-anchor {
-            scroll-margin-top: 2rem;
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: -100%;
-                width: 80%;
-                max-width: 320px;
-                height: 100vh;
-                background: white;
-                z-index: 50;
-                transition: left 0.3s ease;
-                overflow-y: auto;
-                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            }
-
-            .sidebar.open {
-                left: 0;
-            }
-
-            .sidebar-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 40;
-                display: none;
-            }
-
-            .sidebar-overlay.active {
-                display: block;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/docs.css">
 </head>
 
-<body class="bg-gray-50 text-gray-900" style="font-size: 17px;">
+<body class="bg-gray-50 text-gray-900">
     <!-- Navigation -->
     <nav class="bg-white shadow-sm border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,7 +68,7 @@
                     Core Concepts
                 </a>
                 <a href="modules.html" class="block px-3 py-2 text-blue-600">
-                    Modules
+                    Capabilities
                 </a>
                 <a href="api-reference.html" class="block px-3 py-2 text-gray-700 hover:text-blue-600">
                     API Reference
