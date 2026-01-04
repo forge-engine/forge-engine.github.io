@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeSqlOrm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-blue-600 font-medium">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ForgeSqlOrm</h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#architecture" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture & Design</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#models-overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Models Overview</a>
+                        <a href="#model-attributes" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Model Attributes</a>
+                        <a href="#creating-models" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Creating Models</a>
+                        <a href="#model-operations" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Model Operations</a>
+                        <a href="#query-builder" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">QueryBuilder</a>
+                        <a href="#model-query" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">ModelQuery</a>
+                        <a href="#relationships" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Relationships</a>
+                        <a href="#type-casting" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Type Casting</a>
+                        <a href="#traits" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Traits</a>
+                        <a href="#soft-deletes" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Soft Deletes</a>
+                        <a href="#protected-hidden" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Protected & Hidden Fields</a>
+                        <a href="#repository-pattern" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Repository Pattern</a>
+                        <a href="#query-caching" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Query Caching</a>
+                        <a href="#transactions" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Transactions</a>
+                        <a href="#raw-sql" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Raw SQL Queries</a>
+                        <a href="#examples" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage Examples</a>
+                        <a href="#best-practices" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best Practices</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">ForgeSqlOrm</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        SQL ORM support for Forge Kernel. Provides attribute-based models, fluent query builder, relationships, repository pattern, query caching, and full transaction support for SQLite, MySQL, and PostgreSQL.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm provides comprehensive Object-Relational Mapping (ORM) support for Forge Kernel applications. It offers model-based database access, fluent query builder, relationship support, repository pattern, and query caching.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Attribute-based model definition</span></div>
+                                    <div class="flex items-center"><span>Fluent query builder (immutable)</span></div>
+                                    <div class="flex items-center"><span>Relationship support (HasOne, HasMany, BelongsTo)</span></div>
+                                    <div class="flex items-center"><span>Eager and lazy loading</span></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Repository pattern with caching</span></div>
+                                    <div class="flex items-center"><span>Automatic type casting</span></div>
+                                    <div class="flex items-center"><span>Soft deletes support</span></div>
+                                    <div class="flex items-center"><span>Full transaction support</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeSqlOrm Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Model-Based ORM:</strong> Clean, attribute-based model definition with automatic property mapping</li>
+                            <li><strong>Fluent Query Builder:</strong> Immutable, chainable query builder implementing QueryBuilderInterface</li>
+                            <li><strong>Relationship Support:</strong> HasOne, HasMany, BelongsTo relationships with eager/lazy loading</li>
+                            <li><strong>Type Casting:</strong> Automatic casting with DTO and enum support</li>
+                            <li><strong>Repository Pattern:</strong> Clean data access layer with built-in caching</li>
+                            <li><strong>Query Caching:</strong> Built-in caching for performance optimization</li>
+                            <li><strong>Transaction Support:</strong> Full transaction support via QueryBuilder</li>
+                            <li><strong>Soft Deletes:</strong> Soft delete support with onlyTrashed() queries</li>
+                            <li><strong>Traits:</strong> HasTimeStamps and HasMetaData for common functionality</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Core Module:</strong> ForgeSqlOrm is a core module (type: 'core', order: 1), providing essential ORM functionality for Forge Kernel applications. It depends on ForgeDatabaseSql for database connectivity.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture & Design Philosophy</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm is built with clean architecture, performance, and developer experience in mind.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Model-Based ORM Approach</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeSqlOrm uses a model-based approach:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Models extend the base Model class</li>
+                            <li>Attribute-based definition using PHP 8 attributes</li>
+                            <li>Automatic property mapping from database rows</li>
+                            <li>Type casting on model hydration</li>
+                            <li>Automatic timestamps and soft delete support</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Fluent Query Builder Pattern</h3>
+                        <p class="text-gray-600 mb-4">
+                            QueryBuilder implements an immutable, fluent interface:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Immutable pattern — each method returns a new instance</li>
+                            <li>Chainable methods for building complex queries</li>
+                            <li>Implements QueryBuilderInterface for dependency injection</li>
+                            <li>Parameter binding for SQL injection prevention</li>
+                            <li>Support for raw SQL when needed</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Repository Pattern for Data Access</h3>
+                        <p class="text-gray-600 mb-4">
+                            Repository pattern provides clean data access:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Repository interface for common operations</li>
+                            <li>RecordRepository base class with CRUD operations</li>
+                            <li>QueryCache integration for performance</li>
+                            <li>Cache invalidation on create/update/delete</li>
+                            <li>Custom find methods with caching</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Relationship Eager/Lazy Loading</h3>
+                        <p class="text-gray-600 mb-4">
+                            Efficient relationship loading:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Eager loading with with() method to prevent N+1 queries</li>
+                            <li>Lazy loading with load() method for on-demand loading</li>
+                            <li>RelationLoader for efficient batch loading</li>
+                            <li>Nested relationship support</li>
+                        </ul>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm is a core module and is typically available by default. It can also be installed via ForgePackageManager.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using ForgePackageManager</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install with wizard (interactive)
+php forge.php package:install-module
+
+# Install directly (skip wizard)
+php forge.php package:install-module --module=ForgeSqlOrm
+
+# Install specific version
+php forge.php package:install-module --module=ForgeSqlOrm@0.1.8</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Dependency</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeSqlOrm depends on ForgeDatabaseSql for database connectivity. Ensure ForgeDatabaseSql is installed and configured.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Container Bindings</h3>
+                        <p class="text-gray-600 mb-4">
+                            The module automatically registers QueryBuilderInterface and QueryCache:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">public function register(Container $container): void
+{
+    // Bind QueryBuilderInterface to QueryBuilder
+    $container->bind(QueryBuilderInterface::class, function ($c) {
+        return new QueryBuilder($c->get(DatabaseConnectionInterface::class));
+    });
+
+    // Register QueryCache as singleton
+    $container->singleton(QueryCache::class, function () {
+        return new QueryCache(3600); // TTL: 3600 seconds
+    });
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Models Overview -->
+                    <section id="models-overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Models Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            Models in ForgeSqlOrm extend the base Model class and use attributes to define their structure.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Model Characteristics</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Extend Model:</strong> All models extend the abstract Model base class</li>
+                            <li><strong>Attribute-Based:</strong> Use #[Table] and #[Column] attributes for definition</li>
+                            <li><strong>Automatic Property Mapping:</strong> Properties are automatically mapped from database rows</li>
+                            <li><strong>Type Casting:</strong> Automatic casting on model hydration using Cast enum</li>
+                            <li><strong>Timestamps Support:</strong> Use HasTimeStamps trait for automatic created_at/updated_at</li>
+                            <li><strong>Soft Deletes:</strong> Built-in soft delete support with deleted_at column</li>
+                            <li><strong>Protected Fields:</strong> Use #[ProtectedFields] to exclude fields from serialization</li>
+                            <li><strong>Hidden Fields:</strong> Use #[Hidden] to hide fields from toArray()/JSON</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Model Lifecycle</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Hydration:</strong> Models are created from database rows using fromRow()</li>
+                            <li><strong>Saving:</strong> save() method inserts new records or updates existing ones</li>
+                            <li><strong>Deletion:</strong> delete() method performs soft delete (or force delete if soft deletes disabled)</li>
+                            <li><strong>Serialization:</strong> toArray() and jsonSerialize() respect protected/hidden fields</li>
+                        </ul>
+                    </section>
+
+                    <!-- Model Attributes -->
+                    <section id="model-attributes" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Model Attributes</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm uses PHP 8 attributes to define model structure and behavior.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Table]</h3>
+                        <p class="text-gray-600 mb-4">
+                            Define the database table name for the model:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Table("users")]
+class User extends Model
+{
+    // ...
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Column]</h3>
+                        <p class="text-gray-600 mb-4">
+                            Define a column with type casting:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Column(primary: true, cast: Cast::INT)]
+public int $id;
+
+#[Column(cast: Cast::STRING)]
+public string $email;
+
+#[Column(cast: Cast::JSON)]
+public ?UserMetadataDto $metadata;</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Column attributes support:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>primary:</strong> Mark as primary key</li>
+                            <li><strong>cast:</strong> Cast enum value for automatic type casting</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">#[ProtectedFields]</h3>
+                        <p class="text-gray-600 mb-4">
+                            Exclude fields from toArray() and JSON serialization:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[ProtectedFields(['password'])]
+class User extends Model
+{
+    #[Column(cast: Cast::STRING)]
+    public string $password; // Excluded from toArray()/JSON
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Hidden]</h3>
+                        <p class="text-gray-600 mb-4">
+                            Hide a field from serialization:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Hidden]
+#[Column(cast: Cast::STRING)]
+public string $internal_field; // Hidden from toArray()/JSON</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Creating Models -->
+                    <section id="creating-models" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Creating Models</h2>
+                        <p class="text-gray-600 mb-6">
+                            Models are defined by extending the Model base class and using attributes.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Model Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\ORM\Attributes\Table;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Column;
+use App\Modules\ForgeSqlOrm\ORM\Model;
+use App\Modules\ForgeSqlOrm\ORM\Values\Cast;
+
+#[Table("users")]
+class User extends Model
+{
+    #[Column(primary: true, cast: Cast::INT)]
+    public int $id;
+
+    #[Column(cast: Cast::STRING)]
+    public string $email;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Model with Traits</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use traits for common functionality:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\Traits\HasTimeStamps;
+use App\Modules\ForgeSqlOrm\Traits\HasMetaData;
+
+#[Table("profiles")]
+class Profile extends Model
+{
+    use HasTimeStamps; // Adds created_at, updated_at
+    use HasMetaData;   // Adds metadata JSON column
+
+    #[Column(primary: true, cast: Cast::INT)]
+    public int $id;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Model with Relationships</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\ORM\Values\Relate;
+use App\Modules\ForgeSqlOrm\ORM\Values\RelationKind;
+
+#[Table("users")]
+class User extends Model
+{
+    use HasTimeStamps;
+    use CanLoadRelations;
+
+    #[Column(primary: true, cast: Cast::INT)]
+    public int $id;
+
+    #[Relate(RelationKind::HasOne, Profile::class, "user_id")]
+    public function profile(): Relation
+    {
+        return self::describe(__FUNCTION__);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Model with Protected Fields</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Table("users")]
+#[ProtectedFields(['password'])]
+class User extends Model
+{
+    #[Column(cast: Cast::STRING)]
+    public string $password; // Excluded from toArray()/JSON
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Model with Tenant Scoping</h3>
+                        <p class="text-gray-600 mb-4">
+                            Models can integrate with ForgeMultiTenant:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Attributes\TenantScoped;
+use App\Modules\ForgeMultiTenant\Traits\TenantScopedTrait;
+
+#[TenantScoped]
+#[Table("posts")]
+class Post extends Model
+{
+    use HasTimeStamps;
+    use HasMetaData;
+    use TenantScopedTrait;
+
+    #[Column(primary: true, cast: Cast::STRING)]
+    public int $id;
+
+    #[Column(cast: Cast::STRING)]
+    public string $tenant_id;
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Model Operations -->
+                    <section id="model-operations" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Model Operations</h2>
+                        <p class="text-gray-600 mb-6">
+                            Models provide methods for creating, updating, deleting, and querying records.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">save()</h3>
+                        <p class="text-gray-600 mb-4">
+                            Insert a new record or update an existing one:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$user = new User();
+$user->email = 'user@example.com';
+$user->password = 'hashed_password';
+$user->save(); // Inserts new record
+
+$user->email = 'newemail@example.com';
+$user->save(); // Updates existing record</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            The save() method:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Automatically detects if record exists (checks primary key)</li>
+                            <li>Inserts new records or updates existing ones</li>
+                            <li>Automatically sets created_at and updated_at if HasTimeStamps trait is used</li>
+                            <li>Generates UUID primary keys if needed</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">delete()</h3>
+                        <p class="text-gray-600 mb-4">
+                            Soft delete or force delete a record:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$user = User::query()->id(1)->first();
+$user->delete(); // Soft delete (sets deleted_at)
+
+// Force delete (if soft deletes disabled)
+$user->forceDelete();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">toArray()</h3>
+                        <p class="text-gray-600 mb-4">
+                            Convert model to array (respects protected fields):
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$user = User::query()->id(1)->first();
+$array = $user->toArray(); // Excludes protected fields</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">jsonSerialize()</h3>
+                        <p class="text-gray-600 mb-4">
+                            JSON serialization (respects protected fields):
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$user = User::query()->id(1)->first();
+$json = json_encode($user); // Uses jsonSerialize()</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">fromRow()</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create model instance from database row:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$row = ['id' => 1, 'email' => 'user@example.com'];
+$user = User::fromRow($row); // Creates User instance with type casting</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- QueryBuilder -->
+                    <section id="query-builder" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">QueryBuilder</h2>
+                        <p class="text-gray-600 mb-6">
+                            QueryBuilder provides a fluent, immutable interface for building database queries.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Query Methods</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\ORM\QueryBuilder;
+use Forge\Core\Contracts\Database\QueryBuilderInterface;
+
+// Inject QueryBuilderInterface
+public function __construct(
+    private readonly QueryBuilderInterface $builder
+) {}
+
+// Basic query
+$results = $this->builder
+    ->table('users')
+    ->where('status', '=', 'active')
+    ->orderBy('created_at', 'DESC')
+    ->limit(10)
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Where Clauses</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Simple where
+$results = $this->builder->table('users')
+    ->where('email', '=', 'user@example.com')
+    ->get();
+
+// Where with IN
+$results = $this->builder->table('users')
+    ->whereIn('id', [1, 2, 3])
+    ->get();
+
+// Where with NOT IN
+$results = $this->builder->table('users')
+    ->whereNotIn('status', ['deleted', 'banned'])
+    ->get();
+
+// Where NULL
+$results = $this->builder->table('users')
+    ->whereNull('deleted_at')
+    ->get();
+
+// Where NOT NULL
+$results = $this->builder->table('users')
+    ->whereNotNull('email')
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Select Specific Columns</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$results = $this->builder->table('users')
+    ->select('id', 'email', 'identifier')
+    ->where('status', '=', 'active')
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Ordering and Pagination</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$results = $this->builder->table('users')
+    ->orderBy('created_at', 'DESC')
+    ->limit(10)
+    ->offset(20)
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Aggregate Functions</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Count
+$count = $this->builder->table('users')
+    ->where('status', '=', 'active')
+    ->count();
+
+// Sum
+$total = $this->builder->table('orders')
+    ->sum('amount');
+
+// Average
+$avg = $this->builder->table('orders')
+    ->avg('amount');
+
+// Min/Max
+$min = $this->builder->table('orders')->min('amount');
+$max = $this->builder->table('orders')->max('amount');</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">CRUD Operations</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Insert
+$id = $this->builder->table('users')
+    ->insert(['email' => 'user@example.com', 'password' => 'hash']);
+
+// Update
+$this->builder->table('users')
+    ->where('id', '=', 1)
+    ->update(['email' => 'newemail@example.com']);
+
+// Delete
+$this->builder->table('users')
+    ->where('id', '=', 1)
+    ->delete();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Locking</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$results = $this->builder->table('users')
+    ->where('id', '=', 1)
+    ->lockForUpdate()
+    ->get();</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- ModelQuery -->
+                    <section id="model-query" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">ModelQuery</h2>
+                        <p class="text-gray-600 mb-6">
+                            ModelQuery provides a model-specific query builder that returns Model instances.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Usage</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Get all users
+$users = User::query()->get();
+
+// Get first user
+$user = User::query()->first();
+
+// Find by ID
+$user = User::query()->id(1)->first();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Where Clauses</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Where clause
+$users = User::query()
+    ->where('status', '=', 'active')
+    ->get();
+
+// Where NULL
+$users = User::query()
+    ->whereNull('deleted_at')
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Soft Deletes</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Only trashed (soft deleted)
+$deletedUsers = User::query()->onlyTrashed()->get();
+
+// Soft delete
+$user = User::query()->id(1)->first();
+$user->softDelete();
+
+// Force delete
+User::query()->id(1)->forceDelete();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Eager Loading</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Eager load relationships
+$users = User::query()
+    ->with('profile')
+    ->get();
+
+// Nested relationships
+$users = User::query()
+    ->with('profile', 'posts')
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">CRUD Operations</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Insert
+User::query()->insert(['email' => 'user@example.com']);
+
+// Update
+User::query()
+    ->where('id', '=', 1)
+    ->update(['email' => 'newemail@example.com']);</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Relationships -->
+                    <section id="relationships" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Relationships</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm supports three types of relationships: HasOne, HasMany, and BelongsTo.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Defining Relationships</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use the #[Relate] attribute to define relationships:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\ORM\Values\Relate;
+use App\Modules\ForgeSqlOrm\ORM\Values\RelationKind;
+
+#[Table("users")]
+class User extends Model
+{
+    use CanLoadRelations;
+
+    // HasOne relationship
+    #[Relate(RelationKind::HasOne, Profile::class, "user_id")]
+    public function profile(): Relation
+    {
+        return self::describe(__FUNCTION__);
+    }
+
+    // HasMany relationship
+    #[Relate(RelationKind::HasMany, Post::class, "user_id")]
+    public function posts(): Relation
+    {
+        return self::describe(__FUNCTION__);
+    }
+}
+
+#[Table("posts")]
+class Post extends Model
+{
+    // BelongsTo relationship
+    #[Relate(RelationKind::BelongsTo, User::class, "user_id")]
+    public function user(): Relation
+    {
+        return self::describe(__FUNCTION__);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Eager Loading</h3>
+                        <p class="text-gray-600 mb-4">
+                            Eager loading prevents N+1 queries:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Eager load relationships
+$users = User::query()
+    ->with('profile')
+    ->get();
+
+// Access relationship
+foreach ($users as $user) {
+    $profile = $user->profile; // Already loaded, no query
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Lazy Loading</h3>
+                        <p class="text-gray-600 mb-4">
+                            Lazy loading loads relationships on demand:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$user = User::query()->id(1)->first();
+$user->load('profile'); // Loads profile relationship</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Nested Relationships</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Load nested relationships
+$users = User::query()
+    ->with('profile', 'posts')
+    ->get();</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Type Casting -->
+                    <section id="type-casting" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Type Casting</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm automatically casts database values to PHP types using the Cast enum.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Cast Enum Values</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">enum Cast: string
+{
+    case INT = "int";
+    case FLOAT = "float";
+    case BOOL = "bool";
+    case STRING = "string";
+    case JSON = "json";
+    case DATE = "date";
+    case DATETIME = "datetime";
+    case TIMESTAMP = "timestamp";
+    case ENUM = "enum";
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Using Cast in Models</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Table("users")]
+class User extends Model
+{
+    #[Column(primary: true, cast: Cast::INT)]
+    public int $id;
+
+    #[Column(cast: Cast::STRING)]
+    public string $email;
+
+    #[Column(cast: Cast::JSON)]
+    public ?UserMetadataDto $metadata; // Casts to DTO
+
+    #[Column(cast: Cast::DATETIME)]
+    public ?DateTimeImmutable $created_at;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">DTO Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            JSON columns can be cast to DTOs:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Column(cast: Cast::JSON)]
+public ?UserMetadataDto $metadata;
+
+// Automatically casts JSON string to UserMetadataDto instance
+// when loading from database</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Enum Support</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Column(cast: Cast::ENUM)]
+public ?UserStatus $status; // BackedEnum instance</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Date Types</h3>
+                        <p class="text-gray-600 mb-4">
+                            Date types are cast to DateTimeImmutable:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Column(cast: Cast::DATE)]
+public ?DateTimeImmutable $birth_date;
+
+#[Column(cast: Cast::DATETIME)]
+public ?DateTimeImmutable $created_at;
+
+#[Column(cast: Cast::TIMESTAMP)]
+public ?DateTimeImmutable $updated_at;</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Traits -->
+                    <section id="traits" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Traits</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm provides traits for common model functionality.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">HasTimeStamps</h3>
+                        <p class="text-gray-600 mb-4">
+                            Automatically adds created_at and updated_at columns:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\Traits\HasTimeStamps;
+
+#[Table("users")]
+class User extends Model
+{
+    use HasTimeStamps;
+
+    // Automatically adds:
+    // public ?DateTimeImmutable $created_at = null;
+    // public ?DateTimeImmutable $updated_at = null;
+}</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            The save() method automatically sets these timestamps:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>created_at is set on insert</li>
+                            <li>updated_at is set on insert and update</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">HasMetaData</h3>
+                        <p class="text-gray-600 mb-4">
+                            Automatically adds a metadata JSON column:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\Traits\HasMetaData;
+
+#[Table("profiles")]
+class Profile extends Model
+{
+    use HasMetaData;
+
+    // Automatically adds:
+    // public ?array $metadata = null;
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Soft Deletes -->
+                    <section id="soft-deletes" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Soft Deletes</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm supports soft deletes, allowing records to be marked as deleted without actually removing them from the database.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Soft Delete Column</h3>
+                        <p class="text-gray-600 mb-4">
+                            Models use a deleted_at column (configurable via SOFT_DELETE_COLUMN constant):
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Default soft delete column
+protected const string SOFT_DELETE_COLUMN = 'deleted_at';</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Soft Deleting Records</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$user = User::query()->id(1)->first();
+$user->delete(); // Sets deleted_at timestamp</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Querying Soft Deleted Records</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Only trashed (soft deleted) records
+$deletedUsers = User::query()->onlyTrashed()->get();
+
+// Normal queries exclude soft deleted records
+$activeUsers = User::query()->get(); // Excludes soft deleted</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Force Delete</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Force delete (permanently remove)
+$user = User::query()->id(1)->first();
+$user->forceDelete();
+
+// Or via ModelQuery
+User::query()->id(1)->forceDelete();</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Protected & Hidden Fields -->
+                    <section id="protected-hidden" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Protected & Hidden Fields</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm provides two ways to exclude fields from serialization: protected fields and hidden fields.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Protected Fields</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use #[ProtectedFields] to exclude fields from toArray() and JSON serialization:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Table("users")]
+#[ProtectedFields(['password'])]
+class User extends Model
+{
+    #[Column(cast: Cast::STRING)]
+    public string $password; // Excluded from toArray()/JSON
+}
+
+$user = User::query()->id(1)->first();
+$array = $user->toArray(); // password is excluded
+$json = json_encode($user); // password is excluded</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Hidden Fields</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use #[Hidden] attribute on individual fields:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Table("users")]
+class User extends Model
+{
+    #[Hidden]
+    #[Column(cast: Cast::STRING)]
+    public string $internal_field; // Hidden from toArray()/JSON
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Use Cases</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Passwords:</strong> Never expose passwords in API responses</li>
+                            <li><strong>Internal Fields:</strong> Hide internal tracking or metadata fields</li>
+                            <li><strong>Sensitive Data:</strong> Protect sensitive information from serialization</li>
+                        </ul>
+                    </section>
+
+                    <!-- Repository Pattern -->
+                    <section id="repository-pattern" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Repository Pattern</h2>
+                        <p class="text-gray-600 mb-6">
+                            The repository pattern provides a clean data access layer with built-in caching.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Repository Interface</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">interface Repository
+{
+    public function create(mixed $data): Model;
+    public function update(int|string $id, mixed $data): ?Model;
+    public function delete(int|string $id): bool;
+    public function find(int|string $id): ?Model;
+    public function findBy(string $field, mixed $value): ?Model;
+    public function findAll(): array;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">RecordRepository Base Class</h3>
+                        <p class="text-gray-600 mb-4">
+                            Extend RecordRepository for common CRUD operations:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\ORM\RecordRepository;
+
+final class UserRepository extends RecordRepository
+{
+    protected function getModelClass(): string
+    {
+        return User::class;
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Custom Find Methods</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">final class UserRepository extends RecordRepository
+{
+    public function findById(int $id): ?User
+    {
+        return parent::find($id);
+    }
+
+    public function findByIdentifier(string $identifier): ?User
+    {
+        $key = $this->cache->generateKey($this->tableName, 'findByIdentifier', $identifier);
+        $cached = $this->cache->get($key);
+        
+        if ($cached !== null) {
+            return $cached;
+        }
+        
+        $user = User::query()->where('identifier', '=', $identifier)->first();
+        
+        if ($user !== null) {
+            $this->cache->set($key, $user);
+        }
+        
+        return $user;
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        $key = $this->cache->generateKey($this->tableName, 'findByEmail', $email);
+        $cached = $this->cache->get($key);
+        
+        if ($cached !== null) {
+            return $cached;
+        }
+        
+        $user = User::query()->where('email', '=', $email)->first();
+        
+        if ($user !== null) {
+            $this->cache->set($key, $user);
+        }
+        
+        return $user;
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Cache Invalidation</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">public function create(mixed $data): User
+{
+    $user = new User();
+    $user->email = $data->email;
+    $user->save();
+    
+    // Invalidate cache
+    $this->cache->invalidate($this->tableName);
+    
+    return $user;
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Query Caching -->
+                    <section id="query-caching" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Query Caching</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm provides built-in query caching for performance optimization.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">QueryCache Class</h3>
+                        <p class="text-gray-600 mb-4">
+                            QueryCache is a simple in-memory cache for query results:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Default TTL: 3600 seconds (1 hour)
+$cache = new QueryCache(3600);
+
+// Get from cache
+$cached = $cache->get($key);
+
+// Set in cache
+$cache->set($key, $value);
+
+// Forget specific key
+$cache->forget($key);
+
+// Invalidate table cache
+$cache->invalidate('users');
+
+// Clear all cache
+$cache->clear();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Cache Key Generation</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$key = $cache->generateKey('users', 'findByIdentifier', $identifier);
+// Generates: "users:findByIdentifier:value"</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Caching in Repositories</h3>
+                        <p class="text-gray-600 mb-4">
+                            RecordRepository automatically uses QueryCache for find operations:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Repository automatically caches find() results
+$user = $repository->find(1); // Cached
+$user = $repository->find(1); // Returns from cache</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Cache Invalidation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Cache is automatically invalidated on create/update/delete:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Create/update/delete invalidates table cache
+$repository->create($data); // Invalidates 'users' cache
+$repository->update(1, $data); // Invalidates 'users' cache
+$repository->delete(1); // Invalidates 'users' cache</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Transactions -->
+                    <section id="transactions" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Transactions</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm provides full transaction support via QueryBuilder.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Transaction Methods</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Begin transaction
+$this->builder->beginTransaction();
+
+// Commit transaction
+$this->builder->commit();
+
+// Rollback transaction
+$this->builder->rollback();
+
+// Check if in transaction
+$inTransaction = $this->builder->inTransaction();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Transaction Commit Example</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">try {
+    $this->builder->beginTransaction();
+    $id = $this->builder->table('example_table')
+        ->insert(['name' => 'orm_transaction_commit']);
+    $this->builder->commit();
+    return ['status' => 'committed', 'inserted_id' => $id];
+} catch (\Exception $e) {
+    $this->builder->rollback();
+    return ['status' => 'error', 'message' => $e->getMessage()];
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Transaction Rollback Example</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Count before transaction
+$countBefore = $this->builder->table('example_table')
+    ->where('name', '=', 'orm_transaction_rollback')
+    ->count();
+
+try {
+    $this->builder->beginTransaction();
+    $this->builder->table('example_table')
+        ->insert(['name' => 'orm_transaction_rollback']);
+    throw new \Exception('Simulated error to trigger rollback');
+    $this->builder->commit();
+} catch (\Exception $e) {
+    $this->builder->rollback();
+    
+    // Count after rollback
+    $countAfter = $this->builder->table('example_table')
+        ->where('name', '=', 'orm_transaction_rollback')
+        ->count();
+    
+    // Verify rollback worked
+    return [
+        'status' => 'rolled_back',
+        'count_before' => $countBefore,
+        'count_after' => $countAfter,
+        'rollback_worked' => $countAfter == $countBefore
+    ];
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Raw SQL Queries -->
+                    <section id="raw-sql" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Raw SQL Queries</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeSqlOrm supports raw SQL queries when you need full control over the query.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">raw() Method</h3>
+                        <p class="text-gray-600 mb-4">
+                            Execute raw SQL with parameter binding:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$results = $this->builder->raw(
+    "SELECT * FROM users WHERE status = :status",
+    [':status' => 'active']
+);</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">whereRaw() Method</h3>
+                        <p class="text-gray-600 mb-4">
+                            Add raw WHERE clauses to query builder chain:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$results = $this->builder
+    ->table('users')
+    ->whereRaw('status = :status', [':status' => 'active'])
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Combining QueryBuilder with Raw SQL</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$results = $this->builder
+    ->table('users')
+    ->select('id', 'email', 'identifier')
+    ->where('status', '=', 'active')
+    ->whereRaw('identifier IS NOT NULL', [])
+    ->orderBy('created_at', 'DESC')
+    ->limit(10)
+    ->get();</code></pre>
+                        </div>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Security Note:</strong> Always use parameter binding with raw SQL to prevent SQL injection attacks. Never concatenate user input directly into SQL queries.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+                        <p class="text-gray-600 mb-6">
+                            Comprehensive examples demonstrating ForgeSqlOrm usage.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Model Definition Examples</h3>
+                        <p class="text-gray-600 mb-4">
+                            User model with relationships, casting, and protected fields:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\ORM\Attributes\{Table, Column, ProtectedFields};
+use App\Modules\ForgeSqlOrm\ORM\Values\{Cast, Relate, RelationKind};
+use App\Modules\ForgeSqlOrm\Traits\HasTimeStamps;
+
+#[Table("users")]
+#[ProtectedFields(['password'])]
+class User extends Model
+{
+    use HasTimeStamps;
+    use CanLoadRelations;
+
+    #[Column(primary: true, cast: Cast::INT)]
+    public int $id;
+
+    #[Column(cast: Cast::STRING)]
+    public string $status;
+
+    #[Column(cast: Cast::STRING)]
+    public string $identifier;
+
+    #[Column(cast: Cast::STRING)]
+    public string $email;
+
+    #[Column(cast: Cast::STRING)]
+    public string $password; // Protected from serialization
+
+    #[Column(cast: Cast::JSON)]
+    public ?UserMetadataDto $metadata;
+
+    #[Relate(RelationKind::HasOne, Profile::class, "user_id")]
+    public function profile(): Relation
+    {
+        return self::describe(__FUNCTION__);
+    }
+}</code></pre>
+                        </div>
+
+                        <p class="text-gray-600 mb-4">
+                            Profile model with traits and nullable fields:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeSqlOrm\Traits\{HasMetaData, HasTimeStamps};
+
+#[Table("profiles")]
+class Profile extends Model
+{
+    use HasTimeStamps;
+    use HasMetaData;
+
+    #[Column(primary: true, cast: Cast::INT)]
+    public int $id;
+
+    #[Column(cast: Cast::INT)]
+    public int $user_id;
+
+    #[Column(cast: Cast::STRING)]
+    public string $first_name;
+
+    #[Column(cast: Cast::STRING)]
+    public ?string $last_name; // Nullable
+
+    #[Column(cast: Cast::STRING)]
+    public ?string $avatar; // Nullable
+}</code></pre>
+                        </div>
+
+                        <p class="text-gray-600 mb-4">
+                            Post model with tenant scoping:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Attributes\TenantScoped;
+use App\Modules\ForgeMultiTenant\Traits\TenantScopedTrait;
+
+#[TenantScoped]
+#[Table("posts")]
+class Post extends Model
+{
+    use HasTimeStamps;
+    use HasMetaData;
+    use TenantScopedTrait;
+
+    #[Column(primary: true, cast: Cast::STRING)]
+    public int $id;
+
+    #[Column(cast: Cast::STRING)]
+    public string $title;
+
+    #[Column(cast: Cast::STRING)]
+    public string $content;
+
+    #[Column(cast: Cast::STRING)]
+    public string $tenant_id;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">QueryBuilder Examples</h3>
+                        <p class="text-gray-600 mb-4">
+                            Basic queries with where(), orderBy(), limit():
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$results = $this->builder
+    ->table('users')
+    ->select('id', 'email', 'identifier')
+    ->where('status', '=', 'active')
+    ->orderBy('created_at', 'DESC')
+    ->limit(10)
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">ModelQuery Examples</h3>
+                        <p class="text-gray-600 mb-4">
+                            Finding by ID and querying with conditions:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Find by ID
+$user = User::query()->id(1)->first();
+
+// Query with conditions
+$activeUsers = User::query()
+    ->where('status', '=', 'active')
+    ->get();
+
+// Eager load relationships
+$users = User::query()
+    ->with('profile')
+    ->get();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Repository Examples</h3>
+                        <p class="text-gray-600 mb-4">
+                            Using repositories with caching:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Find by ID (cached)
+$user = $repository->findById(1);
+
+// Find by identifier (cached)
+$user = $repository->findByIdentifier('user-123');
+
+// Find by email (cached)
+$user = $repository->findByEmail('user@example.com');
+
+// Create (invalidates cache)
+$user = $repository->create($data);</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+                        <p class="text-gray-600 mb-6">
+                            Guidelines for using ForgeSqlOrm effectively.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">QueryBuilder vs ModelQuery</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Use QueryBuilder:</strong> For generic queries, raw SQL, or when you don't need Model instances</li>
+                            <li><strong>Use ModelQuery:</strong> When you need Model instances with relationships, type casting, and model methods</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Relationship Loading Strategies</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Eager Loading:</strong> Use with() to prevent N+1 queries when you know you'll need relationships</li>
+                            <li><strong>Lazy Loading:</strong> Use load() for on-demand loading when relationships might not always be needed</li>
+                            <li><strong>Avoid N+1:</strong> Always eager load relationships when iterating over collections</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Caching Considerations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Use Repositories:</strong> Repositories provide automatic caching for find operations</li>
+                            <li><strong>Cache Invalidation:</strong> Ensure cache is invalidated on create/update/delete operations</li>
+                            <li><strong>Cache Keys:</strong> Use descriptive cache keys for debugging</li>
+                            <li><strong>TTL:</strong> Adjust TTL based on data volatility (default: 3600 seconds)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Transaction Usage</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Always Use Try-Catch:</strong> Wrap transactions in try-catch blocks</li>
+                            <li><strong>Rollback on Error:</strong> Always rollback on exceptions</li>
+                            <li><strong>Keep Transactions Short:</strong> Minimize time spent in transactions</li>
+                            <li><strong>Verify Results:</strong> Verify transaction results when needed</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Model Organization</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Use Attributes:</strong> Always use #[Table] and #[Column] attributes</li>
+                            <li><strong>Type Casting:</strong> Always specify cast types for proper type conversion</li>
+                            <li><strong>Protected Fields:</strong> Use #[ProtectedFields] for sensitive data like passwords</li>
+                            <li><strong>Traits:</strong> Use HasTimeStamps and HasMetaData traits when needed</li>
+                            <li><strong>Relationships:</strong> Define relationships using #[Relate] attribute</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active nav link
+        const sections = document.querySelectorAll('.section-anchor');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        highlightNav();
+    </script>
+</body>
+
+</html>
+
