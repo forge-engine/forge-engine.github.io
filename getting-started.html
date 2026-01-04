@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Getting Started - Forge Engine Documentation</title>
+    <title>Getting Started - Forge Kernel Documentation</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
@@ -92,7 +92,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">
-                            Forge Engine
+                            Forge Kernel
                         </h1>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -110,7 +110,7 @@
                         </a>
                         <a href="modules.html"
                             class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
-                            Modules
+                            Capabilities
                         </a>
                         <a href="api-reference.html"
                             class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
@@ -142,9 +142,9 @@
                     class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
                     Core Concepts
                 </a>
-                <a href="modules.html"
+                        <a href="modules.html"
                     class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
-                    Modules
+                    Capabilities
                 </a>
                 <a href="api-reference.html"
                     class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">
@@ -184,6 +184,10 @@
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
                             Quick Start
                         </a>
+                        <a href="#developer-mode"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Developer Mode
+                        </a>
                         <a href="#next-steps"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
                             Next Steps
@@ -208,11 +212,13 @@
                             Requirements
                         </h2>
                         <ul class="list-disc list-inside space-y-2 text-gray-700">
-                            <li>PHP 8.3 or higher</li>
-                            <li>Composer (for dependency management)</li>
-                            <li>SQLite, MySQL, or PostgreSQL (optional, for database features)</li>
+                            <li>PHP 8.2 or higher</li>
                             <li>Web server (Apache, Nginx, or PHP CLI built-in server)</li>
+                            <li>SQLite, MySQL, or PostgreSQL (optional, install via database capability if needed)</li>
                         </ul>
+                        <p class="text-gray-600 mt-4">
+                            <strong>Note:</strong> Forge doesn't require Composer. The kernel is dependency-free. Database and ORM are capabilities you install when needed, not built-in requirements.
+                        </p>
                     </section>
 
                     <!-- Installation -->
@@ -286,8 +292,9 @@ APP_NAME="My Forge App"
 APP_ENV=development
 APP_DEBUG=true
 APP_KEY=your-generated-key
+FORGE_DEVELOPER_MODE=false
 
-# Database Configuration
+# Database Configuration (only if you've installed a database capability)
 DB_DRIVER=sqlite
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -572,55 +579,96 @@ View::layout(name: "layouts/app", loadFromModule: false);
                     <!-- Database -->
                     <section id="database" class="mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">
-                            Database Models
+                            Database & ORM (Capabilities)
                         </h2>
                         <p class="text-gray-600 mb-4">
-                            Forge includes a lightweight ORM and migration system. Create your first migration:
+                            Database and ORM are not built into the kernel. They're capabilities you install when you need them.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Install a database capability first:
+                        </p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install a database capability
+php forge.php package:install-module ForgeDatabaseSQL
+
+# Or install an ORM capability
+php forge.php package:install-module ForgeSqlOrm</code></pre>
+                        </div>
+
+                        <p class="text-gray-600 mb-4">
+                            Once installed, you can create migrations and models:
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Create a migration
-php forge.php make:migration CreateUsersTable
+php forge.php generate:migration CreateUsersTable
 
 # Run migrations
-php forge.php migrate</code></pre>
+php forge.php db:migrate</code></pre>
                         </div>
 
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Note:</strong> Database and ORM functionality requires installing the appropriate capability module first. The kernel doesn't include these by default.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Developer Mode -->
+                    <section id="developer-mode" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Developer Mode
+                        </h2>
                         <p class="text-gray-600 mb-4">
-                            Create a simple model:
+                            Developer mode unlocks advanced CLI commands for working with registries and publishing kernel/capability versions. You only need this if you're building your own kernel or publishing capabilities.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Enabling Developer Mode</h3>
+                        <p class="text-gray-600 mb-4">
+                            Set <code class="bg-gray-100 px-2 py-1 rounded">FORGE_DEVELOPER_MODE=true</code> in your <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file:
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">&lt;?php
+                            <pre><code class="language-bash">FORGE_DEVELOPER_MODE=true</code></pre>
+                        </div>
 
-namespace App\Models;
+                        <p class="text-gray-600 mb-4">
+                            Or set it in <code class="bg-gray-100 px-2 py-1 rounded">config/app.php</code>:
+                        </p>
 
-use Forge\Core\Database\Model;
-use Forge\Core\Database\Table;
-use Forge\Core\Database\Column;
-use Forge\Core\Database\Model;
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">return [
+    'developer_mode' => true,
+    // ... other config
+];</code></pre>
+                        </div>
 
-#[Table('users')]
-class User extends Model
-{
-use Hastimestamps;   
-    protected array $hidden = ['password'];
-    
-    #[Column("integer", primary: true)]
-    public int $id;
-    
-    #[Column("varchar(255)")]
-    public string $status;
-    
-    #[Column("varchar(255)")]
-    public string $identifier;
-    
-    #[Column("varchar(255)")]
-    public string $email;
-    
-    #[Column("varchar(255)")]
-    public string $password;
-}</code></pre>
+                        <h3 class="text-lg font-semibold mb-3">Commands Unlocked</h3>
+                        <p class="text-gray-600 mb-4">
+                            When developer mode is enabled, these commands become available:
+                        </p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Framework/Kernel registry commands
+php forge.php dev:framework:list          # List available kernel versions
+php forge.php dev:framework:publish        # Publish kernel registry changes
+php forge.php dev:framework:version        # Create new kernel version
+
+# Module/Capability registry commands
+php forge.php dev:module:list              # List available capability versions
+php forge.php dev:module:publish           # Publish capability registry changes
+php forge.php dev:module:version           # Create new capability version
+
+# Registry management
+php forge.php dev:registry:config          # Configure registry settings
+php forge.php dev:registry:init             # Initialize new registry</code></pre>
+                        </div>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <p class="text-sm text-blue-700">
+                                <strong>When to enable:</strong> Only enable developer mode if you're building your own kernel fork or publishing capabilities to registries. For regular application development, you don't need it.
+                            </p>
                         </div>
                     </section>
 
@@ -658,10 +706,10 @@ php forge.php maintenance:up
 php forge.php key:generate
 
 # Package management (ForgePackageManager)
-php forge.php install:module ForgeAuth
-php forge.php install:module ForgeAuth@1.2.0
-php forge.php remove:module ForgeAuth
-php forge.php list:modules</code></pre>
+php forge.php package:install-module ForgeAuth
+php forge.php package:install-module ForgeAuth@1.2.0
+php forge.php package:remove-module ForgeAuth
+php forge.php package:list-modules</code></pre>
                         </div>
 
                         <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
@@ -697,10 +745,10 @@ php forge.php list:modules</code></pre>
 
                             <div class="border border-gray-200 rounded-lg p-6">
                                 <h3 class="font-semibold text-lg mb-2">
-                                    Modules
+                                    Capabilities
                                 </h3>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Available modules and how to make your own.
+                                    Available capabilities and how to make your own.
                                 </p>
                                 <a href="modules.html" class="text-blue-600 hover:text-blue-800">
                                     Explore
@@ -716,7 +764,7 @@ php forge.php list:modules</code></pre>
         <footer class="bg-gray-900 text-white py-8 mt-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <div class="mb-4">
-                    <span class="text-lg font-bold">Forge Engine</span>
+                    <span class="text-lg font-bold">Forge Kernel</span>
                 </div>
                 <p class="text-gray-400">
                     A toolbox for builders who like to do things their way.

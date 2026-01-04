@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modules - Forge Engine Documentation</title>
+    <title>Capabilities - Forge Kernel Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
@@ -74,7 +74,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">
-                            Forge Engine
+                            Forge Kernel
                         </h1>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -92,7 +92,7 @@
                         </a>
                         <a href="modules.html"
                             class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
-                            Modules
+                            Capabilities
                         </a>
                         <a href="api-reference.html"
                             class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
@@ -136,7 +136,7 @@
             <div class="lg:w-1/4">
                 <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                        Modules
+                        Capabilities
                     </h3>
                     <nav class="space-y-2">
                         <a href="#overview"
@@ -199,20 +199,20 @@
             <div class="lg:w-3/4">
                 <div class="bg-white rounded-lg shadow-sm p-8">
                     <h1 class="text-4xl font-bold text-gray-900 mb-6">
-                        Modules
+                        Capabilities
                     </h1>
                     <p class="text-xl text-gray-600 mb-8">
-                        Extend Forge with self-contained modules for services, routes, views, etc.
+                        Extend Forge Kernel with self-contained capability modules. Think of capabilities like modular additions to a house. The kernel gives you the foundation. Capabilities add what you need: database, ORM, authentication, storage — all optional, all pluggable.
                     </p>
 
                     <!-- Overview -->
                     <section id="overview" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">
-                            Module System Overview
+                            Capability System Overview
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            Package functionality into reusable components. Modules provide services, controllers,
-                            views, CLI commands, and more.
+                            Package functionality into reusable capability modules. Capabilities provide services, controllers,
+                            views, CLI commands, and more. Need a database? Install a database capability. Need an ORM? Install an ORM capability. Don't need authentication? Don't install it. The kernel stays lean. You stay in control.
                         </p>
 
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
@@ -614,30 +614,30 @@ public function onAppBooted(): void
                     <!-- Installation -->
                     <section id="installation" class="mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">
-                            Installing Modules
+                            Installing Capabilities
                         </h2>
                         <p class="text-gray-600 mb-4">
-                            Use Forge CLI or manually place modules in the modules directory.
+                            Use Forge CLI or manually place capability modules in the modules directory.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Using Forge CLI</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Install a module
-php forge.php install:module ForgeAuth
+                            <pre><code class="language-bash"># Install a capability
+php forge.php package:install-module ForgeAuth
 
 # Install a specific version
-php forge.php install:module ForgeAuth@1.2.0
+php forge.php package:install-module ForgeAuth@1.2.0
 
-# Force refresh cache during installation
-php forge.php install:module ForgeAuth force
+# List available capabilities
+php forge.php package:list-modules
 
-# List available modules
-php forge.php list:modules</code></pre>
+# Remove a capability
+php forge.php package:remove-module ForgeAuth</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Manual Installation</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Clone module to modules directory
+                            <pre><code class="language-bash"># Clone capability to modules directory
 cd modules/
 git clone https://github.com/forge-modules/ForgeAuth.git
 
@@ -648,7 +648,7 @@ unzip main.zip -d ForgeAuth/</code></pre>
 
                         <div class="bg-green-50 border-l-4 border-green-400 p-4">
                             <p class="text-sm text-green-700">
-                                <strong>Auto-Discovery:</strong> Modules auto-load when placed in the modules directory.
+                                <strong>Auto-Discovery:</strong> Capabilities auto-load when placed in the modules directory.
                             </p>
                         </div>
                     </section>
@@ -656,22 +656,22 @@ unzip main.zip -d ForgeAuth/</code></pre>
                     <!-- Creating Modules -->
                     <section id="creating-modules" class="mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">
-                            Creating Custom Modules
+                            Creating Custom Capabilities
                         </h2>
                         <p class="text-gray-600 mb-4">
-                            Encapsulate functionality and share across projects.
+                            Encapsulate functionality and share across projects as capability modules.
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Generate a new module
-php forge.php make:module MyCustomModule
+                            <pre><code class="language-bash"># Generate a new capability module
+php forge.php generate:module MyCustomModule
 
 # Generate with specific options
-php forge.php make:module BlogModule --type=cms --with-controllers --with-views</code></pre>
+php forge.php generate:module BlogModule --type=cms --with-controllers --with-views</code></pre>
                         </div>
 
                         <p class="text-gray-600 mb-4">
-                            This creates a complete module structure in <code
+                            This creates a complete capability module structure in <code
                                 class="bg-gray-100 px-2 py-1 rounded">modules/MyCustomModule/</code>:
                         </p>
 
@@ -954,7 +954,7 @@ php forge.php module:build MyCustomModule</code></pre>
     <footer class="bg-gray-900 text-white py-8 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="flex items-center justify-center mb-4">
-                <span class="text-lg font-bold">Forge Engine</span>
+                <span class="text-lg font-bold">Forge Kernel</span>
             </div>
             <p class="text-gray-400">
                 A toolbox for builders who like to do things their way.

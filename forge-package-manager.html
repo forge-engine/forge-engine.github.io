@@ -186,6 +186,34 @@
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
                             Overview
                         </a>
+                        <a href="#why-units"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Why Units, Not Source Code
+                        </a>
+                        <a href="#old-school-mirrors"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Old School Mirrors
+                        </a>
+                        <a href="#registry-structure"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Registry Structure
+                        </a>
+                        <a href="#small-business-benefits"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Small Business Benefits
+                        </a>
+                        <a href="#enterprise-benefits"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Enterprise Benefits
+                        </a>
+                        <a href="#host-anywhere"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Host Where You Like
+                        </a>
+                        <a href="#still-use-your-own"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Still Use Your Own Thing
+                        </a>
                         <a href="#features"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
                             Features
@@ -229,7 +257,7 @@
                         ForgePackageManager
                     </h1>
                     <p class="text-xl text-gray-600 mb-8">
-                        Package and module management for Forge Engine.
+                        Package and capability management for Forge Kernel.
                     </p>
 
                     <!-- Overview -->
@@ -238,7 +266,47 @@
                             Overview
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            Package manager for Forge modules with registry support and dependency management.
+                            Package manager for Forge capability modules with registry support and integrity verification. Think of it like a trusted supplier system — you explicitly trust sources (like trusting a specific store). You control where things come from. Not a central marketplace you can't control.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Philosophy: Choice, Not Competition</h3>
+                        <p class="text-gray-600 mb-4">
+                            The package manager isn't trying to compete with or replace Composer. It's a choice. You can use it, or you can use your own thing. See <a href="#still-use-your-own" class="text-blue-600 hover:underline">Still Use Your Own Thing</a> for more on this.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Why it exists:</strong>
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Capabilities are shipped as <strong>units (ZIP files)</strong>, not source code — see <a href="#why-units" class="text-blue-600 hover:underline">Why Units, Not Source Code</a></li>
+                            <li>Works like <strong>old school mirrors</strong> — simple folder navigation — see <a href="#old-school-mirrors" class="text-blue-600 hover:underline">Old School Mirrors: How It Works</a></li>
+                            <li>You want freedom to control your sources</li>
+                            <li>You want it to behave like Linux package managers (apt, yum, pacman)</li>
+                            <li>You want trusted sources, not a central registry you can't control</li>
+                            <li>You want the power and capabilities that approach offers</li>
+                            <li>Perfect for <strong>small business</strong> and <strong>enterprise</strong> — see <a href="#small-business-benefits" class="text-blue-600 hover:underline">Benefits for Small Business</a> and <a href="#enterprise-benefits" class="text-blue-600 hover:underline">Benefits for Enterprise</a></li>
+                            <li>Host capabilities <strong>where you like, how you like</strong> — see <a href="#host-anywhere" class="text-blue-600 hover:underline">Host Where You Like, How You Like</a></li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            <strong>What you get:</strong>
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Capabilities as complete units (ZIP files) — no build steps, no compilation</li>
+                            <li>Simple folder structure like old school software mirrors</li>
+                            <li>Multiple source types (Git, SFTP, FTP, HTTP, Local, Network)</li>
+                            <li>Trusted sources system (you explicitly trust what you install)</li>
+                            <li>Lock files for reproducible installations</li>
+                            <li>Integrity verification with SHA-256 hashes</li>
+                            <li>No dependency on external package registries</li>
+                            <li>Full control over distribution and hosting</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Use Composer if you want:</strong> Central package registry, dependency resolution, semantic versioning constraints, that ecosystem.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Use Forge's package manager if you want:</strong> Control over your sources, Linux package manager-like behavior, trusted sources philosophy, freedom to choose where your capabilities come from, units instead of source code, simple folder-based distribution.
+                        </p>
+                        <p class="text-gray-600 mb-6">
+                            Both can coexist. This is about choice, not competition. You can still use Composer, Git submodules, manual installation, or whatever works for you. The package manager is there if you want it — see <a href="#still-use-your-own" class="text-blue-600 hover:underline">Still Use Your Own Thing</a>.
                         </p>
 
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
@@ -267,6 +335,425 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </section>
+
+                    <!-- Why Units, Not Source Code -->
+                    <section id="why-units" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Why Units, Not Source Code
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            Forge capabilities are shipped as complete, self-contained ZIP files — units, not source code. This fundamental design decision shapes how the package manager works and why it's different from traditional package managers.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Complete Units</h3>
+                        <p class="text-gray-600 mb-4">
+                            Each capability version is a single ZIP file containing everything needed to run it. No compilation, no build steps, no processing required. Download the ZIP, extract it, and it's ready to use.
+                        </p>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Think of it like this:</strong> Instead of getting ingredients and a recipe (source code + build instructions), you get a finished meal (complete ZIP file). Just extract and serve.
+                            </p>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Benefits of Units</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Faster installation:</strong> No build time, no compilation, just extract and go</li>
+                            <li><strong>No build dependencies:</strong> Don't need Node.js, Composer, or other build tools on production servers</li>
+                            <li><strong>Reproducible deployments:</strong> Same ZIP file = same result, every time</li>
+                            <li><strong>Simple distribution:</strong> Just host ZIP files, no complex build pipelines</li>
+                            <li><strong>Version control:</strong> Each version is a complete, immutable unit</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">What's Inside a Unit</h3>
+                        <p class="text-gray-600 mb-4">
+                            Each capability ZIP file contains the complete module structure:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-text">forge-auth-0.2.4.zip
+└── forge-auth/
+    ├── forge.json          # Module metadata
+    ├── src/                # Source code
+    │   ├── Controllers/
+    │   ├── Services/
+    │   ├── Middlewares/
+    │   └── ...
+    ├── config/             # Configuration files
+    ├── resources/           # Views, assets, etc.
+    └── tests/              # Test files</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Old School Mirrors -->
+                    <section id="old-school-mirrors" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Old School Mirrors: How It Works
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            The package manager works like old school software mirrors. Remember when you'd navigate through folders on an FTP server to find the file you needed? That's exactly how this works — simple, transparent, and human-readable.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Folder Navigation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Capabilities are organized in a simple folder structure. To find a capability, you navigate through folders:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-text">modules/
+└── forge-auth/           # Navigate to the capability
+    └── 0.2.4/            # Navigate to the version
+        └── 0.2.4.zip     # There's your file!</code></pre>
+                        </div>
+
+                        <p class="text-gray-600 mb-4">
+                            The package manager automates this navigation. When you run <code class="bg-gray-100 px-2 py-1 rounded">package:install-module forge-auth@0.2.4</code>, it:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Reads <code class="bg-gray-100 px-2 py-1 rounded">modules.json</code> to find the capability</li>
+                            <li>Gets the folder path from the <code class="bg-gray-100 px-2 py-1 rounded">url</code> field</li>
+                            <li>Navigates to <code class="bg-gray-100 px-2 py-1 rounded">modules/forge-auth/0.2.4/</code></li>
+                            <li>Downloads <code class="bg-gray-100 px-2 py-1 rounded">0.2.4.zip</code></li>
+                            <li>Verifies the integrity hash</li>
+                            <li>Extracts it to your <code class="bg-gray-100 px-2 py-1 rounded">modules/</code> directory</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">You Can Browse Manually</h3>
+                        <p class="text-gray-600 mb-4">
+                            Because it's just folders and files, you can manually browse any registry. If you're using a Git-based registry, you can browse it on GitHub. If it's an HTTP registry, you can navigate the folders in your browser. If it's SFTP, you can use any FTP client. The structure is always the same, always human-readable.
+                        </p>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Transparency:</strong> There's no magic. You can see exactly where capabilities come from, what versions are available, and download them manually if you want. The package manager just makes it convenient.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Registry Structure -->
+                    <section id="registry-structure" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Registry Structure
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            Every registry follows the same simple structure. Here's how it's organized:
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Directory Layout</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-text">registry-root/
+├── modules.json          # Manifest with all capabilities and versions
+└── modules/
+    └── forge-auth/
+        ├── 0.2.4/
+        │   └── 0.2.4.zip
+        ├── 0.2.3/
+        │   └── 0.2.3.zip
+        ├── 0.2.2/
+        │   └── 0.2.2.zip
+        └── ...</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">modules.json Manifest</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">modules.json</code> file is the index. It lists all available capabilities, their versions, and where to find them:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-json">{
+  "forge-auth": {
+    "latest": "0.2.4",
+    "versions": {
+      "0.2.4": {
+        "description": "Version 0.2.4 of forge-auth",
+        "url": "forge-auth/0.2.4",
+        "integrity": "33bd70eead56a2855e97147e870858bf20bd8416a92cb516066aa31020a09367"
+      },
+      "0.2.3": {
+        "description": "Version 0.2.3 of forge-auth",
+        "url": "forge-auth/0.2.3",
+        "integrity": "3a0b1747f2b8d4f3f604e6e070872fd13ebb78aad93b2838a830e8978ad9b6f6"
+      }
+    }
+  }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">How It Works</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>url field:</strong> Points to the folder path relative to <code class="bg-gray-100 px-2 py-1 rounded">modules/</code>. For example, <code class="bg-gray-100 px-2 py-1 rounded">"forge-auth/0.2.4"</code> means <code class="bg-gray-100 px-2 py-1 rounded">modules/forge-auth/0.2.4/</code></li>
+                            <li><strong>integrity hash:</strong> SHA-256 hash of the ZIP file. Used to verify the file hasn't been tampered with</li>
+                            <li><strong>latest field:</strong> The default version to install if no version is specified</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">ZIP File Naming</h3>
+                        <p class="text-gray-600 mb-4">
+                            The ZIP file is named after the version number. In the folder <code class="bg-gray-100 px-2 py-1 rounded">modules/forge-auth/0.2.4/</code>, you'll find <code class="bg-gray-100 px-2 py-1 rounded">0.2.4.zip</code>. Simple and predictable.
+                        </p>
+                    </section>
+
+                    <!-- Benefits for Small Business -->
+                    <section id="small-business-benefits" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Benefits for Small Business
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            The unit-based approach is perfect for small businesses that want control without complexity.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Host on Your Own Infrastructure</h3>
+                        <p class="text-gray-600 mb-4">
+                            You don't need expensive hosting or complex infrastructure. Host capabilities on:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>GitHub (free for public repos, affordable for private)</li>
+                            <li>GitLab (free tiers available)</li>
+                            <li>Your own web server (just serve files via HTTP)</li>
+                            <li>SFTP server (many hosting providers include this)</li>
+                            <li>FTP server (basic file hosting)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">No Complex Build Systems</h3>
+                        <p class="text-gray-600 mb-4">
+                            You don't need CI/CD pipelines, build servers, or complex tooling. Just:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Create a ZIP file of your capability</li>
+                            <li>Calculate the SHA-256 hash</li>
+                            <li>Upload it to the right folder</li>
+                            <li>Update <code class="bg-gray-100 px-2 py-1 rounded">modules.json</code></li>
+                        </ol>
+                        <p class="text-gray-600 mb-4">
+                            That's it. No build steps, no compilation, no special tools required.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Full Control</h3>
+                        <p class="text-gray-600 mb-4">
+                            You control:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>What capabilities are available</li>
+                            <li>Which versions to publish</li>
+                            <li>Where they're hosted</li>
+                            <li>Who has access</li>
+                            <li>When updates are released</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Simple Management</h3>
+                        <p class="text-gray-600 mb-4">
+                            Managing a registry is as simple as managing files. No databases, no special services, no complex APIs. Just folders and files.
+                        </p>
+                    </section>
+
+                    <!-- Benefits for Enterprise -->
+                    <section id="enterprise-benefits" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Benefits for Enterprise
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            Enterprise organizations need control, compliance, and security. The unit-based approach delivers all three.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Host Internally</h3>
+                        <p class="text-gray-600 mb-4">
+                            Keep capabilities completely internal:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Private Git repositories (GitLab Enterprise, GitHub Enterprise, Bitbucket Server)</li>
+                            <li>Internal file servers (network shares, NAS devices)</li>
+                            <li>Internal web servers (serve via HTTP/HTTPS)</li>
+                            <li>SFTP servers (secure file transfer)</li>
+                            <li>Any infrastructure you already have</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Complete Control Over Distribution</h3>
+                        <p class="text-gray-600 mb-4">
+                            You control the entire distribution chain:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Who can access which capabilities</li>
+                            <li>Which versions are available to which teams</li>
+                            <li>When updates are rolled out</li>
+                            <li>How capabilities are distributed (internal network, VPN, etc.)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Audit Trail</h3>
+                        <p class="text-gray-600 mb-4">
+                            Every capability has an integrity hash. You can:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Verify what was installed matches what was published</li>
+                            <li>Track which versions are in use across your organization</li>
+                            <li>Ensure no tampering occurred during distribution</li>
+                            <li>Maintain compliance with security policies</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Works with Existing Infrastructure</h3>
+                        <p class="text-gray-600 mb-4">
+                            No need for special services or new infrastructure. Works with:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Existing Git repositories</li>
+                            <li>Existing file servers</li>
+                            <li>Existing web servers</li>
+                            <li>Existing network shares</li>
+                            <li>Any file-serving infrastructure you already have</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Compliance-Friendly</h3>
+                        <p class="text-gray-600 mb-4">
+                            Perfect for organizations with strict compliance requirements:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>You control where code comes from (no external dependencies)</li>
+                            <li>You can audit every capability before it's installed</li>
+                            <li>You can maintain internal mirrors of approved capabilities</li>
+                            <li>You can enforce policies on which capabilities are allowed</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Mirror and Cache</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can mirror or cache capabilities locally for:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Faster installations (local network is faster than internet)</li>
+                            <li>Offline installations (air-gapped environments)</li>
+                            <li>Bandwidth savings (download once, use many times)</li>
+                            <li>Redundancy (backup copies of critical capabilities)</li>
+                        </ul>
+                    </section>
+
+                    <!-- Host Where You Like -->
+                    <section id="host-anywhere" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Host Where You Like, How You Like
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            The package manager supports multiple source types. Choose what works for you, or use multiple sources at once.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Supported Source Types</h3>
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">Git</h4>
+                                <p class="text-sm text-gray-600 mb-2">GitHub, GitLab, Bitbucket, or any Git repository</p>
+                                <p class="text-xs text-gray-500">Perfect for version control and collaboration</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">SFTP</h4>
+                                <p class="text-sm text-gray-600 mb-2">Secure file transfer protocol</p>
+                                <p class="text-xs text-gray-500">Secure, encrypted file transfers</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">FTP/FTPS</h4>
+                                <p class="text-sm text-gray-600 mb-2">File transfer protocol (with optional SSL)</p>
+                                <p class="text-xs text-gray-500">Works with standard FTP servers</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">HTTP/HTTPS</h4>
+                                <p class="text-sm text-gray-600 mb-2">Direct download from URLs</p>
+                                <p class="text-xs text-gray-500">Simple web server hosting</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">Local</h4>
+                                <p class="text-sm text-gray-600 mb-2">Local file system</p>
+                                <p class="text-xs text-gray-500">For development or air-gapped environments</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">Network</h4>
+                                <p class="text-sm text-gray-600 mb-2">Network file shares</p>
+                                <p class="text-xs text-gray-500">For enterprise network environments</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Configure in source_list.php</h3>
+                        <p class="text-gray-600 mb-4">
+                            Configure your trusted sources in <code class="bg-gray-100 px-2 py-1 rounded">config/source_list.php</code>:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php"><?php
+
+return [
+    'registry' => [
+        // Official Forge registry (GitHub)
+        [
+            'name' => 'forge-engine-modules',
+            'type' => 'git',
+            'url' => 'https://github.com/forge-engine/modules',
+            'branch' => 'main',
+            'private' => false
+        ],
+        // Your company's private registry (SFTP)
+        [
+            'name' => 'company-modules',
+            'type' => 'sftp',
+            'host' => 'sftp.company.com',
+            'username' => env('SFTP_USER'),
+            'password' => env('SFTP_PASS'),
+            'path' => '/modules'
+        ],
+        // Internal network share
+        [
+            'name' => 'internal-modules',
+            'type' => 'network',
+            'path' => '\\\\fileserver\\modules'
+        ]
+    ]
+];</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">You Control the Distribution Chain</h3>
+                        <p class="text-gray-600 mb-4">
+                            Each source is a trusted source you explicitly add. You decide:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Which sources to trust</li>
+                            <li>What capabilities come from which source</li>
+                            <li>How sources are accessed (authentication, encryption, etc.)</li>
+                            <li>When to add or remove sources</li>
+                        </ul>
+                    </section>
+
+                    <!-- Still Use Your Own Thing -->
+                    <section id="still-use-your-own" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Still Use Your Own Thing
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            The package manager is a choice, not a requirement. You have complete freedom to use whatever tools and methods work for you.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Use Composer</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can still use Composer for dependencies. The package manager doesn't replace Composer — it's an alternative for managing Forge capabilities. Use both, use one, or use neither. Your choice.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Manual Installation</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can manually download and install capabilities:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Download the ZIP file from the registry</li>
+                            <li>Extract it to your <code class="bg-gray-100 px-2 py-1 rounded">modules/</code> directory</li>
+                            <li>Update <code class="bg-gray-100 px-2 py-1 rounded">forge.json</code> if needed</li>
+                        </ol>
+                        <p class="text-gray-600 mb-4">
+                            The package manager just automates this process. You can do it manually if you prefer.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Git Submodules</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can use Git submodules to include capabilities directly from their source repositories. The package manager doesn't prevent this — it's just another option.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Custom Scripts</h3>
+                        <p class="text-gray-600 mb-4">
+                            Write your own installation scripts. Use deployment tools. Use whatever works for your workflow. The package manager is there if you want it, but you're not locked into it.
+                        </p>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Freedom:</strong> The package manager is a tool, not a constraint. Use it when it helps, ignore it when it doesn't. You're in control.
+                            </p>
                         </div>
                     </section>
 
@@ -348,18 +835,18 @@
                             Installation
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            Pre-installed with Forge Engine. Manual installation options available.
+                            Pre-installed with Forge Kernel. Manual installation options available.
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Install ForgePackageManager module
-php forge.php install:module ForgePackageManager
+                            <pre><code class="language-bash"># Install ForgePackageManager capability
+php forge.php package:install-module ForgePackageManager
 
 # Install specific version
-php forge.php install:module ForgePackageManager@1.0.0
+php forge.php package:install-module ForgePackageManager@1.0.0
 
 # Verify installation
-php forge.php list:modules | grep ForgePackageManager</code></pre>
+php forge.php package:list-modules | grep ForgePackageManager</code></pre>
                         </div>
 
                         <div class="bg-green-50 border-l-4 border-green-400 p-4">
@@ -381,7 +868,12 @@ php forge.php list:modules | grep ForgePackageManager</code></pre>
                         </h2>
                         <p class="text-gray-600 mb-6">
                             Configure through <code
-                                class="bg-gray-100 px-2 py-1 rounded">config/forge_package_manager.php</code> file.
+                                class="bg-gray-100 px-2 py-1 rounded">config/source_list.php</code> file. This is where you define your trusted sources — like configuring apt sources on Debian or yum repositories on RHEL.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Trusted Sources Philosophy</h3>
+                        <p class="text-gray-600 mb-4">
+                            Similar to Linux package managers (apt, yum, pacman), you explicitly define and trust your capability sources. You control where your capabilities come from. This gives you freedom and control over your dependencies.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Basic Configuration</h3>
@@ -393,22 +885,41 @@ return [
         // Official Forge registry (included by default)
         [
             'name' => 'forge-engine-modules',
+            'type' => 'git',
             'url' => 'https://github.com/forge-engine/modules',
             'branch' => 'main',
             'private' => false,
+            'personal_token' => env('GITHUB_TOKEN') // Only needed for private repos
         ],
         // Custom private registry example
         [
             'name' => 'my-company-modules',
+            'type' => 'git',
             'url' => 'https://github.com/mycompany/private-modules',
             'branch' => 'main',
             'private' => true,
-            'personal_token' => env('GITHUB_TOKEN', 'your-secret-token'),
+            'personal_token' => env('GITHUB_TOKEN')
         ],
     ],
     'cache_ttl' => 3600, // Cache time-to-live in seconds
 ];</code></pre>
                         </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Supported Source Types</h3>
+                        <p class="text-gray-600 mb-4">
+                            The package manager supports multiple source types:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Git:</strong> GitHub, GitLab, Bitbucket, or any Git repository</li>
+                            <li><strong>SFTP:</strong> Secure file transfer protocol</li>
+                            <li><strong>FTP/FTPS:</strong> File transfer protocol</li>
+                            <li><strong>HTTP/HTTPS:</strong> Direct download from URLs</li>
+                            <li><strong>Local:</strong> Local file system paths</li>
+                            <li><strong>Network:</strong> Network file shares</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            See the <a href="https://github.com/forge-engine/forge/blob/main/modules/ForgePackageManager/docs/" class="text-blue-600 hover:underline">ForgePackageManager documentation</a> for detailed configuration of each source type.
+                        </p>
 
                         <h3 class="text-lg font-semibold mb-3">Environment Variables</h3>
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
@@ -428,40 +939,28 @@ CACHE_TTL=7200</code></pre>
                             Usage
                         </h2>
 
-                        <h3 class="text-lg font-semibold mb-3">Installing Modules</h3>
+                        <h3 class="text-lg font-semibold mb-3">Installing Capabilities</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Install latest version of a module
-php forge.php install:module ForgeAuth
+                            <pre><code class="language-bash"># Install latest version of a capability
+php forge.php package:install-module ForgeAuth
 
 # Install specific version
-php forge.php install:module ForgeAuth@1.2.0
+php forge.php package:install-module ForgeAuth@1.2.0
 
-# Force refresh cache during installation
-php forge.php install:module ForgeAuth force
-
-# Install from specific registry
-php forge.php install:module --registry=my-company-modules CustomModule</code></pre>
+# Install all capabilities from lock file and scaffold app structure
+php forge.php package:install-project</code></pre>
                         </div>
 
-                        <h3 class="text-lg font-semibold mb-3">Removing Modules</h3>
+                        <h3 class="text-lg font-semibold mb-3">Removing Capabilities</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Remove a module
-php forge.php remove:module ForgeAuth
-
-# Remove with confirmation
-php forge.php remove:module ForgeAuth --confirm</code></pre>
+                            <pre><code class="language-bash"># Remove a capability
+php forge.php package:remove-module ForgeAuth</code></pre>
                         </div>
 
-                        <h3 class="text-lg font-semibold mb-3">Listing Modules</h3>
+                        <h3 class="text-lg font-semibold mb-3">Listing Capabilities</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># List all available modules
-php forge.php list:modules
-
-# List installed modules
-php forge.php list:modules --installed
-
-# List modules from specific registry
-php forge.php list:modules --registry=forge-engine-modules</code></pre>
+                            <pre><code class="language-bash"># List all available capabilities
+php forge.php package:list-modules</code></pre>
                         </div>
                     </section>
 
@@ -471,8 +970,8 @@ php forge.php list:modules --registry=forge-engine-modules</code></pre>
                             Custom Registries
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            ForgePackageManager supports custom registries for private modules and enterprise
-                            deployments.
+                            ForgePackageManager supports custom registries for private capabilities and enterprise
+                            deployments. Configure your trusted sources in <code class="bg-gray-100 px-2 py-1 rounded">config/source_list.php</code>.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Adding a Custom Registry</h3>
