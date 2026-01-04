@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Forge Framework</title>
+        <title>Forge Kernel</title>
         <link rel="stylesheet" href="/assets/css/style.css">
         <style>
             body {
@@ -88,8 +88,8 @@
     <body>
         <div class="container">
             <header>
-                <h1>Forge Engine</h1>
-                <p>a toolbox for builders who like to do things their way.</p>
+                <h1>Forge Kernel</h1>
+                <p>an Application Hosted Kernel with pluggable capabilities.</p>
                 <nav>
                     <a href="getting-started.html">Get Started</a>
                     <a href="core-concepts.html">Core Concepts</a>
@@ -104,14 +104,17 @@
 
             <section>
                 <p>
-                    Forge is a simple PHP framework and module system I built to serve my own projects. It’s fully open source under the MIT license. <br/>— take what helps, ignore what doesn’t, fork it if you need to.
+                    Forge is an Application Hosted Kernel with pluggable capabilities. It's a minimal, dependency-free PHP kernel I built to serve my own projects. It's fully open source under the MIT license. <br/>— take what helps, ignore what doesn't, fork it if you need to.
                 </p>
                 <h3>This organization contains:</h3>
                 <ul>
-                    <li>🧱 The Forge Engine — a minimal, dependency-free PHP framework.</li>
-                    <li>🧩 Forge Modules — self-contained, optional packages that extend functionality.</li>
+                    <li>🧱 The Forge Kernel — a minimal, dependency-free PHP kernel (DI, routing, bootstrapping, view engine, configuration manager, and core services).</li>
+                    <li>🧩 Forge Capabilities — self-contained, optional capability modules (database, ORM, auth, storage, etc.) that you plug in when needed.</li>
                     <li>🛠️ Utilities & Installers — scripts and helpers for easier setup and tooling.</li>
                 </ul>
+                <p>
+                    <strong>Capabilities, not built-ins.</strong> Database, ORM, authentication, storage — these aren't built into the kernel. They're capabilities you plug in via modules when you need them. The kernel stays lean. You stay in control.
+                </p>
             </section>
 
             <section>
@@ -132,7 +135,7 @@
 
             <section>
                 <h2>want to build your own thing?</h2>
-                <p>You can fork the entire framework and module ecosystem to start your own direction. Check out <a href="https://github.com/forge-engine/forge/blob/main/docs/FORGING-YOUR-OWN.md">FORGING-YOUR-OWN.md</a> in the main repo for notes on how everything is structured and how to get started.</p>
+                <p>You can fork the entire kernel and capability ecosystem to start your own direction. Check out <a href="https://github.com/forge-engine/forge/blob/main/docs/FORGING-YOUR-OWN.md">FORGING-YOUR-OWN.md</a> in the main repo for notes on how everything is structured and how to get started.</p>
             </section>
 
             <footer>
