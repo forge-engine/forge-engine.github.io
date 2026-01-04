@@ -337,7 +337,7 @@ SESSION_LIFETIME=1440</code></pre>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Generate a new controller
-php forge.php make:controller WelcomeController</code></pre>
+php forge.php generate:controller WelcomeController</code></pre>
                         </div>
 
                         <p class="text-gray-600 mb-4">
@@ -683,14 +683,14 @@ php forge.php dev:registry:init             # Initialize new registry</code></pr
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Generate files
-php forge.php make:controller UserController
-php forge.php make:middleware AuthMiddleware
-php forge.php make:migration CreatePostsTable
-php forge.php make:module BlogModule
+php forge.php generate:controller UserController
+php forge.php generate:middleware AuthMiddleware
+php forge.php generate:migration CreatePostsTable
+php forge.php generate:module BlogModule
 
 # Database operations
-php forge.php migrate
-php forge.php migrate:rollback
+php forge.php db:migrate
+php forge.php db:migrate:rollback
 
 # Development server
 php forge.php serve
@@ -699,8 +699,8 @@ php forge.php serve
 php forge.php cache:clear
 
 # Application maintenance
-php forge.php maintenance:down
-php forge.php maintenance:up
+php forge.php down
+php forge.php up
 
 # Generate application key
 php forge.php key:generate

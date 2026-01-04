@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forge Engine - ForgeWire</title>
+    <title>Forge Kernel - ForgeWire</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
@@ -92,7 +92,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">
-                            Forge Engine
+                            Forge Kernel
                         </h1>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -210,7 +210,7 @@
                         ForgeWire
                     </h1>
                     <p class="text-xl text-gray-600 mb-8">
-                        A lightweight Livewire-like reactive component system for Forge Engine applications with
+                        A lightweight Livewire-like reactive component system for Forge Kernel applications with
                         server-side rendering and real-time updates.
                     </p>
 
@@ -323,10 +323,10 @@
                         <h3 class="text-lg font-semibold mb-3">Using Forge Package Manager</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Install the latest version
-php forge install:module ForgeWire
+php forge.php package:install-module ForgeWire
 
 # Install a specific version
-php forge install:module ForgeWire@1.0.5</code></pre>
+php forge.php package:install-module ForgeWire@1.0.5</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Manual Installation</h3>
@@ -480,7 +480,7 @@ use Forge\Core\Helpers\ModuleResources;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Forge Engine&lt;/title&gt;
+    &lt;title&gt;Forge Kernel&lt;/title&gt;
     &lt;?= ModuleResources::loadStyles("forge-ui") ?&gt;
     &lt;?= raw(csrf_meta()) ?&gt;
 &lt;/head&gt;
@@ -520,7 +520,7 @@ use Forge\Core\Helpers\ModuleResources;
 
                         <h3 class="text-lg font-semibold mb-3">CSRF Protection</h3>
                         <p class="text-gray-600 mb-4">
-                            ForgeWire integrates with Forge Engine's CSRF protection. Use these helpers in your forms
+                            ForgeWire integrates with Forge Kernel's CSRF protection. Use these helpers in your forms
                             and layouts:
                         </p>
 
@@ -870,7 +870,7 @@ wire_name('user-profile', ['userId' => 1], 'profile-1');</code></pre>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center text-gray-600">
                 <p class="text-sm">
-                    Forge Engine Documentation - ForgeWire Module
+                    Forge Kernel Documentation - ForgeWire Module
                 </p>
             </div>
         </div>

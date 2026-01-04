@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forge Engine</title>
+    <title>Forge Kernel - ForgeAuth</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
@@ -92,7 +92,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">
-                            Forge Engine
+                            Forge Kernel
                         </h1>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -320,10 +320,10 @@
                         <h3 class="text-lg font-semibold mb-3">Using Forge Package Manager</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Install the latest version
-php forge install:module ForgeAuth
+php forge.php package:install-module ForgeAuth
 
 # Install a specific version
-php forge install:module ForgeAuth@0.1.2</code></pre>
+php forge.php package:install-module ForgeAuth@0.1.2</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Manual Installation</h3>
@@ -799,7 +799,7 @@ class RoleMiddleware
     <footer class="bg-gray-900 text-white py-8 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="flex items-center justify-center mb-4">
-                <span class="text-lg font-bold">Forge Engine</span>
+                <span class="text-lg font-bold">Forge Kernel</span>
             </div>
             <p class="text-gray-400">
                 A toolbox for builders who like to do things their way.

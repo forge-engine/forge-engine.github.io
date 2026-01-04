@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForgeTesting - Forge Engine Documentation</title>
+    <title>ForgeTesting - Forge Kernel Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script
@@ -75,7 +75,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">
-                            Forge Engine
+                            Forge Kernel
                         </h1>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -209,7 +209,7 @@
                             Overview
                         </h2>
                         <p class="text-gray-700 mb-4">
-                            ForgeTesting is a comprehensive testing framework for Forge Engine applications. It provides
+                            ForgeTesting is a comprehensive testing framework for Forge Kernel applications. It provides
                             a robust set of tools for unit testing, integration testing, HTTP testing, database testing,
                             and performance benchmarking.
                         </p>
@@ -280,7 +280,7 @@
                             Installation
                         </h2>
                         <p class="text-gray-700 mb-4">
-                            ForgeTesting comes pre-installed with Forge Engine. If you need to install it separately:
+                            ForgeTesting comes pre-installed with Forge Kernel. If you need to install it separately:
                         </p>
                         <div class="code-block">
                             <pre class="language-php" tabindex="0"><code class="language-php"># Using Forge Package Manager
@@ -565,11 +565,11 @@ class HttpTest extends TestCase
                         <div class="code-block">
                             <pre class="language-php" tabindex="0"><code class="language-php">use App\Modules\ForgeTesting\Attributes\Test;
 use App\Modules\ForgeTesting\TestCase;
-use Forge\Core\Database\QueryBuilder;
+use Forge\Core\Contracts\Database\QueryBuilderInterface;
 
 class DatabaseTest extends TestCase
 {
-    private QueryBuilder $queryBuilder;
+    private QueryBuilderInterface $queryBuilder;
 
     public function __construct()
     {
@@ -827,7 +827,7 @@ final class AuthenticationTest extends TestCase
     <footer class="bg-gray-800 text-white py-8 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <p>&copy; 2024 Forge Engine. All rights reserved.</p>
+                <p>&copy; 2024 Forge Kernel. All rights reserved.</p>
             </div>
         </div>
     </footer>

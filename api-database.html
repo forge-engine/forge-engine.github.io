@@ -198,7 +198,7 @@
                     <p class="text-xl text-gray-600 mb-8">
                         Database connectivity, ORM functionality, query building, and model management. 
                         These classes provide comprehensive database operations including connections, 
-                        migrations, relationships, and query optimization for your Forge Engine applications.
+                        migrations, relationships, and query optimization for your Forge Kernel applications.
                     </p>
 
                     <!-- DatabaseConnection Class -->
@@ -328,33 +328,62 @@ $count = $connection->select('SELECT COUNT(*) as total FROM users')[0]['total'];
                             
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
                                 <h4 class="font-semibold text-lg mb-2">Creating a Model</h4>
-                                <p class="text-gray-600 text-sm mb-3">Extend the base Model class to create your own models.</p>
+                                <p class="text-gray-600 text-sm mb-3">Extend the base Model class and use attributes to define your model properties and relationships.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-php">class User extends Model
+                                    <pre><code class="language-php">&lt;?php
+use App\Modules\ForgeSqlOrm\ORM\Model;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Table;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Column;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Hidden;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\ProtectedFields;
+use App\Modules\ForgeSqlOrm\ORM\Values\Cast;
+use App\Modules\ForgeSqlOrm\ORM\Values\Relate;
+use App\Modules\ForgeSqlOrm\ORM\Values\RelationKind;
+
+#[Table('users')]
+#[ProtectedFields('password', 'remember_token')]
+class User extends Model
 {
-    protected string $table = 'users';
-    protected string $primaryKey = 'id';
-    protected array $fillable = ['name', 'email', 'password'];
-    protected array $hidden = ['password', 'remember_token'];
-    protected array $casts = [
-        'email_verified_at' => 'datetime',
-        'is_active' => 'boolean'
-    ];
+    #[Column(primary: true, cast: Cast::INTEGER)]
+    public int $id;
     
-    // Define relationships
+    #[Column(cast: Cast::STRING)]
+    public string $name;
+    
+    #[Column(cast: Cast::STRING)]
+    public string $email;
+    
+    #[Column(cast: Cast::STRING)]
+    #[Hidden]
+    public string $password;
+    
+    #[Column(cast: Cast::DATETIME, nullable: true)]
+    public ?DateTimeImmutable $email_verified_at;
+    
+    #[Column(cast: Cast::BOOLEAN)]
+    public bool $is_active;
+    
+    // Define relationships using #[Relate] attribute
+    #[Relate(
+        kind: RelationKind::HasMany,
+        target: Post::class,
+        foreignKey: 'user_id',
+        localKey: 'id'
+    )]
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->relation('posts');
     }
     
+    #[Relate(
+        kind: RelationKind::HasOne,
+        target: Profile::class,
+        foreignKey: 'user_id',
+        localKey: 'id'
+    )]
     public function profile()
     {
-        return $this->hasOne(Profile::class);
-    }
-    
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
+        return $this->relation('profile');
     }
 }</code></pre>
                                 </div>
@@ -365,39 +394,43 @@ $count = $connection->select('SELECT COUNT(*) as total FROM users')[0]['total'];
                             <h3 class="text-xl font-semibold text-gray-900 mb-4">Query Methods</h3>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
-                                <h4 class="font-semibold text-lg mb-2">find(mixed $id): ?Model</h4>
-                                <p class="text-gray-600 text-sm mb-3">Find a model by its primary key.</p>
+                                <h4 class="font-semibold text-lg mb-2">query(): ModelQuery</h4>
+                                <p class="text-gray-600 text-sm mb-3">Start a new query builder instance. All queries begin with <code>Model::query()</code>.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-php">$user = User::find(1);
-$user = User::find('550e8400-e29b-41d4-a716-446655440000');</code></pre>
+                                    <pre><code class="language-php">// Get all records
+$users = User::query()->get();
+
+// Find by ID
+$user = User::query()->id(1)->first();
+$user = User::query()->id('550e8400-e29b-41d4-a716-446655440000')->first();</code></pre>
                                 </div>
                             </div>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
-                                <h4 class="font-semibold text-lg mb-2">where(string $column, mixed $operator = null, mixed $value = null): Builder</h4>
+                                <h4 class="font-semibold text-lg mb-2">where(string $column, string $operator, mixed $value): ModelQuery</h4>
                                 <p class="text-gray-600 text-sm mb-3">Add a where clause to the query.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-php">$users = User::where('active', true)->get();
-$users = User::where('age', '>', 18)->get();
-$users = User::where('email', 'like', '%@example.com')->get();</code></pre>
+                                    <pre><code class="language-php">$users = User::query()->where('is_active', '=', true)->get();
+$users = User::query()->where('age', '>', 18)->get();
+$users = User::query()->where('email', 'like', '%@example.com')->get();</code></pre>
                                 </div>
                             </div>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
-                                <h4 class="font-semibold text-lg mb-2">get(): Collection</h4>
-                                <p class="text-gray-600 text-sm mb-3">Execute the query and get the results.</p>
+                                <h4 class="font-semibold text-lg mb-2">get(): array</h4>
+                                <p class="text-gray-600 text-sm mb-3">Execute the query and get all results as an array of Model instances.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-php">$users = User::where('active', true)->get();
-$users = User::where('role', 'admin')->limit(10)->get();</code></pre>
+                                    <pre><code class="language-php">$users = User::query()->where('is_active', '=', true)->get();
+$users = User::query()->where('role', '=', 'admin')->get();</code></pre>
                                 </div>
                             </div>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
                                 <h4 class="font-semibold text-lg mb-2">first(): ?Model</h4>
-                                <p class="text-gray-600 text-sm mb-3">Get the first result of the query.</p>
+                                <p class="text-gray-600 text-sm mb-3">Get the first result of the query, or null if no results.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-php">$user = User::where('email', 'john@example.com')->first();
-$admin = User::where('role', 'admin')->first();</code></pre>
+                                    <pre><code class="language-php">$user = User::query()->where('email', '=', 'john@example.com')->first();
+$admin = User::query()->where('role', '=', 'admin')->first();</code></pre>
                                 </div>
                             </div>
                         </div>
@@ -406,14 +439,14 @@ $admin = User::where('role', 'admin')->first();</code></pre>
                             <h3 class="text-xl font-semibold text-gray-900 mb-4">CRUD Operations</h3>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
-                                <h4 class="font-semibold text-lg mb-2">create(array $attributes): Model</h4>
-                                <p class="text-gray-600 text-sm mb-3">Create a new model instance and save it to the database.</p>
+                                <h4 class="font-semibold text-lg mb-2">Creating Records</h4>
+                                <p class="text-gray-600 text-sm mb-3">Create a new model instance and save it to the database using the <code>save()</code> method.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-php">$user = User::create([
-    'name' => 'John Doe',
-    'email' => 'john@example.com',
-    'password' => password_hash('secret', PASSWORD_DEFAULT)
-]);</code></pre>
+                                    <pre><code class="language-php">$user = new User();
+$user->name = 'John Doe';
+$user->email = 'john@example.com';
+$user->password = password_hash('secret', PASSWORD_DEFAULT);
+$user->save();</code></pre>
                                 </div>
                             </div>
 
@@ -429,20 +462,31 @@ $user->save();</code></pre>
                             </div>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
-                                <h4 class="font-semibold text-lg mb-2">update(array $attributes): bool</h4>
-                                <p class="text-gray-600 text-sm mb-3">Update the model in the database.</p>
+                                <h4 class="font-semibold text-lg mb-2">Updating Records</h4>
+                                <p class="text-gray-600 text-sm mb-3">Update model properties and call <code>save()</code>, or use the query builder to update multiple records.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-php">$user->update(['name' => 'John Smith']);
-User::where('role', 'user')->update(['active' => false]);</code></pre>
+                                    <pre><code class="language-php">// Update single model
+$user->name = 'John Smith';
+$user->save();
+
+// Update multiple records
+User::query()
+    ->where('role', '=', 'user')
+    ->update(['is_active' => false]);</code></pre>
                                 </div>
                             </div>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
-                                <h4 class="font-semibold text-lg mb-2">delete(): bool</h4>
-                                <p class="text-gray-600 text-sm mb-3">Delete the model from the database.</p>
+                                <h4 class="font-semibold text-lg mb-2">Deleting Records</h4>
+                                <p class="text-gray-600 text-sm mb-3">Delete a model instance, or use the query builder to delete multiple records.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-php">$user->delete();
-User::where('last_login', '<', '2023-01-01')->delete();</code></pre>
+                                    <pre><code class="language-php">// Delete single model
+$user->delete();
+
+// Delete multiple records
+User::query()
+    ->where('last_login', '<', '2023-01-01')
+    ->forceDelete();</code></pre>
                                 </div>
                             </div>
                         </div>
@@ -650,53 +694,74 @@ $defaultConfig = $config->getConnection(); // Gets default connection</code></pr
                             <h3 class="text-xl font-semibold text-gray-900 mb-4">Basic CRUD Operations</h3>
                             <div class="code-block p-4 text-white rounded">
                                 <pre><code class="language-php">// Create
-$user = User::create([
-    'name' => 'John Doe',
-    'email' => 'john@example.com',
-    'password' => password_hash('secret', PASSWORD_DEFAULT)
-]);
+$user = new User();
+$user->name = 'John Doe';
+$user->email = 'john@example.com';
+$user->save();
 
 // Read
-$user = User::find(1);
-$users = User::where('active', true)->get();
-$admin = User::where('role', 'admin')->first();
+$user = User::query()->id(1)->first();
+$users = User::query()->where('is_active', '=', true)->get();
 
 // Update
-$user->name = 'John Smith';
+$user->name = 'Jane Doe';
 $user->save();
-User::where('role', 'user')->update(['active' => false]);
 
 // Delete
-$user->delete();
-User::where('last_login', '<', '2023-01-01')->delete();</code></pre>
+$user->delete();</code></pre>
                             </div>
                         </div>
 
                         <div class="mb-8">
                             <h3 class="text-xl font-semibold text-gray-900 mb-4">Complex Queries with Relationships</h3>
                             <div class="code-block p-4 text-white rounded">
-                                <pre><code class="language-php">// Get users with their posts
-$users = User::with('posts')->get();
+                                <pre><code class="language-php">// Eager load relationships
+$users = User::query()->with('posts')->get();
 
-// Get posts with user information
-$posts = Post::with('user')->where('published', true)->get();
+// Access relationship
+$user = User::query()->id(1)->first();
+$posts = $user->load('posts');
 
-// Get users who have posts
-$users = User::has('posts')->get();
+// Query related models
+$posts = Post::query()
+    ->where('published', '=', true)
+    ->get();
 
-// Get users with more than 5 posts
-$users = User::has('posts', '>', 5)->get();
+// Query with relationship
+$user = User::query()->id(1)->first();
+$userPosts = $user->relation('posts')->get();</code></pre>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
 
-// Get posts with specific user
-$posts = Post::whereHas('user', function($query) {
-    $query->where('active', true);
-})->get();
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
-// Eager loading with conditions
-$users = User::with(['posts' => function($query) {
-    $query->where('published', true)
-          ->orderBy('created_at', 'desc');
-}])->get();</code></pre>
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuOverlay.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
                             </div>
                         </div>
 
@@ -708,15 +773,15 @@ $connection = new DatabaseConnection($config);
 $connection->beginTransaction();
 
 try {
-    $user = User::create([
-        'name' => 'John Doe',
-        'email' => 'john@example.com'
-    ]);
+    $user = new User();
+    $user->name = 'John Doe';
+    $user->email = 'john@example.com';
+    $user->save();
     
-    $profile = Profile::create([
-        'user_id' => $user->id,
-        'bio' => 'Software Developer'
-    ]);
+    $profile = new Profile();
+    $profile->user_id = $user->id;
+    $profile->bio = 'Software Developer';
+    $profile->save();
     
     $connection->commit();
 } catch (Exception $e) {
@@ -726,8 +791,16 @@ try {
 
 // Using transaction method
 $result = $connection->transaction(function() {
-    $user = User::create(['name' => 'Jane Doe', 'email' => 'jane@example.com']);
-    Profile::create(['user_id' => $user->id, 'bio' => 'Designer']);
+    $user = new User();
+    $user->name = 'Jane Doe';
+    $user->email = 'jane@example.com';
+    $user->save();
+    
+    $profile = new Profile();
+    $profile->user_id = $user->id;
+    $profile->bio = 'Designer';
+    $profile->save();
+    
     return $user;
 });</code></pre>
                             </div>
@@ -817,7 +890,7 @@ $users = $connection->query('
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center text-gray-600">
                 <p class="text-sm">
-                    Forge Engine Documentation - Database & ORM API
+                    Forge Kernel Documentation - Database & ORM API
                 </p>
             </div>
         </div>

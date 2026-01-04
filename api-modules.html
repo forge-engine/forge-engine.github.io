@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module System API - Forge Engine Documentation</title>
+    <title>Capability System API - Forge Kernel Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script
@@ -74,9 +74,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <div class="flex-shrink-0">
+                        <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">
-                            Forge Engine
+                            Forge Kernel
                         </h1>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -193,7 +193,7 @@
                     <p class="text-xl text-gray-600 mb-8">
                         Module discovery, registration, lifecycle management, and dependency resolution. 
                         The Module System provides a powerful plugin architecture that allows you to 
-                        extend the framework's functionality through modular components.
+                        extend the kernel's functionality through modular capability components.
                     </p>
 
                     <!-- Module Attribute -->
@@ -203,7 +203,7 @@
                                 <i class="fas fa-cube text-blue-600 mr-3"></i>Module Attribute
                             </h2>
                             <p class="text-gray-700">
-                                PHP 8 attribute that marks a class as a Forge Engine module. Modules use attributes 
+                                PHP 8 attribute that marks a class as a Forge Kernel capability module. Capabilities use attributes 
                                 for configuration rather than extending a base class, providing a clean and modern 
                                 approach to module definition.
                             </p>
@@ -214,7 +214,7 @@
                             
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
                                 <h4 class="font-semibold text-lg mb-2">Basic Module Definition</h4>
-                                <p class="text-gray-600 text-sm mb-3">Create a custom module using PHP 8 attributes to mark the class as a Forge Engine module.</p>
+                                <p class="text-gray-600 text-sm mb-3">Create a custom capability module using PHP 8 attributes to mark the class as a Forge Kernel capability.</p>
                                 <div class="code-block p-4 text-white rounded">
                                     <pre><code class="language-php">&lt;?php
 
@@ -386,7 +386,7 @@ public function onAfterRequest(): void
                                 <i class="fas fa-tags text-purple-600 mr-3"></i>Module Attributes Reference
                             </h2>
                             <p class="text-gray-700">
-                                Complete reference of all available PHP 8 attributes for defining and configuring modules in Forge Engine.
+                                Complete reference of all available PHP 8 attributes for defining and configuring capability modules in Forge Kernel.
                                 These attributes provide a declarative way to configure module metadata, dependencies, compatibility, and behavior.
                             </p>
                         </div>
@@ -396,7 +396,7 @@ public function onAfterRequest(): void
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
                                 <h4 class="font-semibold text-lg mb-2">#[Module] - Primary Module Definition</h4>
-                                <p class="text-gray-600 text-sm mb-3">Required attribute that marks a class as a Forge Engine module and defines its basic properties.</p>
+                                <p class="text-gray-600 text-sm mb-3">Required attribute that marks a class as a Forge Kernel capability module and defines its basic properties.</p>
                                 <div class="code-block p-4 text-white rounded">
                                     <pre><code class="language-php">use Forge\Core\Module\Attributes\Module;
 
@@ -416,13 +416,13 @@ final class BlogModule
                             </div>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
-                                <h4 class="font-semibold text-lg mb-2">#[Compatibility] - Framework & PHP Version Requirements</h4>
-                                <p class="text-gray-600 text-sm mb-3">Defines compatibility requirements for Forge Engine framework and PHP versions.</p>
+                                <h4 class="font-semibold text-lg mb-2">#[Compatibility] - Kernel & PHP Version Requirements</h4>
+                                <p class="text-gray-600 text-sm mb-3">Defines compatibility requirements for Forge Kernel and PHP versions.</p>
                                 <div class="code-block p-4 text-white rounded">
                                     <pre><code class="language-php">use Forge\Core\Module\Attributes\Compatibility;
 
 #[Compatibility(
-    framework: ">=0.1.0",            // Forge Engine version constraint
+    framework: ">=0.1.0",            // Forge Kernel version constraint
     php: ">=8.3"                    // PHP version constraint
 )]
 final class BlogModule
@@ -625,7 +625,7 @@ public function onBeforeRequest(): void
 
                         <div class="mb-8">
                             <h3 class="text-xl font-semibold text-gray-900 mb-4">Module Loading System</h3>
-                            <p class="text-gray-600 mb-4">Forge Engine uses a ModuleLoader to discover, load, and manage modules throughout the application lifecycle. Modules are loaded based on their <code>forge.json</code> configuration files.</p>
+                            <p class="text-gray-600 mb-4">Forge Kernel uses a ModuleLoader to discover, load, and manage capability modules throughout the application lifecycle. Capabilities are loaded based on their <code>forge.json</code> configuration files.</p>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
                                 <h4 class="font-semibold text-lg mb-2">Module Discovery</h4>
@@ -640,7 +640,7 @@ $loader = new ModuleLoader($this->container);
     "$schema": "engine/Core/Schema/module-schema.json",
     "name": "ForgeBlog",
     "version": "1.0.0",
-    "description": "Blog functionality for Forge Engine",
+    "description": "Blog functionality for Forge Kernel",
     "type": "module",
     "order": 10,
     "provides": ["blog", "posts"],
@@ -731,32 +731,31 @@ $modules = [
 
                         <div class="mb-8">
                             <h3 class="text-xl font-semibold text-gray-900 mb-4">Module Management</h3>
-                            <p class="text-gray-600 mb-4">Module management in Forge Engine is handled through the PackageManager module and CLI commands, not through a programmatic API.</p>
+                            <p class="text-gray-600 mb-4">Capability management in Forge Kernel is handled through the PackageManager capability and CLI commands, not through a programmatic API.</p>
 
                             <div class="api-method bg-gray-50 p-4 rounded-lg mb-4">
                                 <h4 class="font-semibold text-lg mb-2">CLI Commands</h4>
-                                <p class="text-gray-600 text-sm mb-3">Use the Forge CLI to manage modules from the command line.</p>
+                                <p class="text-gray-600 text-sm mb-3">Use the Forge CLI to manage capabilities from the command line.</p>
                                 <div class="code-block p-4 text-white rounded">
-                                    <pre><code class="language-bash"># List all available modules
-php forge module:list
+                                    <pre><code class="language-bash"># List all available capabilities
+php forge.php package:list-modules
 
-# Install a module
-php forge module:install ForgeBlog
+# Install a capability
+php forge.php package:install-module ForgeAuth
 
-# Uninstall a module
-php forge module:uninstall ForgeBlog
+# Install a specific version
+php forge.php package:install-module ForgeAuth@1.2.0
 
-# Enable a module
-php forge module:enable ForgeBlog
+# Remove a capability
+php forge.php package:remove-module ForgeAuth
 
-# Disable a module
-php forge module:disable ForgeBlog
-
-# Update a module
-php forge module:update ForgeBlog
-
-# Check module status
-php forge module:status ForgeBlog</code></pre>
+# Install all capabilities from lock file
+php forge.php package:install-project</code></pre>
+                                </div>
+                                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mt-3">
+                                    <p class="text-sm text-yellow-700">
+                                        <strong>Note:</strong> Capabilities are managed through the package manager. There are no separate enable/disable/update commands. To update a capability, install a new version. To disable it, remove it.
+                                    </p>
                                 </div>
                             </div>
 
@@ -893,7 +892,7 @@ switch ($status) {
                                 <i class="fas fa-download text-purple-600 mr-3"></i>Module Loading System
                             </h2>
                             <p class="text-gray-700">
-                                Forge Engine uses a sophisticated module loading system that discovers modules through their <code>forge.json</code> configuration files and loads them using PHP 8 attributes. The system handles dependency resolution, lifecycle hooks, and module validation automatically.
+                                Forge Kernel uses a sophisticated capability loading system that discovers capability modules through their <code>forge.json</code> configuration files and loads them using PHP 8 attributes. The system handles dependency resolution, lifecycle hooks, and capability validation automatically.
                             </p>
                         </div>
 
@@ -995,7 +994,7 @@ use Forge\Core\Module\LifecycleHookName;
 #[Module(
     name: "ForgeBlog",
     version: "1.0.0",
-    description: "Blog functionality for Forge Engine",
+    description: "Blog functionality for Forge Kernel",
     order: 10,
     core: false,
     isCli: false
@@ -1060,14 +1059,14 @@ class ForgeBlogModule
 {
     "name": "ForgeBlog",
     "version": "1.0.0",
-    "description": "Blog functionality for Forge Engine",
+    "description": "Blog functionality for Forge Kernel",
     "type": "module",
     "keywords": ["blog", "posts", "content"],
     "homepage": "https://github.com/forge-engine/forge-blog",
     "license": "MIT",
     "authors": [
         {
-            "name": "Forge Engine Team",
+            "name": "Forge Kernel Team",
             "email": "team@forge-engine.com"
         }
     ],
@@ -1115,7 +1114,7 @@ use Forge\Core\Module\Attributes\Provides;
 #[Module(
     name: "ForgeBlog",
     version: "1.0.0",
-    description: "Blog functionality for Forge Engine"
+    description: "Blog functionality for Forge Kernel"
 )]
 #[Requires("ForgeAuth", "^1.0.0")]      // Requires auth module
 #[Requires("ForgeUI", "^1.0.0")]        // Requires UI module
@@ -1387,7 +1386,7 @@ class ForgeBlogModule
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center text-gray-600">
                 <p class="text-sm">
-                    Forge Engine Documentation - Module System API
+                    Forge Kernel Documentation - Capability System API
                 </p>
             </div>
         </div>

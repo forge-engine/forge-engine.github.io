@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helpers & Traits API - Forge Engine Documentation</title>
+    <title>Helpers & Traits API - Forge Kernel Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script
@@ -76,7 +76,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">
-                            Forge Engine
+                            Forge Kernel
                         </h1>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -239,7 +239,7 @@ Str::snake('fooBar');                      // foo_bar
 Str::kebab('fooBar');                      // foo-bar
 Str::studly('foo_bar');                   // FooBar
 Str::title('hello world');                // Hello World
-Str::headline('forge_engine_is_awesome'); // Forge Engine Is Awesome
+Str::headline('forge_kernel_is_awesome'); // Forge Kernel Is Awesome
 
 // Case conversion
 Str::upper('hello world');                // HELLO WORLD
@@ -350,8 +350,8 @@ Str::readingTime('Long article text here...');  // 5 (minutes)
 Str::readingTime('Short text', 'seconds');      // 30 (seconds)
 
 // Generate hashtags
-Str::hashtags('PHP Laravel Framework Web Development'); // #PHP #Laravel #Framework #Web #Development
-Str::hashtags('PHP Laravel Framework', '#'); // #PHP#Laravel#Framework</code></pre>
+Str::hashtags('PHP Forge Kernel Web Development'); // #PHP #Forge #Kernel #Web #Development
+Str::hashtags('PHP Forge Kernel', '#'); // #PHP#Forge#Kernel</code></pre>
                                 </div>
                             </div>
                         </div>
@@ -467,8 +467,8 @@ Str::extractEmails('Contact us at info@example.com or support@domain.org');
 // ['info@example.com', 'support@domain.org']
 Str::extractUrls('Visit https://example.com and http://test.org');
 // ['https://example.com', 'http://test.org']
-Str::extractHashtags('Love #PHP and #Laravel framework');
-// ['PHP', 'Laravel']</code></pre>
+Str::extractHashtags('Love #PHP and #Forge kernel');
+// ['PHP', 'Forge']</code></pre>
                                 </div>
                             </div>
                         </div>
@@ -1772,7 +1772,7 @@ $users = User::updatedInLast('24 hours')->get();</code></pre>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
                 <p class="text-gray-400">
-                    &copy; 2024 Forge Engine. All rights reserved.
+                    &copy; 2024 Forge Kernel. All rights reserved.
                 </p>
             </div>
         </div>

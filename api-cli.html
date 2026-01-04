@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLI & Console API - Forge Engine Documentation</title>
+    <title>CLI & Console API - Forge Kernel Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script
@@ -76,7 +76,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <h1 class="text-xl font-bold text-gray-900">
-                            Forge Engine
+                            Forge Kernel
                         </h1>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -221,10 +221,10 @@ use Forge\Console\Input\Input;
 use Forge\Console\Output\Output;
 
 // Create console application
-$console = new Console('Forge Engine CLI', '1.0.0');
+$console = new Console('Forge Kernel CLI', '1.0.0');
 
 // Set application description
-$console->setDescription('Command-line interface for Forge Engine applications');
+$console->setDescription('Command-line interface for Forge Kernel applications');
 
 // Configure global options
 $console->setGlobalOptions([
@@ -1025,7 +1025,7 @@ class ListCommand extends Command
         
         // Definition list
         $io->definitionList(
-            ['Application' => 'Forge Engine'],
+            ['Application' => 'Forge Kernel'],
             ['Version' => '1.0.0'],
             ['Environment' => 'production'],
             ['Debug Mode' => 'disabled'],
@@ -1459,7 +1459,7 @@ class CacheCommand extends Command
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center text-gray-600">
                 <p class="text-sm">
-                    Forge Engine Documentation - CLI & Console API
+                    Forge Kernel Documentation - CLI & Console API
                 </p>
             </div>
         </div>

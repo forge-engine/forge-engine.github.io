@@ -553,29 +553,42 @@ class UserController
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
 
-use Forge\Core\Database\Model;
-use Forge\Core\Database\Attributes\Table;
-use Forge\Core\Database\Attributes\Column;
+use App\Modules\ForgeSqlOrm\ORM\Model;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Table;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Column;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Hidden;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\ProtectedFields;
+use App\Modules\ForgeSqlOrm\ORM\Values\Cast;
+use App\Modules\ForgeSqlOrm\ORM\Values\Relate;
+use App\Modules\ForgeSqlOrm\ORM\Values\RelationKind;
 
 #[Table('users')]
+#[ProtectedFields('password', 'remember_token')]
 class User extends Model
 {
-    #[Column(type: 'string', length: 255)]
+    #[Column(primary: true, cast: Cast::INTEGER)]
+    public int $id;
+    
+    #[Column(cast: Cast::STRING)]
     public string $name;
     
-    #[Column(type: 'string', length: 255, unique: true)]
+    #[Column(cast: Cast::STRING)]
     public string $email;
     
-    #[Column(type: 'string', length: 255)]
-    protected string $password;
+    #[Column(cast: Cast::STRING)]
+    #[Hidden]
+    public string $password;
     
-    protected array $fillable = ['name', 'email', 'password'];
-    protected array $hidden = ['password'];
-    
-    // Relationships
+    // Relationships use #[Relate] attribute
+    #[Relate(
+        kind: RelationKind::HasMany,
+        target: Post::class,
+        foreignKey: 'user_id',
+        localKey: 'id'
+    )]
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->relation('posts');
     }
 }</code></pre>
                         </div>
@@ -584,27 +597,35 @@ class User extends Model
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
 
-// Basic queries
-$users = User::all();
-$user = User::find(1);
-$activeUsers = User::where('status', 'active')->get();
+// Get all records
+$users = User::query()->get();
 
-// Advanced queries
-$users = User::where('created_at', '>', '2024-01-01')
-    ->orderBy('name')
-    ->limit(10)
+// Find by ID
+$user = User::query()->id(1)->first();
+
+// Where queries
+$activeUsers = User::query()
+    ->where('status', '=', 'active')
     ->get();
 
-// Relationships
-$user = User::with('posts')->find(1);
-$posts = $user->posts;
+// Advanced queries
+$users = User::query()
+    ->where('created_at', '>', '2024-01-01')
+    ->get();
 
-// Aggregates
-$count = User::count();
-$avgAge = User::avg('age');
+// With relationships
+$user = User::query()
+    ->with('posts')
+    ->id(1)
+    ->first();
 
-// Raw queries when needed
-$users = User::raw('SELECT * FROM users WHERE custom_condition = ?', [true]);</code></pre>
+// Access relationship
+$posts = $user->load('posts');</code></pre>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Note:</strong> Forge uses a query builder pattern. Always start with <code>Model::query()</code> to build queries. There are no static methods like <code>all()</code> or <code>find()</code> directly on the Model class.
+                            </p>
                         </div>
                     </section>
 

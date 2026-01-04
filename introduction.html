@@ -268,7 +268,11 @@
                     <li><strong>app/</strong> – Your application code. This is where your controllers, services, views, and application logic live.</li>
                     <ul>
                         <li><strong>Commands/</strong> – Custom CLI commands for your application.</li>
-                        <li><strong>Components/</strong> – PHP components (Ui/ and Wire/ subfolders).</li>
+                        <li><strong>Components/</strong> – PHP component classes organized by type:</li>
+                        <ul>
+                            <li><strong>Ui/</strong> – UI component classes (e.g., Alert, NavBar, Footer).</li>
+                            <li><strong>Wire/</strong> – Wire component classes for reactive components (e.g., Counter, ProductSearch).</li>
+                        </ul>
                         <li><strong>Controllers/</strong> – Route handlers. Required if you're using auto-discovery.</li>
                         <li><strong>Database/</strong> – Migrations and seeders for setting up your schema and sample data.</li>
                         <li><strong>Dto/</strong> – Data Transfer Objects.</li>
@@ -277,7 +281,12 @@
                         <li><strong>resources/</strong> – Views, layouts, assets, components — your UI layer.</li>
                         <ul>
                             <li><strong>assets/</strong> – CSS and JavaScript files (css/ and js/ subfolders).</li>
-                            <li><strong>components/</strong> – View components (shared/, ui/, wire/ subfolders).</li>
+                            <li><strong>components/</strong> – View templates for components:</li>
+                            <ul>
+                                <li><strong>shared/</strong> – Shared component views.</li>
+                                <li><strong>ui/</strong> – View templates for UI components (e.g., alert.php, nav-bar.php).</li>
+                                <li><strong>wire/</strong> – View templates for Wire components (e.g., counter.php, product-table.php).</li>
+                            </ul>
                             <li><strong>views/</strong> – View templates (layouts/ and pages/ subfolders).</li>
                         </ul>
                         <li><strong>Services/</strong> – Classes injected into other parts of your app. Also auto-discovered.</li>
@@ -296,7 +305,7 @@
                     <li><strong>storage/</strong> – Logs, compiled views, uploads, cache, etc.</li>
                     <li><strong>.env</strong>, <strong>env-example</strong> – Your environment settings and template.</li>
                     <li><strong>forge.php</strong> – The Forge CLI for installing modules, clearing caches, generating files, etc.</li>
-                    <li><strong>install.php</strong> – Handles framework updates and downgrades. Handy for version control.</li>
+                    <li><strong>install.php</strong> – Handles kernel updates and downgrades. Handy for version control.</li>
                     <li><strong>LICENSE</strong>, <strong>LICENSE-MIT.txt</strong>, <strong>README.md</strong> – Usual open source files.</li>
                 </ul>
 
