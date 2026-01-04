@@ -1,222 +1,474 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Reference - Forge Kernel Documentation</title>
-    <link rel="stylesheet" href="assets/css/forge-docs.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background: #2d3748;
+            border-radius: 0.5rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #f3f4f6;
+            padding-left: 1.5rem;
+        }
+
+        .nav-link.active {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            border-left: 4px solid #6366f1;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Mobile menu styles */
+        #mobile-menu {
+            display: none;
+        }
+
+        #mobile-menu:not(.hidden) {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .lg\:w-1\/4 {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 80%;
+                max-width: 320px;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                background: white;
+                overflow-y: auto;
+            }
+
+            .lg\:w-1\/4.mobile-menu-open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+                display: none;
+            }
+
+            .mobile-menu-overlay.active {
+                display: block;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="docs-container">
-        <aside class="sidebar">
-            <nav>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">Navigation</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="index.html" class="sidebar-nav-link">Home</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="introduction.html" class="sidebar-nav-link">Introduction</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="getting-started.html" class="sidebar-nav-link">Getting Started</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="core-concepts.html" class="sidebar-nav-link">Core Concepts</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="modules.html" class="sidebar-nav-link">Capabilities</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-reference.html" class="sidebar-nav-link active">API Reference</a>
-                            </li>
+
+<body class="bg-gray-50 text-gray-900" style="font-size: 17px;">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Modules
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Home
+                </a>
+                <a href="getting-started.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Getting Started
+                </a>
+                <a href="core-concepts.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Core Concepts
+                </a>
+                <a href="modules.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Modules
+                </a>
+                <a href="api-reference.html"
+                    class="block px-3 py-2 text-blue-600 font-medium">
+                    API Reference
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <!-- Mobile menu overlay -->
+                <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        API Reference
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="api-core.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Core Engine
+                        </a>
+                        <a href="api-http.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            HTTP Layer
+                        </a>
+                        <a href="api-database.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Database & ORM
+                        </a>
+                        <a href="api-di.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            DI Container
+                        </a>
+                        <a href="api-routing.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Routing
+                        </a>
+                        <a href="api-modules.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Module System
+                        </a>
+                        <a href="api-cli.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            CLI & Console
+                        </a>
+                        <a href="api-cache.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Caching
+                        </a>
+                        <a href="api-validation.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Validation
+                        </a>
+                        <a href="api-helpers.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Helpers & Traits
+                        </a>
+                        <a href="api-events.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Events
+                        </a>
+                        <a href="api-security.html"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Security
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">
+                        API Reference
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Complete reference for all Forge Kernel classes, methods, and interfaces.
+                    </p>
+
+                    <section class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Getting Started</h2>
+                        <p class="text-gray-600 mb-4">
+                            The Forge Kernel API is organized into logical sections. Each section contains detailed documentation for classes, methods, properties, and usage examples.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">For Developers</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Start with <strong><a href="api-core.html" class="text-blue-600 hover:underline">Core Engine</a></strong> for kernel fundamentals</li>
+                            <li>Learn <strong><a href="api-http.html" class="text-blue-600 hover:underline">HTTP Layer</a></strong> for web application development</li>
+                            <li>Explore <strong><a href="api-database.html" class="text-blue-600 hover:underline">Database & ORM</a></strong> for data management (requires capability installation)</li>
                         </ul>
-                    </li>
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">API Sections</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="api-core.html" class="sidebar-nav-link">Core Engine</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-http.html" class="sidebar-nav-link">HTTP Layer</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-database.html" class="sidebar-nav-link">Database & ORM</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-di.html" class="sidebar-nav-link">DI Container</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-routing.html" class="sidebar-nav-link">Routing</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-modules.html" class="sidebar-nav-link">Module System</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-cli.html" class="sidebar-nav-link">CLI & Console</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-cache.html" class="sidebar-nav-link">Caching</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-validation.html" class="sidebar-nav-link">Validation</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-helpers.html" class="sidebar-nav-link">Helpers & Traits</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-events.html" class="sidebar-nav-link">Events</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-security.html" class="sidebar-nav-link">Security</a>
-                            </li>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">For Capability Developers</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Study <strong><a href="api-modules.html" class="text-blue-600 hover:underline">Module System</a></strong> for extension development</li>
+                            <li>Understand <strong><a href="api-di.html" class="text-blue-600 hover:underline">DI Container</a></strong> for service management</li>
+                            <li>Review <strong><a href="api-events.html" class="text-blue-600 hover:underline">Events</a></strong> for system integration</li>
                         </ul>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
+                    </section>
 
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
-        <div class="mobile-overlay"></div>
+                    <section class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Core API Sections</h2>
 
-        <main class="main-content">
-            <article>
-                <header class="docs-header">
-                    <h1>API Reference</h1>
-                    <p>Complete reference for all Forge Kernel classes, methods, and interfaces.</p>
-                </header>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Core Engine</h3>
+                        <p class="text-gray-600 mb-4">
+                            Essential classes that power the kernel: Engine, Bootstrap, Autoloader, and more.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-core.html" class="text-blue-600 hover:underline">View Core Engine Documentation →</a>
+                        </p>
 
-                <section>
-                    <h2>Getting Started</h2>
-                    <p>
-                        The Forge Kernel API is organized into logical sections. Each section contains detailed documentation for classes, methods, properties, and usage examples.
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">HTTP Layer</h3>
+                        <p class="text-gray-600 mb-4">
+                            Request/Response handling, middleware, sessions, and HTTP utilities.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-http.html" class="text-blue-600 hover:underline">View HTTP Layer Documentation →</a>
+                        </p>
 
-                    <h3>For Developers</h3>
-                    <ul>
-                        <li>Start with <strong><a href="api-core.html">Core Engine</a></strong> for kernel fundamentals</li>
-                        <li>Learn <strong><a href="api-http.html">HTTP Layer</a></strong> for web application development</li>
-                        <li>Explore <strong><a href="api-database.html">Database & ORM</a></strong> for data management (requires capability installation)</li>
-                    </ul>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Database & ORM</h3>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> Database and ORM functionalities are provided as pluggable capabilities, not built-in features of the Forge Kernel. Models, QueryBuilder, database connections, and migration system.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-database.html" class="text-blue-600 hover:underline">View Database & ORM Documentation →</a>
+                        </p>
 
-                    <h3>For Capability Developers</h3>
-                    <ul>
-                        <li>Study <strong><a href="api-modules.html">Module System</a></strong> for extension development</li>
-                        <li>Understand <strong><a href="api-di.html">DI Container</a></strong> for service management</li>
-                        <li>Review <strong><a href="api-events.html">Events</a></strong> for system integration</li>
-                    </ul>
-                </section>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">DI Container</h3>
+                        <p class="text-gray-600 mb-4">
+                            Dependency injection, service registration, and container management.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-di.html" class="text-blue-600 hover:underline">View DI Container Documentation →</a>
+                        </p>
 
-                <section>
-                    <h2>Core API Sections</h2>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Routing</h3>
+                        <p class="text-gray-600 mb-4">
+                            Route definitions, parameter binding, and URL generation.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-routing.html" class="text-blue-600 hover:underline">View Routing Documentation →</a>
+                        </p>
 
-                    <h3>Core Engine</h3>
-                    <p>
-                        Essential classes that power the kernel: Engine, Bootstrap, Autoloader, and more.
-                    </p>
-                    <p>
-                        <a href="api-core.html">View Core Engine Documentation →</a>
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Module System</h3>
+                        <p class="text-gray-600 mb-4">
+                            Capability loading, lifecycle hooks, and capability development.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-modules.html" class="text-blue-600 hover:underline">View Module System Documentation →</a>
+                        </p>
+                    </section>
 
-                    <h3>HTTP Layer</h3>
-                    <p>
-                        Request/Response handling, middleware, sessions, and HTTP utilities.
-                    </p>
-                    <p>
-                        <a href="api-http.html">View HTTP Layer Documentation →</a>
-                    </p>
+                    <section class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Additional API Sections</h2>
 
-                    <h3>Database & ORM</h3>
-                    <p>
-                        <strong>Note:</strong> Database and ORM functionalities are provided as pluggable capabilities, not built-in features of the Forge Kernel. Models, QueryBuilder, database connections, and migration system.
-                    </p>
-                    <p>
-                        <a href="api-database.html">View Database & ORM Documentation →</a>
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">CLI & Console</h3>
+                        <p class="text-gray-600 mb-4">
+                            Command-line interface, console commands, and CLI utilities for development and maintenance.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-cli.html" class="text-blue-600 hover:underline">View CLI & Console Documentation →</a>
+                        </p>
 
-                    <h3>DI Container</h3>
-                    <p>
-                        Dependency injection, service registration, and container management.
-                    </p>
-                    <p>
-                        <a href="api-di.html">View DI Container Documentation →</a>
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Caching</h3>
+                        <p class="text-gray-600 mb-4">
+                            Cache drivers, cache management, and performance optimization tools.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-cache.html" class="text-blue-600 hover:underline">View Caching Documentation →</a>
+                        </p>
 
-                    <h3>Routing</h3>
-                    <p>
-                        Route definitions, parameter binding, and URL generation.
-                    </p>
-                    <p>
-                        <a href="api-routing.html">View Routing Documentation →</a>
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Validation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Data validation, input sanitization, and validation rules.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-validation.html" class="text-blue-600 hover:underline">View Validation Documentation →</a>
+                        </p>
 
-                    <h3>Module System</h3>
-                    <p>
-                        Capability loading, lifecycle hooks, and capability development.
-                    </p>
-                    <p>
-                        <a href="api-modules.html">View Module System Documentation →</a>
-                    </p>
-                </section>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Events</h3>
+                        <p class="text-gray-600 mb-4">
+                            Event system, listeners, and lifecycle hooks for system integration.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-events.html" class="text-blue-600 hover:underline">View Events Documentation →</a>
+                        </p>
 
-                <section>
-                    <h2>Additional API Sections</h2>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Helpers & Traits</h3>
+                        <p class="text-gray-600 mb-4">
+                            Utility functions, helper classes, and reusable traits for common operations.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-helpers.html" class="text-blue-600 hover:underline">View Helpers & Traits Documentation →</a>
+                        </p>
 
-                    <h3>CLI & Console</h3>
-                    <p>
-                        Command-line interface, console commands, and CLI utilities for development and maintenance.
-                    </p>
-                    <p>
-                        <a href="api-cli.html">View CLI & Console Documentation →</a>
-                    </p>
-
-                    <h3>Caching</h3>
-                    <p>
-                        Cache drivers, cache management, and performance optimization tools.
-                    </p>
-                    <p>
-                        <a href="api-cache.html">View Caching Documentation →</a>
-                    </p>
-
-                    <h3>Validation</h3>
-                    <p>
-                        Data validation, input sanitization, and validation rules.
-                    </p>
-                    <p>
-                        <a href="api-validation.html">View Validation Documentation →</a>
-                    </p>
-
-                    <h3>Events</h3>
-                    <p>
-                        Event system, listeners, and lifecycle hooks for system integration.
-                    </p>
-                    <p>
-                        <a href="api-events.html">View Events Documentation →</a>
-                    </p>
-
-                    <h3>Helpers & Traits</h3>
-                    <p>
-                        Utility functions, helper classes, and reusable traits for common operations.
-                    </p>
-                    <p>
-                        <a href="api-helpers.html">View Helpers & Traits Documentation →</a>
-                    </p>
-
-                    <h3>Security</h3>
-                    <p>
-                        Security features, input sanitization, permissions, and authentication helpers.
-                    </p>
-                    <p>
-                        <a href="api-security.html">View Security Documentation →</a>
-                    </p>
-                </section>
-            </article>
-        </main>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Security</h3>
+                        <p class="text-gray-600 mb-4">
+                            Security features, input sanitization, permissions, and authentication helpers.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <a href="api-security.html" class="text-blue-600 hover:underline">View Security Documentation →</a>
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src="assets/js/docs.js"></script>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
+            </div>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileSidebarButton = document.getElementById('mobile-sidebar-button');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const sidebar = document.getElementById('sidebar-nav');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function openMobileSidebar() {
+            sidebar.classList.add('mobile-menu-open');
+            mobileMenuOverlay.classList.add('active');
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.remove('mobile-menu-open');
+            mobileMenuOverlay.classList.remove('active');
+        }
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        }
+
+        if (mobileSidebarButton) {
+            mobileSidebarButton.addEventListener('click', openMobileSidebar);
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileSidebar);
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideMenu = mobileMenu && mobileMenu.contains(event.target);
+            const isClickOnMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
+
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu and sidebar on window resize if above mobile breakpoint
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 640) {
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                closeMobileSidebar();
+            }
+        });
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>

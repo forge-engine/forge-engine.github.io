@@ -1,129 +1,224 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTTP Layer API - Forge Kernel Documentation</title>
-    <link rel="stylesheet" href="assets/css/forge-docs.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background: #2d3748;
+            border-radius: 0.5rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #f3f4f6;
+            padding-left: 1.5rem;
+        }
+
+        .nav-link.active {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            border-left: 4px solid #6366f1;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Mobile menu styles */
+        #mobile-menu {
+            display: none;
+        }
+
+        #mobile-menu:not(.hidden) {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .lg\:w-1\/4 {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 80%;
+                max-width: 320px;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                background: white;
+                overflow-y: auto;
+            }
+
+            .lg\:w-1\/4.mobile-menu-open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+                display: none;
+            }
+
+            .mobile-menu-overlay.active {
+                display: block;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="docs-container">
-        <aside class="sidebar">
-            <nav>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">Navigation</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="index.html" class="sidebar-nav-link">Home</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="introduction.html" class="sidebar-nav-link">Introduction</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="getting-started.html" class="sidebar-nav-link">Getting Started</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="core-concepts.html" class="sidebar-nav-link">Core Concepts</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="modules.html" class="sidebar-nav-link">Capabilities</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-reference.html" class="sidebar-nav-link">API Reference</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">API Sections</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="api-core.html" class="sidebar-nav-link">Core Engine</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-http.html" class="sidebar-nav-link active">HTTP Layer</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-database.html" class="sidebar-nav-link">Database & ORM</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-di.html" class="sidebar-nav-link">DI Container</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-routing.html" class="sidebar-nav-link">Routing</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-modules.html" class="sidebar-nav-link">Module System</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-cli.html" class="sidebar-nav-link">CLI & Console</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-cache.html" class="sidebar-nav-link">Caching</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-validation.html" class="sidebar-nav-link">Validation</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-helpers.html" class="sidebar-nav-link">Helpers & Traits</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-events.html" class="sidebar-nav-link">Events</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-security.html" class="sidebar-nav-link">Security</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">On This Page</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="#request" class="sidebar-nav-link">Request</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#response" class="sidebar-nav-link">Response</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#kernel" class="sidebar-nav-link">Kernel</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#middleware" class="sidebar-nav-link">Middleware</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#examples" class="sidebar-nav-link">Usage Examples</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#best-practices" class="sidebar-nav-link">Best Practices</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
 
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
-        <div class="mobile-overlay"></div>
+<body class="bg-gray-50 text-gray-900" style="font-size: 17px;">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Modules
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-        <main class="main-content">
-            <article>
-                <header class="docs-header">
-                    <h1>HTTP Layer API</h1>
-                    <p>Comprehensive HTTP handling including request/response objects, routing, middleware, and kernel processing. These classes provide the foundation for handling web requests and generating responses in your Forge Kernel applications.</p>
-                </header>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Home
+                </a>
+                <a href="getting-started.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Getting Started
+                </a>
+                <a href="core-concepts.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Core Concepts
+                </a>
+                <a href="modules.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Modules
+                </a>
+                <a href="api-reference.html"
+                    class="block px-3 py-2 text-blue-600 font-medium">
+                    API Reference
+                </a>
+            </div>
+        </div>
+    </nav>
 
-                <section id="request">
-                    <h2>Request</h2>
-                    <p>Represents an HTTP request and provides methods to access request data, headers, and other request-related information. This is the primary way to interact with incoming HTTP requests in your application.</p>
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <!-- Mobile menu overlay -->
+                <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
 
-                    <h3>Constructor & Properties</h3>
-                    <h4>__construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], string $content = null)</h4>
-                    <p>Create a new Request instance with the given parameters.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">// Create from globals
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        HTTP Layer
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#request"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Request
+                        </a>
+                        <a href="#response"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Response
+                        </a>
+                        <a href="#kernel"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Kernel
+                        </a>
+                        <a href="#middleware"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Middleware
+                        </a>
+                        <a href="#examples"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Usage Examples
+                        </a>
+                        <a href="#best-practices"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Best Practices
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">
+                        HTTP Layer API
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Comprehensive HTTP handling including request/response objects, routing, middleware, and kernel processing. These classes provide the foundation for handling web requests and generating responses in your Forge Kernel applications.
+                    </p>
+
+                    <section id="request" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Request</h2>
+                        <p class="text-gray-600 mb-4">Represents an HTTP request and provides methods to access request data, headers, and other request-related information. This is the primary way to interact with incoming HTTP requests in your application.</p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Constructor & Properties</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">__construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], string $content = null)</h4>
+                        <p class="text-gray-600 mb-4">Create a new Request instance with the given parameters.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Create from globals
 $request = Request::createFromGlobals();
 
 // Create manually
@@ -136,229 +231,229 @@ $request = new Request(
     $_SERVER,
     file_get_contents('php://input')
 );</code></pre>
-                    </div>
+                        </div>
 
-                    <h3>Request Data Methods</h3>
-                    <h4>get(string $key, mixed $default = null): mixed</h4>
-                    <p>Get a value from the query string (GET parameters).</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$page = $request->get('page', 1);
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Request Data Methods</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">get(string $key, mixed $default = null): mixed</h4>
+                        <p class="text-gray-600 mb-4">Get a value from the query string (GET parameters).</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$page = $request->get('page', 1);
 $search = $request->get('search');</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>post(string $key, mixed $default = null): mixed</h4>
-                    <p>Get a value from the POST parameters.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$username = $request->post('username');
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">post(string $key, mixed $default = null): mixed</h4>
+                        <p class="text-gray-600 mb-4">Get a value from the POST parameters.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$username = $request->post('username');
 $email = $request->post('email', 'default@example.com');</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>input(string $key, mixed $default = null): mixed</h4>
-                    <p>Get a value from any input source (GET, POST, JSON).</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$data = $request->input('user.name');
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">input(string $key, mixed $default = null): mixed</h4>
+                        <p class="text-gray-600 mb-4">Get a value from any input source (GET, POST, JSON).</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$data = $request->input('user.name');
 $settings = $request->input('settings', []);</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>all(): array</h4>
-                    <p>Get all input data as an array.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$allData = $request->all();
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">all(): array</h4>
+                        <p class="text-gray-600 mb-4">Get all input data as an array.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$allData = $request->all();
 $filtered = $request->only(['name', 'email']);
 $excluded = $request->except(['password', 'token']);</code></pre>
-                    </div>
+                        </div>
 
-                    <h3>Request Information Methods</h3>
-                    <h4>method(): string</h4>
-                    <p>Get the HTTP request method (GET, POST, PUT, DELETE, etc.).</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">if ($request->method() === 'POST') {
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Request Information Methods</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">method(): string</h4>
+                        <p class="text-gray-600 mb-4">Get the HTTP request method (GET, POST, PUT, DELETE, etc.).</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">if ($request->method() === 'POST') {
     // Handle POST request
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>isMethod(string $method): bool</h4>
-                    <p>Check if the request method matches the given method.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">if ($request->isMethod('POST')) {
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">isMethod(string $method): bool</h4>
+                        <p class="text-gray-600 mb-4">Check if the request method matches the given method.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">if ($request->isMethod('POST')) {
     // Handle POST request
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>url(): string</h4>
-                    <p>Get the full URL of the request.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$currentUrl = $request->url();
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">url(): string</h4>
+                        <p class="text-gray-600 mb-4">Get the full URL of the request.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$currentUrl = $request->url();
 $fullUrl = $request->fullUrl(); // Includes query string</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>path(): string</h4>
-                    <p>Get the request path without the domain.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$path = $request->path(); // e.g., /users/123</code></pre>
-                    </div>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">path(): string</h4>
+                        <p class="text-gray-600 mb-4">Get the request path without the domain.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$path = $request->path(); // e.g., /users/123</code></pre>
+                        </div>
 
-                    <h3>Header Methods</h3>
-                    <h4>header(string $key, string $default = null): string|null</h4>
-                    <p>Get a header value by key.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$contentType = $request->header('Content-Type');
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Header Methods</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">header(string $key, string $default = null): string|null</h4>
+                        <p class="text-gray-600 mb-4">Get a header value by key.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$contentType = $request->header('Content-Type');
 $authToken = $request->header('Authorization');</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>bearerToken(): string|null</h4>
-                    <p>Get the bearer token from the Authorization header.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$token = $request->bearerToken();
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">bearerToken(): string|null</h4>
+                        <p class="text-gray-600 mb-4">Get the bearer token from the Authorization header.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$token = $request->bearerToken();
 if ($token) {
     // Validate JWT token
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>accepts(string|array $contentTypes): bool</h4>
-                    <p>Check if the request accepts the given content type(s).</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">if ($request->accepts('application/json')) {
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">accepts(string|array $contentTypes): bool</h4>
+                        <p class="text-gray-600 mb-4">Check if the request accepts the given content type(s).</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">if ($request->accepts('application/json')) {
     return response()->json($data);
 }</code></pre>
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                <section id="response">
-                    <h2>Response</h2>
-                    <p>Represents an HTTP response and provides methods to set response data, headers, and status codes. This class is used to construct and send HTTP responses back to the client.</p>
+                    <section id="response" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Response</h2>
+                        <p class="text-gray-600 mb-4">Represents an HTTP response and provides methods to set response data, headers, and status codes. This class is used to construct and send HTTP responses back to the client.</p>
 
-                    <h3>Constructor & Properties</h3>
-                    <h4>__construct(mixed $content = '', int $status = 200, array $headers = [])</h4>
-                    <p>Create a new Response instance.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">// Basic response
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Constructor & Properties</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">__construct(mixed $content = '', int $status = 200, array $headers = [])</h4>
+                        <p class="text-gray-600 mb-4">Create a new Response instance.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Basic response
 $response = new Response('Hello World', 200, ['Content-Type' => 'text/plain']);
 
 // JSON response
 $response = new Response(json_encode($data), 200, ['Content-Type' => 'application/json']);</code></pre>
-                    </div>
+                        </div>
 
-                    <h3>Response Content Methods</h3>
-                    <h4>setContent(mixed $content): self</h4>
-                    <p>Set the response content.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$response->setContent('Hello World');
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Response Content Methods</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">setContent(mixed $content): self</h4>
+                        <p class="text-gray-600 mb-4">Set the response content.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$response->setContent('Hello World');
 $response->setContent(json_encode($data));</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>getContent(): string</h4>
-                    <p>Get the current response content.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$content = $response->getContent();</code></pre>
-                    </div>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">getContent(): string</h4>
+                        <p class="text-gray-600 mb-4">Get the current response content.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$content = $response->getContent();</code></pre>
+                        </div>
 
-                    <h3>Status Code Methods</h3>
-                    <h4>setStatusCode(int $code): self</h4>
-                    <p>Set the HTTP status code.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$response->setStatusCode(200); // OK
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Status Code Methods</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">setStatusCode(int $code): self</h4>
+                        <p class="text-gray-600 mb-4">Set the HTTP status code.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$response->setStatusCode(200); // OK
 $response->setStatusCode(404); // Not Found
 $response->setStatusCode(500); // Internal Server Error</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>getStatusCode(): int</h4>
-                    <p>Get the current status code.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$statusCode = $response->getStatusCode();</code></pre>
-                    </div>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">getStatusCode(): int</h4>
+                        <p class="text-gray-600 mb-4">Get the current status code.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$statusCode = $response->getStatusCode();</code></pre>
+                        </div>
 
-                    <h3>Header Methods</h3>
-                    <h4>header(string $name, string $value): self</h4>
-                    <p>Set a response header.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$response->header('Content-Type', 'application/json');
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Header Methods</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">header(string $name, string $value): self</h4>
+                        <p class="text-gray-600 mb-4">Set a response header.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$response->header('Content-Type', 'application/json');
 $response->header('Cache-Control', 'no-cache');
 $response->header('X-Custom-Header', 'value');</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>headers(array $headers): self</h4>
-                    <p>Set multiple headers at once.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$response->headers([
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">headers(array $headers): self</h4>
+                        <p class="text-gray-600 mb-4">Set multiple headers at once.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$response->headers([
     'Content-Type' => 'application/json',
     'Cache-Control' => 'no-cache',
     'X-Rate-Limit' => '100'
 ]);</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>getHeaders(): array</h4>
-                    <p>Get all response headers.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$headers = $response->getHeaders();
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">getHeaders(): array</h4>
+                        <p class="text-gray-600 mb-4">Get all response headers.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$headers = $response->getHeaders();
 foreach ($headers as $name => $value) {
     echo "$name: $value\n";
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h3>Response Helpers</h3>
-                    <h4>json(mixed $data, int $status = 200): JsonResponse</h4>
-                    <p>Create a JSON response.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">return response()->json(['message' => 'Success'], 200);
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Response Helpers</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">json(mixed $data, int $status = 200): JsonResponse</h4>
+                        <p class="text-gray-600 mb-4">Create a JSON response.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">return response()->json(['message' => 'Success'], 200);
 return response()->json($user, 201);</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>redirect(string $url, int $status = 302): RedirectResponse</h4>
-                    <p>Create a redirect response.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">return response()->redirect('/dashboard');
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">redirect(string $url, int $status = 302): RedirectResponse</h4>
+                        <p class="text-gray-600 mb-4">Create a redirect response.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">return response()->redirect('/dashboard');
 return response()->redirect('/login', 301);</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>download(string $path, string $name = null): BinaryFileResponse</h4>
-                    <p>Create a file download response.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">return response()->download('/path/to/file.pdf');
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">download(string $path, string $name = null): BinaryFileResponse</h4>
+                        <p class="text-gray-600 mb-4">Create a file download response.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">return response()->download('/path/to/file.pdf');
 return response()->download('/path/to/file.pdf', 'custom-name.pdf');</code></pre>
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                <section id="kernel">
-                    <h2>Kernel</h2>
-                    <p>Handles HTTP request processing through middleware pipeline. The Kernel is responsible for processing incoming requests through the middleware stack and generating appropriate responses.</p>
+                    <section id="kernel" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Kernel</h2>
+                        <p class="text-gray-600 mb-4">Handles HTTP request processing through middleware pipeline. The Kernel is responsible for processing incoming requests through the middleware stack and generating appropriate responses.</p>
 
-                    <h3>Core Methods</h3>
-                    <h4>handle(Request $request): Response</h4>
-                    <p>Process a request through the middleware pipeline.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$kernel = new Kernel();
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Core Methods</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">handle(Request $request): Response</h4>
+                        <p class="text-gray-600 mb-4">Process a request through the middleware pipeline.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$kernel = new Kernel();
 $response = $kernel->handle($request);
 $response->send();</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>pushMiddleware(string $middleware): void</h4>
-                    <p>Add middleware to the pipeline.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$kernel->pushMiddleware(AuthenticationMiddleware::class);
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">pushMiddleware(string $middleware): void</h4>
+                        <p class="text-gray-600 mb-4">Add middleware to the pipeline.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$kernel->pushMiddleware(AuthenticationMiddleware::class);
 $kernel->pushMiddleware(CorsMiddleware::class);
 $kernel->pushMiddleware(RateLimitMiddleware::class);</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>getMiddleware(): array</h4>
-                    <p>Get all registered middleware.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">$middleware = $kernel->getMiddleware();
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">getMiddleware(): array</h4>
+                        <p class="text-gray-600 mb-4">Get all registered middleware.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$middleware = $kernel->getMiddleware();
 foreach ($middleware as $class) {
     echo "Registered: $class\n";
 }</code></pre>
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                <section id="middleware">
-                    <h2>Middleware</h2>
-                    <p>Interface for creating HTTP middleware. Middleware provides a convenient mechanism for filtering HTTP requests entering your application and processing responses before they're sent to the client.</p>
+                    <section id="middleware" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Middleware</h2>
+                        <p class="text-gray-600 mb-4">Interface for creating HTTP middleware. Middleware provides a convenient mechanism for filtering HTTP requests entering your application and processing responses before they're sent to the client.</p>
 
-                    <h3>Interface Definition</h3>
-                    <h4>process(Request $request, callable $next): Response</h4>
-                    <p>Process an incoming request and return a response.</p>
-                    <div class="code-block">
-                        <pre><code class="language-php">class AuthenticationMiddleware implements Middleware
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Interface Definition</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">process(Request $request, callable $next): Response</h4>
+                        <p class="text-gray-600 mb-4">Process an incoming request and return a response.</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">class AuthenticationMiddleware implements Middleware
 {
     public function process(Request $request, callable $next): Response
     {
@@ -376,12 +471,12 @@ foreach ($middleware as $class) {
         return $response;
     }
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h3>Common Middleware Examples</h3>
-                    <h4>CORS Middleware</h4>
-                    <div class="code-block">
-                        <pre><code class="language-php">class CorsMiddleware implements Middleware
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Common Middleware Examples</h3>
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">CORS Middleware</h4>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">class CorsMiddleware implements Middleware
 {
     public function process(Request $request, callable $next): Response
     {
@@ -396,11 +491,11 @@ foreach ($middleware as $class) {
         return $response;
     }
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h4>Rate Limit Middleware</h4>
-                    <div class="code-block">
-                        <pre><code class="language-php">class RateLimitMiddleware implements Middleware
+                        <h4 class="text-base font-semibold mb-2 text-gray-900">Rate Limit Middleware</h4>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">class RateLimitMiddleware implements Middleware
 {
     private $maxRequests = 100;
     private $window = 3600; // 1 hour
@@ -420,16 +515,16 @@ foreach ($middleware as $class) {
         return $next($request);
     }
 }</code></pre>
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                <section id="examples">
-                    <h2>Usage Examples</h2>
-                    <p>Common patterns and examples for working with the HTTP Layer classes.</p>
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+                        <p class="text-gray-600 mb-4">Common patterns and examples for working with the HTTP Layer classes.</p>
 
-                    <h3>Basic Request Handling</h3>
-                    <div class="code-block">
-                        <pre><code class="language-php">// Get current request
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Basic Request Handling</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Get current request
 $request = Request::createFromGlobals();
 
 // Access request data
@@ -457,11 +552,11 @@ if ($request->isMethod('POST')) {
     
     return response()->json(['user' => $user], 201);
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h3>JSON API Response</h3>
-                    <div class="code-block">
-                        <pre><code class="language-php">// Controller method
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">JSON API Response</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Controller method
 public function getUser(Request $request, $id)
 {
     // Check if request wants JSON
@@ -496,11 +591,11 @@ public function getUser(Request $request, $id)
         ]
     ], 200);
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h3>File Upload Handling</h3>
-                    <div class="code-block">
-                        <pre><code class="language-php">public function uploadFile(Request $request)
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">File Upload Handling</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">public function uploadFile(Request $request)
 {
     // Validate file upload
     if (!$request->hasFile('document')) {
@@ -534,39 +629,146 @@ public function getUser(Request $request, $id)
         'document' => $document
     ], 201);
 }</code></pre>
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                <section id="best-practices">
-                    <h2>Best Practices</h2>
-                    <p>Recommended patterns and guidelines for working with the HTTP Layer.</p>
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+                        <p class="text-gray-600 mb-4">Recommended patterns and guidelines for working with the HTTP Layer.</p>
 
-                    <h3>Do's</h3>
-                    <ul>
-                        <li>Always validate request data before processing</li>
-                        <li>Use appropriate HTTP status codes</li>
-                        <li>Set proper Content-Type headers</li>
-                        <li>Handle file uploads securely</li>
-                        <li>Use middleware for cross-cutting concerns</li>
-                        <li>Return consistent response formats</li>
-                        <li>Handle errors gracefully</li>
-                    </ul>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Do's</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Always validate request data before processing</li>
+                            <li>Use appropriate HTTP status codes</li>
+                            <li>Set proper Content-Type headers</li>
+                            <li>Handle file uploads securely</li>
+                            <li>Use middleware for cross-cutting concerns</li>
+                            <li>Return consistent response formats</li>
+                            <li>Handle errors gracefully</li>
+                        </ul>
 
-                    <h3>Don'ts</h3>
-                    <ul>
-                        <li>Don't trust user input without validation</li>
-                        <li>Don't expose sensitive information in responses</li>
-                        <li>Don't ignore HTTP method semantics</li>
-                        <li>Don't bypass middleware for security</li>
-                        <li>Don't return generic error messages</li>
-                        <li>Don't ignore content negotiation</li>
-                        <li>Don't store large files in memory</li>
-                    </ul>
-                </section>
-            </article>
-        </main>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Don'ts</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Don't trust user input without validation</li>
+                            <li>Don't expose sensitive information in responses</li>
+                            <li>Don't ignore HTTP method semantics</li>
+                            <li>Don't bypass middleware for security</li>
+                            <li>Don't return generic error messages</li>
+                            <li>Don't ignore content negotiation</li>
+                            <li>Don't store large files in memory</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src="assets/js/docs.js"></script>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
+            </div>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileSidebarButton = document.getElementById('mobile-sidebar-button');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const sidebar = document.getElementById('sidebar-nav');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function openMobileSidebar() {
+            sidebar.classList.add('mobile-menu-open');
+            mobileMenuOverlay.classList.add('active');
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.remove('mobile-menu-open');
+            mobileMenuOverlay.classList.remove('active');
+        }
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        }
+
+        if (mobileSidebarButton) {
+            mobileSidebarButton.addEventListener('click', openMobileSidebar);
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileSidebar);
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideMenu = mobileMenu && mobileMenu.contains(event.target);
+            const isClickOnMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
+
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu and sidebar on window resize if above mobile breakpoint
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 640) {
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                closeMobileSidebar();
+            }
+        });
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
