@@ -1,342 +1,466 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introduction - Forge Kernel Documentation</title>
-    <link rel="stylesheet" href="assets/css/forge-docs.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background: #2d3748;
+            border-radius: 0.5rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #f3f4f6;
+            padding-left: 1.5rem;
+        }
+
+        .nav-link.active {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            border-left: 4px solid #6366f1;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Mobile menu styles */
+        #mobile-menu {
+            display: none;
+        }
+
+        #mobile-menu:not(.hidden) {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .lg\:w-1\/4 {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 80%;
+                max-width: 320px;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                background: white;
+                overflow-y: auto;
+            }
+
+            .lg\:w-1\/4.mobile-menu-open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+                display: none;
+            }
+
+            .mobile-menu-overlay.active {
+                display: block;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="docs-container">
-        <aside class="sidebar">
-            <nav>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">Navigation</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="index.html" class="sidebar-nav-link">Home</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="introduction.html" class="sidebar-nav-link active">Introduction</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="getting-started.html" class="sidebar-nav-link">Getting Started</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="core-concepts.html" class="sidebar-nav-link">Core Concepts</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="modules.html" class="sidebar-nav-link">Capabilities</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-reference.html" class="sidebar-nav-link">API Reference</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">On This Page</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="#introduction" class="sidebar-nav-link">Introduction</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#installation" class="sidebar-nav-link">Installation</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#directory-structure" class="sidebar-nav-link">Directory Structure</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#kernel-structure" class="sidebar-nav-link">Kernel Structure</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#dependency-injection" class="sidebar-nav-link">Dependency Injection</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#capability-system" class="sidebar-nav-link">Capability System</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#configuration" class="sidebar-nav-link">Configuration</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
 
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
-        <div class="mobile-overlay"></div>
-
-        <main class="main-content">
-            <article>
-                <header class="docs-header">
-                    <h1>Forge Kernel</h1>
-                    <p>Introduction to the kernel, its philosophy, and how it's structured.</p>
-                </header>
-
-                <section id="introduction">
-                    <h2>introduction</h2>
-                    <p>Forge is an Application Hosted Kernel with pluggable capabilities. It's a minimal, dependency-free PHP kernel I built to serve my own projects. It's fully open source under the MIT license.</p>
-
-                    <p>
-                        I didn't create Forge to compete with anything. I created it because I wanted something I could fully understand, control, and evolve at my own pace.
-                        I believe kernels should feel like tools, not black boxes — simple, readable, and flexible.
-                    </p>
-
-                    <h3>kernel vs framework</h3>
-                    <p>
-                        Think of it like building a house. A framework is like a fully furnished house — everything is already there (furniture, appliances, plumbing, electrical). You move in and use what's provided. It works great if you want what's included, but it's hard to change the foundation or remove things you don't need.
-                    </p>
-                    <p>
-                        A kernel is like a foundation with utilities. You get the foundation, plumbing, electrical, and basic structure. You decide what to build on top. You add only what you need (kitchen, bedrooms, etc.). You control everything that goes in.
-                    </p>
-                    <p>
-                        Capabilities are like modular additions. Need a kitchen? Add a kitchen capability. Need a garage? Add a garage capability. Don't need a pool? Don't add it. Each addition is optional and pluggable.
-                    </p>
-
-                    <p>
-                        Modern frameworks often try to be everything for everyone, which usually means extra layers of abstraction and heavy dependencies.
-                        Forge goes in the opposite direction — it tries to stay small, focused, and honest about what it is. A kernel, not a framework.
-                    </p>
-
-                    <h3>philosophy</h3>
-                    <p>
-                        This isn't a product. There's no company behind it. No support SLA. No roadmap you should depend on.
-                        Forge exists because I like to understand and own my stack. If others find value in it — awesome. If not — that's cool too.
-                    </p>
-
-                    <p>
-                        I'm not chasing trends or buzzwords. Forge is built incrementally, based on real project needs.
-                        If I need something, I build it — and if you ever do too, maybe the pieces will already be there for you to use.
-                    </p>
-
-                    <p>
-                        You won't find magic here. Just PHP, well-structured, and thoughtfully organized.
-                    </p>
-
-                    <h3>this organization contains</h3>
-                    <ul>
-                        <li>Pluggable capabilities system with official and private capability support</li>
-                        <li>Flexible application structure supporting various design patterns (MVC, DDD, Clean Architecture)</li>
-                        <li>Powerful dependency injection system</li>
-                        <li>The Forge Kernel — a minimal, dependency-free PHP kernel (DI, routing, bootstrapping, view engine, configuration manager, and core services).</li>
-                        <li>Forge Capabilities — self-contained, optional capability modules (database, ORM, auth, storage, etc.) that you plug in when needed.</li>
-                        <li>Utilities & Installers — scripts and helpers for easier setup and tooling.</li>
-                    </ul>
-                    <p>
-                        <strong>Capabilities, not built-ins.</strong> Database, ORM, authentication, storage — these aren't built into the kernel. They're capabilities you plug in via modules when you need them. The kernel stays lean. You stay in control.
-                    </p>
-
-                    <h3>want to build your own thing?</h3>
-                    <p>
-                        You can fork the entire kernel and capability ecosystem to start your own direction.
-                        Check out <a href="https://github.com/forge-engine/forge/blob/main/docs/FORGING-YOUR-OWN.md">FORGING-YOUR-OWN.md</a>
-                        in the main repo for notes on how everything is structured and how to get started.
-                    </p>
-
-                    <p>
-                        I think every developer should, at some point, try building their own kernel — not to replace existing tools,
-                        but to learn how things actually work under the hood. Forge is my version of that journey.
-                    </p>
-                </section>
-
-                <section id="installation">
-                    <h2>installation</h2>
-                    <p>First things first, you'll need PHP 8.2 or newer installed on your machine.</p>
-
-                    <p>
-                        Forge is designed to be lightweight and quick to spin up. No complex scaffolding. No endless composer dependencies.
-                        Just you, your terminal, and a clean starting point to build on.
-                    </p>
-
-                    <p>Ready? Here's the super simple way to get started:</p>
-
-                    <ol>
-                        <li>Grab the installer and run it:</li>
-                    </ol>
-                    <div class="code-block">
-                        <pre><code>bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/main/installer.sh)</code></pre>
+<body class="bg-gray-50 text-gray-900" style="font-size: 17px;">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
                     </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Modules
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-                    <p>
-                        That's it! This little command will do all the heavy lifting for you — clone the starter project, set up the folder structure,
-                        and give you a working Forge app you can run immediately.
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Home
+                </a>
+                <a href="getting-started.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Getting Started
+                </a>
+                <a href="core-concepts.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Core Concepts
+                </a>
+                <a href="modules.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Modules
+                </a>
+                <a href="api-reference.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    API Reference
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <!-- Mobile menu overlay -->
+                <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        Introduction
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#introduction"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Introduction
+                        </a>
+                        <a href="#installation"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Installation
+                        </a>
+                        <a href="#directory-structure"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Directory Structure
+                        </a>
+                        <a href="#kernel-structure"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Kernel Structure
+                        </a>
+                        <a href="#dependency-injection"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Dependency Injection
+                        </a>
+                        <a href="#capability-system"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Capability System
+                        </a>
+                        <a href="#configuration"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Configuration
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">
+                        Forge Kernel
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Introduction to the kernel, its philosophy, and how it's structured.
                     </p>
 
-                    <p>
-                        The default starter is intentionally minimal. No unnecessary files, no extra configs.
-                        Just the Forge Kernel and a blank canvas for your ideas. Whether you're building a personal site,
-                        a CMS, an API, or a full-on app — you can take it wherever you need.
-                    </p>
+                    <section id="introduction" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">introduction</h2>
+                        <p class="text-gray-600 mb-4">Forge is an Application Hosted Kernel with pluggable capabilities. It's a minimal, dependency-free PHP kernel I built to serve my own projects. It's fully open source under the MIT license.</p>
 
-                    <p>
-                        If you're curious about different project types or want something pre-wired with capabilities (like authentication or admin panels),
-                        check out the other starters listed in the docs or browse the examples directory.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            I didn't create Forge to compete with anything. I created it because I wanted something I could fully understand, control, and evolve at my own pace.
+                            I believe kernels should feel like tools, not black boxes — simple, readable, and flexible.
+                        </p>
 
-                    <p>
-                        Forge doesn't assume how you want to work — it just tries to stay out of your way.
-                        If you like tinkering with your tools and enjoy building things from the ground up, you'll probably feel right at home.
-                    </p>
-                </section>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">kernel vs framework</h3>
+                        <p class="text-gray-600 mb-4">
+                            Think of it like building a house. A framework is like a fully furnished house — everything is already there (furniture, appliances, plumbing, electrical). You move in and use what's provided. It works great if you want what's included, but it's hard to change the foundation or remove things you don't need.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            A kernel is like a foundation with utilities. You get the foundation, plumbing, electrical, and basic structure. You decide what to build on top. You add only what you need (kitchen, bedrooms, etc.). You control everything that goes in.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Capabilities are like modular additions. Need a kitchen? Add a kitchen capability. Need a garage? Add a garage capability. Don't need a pool? Don't add it. Each addition is optional and pluggable.
+                        </p>
 
-                <section id="directory-structure">
-                    <h2>directory structure</h2>
-                    <p>
-                        Forge keeps things simple and predictable. The default project layout gives you a solid foundation, but you're always free
-                        to organize it however you like. Nothing is locked in — use what makes sense for your project.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Modern frameworks often try to be everything for everyone, which usually means extra layers of abstraction and heavy dependencies.
+                            Forge goes in the opposite direction — it tries to stay small, focused, and honest about what it is. A kernel, not a framework.
+                        </p>
 
-                    <p>
-                        At the root of your Forge app, you'll find the following:
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">philosophy</h3>
+                        <p class="text-gray-600 mb-4">
+                            This isn't a product. There's no company behind it. No support SLA. No roadmap you should depend on.
+                            Forge exists because I like to understand and own my stack. If others find value in it — awesome. If not — that's cool too.
+                        </p>
 
-                    <ul>
-                        <li><strong>app/</strong> – Your application code. This is where your controllers, services, views, and application logic live.</li>
-                        <ul>
+                        <p class="text-gray-600 mb-4">
+                            I'm not chasing trends or buzzwords. Forge is built incrementally, based on real project needs.
+                            If I need something, I build it — and if you ever do too, maybe the pieces will already be there for you to use.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            You won't find magic here. Just PHP, well-structured, and thoughtfully organized.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">this organization contains</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Pluggable capabilities system with official and private capability support</li>
+                            <li>Flexible application structure supporting various design patterns (MVC, DDD, Clean Architecture)</li>
+                            <li>Powerful dependency injection system</li>
+                            <li>The Forge Kernel — a minimal, dependency-free PHP kernel (DI, routing, bootstrapping, view engine, configuration manager, and core services).</li>
+                            <li>Forge Capabilities — self-contained, optional capability modules (database, ORM, auth, storage, etc.) that you plug in when needed.</li>
+                            <li>Utilities & Installers — scripts and helpers for easier setup and tooling.</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Capabilities, not built-ins.</strong> Database, ORM, authentication, storage — these aren't built into the kernel. They're capabilities you plug in via modules when you need them. The kernel stays lean. You stay in control.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">want to build your own thing?</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can fork the entire kernel and capability ecosystem to start your own direction.
+                            Check out <a href="https://github.com/forge-engine/forge/blob/main/docs/FORGING-YOUR-OWN.md" class="text-blue-600 hover:underline">FORGING-YOUR-OWN.md</a>
+                            in the main repo for notes on how everything is structured and how to get started.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            I think every developer should, at some point, try building their own kernel — not to replace existing tools,
+                            but to learn how things actually work under the hood. Forge is my version of that journey.
+                        </p>
+                    </section>
+
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">installation</h2>
+                        <p class="text-gray-600 mb-4">First things first, you'll need PHP 8.2 or newer installed on your machine.</p>
+
+                        <p class="text-gray-600 mb-4">
+                            Forge is designed to be lightweight and quick to spin up. No complex scaffolding. No endless composer dependencies.
+                            Just you, your terminal, and a clean starting point to build on.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">Ready? Here's the super simple way to get started:</p>
+
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Grab the installer and run it:</li>
+                        </ol>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/main/installer.sh)</code></pre>
+                        </div>
+
+                        <p class="text-gray-600 mb-4">
+                            That's it! This little command will do all the heavy lifting for you — clone the starter project, set up the folder structure,
+                            and give you a working Forge app you can run immediately.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            The default starter is intentionally minimal. No unnecessary files, no extra configs.
+                            Just the Forge Kernel and a blank canvas for your ideas. Whether you're building a personal site,
+                            a CMS, an API, or a full-on app — you can take it wherever you need.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            If you're curious about different project types or want something pre-wired with capabilities (like authentication or admin panels),
+                            check out the other starters listed in the docs or browse the examples directory.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            Forge doesn't assume how you want to work — it just tries to stay out of your way.
+                            If you like tinkering with your tools and enjoy building things from the ground up, you'll probably feel right at home.
+                        </p>
+                    </section>
+
+                    <section id="directory-structure" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">directory structure</h2>
+                        <p class="text-gray-600 mb-4">
+                            Forge keeps things simple and predictable. The default project layout gives you a solid foundation, but you're always free
+                            to organize it however you like. Nothing is locked in — use what makes sense for your project.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            At the root of your Forge app, you'll find the following:
+                        </p>
+
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>app/</strong> – Your application code. This is where your controllers, services, views, and application logic live.</li>
                             <li><strong>Commands/</strong> – Custom CLI commands for your application.</li>
                             <li><strong>Components/</strong> – PHP component classes organized by type:</li>
-                            <ul>
-                                <li><strong>Ui/</strong> – UI component classes (e.g., Alert, NavBar, Footer).</li>
-                                <li><strong>Wire/</strong> – Wire component classes for reactive components (e.g., Counter, ProductSearch).</li>
-                            </ul>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Ui/</strong> – UI component classes (e.g., Alert, NavBar, Footer).</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Wire/</strong> – Wire component classes for reactive components (e.g., Counter, ProductSearch).</li>
                             <li><strong>Controllers/</strong> – Route handlers. Required if you're using auto-discovery.</li>
                             <li><strong>Database/</strong> – Migrations and seeders for setting up your schema and sample data.</li>
                             <li><strong>Dto/</strong> – Data Transfer Objects.</li>
                             <li><strong>Events/</strong> – Application events.</li>
                             <li><strong>Models/</strong> – Data models (if using ORM capability).</li>
                             <li><strong>resources/</strong> – Views, layouts, assets, components — your UI layer.</li>
-                            <ul>
-                                <li><strong>assets/</strong> – CSS and JavaScript files (css/ and js/ subfolders).</li>
-                                <li><strong>components/</strong> – View templates for components:</li>
-                                <ul>
-                                    <li><strong>shared/</strong> – Shared component views.</li>
-                                    <li><strong>ui/</strong> – View templates for UI components (e.g., alert.php, nav-bar.php).</li>
-                                    <li><strong>wire/</strong> – View templates for Wire components (e.g., counter.php, product-table.php).</li>
-                                </ul>
-                                <li><strong>views/</strong> – View templates (layouts/ and pages/ subfolders).</li>
-                            </ul>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>assets/</strong> – CSS and JavaScript files (css/ and js/ subfolders).</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>components/</strong> – View templates for components:</li>
+                            <li style="list-style: none; margin-left: 2rem;"><strong>shared/</strong> – Shared component views.</li>
+                            <li style="list-style: none; margin-left: 2rem;"><strong>ui/</strong> – View templates for UI components (e.g., alert.php, nav-bar.php).</li>
+                            <li style="list-style: none; margin-left: 2rem;"><strong>wire/</strong> – View templates for Wire components (e.g., counter.php, product-table.php).</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>views/</strong> – View templates (layouts/ and pages/ subfolders).</li>
                             <li><strong>Services/</strong> – Classes injected into other parts of your app. Also auto-discovered.</li>
                             <li><strong>tests/</strong> – Put your app tests here. Forge uses a simple `Test.php` runner.</li>
-                        </ul>
-                        <li><strong>config/</strong> – Central config for your app. Includes:</li>
-                        <ul>
-                            <li><strong>app.php</strong> – App name, debug, developer mode, logging paths, CORS, etc.</li>
-                            <li><strong>middleware.php</strong> – Define global, web, and API middleware.</li>
-                            <li><strong>security.php</strong> – Rate limits, circuit breakers, password rules, JWT settings, IP whitelists.</li>
-                            <li><strong>source_list.php</strong> – Package manager registry sources and authentication for capability installs.</li>
-                        </ul>
-                        <li><strong>engine/</strong> – The actual Forge Kernel source code. You can update or replace this independently.</li>
-                        <li><strong>modules/</strong> – All your installed capability modules — both official and custom.</li>
-                        <li><strong>public/</strong> – Your web root. `index.php` and static assets go here.</li>
-                        <li><strong>storage/</strong> – Logs, compiled views, uploads, cache, etc.</li>
-                        <li><strong>.env</strong>, <strong>env-example</strong> – Your environment settings and template.</li>
-                        <li><strong>forge.php</strong> – The Forge CLI for installing modules, clearing caches, generating files, etc.</li>
-                        <li><strong>install.php</strong> – Handles kernel updates and downgrades. Handy for version control.</li>
-                        <li><strong>LICENSE</strong>, <strong>LICENSE-MIT.txt</strong>, <strong>README.md</strong> – Usual open source files.</li>
-                    </ul>
-
-                    <p>
-                        The structure is modular on purpose. If you don't need something — like services or tests — you can just delete those folders.
-                        Forge won't complain. You can even skip the whole <code>app/</code> folder if you're building your app entirely using capabilities.
-                    </p>
-
-                    <p>
-                        The only requirement: if you're using the Forge auto-discovery system, controllers must go in <code>Controllers/</code>,
-                        services in <code>Services/</code>, and migrations/seeders inside <code>database/</code>. Everything else is flexible.
-                    </p>
-
-                    <p>
-                        Think of this structure as a starting point, not a rulebook. You're in control.
-                    </p>
-                </section>
-
-                <section id="kernel-structure">
-                    <h2>kernel structure</h2>
-                    <p>
-                        The Forge Kernel is lightweight but powerful — built from the ground up to be understandable, flexible, and easy to extend.
-                        If you want to dive into the source code or even fork the kernel and make it your own, this overview will help you get familiar with the layout.
-                    </p>
-
-                    <p>
-                        The kernel lives inside the <code>engine/</code> directory and is structured like this:
-                    </p>
-
-                    <ul>
-                        <li><strong>CLI/</strong> – Everything related to the Forge command line:</li>
-                        <ul>
-                            <li><strong>Commands/</strong> – Built-in CLI commands (like installing modules or generating files).</li>
-                            <li><strong>Traits/</strong> – Reusable CLI behaviors.</li>
-                            <li><strong>Application.php</strong> – Entry point for running CLI commands.</li>
-                            <li><strong>Command.php</strong> – Interface that all commands implement.</li>
+                            <li><strong>config/</strong> – Central config for your app. Includes:</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>app.php</strong> – App name, debug, developer mode, logging paths, CORS, etc.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>middleware.php</strong> – Define global, web, and API middleware.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>security.php</strong> – Rate limits, circuit breakers, password rules, JWT settings, IP whitelists.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>source_list.php</strong> – Package manager registry sources and authentication for capability installs.</li>
+                            <li><strong>engine/</strong> – The actual Forge Kernel source code. You can update or replace this independently.</li>
+                            <li><strong>modules/</strong> – All your installed capability modules — both official and custom.</li>
+                            <li><strong>public/</strong> – Your web root. `index.php` and static assets go here.</li>
+                            <li><strong>storage/</strong> – Logs, compiled views, uploads, cache, etc.</li>
+                            <li><strong>.env</strong>, <strong>env-example</strong> – Your environment settings and template.</li>
+                            <li><strong>forge.php</strong> – The Forge CLI for installing modules, clearing caches, generating files, etc.</li>
+                            <li><strong>install.php</strong> – Handles kernel updates and downgrades. Handy for version control.</li>
+                            <li><strong>LICENSE</strong>, <strong>LICENSE-MIT.txt</strong>, <strong>README.md</strong> – Usual open source files.</li>
                         </ul>
 
-                        <li><strong>Core/</strong> – The heart of the Forge Kernel. It's broken down into small, focused parts:</li>
-                        <ul>
-                            <li><strong>Bootstrap/</strong> – Startup logic and initialization.</li>
-                            <li><strong>Config/</strong> – Loads your config files and makes them available throughout the app.</li>
-                            <li><strong>DI/</strong> – The dependency injection container (like a smart warehouse manager — knows where everything is, gets you what you need).</li>
-                            <li><strong>Debug/</strong> – Debug tools like <code>Metrics.php</code>.</li>
-                            <li><strong>Dto/</strong> – Support for Data Transfer Objects (used in components and services).</li>
-                            <li><strong>Helpers/</strong> – Utility functions and convenience methods.</li>
-                            <li><strong>Http/</strong> – Request/response handling, routing, and middleware interfaces.</li>
-                            <li><strong>Module/</strong> – Internal logic for capability discovery, loading, and registration.</li>
-                            <li><strong>Routing/</strong> – Route matching and auto-discovery.</li>
-                            <li><strong>Schema/</strong> – For defining and managing validation schemas and rules.</li>
-                            <li><strong>Security/</strong> – Rate limiting, JWT, circuit breakers, and other protections.</li>
-                            <li><strong>Services/</strong> – Core Forge services like logging, events, etc.</li>
-                            <li><strong>Session/</strong> – Simple session manager.</li>
-                            <li><strong>Support/</strong> – Shared utilities and helpers.</li>
-                            <li><strong>Templates/</strong> – Scaffold files used when generating new code (controllers, modules, etc.).</li>
-                            <li><strong>Validation/</strong> – Input validation system.</li>
-                            <li><strong>View/</strong> – View engine, layouts, and rendering logic.</li>
-                            <li><strong>Autoloader.php</strong> – Forge's internal PSR-4 class loader.</li>
-                            <li><strong>Engine.php</strong> – The main engine bootstrapper that glues everything together.</li>
+                        <p class="text-gray-600 mb-4">
+                            The structure is modular on purpose. If you don't need something — like services or tests — you can just delete those folders.
+                            Forge won't complain. You can even skip the whole <code class="bg-gray-100 px-2 py-1 rounded">app/</code> folder if you're building your app entirely using capabilities.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            The only requirement: if you're using the Forge auto-discovery system, controllers must go in <code class="bg-gray-100 px-2 py-1 rounded">Controllers/</code>,
+                            services in <code class="bg-gray-100 px-2 py-1 rounded">Services/</code>, and migrations/seeders inside <code class="bg-gray-100 px-2 py-1 rounded">database/</code>. Everything else is flexible.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            Think of this structure as a starting point, not a rulebook. You're in control.
+                        </p>
+                    </section>
+
+                    <section id="kernel-structure" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">kernel structure</h2>
+                        <p class="text-gray-600 mb-4">
+                            The Forge Kernel is lightweight but powerful — built from the ground up to be understandable, flexible, and easy to extend.
+                            If you want to dive into the source code or even fork the kernel and make it your own, this overview will help you get familiar with the layout.
+                        </p>
+
+                        <p class="text-gray-600 mb-4">
+                            The kernel lives inside the <code class="bg-gray-100 px-2 py-1 rounded">engine/</code> directory and is structured like this:
+                        </p>
+
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>CLI/</strong> – Everything related to the Forge command line:</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Commands/</strong> – Built-in CLI commands (like installing modules or generating files).</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Traits/</strong> – Reusable CLI behaviors.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Application.php</strong> – Entry point for running CLI commands.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Command.php</strong> – Interface that all commands implement.</li>
+                            <li><strong>Core/</strong> – The heart of the Forge Kernel. It's broken down into small, focused parts:</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Bootstrap/</strong> – Startup logic and initialization.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Config/</strong> – Loads your config files and makes them available throughout the app.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>DI/</strong> – The dependency injection container (like a smart warehouse manager — knows where everything is, gets you what you need).</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Debug/</strong> – Debug tools like <code class="bg-gray-100 px-2 py-1 rounded">Metrics.php</code>.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Dto/</strong> – Support for Data Transfer Objects (used in components and services).</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Helpers/</strong> – Utility functions and convenience methods.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Http/</strong> – Request/response handling, routing, and middleware interfaces.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Module/</strong> – Internal logic for capability discovery, loading, and registration.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Routing/</strong> – Route matching and auto-discovery.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Schema/</strong> – For defining and managing validation schemas and rules.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Security/</strong> – Rate limiting, JWT, circuit breakers, and other protections.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Services/</strong> – Core Forge services like logging, events, etc.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Session/</strong> – Simple session manager.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Support/</strong> – Shared utilities and helpers.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Templates/</strong> – Scaffold files used when generating new code (controllers, modules, etc.).</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Validation/</strong> – Input validation system.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>View/</strong> – View engine, layouts, and rendering logic.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Autoloader.php</strong> – Forge's internal PSR-4 class loader.</li>
+                            <li style="list-style: none; margin-left: 1rem;"><strong>Engine.php</strong> – The main engine bootstrapper that glues everything together.</li>
+                            <li><strong>Database/Migrations/</strong> – Kernel-level migrations if the kernel needs to evolve the schema.</li>
+                            <li><strong>Exceptions/</strong> – Shared exception types used across the kernel.</li>
+                            <li><strong>Templates/Views/</strong> – Default views like <code class="bg-gray-100 px-2 py-1 rounded">error_page.php</code>.</li>
+                            <li><strong>Traits/</strong> – Kernel-level traits for shared behavior.</li>
+                            <li><strong>tests/</strong> – Unit tests for the Forge Kernel itself.</li>
+                            <li><strong>LICENSE</strong>, <strong>README.md</strong> – Usual stuff.</li>
                         </ul>
 
-                        <li><strong>Database/Migrations/</strong> – Kernel-level migrations if the kernel needs to evolve the schema.</li>
-                        <li><strong>Exceptions/</strong> – Shared exception types used across the kernel.</li>
-                        <li><strong>Templates/Views/</strong> – Default views like <code>error_page.php</code>.</li>
-                        <li><strong>Traits/</strong> – Kernel-level traits for shared behavior.</li>
-                        <li><strong>tests/</strong> – Unit tests for the Forge Kernel itself.</li>
-                        <li><strong>LICENSE</strong>, <strong>README.md</strong> – Usual stuff.</li>
-                    </ul>
+                        <p class="text-gray-600 mb-4">
+                            Everything is built in plain PHP, without any dependencies — so you can dig into any part of the kernel
+                            and understand exactly what's going on. No magic, no black boxes.
+                        </p>
 
-                    <p>
-                        Everything is built in plain PHP, without any dependencies — so you can dig into any part of the kernel
-                        and understand exactly what's going on. No magic, no black boxes.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> Database and ORM are not in the kernel. They're capabilities you install when you need them. The kernel provides the foundation — you add what you need on top.
+                        </p>
 
-                    <p>
-                        <strong>Note:</strong> Database and ORM are not in the kernel. They're capabilities you install when you need them. The kernel provides the foundation — you add what you need on top.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Want to customize or even fork the kernel? Go for it. It's all MIT-licensed and designed to be yours.
+                        </p>
+                    </section>
 
-                    <p>
-                        Want to customize or even fork the kernel? Go for it. It's all MIT-licensed and designed to be yours.
-                    </p>
-                </section>
+                    <section id="dependency-injection" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Dependency Injection: My Way of Keeping Things Tidy</h2>
+                        <p class="text-gray-600 mb-4">
+                            Okay, so let's talk about something called Dependency Injection (DI). For me, building Forge has been about keeping things simple and understandable, and DI is a big part of that philosophy. Think of it like this: instead of your code having to go out and grab all the tools it needs, I wanted a system where those tools are just handed to it.
+                        </p>
 
-                <section id="dependency-injection">
-                    <h2>Dependency Injection: My Way of Keeping Things Tidy</h2>
-                    <p>
-                        Okay, so let's talk about something called Dependency Injection (DI). For me, building Forge has been about keeping things simple and understandable, and DI is a big part of that philosophy. Think of it like this: instead of your code having to go out and grab all the tools it needs, I wanted a system where those tools are just handed to it.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            It's like when you're building something, right? It's way smoother if you have all your parts laid out and ready instead of constantly searching for them. That's what DI does for your code. It helps keep everything organized and makes it easier to see what relies on what.
+                        </p>
 
-                    <p>
-                        It's like when you're building something, right? It's way smoother if you have all your parts laid out and ready instead of constantly searching for them. That's what DI does for your code. It helps keep everything organized and makes it easier to see what relies on what.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            In Forge, the <code class="bg-gray-100 px-2 py-1 rounded">Container</code> is like a smart warehouse manager. It knows where everything is stored, gets you what you need when you ask, and manages dependencies automatically. It's the guy in charge of handing out these tools (we call them services). It knows how to create them and keep them ready when they're needed.
+                        </p>
 
-                    <p>
-                        In Forge, the <code>Container</code> is like a smart warehouse manager. It knows where everything is stored, gets you what you need when you ask, and manages dependencies automatically. It's the guy in charge of handing out these tools (we call them services). It knows how to create them and keep them ready when they're needed.
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">The Simple Breakdown (as I See It)</h3>
+                        <p class="text-gray-600 mb-4"><strong>Telling Forge About the Tools:</strong> First, we need to tell the <code class="bg-gray-100 px-2 py-1 rounded">Container</code> about the different tools (services) we have and how to make them. Here's how you can do that:</p>
 
-                    <h3>The Simple Breakdown (as I See It)</h3>
-                    <p><strong>Telling Forge About the Tools:</strong> First, we need to tell the <code>Container</code> about the different tools (services) we have and how to make them. Here's how you can do that:</p>
-
-                    <p><strong>Using Attributes (My Preferred Way):</strong> I like to keep things close to where they're used. That's why I added attributes like <code>#[Service]</code>. Just slap that on top of your class, and Forge knows it's something the <code>Container</code> should manage. It's clean and keeps your code organized.</p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <p class="text-gray-600 mb-4"><strong>Using Attributes (My Preferred Way):</strong> I like to keep things close to where they're used. That's why I added attributes like <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code>. Just slap that on top of your class, and Forge knows it's something the <code class="bg-gray-100 px-2 py-1 rounded">Container</code> should manage. It's clean and keeps your code organized.</p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 use Forge\Core\DI\Attributes\Service;
 
 #[Service]
@@ -346,24 +470,24 @@ class MyAwesomeService
         // ...
     }
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <p>Using register(): If you need more control, you can use the register() method. This is useful if you want to specify a different ID for the service.</p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <p class="text-gray-600 mb-4">Using register(): If you need more control, you can use the register() method. This is useful if you want to specify a different ID for the service.</p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 use Forge\Core\DI\Container;
 
 $container = Container::getInstance();
 $container->register(MyAwesomeService::class); // Registers it with the class name as the ID
 
 $container->register('my.awesome.service', MyAwesomeService::class); // Registers it with a custom ID</code></pre>
-                    </div>
+                        </div>
 
-                    <p>Binding with bind(): This is handy when you want to map an interface to a specific implementation, or if you want to provide a custom function (a Closure) to create the service.</p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <p class="text-gray-600 mb-4">Binding with bind(): This is handy when you want to map an interface to a specific implementation, or if you want to provide a custom function (a Closure) to create the service.</p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 use Forge\Core\DI\Container;
 use App\Interfaces\MyServiceInterface;
 use App\Services\MyServiceImpl;
@@ -374,88 +498,88 @@ $container->bind(MyServiceInterface::class, MyServiceImpl::class);
 $container->bind('my.service', function(Container $c) {
     return new MyServiceImpl($c->get('some.other.service')); // Injecting another service
 });</code></pre>
-                    </div>
+                        </div>
 
-                    <p>Singletons with singleton(): If you only want one instance of a service, use singleton().</p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <p class="text-gray-600 mb-4">Singletons with singleton(): If you only want one instance of a service, use singleton().</p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 use Forge\Core\DI\Container;
 
 $container = Container::getInstance();
 $container->singleton('my.config', function() {
     return ['api_key' => 'your_key', 'debug' => true];
 });</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        Asking for the Tools: When a piece of your code needs a tool, it just asks the Container.
-                        Forge then makes sure it has one ready and passes it over. That's what the get() and make()
-                        methods are for.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Asking for the Tools: When a piece of your code needs a tool, it just asks the Container.
+                            Forge then makes sure it has one ready and passes it over. That's what the get() and make()
+                            methods are for.
+                        </p>
 
-                    <p>get() (My Go-To): This is the most common way to get a service. It's simple and efficient.</p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <p class="text-gray-600 mb-4">get() (My Go-To): This is the most common way to get a service. It's simple and efficient.</p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 use Forge\Core\DI\Container;
 
 $container = Container::getInstance();
 $service = $container->get(MyAwesomeService::class);
 $service->doSomething();</code></pre>
-                    </div>
+                        </div>
 
-                    <p>make(): This is similar to get(), but it always creates a new instance of the service, even if it's registered as a singleton. I don't use this as often, but it's there if you need it.</p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <p class="text-gray-600 mb-4">make(): This is similar to get(), but it always creates a new instance of the service, even if it's registered as a singleton. I don't use this as often, but it's there if you need it.</p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 use Forge\Core\DI\Container;
 
 $container = Container::getInstance();
 $service1 = $container->make(MyAwesomeService::class);
 $service2 = $container->make(MyAwesomeService::class); // $service1 and $service2 are different instances</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        Forge Being Helpful (Auto-wiring): This is one of the cooler parts. Often, when your code asks for a tool,
-                        Forge can automatically figure out what other tools that tool needs to work! It looks at the constructor
-                        (that __construct() thing in your PHP classes) and sees what else is being requested.
-                        If Forge knows how to make those other things, it just does it – that's auto-wiring.
-                    </p>
-                    <p>
-                        Making Sure There's Only One (Singletons): For some tools, you only ever need one in your whole project –
-                        like a settings manager. The singleton() method makes sure that Forge only creates one of those tools and
-                        gives you the same one every time you ask for it.
-                    </p>
-                    <p>
-                        Using Attributes for Easy Setup: You might see things like #[Service] in the code. This is just a handy
-                        way to tell Forge, "Hey, this class is a service, so manage it for me!" It's like putting a label on a
-                        tool so the Container knows what it is without you having to spell it out somewhere else.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Forge Being Helpful (Auto-wiring): This is one of the cooler parts. Often, when your code asks for a tool,
+                            Forge can automatically figure out what other tools that tool needs to work! It looks at the constructor
+                            (that __construct() thing in your PHP classes) and sees what else is being requested.
+                            If Forge knows how to make those other things, it just does it – that's auto-wiring.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Making Sure There's Only One (Singletons): For some tools, you only ever need one in your whole project –
+                            like a settings manager. The singleton() method makes sure that Forge only creates one of those tools and
+                            gives you the same one every time you ask for it.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Using Attributes for Easy Setup: You might see things like #[Service] in the code. This is just a handy
+                            way to tell Forge, "Hey, this class is a service, so manage it for me!" It's like putting a label on a
+                            tool so the Container knows what it is without you having to spell it out somewhere else.
+                        </p>
 
-                    <h3>Why Go Through All This?</h3>
-                    <p>
-                        For me, using dependency injection just makes sense. It leads to code that's:
-                    </p>
-                    <ul>
-                        <li><strong>Easier to Grasp:</strong> You can see more clearly what each piece of code needs to do its job.</li>
-                        <li><strong>Simpler to Test:</strong> When you're testing, you can easily swap out the real tools with fake ones to make sure your code is working correctly in isolation.</li>
-                        <li><strong>More Flexible Down the Road:</strong> If you decide to change how a tool works under the hood, you often don't have to change the code that uses it.</li>
-                        <li><strong>More Reusable in Different Places:</strong> Pieces of your code become less tied to specific ways of doing things, making them easier to use in different parts of your project.</li>
-                    </ul>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Why Go Through All This?</h3>
+                        <p class="text-gray-600 mb-4">
+                            For me, using dependency injection just makes sense. It leads to code that's:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Easier to Grasp:</strong> You can see more clearly what each piece of code needs to do its job.</li>
+                            <li><strong>Simpler to Test:</strong> When you're testing, you can easily swap out the real tools with fake ones to make sure your code is working correctly in isolation.</li>
+                            <li><strong>More Flexible Down the Road:</strong> If you decide to change how a tool works under the hood, you often don't have to change the code that uses it.</li>
+                            <li><strong>More Reusable in Different Places:</strong> Pieces of your code become less tied to specific ways of doing things, making them easier to use in different parts of your project.</li>
+                        </ul>
 
-                    <h3>Usage Examples (Show Me the Code!)</h3>
-                    <p>
-                        Let's look at some real-world examples from Forge to see DI in action:
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Usage Examples (Show Me the Code!)</h3>
+                        <p class="text-gray-600 mb-4">
+                            Let's look at some real-world examples from Forge to see DI in action:
+                        </p>
 
-                    <h4>Example 1: Injecting a Service into a Controller</h4>
-                    <p>
-                        Here's how I inject the <code>ForgeAuthService</code> into a controller. The controller needs this service to handle user authentication. Because of DI, the controller doesn't have to worry about *how* to create the <code>ForgeAuthService</code>; it just gets it handed over.
-                    </p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Example 1: Injecting a Service into a Controller</h4>
+                        <p class="text-gray-600 mb-4">
+                            Here's how I inject the <code class="bg-gray-100 px-2 py-1 rounded">ForgeAuthService</code> into a controller. The controller needs this service to handle user authentication. Because of DI, the controller doesn't have to worry about *how* to create the <code class="bg-gray-100 px-2 py-1 rounded">ForgeAuthService</code>; it just gets it handed over.
+                        </p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 declare(strict_types=1);
 
 namespace App\Controllers;
@@ -493,18 +617,18 @@ final class DashboardController
         return $this->view(view: "pages/dashboard/index", data: $data);
     }
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <p>Notice how the ForgeAuthService is declared in the constructor? Forge's Container automatically provides an instance of that service when the DashboardController is created. Clean and simple!</p>
+                        <p class="text-gray-600 mb-4">Notice how the ForgeAuthService is declared in the constructor? Forge's Container automatically provides an instance of that service when the DashboardController is created. Clean and simple!</p>
 
-                    <h4>Example 2: Using DI in an Event Listener</h4>
-                    <p>
-                        This example shows how a service (<code>PageVisitLogger</code>) is used to handle an event.
-                        The event listener class is itself a service, thanks to the <code>#[Service]</code> attribute.
-                    </p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Example 2: Using DI in an Event Listener</h4>
+                        <p class="text-gray-600 mb-4">
+                            This example shows how a service (<code class="bg-gray-100 px-2 py-1 rounded">PageVisitLogger</code>) is used to handle an event.
+                            The event listener class is itself a service, thanks to the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute.
+                        </p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 declare(strict_types=1);
 
 namespace App\Services;
@@ -534,31 +658,31 @@ class PageVisitLogger
         );
     }
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <p>In this case, if the PageVisitLogger had any dependencies, they would also be injected by the Container.</p>
+                        <p class="text-gray-600 mb-4">In this case, if the PageVisitLogger had any dependencies, they would also be injected by the Container.</p>
 
-                    <h3>A Bit More on Using DI in Forge</h3>
-                    <p>
-                        Here are a few more things to keep in mind when working with DI in Forge:
-                    </p>
-                    <ul>
-                        <li>
-                            <strong>Embrace Interfaces:</strong> I encourage you to use interfaces whenever possible. This makes your code even more flexible. For example, if you have a service that sends emails, define an <code>EmailServiceInterface</code> and then create different classes that implement that interface (e.g., <code>SmtpEmailService</code>, <code>MailgunEmailService</code>). Then, you can use <code>bind()</code> to tell Forge which implementation to use. This way, you can easily swap out email providers without changing the code that sends emails.
-                        </li>
-                        <li>
-                            <strong>Keep it Lean:</strong>
-                            DI is a powerful tool, but don't overuse it. Only inject things that your class truly *depends* on. If a class can create an object itself without becoming too complex, it's often fine to do so.
-                        </li>
-                        <li>
-                            <strong>Configuration:</strong>
-                            Sometimes, services need configuration values (like API keys, database settings, etc.).
-                            You can use the <code>setParameter()</code> and <code>getParameter()</code> methods of the <code>Container</code> to manage these.
-                        </li>
-                    </ul>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">A Bit More on Using DI in Forge</h3>
+                        <p class="text-gray-600 mb-4">
+                            Here are a few more things to keep in mind when working with DI in Forge:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>
+                                <strong>Embrace Interfaces:</strong> I encourage you to use interfaces whenever possible. This makes your code even more flexible. For example, if you have a service that sends emails, define an <code class="bg-gray-100 px-2 py-1 rounded">EmailServiceInterface</code> and then create different classes that implement that interface (e.g., <code class="bg-gray-100 px-2 py-1 rounded">SmtpEmailService</code>, <code class="bg-gray-100 px-2 py-1 rounded">MailgunEmailService</code>). Then, you can use <code class="bg-gray-100 px-2 py-1 rounded">bind()</code> to tell Forge which implementation to use. This way, you can easily swap out email providers without changing the code that sends emails.
+                            </li>
+                            <li>
+                                <strong>Keep it Lean:</strong>
+                                DI is a powerful tool, but don't overuse it. Only inject things that your class truly *depends* on. If a class can create an object itself without becoming too complex, it's often fine to do so.
+                            </li>
+                            <li>
+                                <strong>Configuration:</strong>
+                                Sometimes, services need configuration values (like API keys, database settings, etc.).
+                                You can use the <code class="bg-gray-100 px-2 py-1 rounded">setParameter()</code> and <code class="bg-gray-100 px-2 py-1 rounded">getParameter()</code> methods of the <code class="bg-gray-100 px-2 py-1 rounded">Container</code> to manage these.
+                            </li>
+                        </ul>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 use Forge\Core\DI\Container;
 
 $container = Container::getInstance();
@@ -577,12 +701,12 @@ class MyService {
 $container->bind(MyService::class, function(Container $c) {
     return new MyService($c->get('api.key'));
 });</code></pre>
-                    </div>
+                        </div>
 
-                    <p>Tags: Forge also supports "tags". This lets you group related services together. For example, you might tag all your event listeners with an "event.listener" tag. Then, you can easily retrieve all of them from the Container.</p>
-                    
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <p class="text-gray-600 mb-4">Tags: Forge also supports "tags". This lets you group related services together. For example, you might tag all your event listeners with an "event.listener" tag. Then, you can easily retrieve all of them from the Container.</p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 use Forge\Core\DI\Container;
 use Forge\Core\DI\Attributes\Service;
 use Forge\Core\DI\Attributes\Tag;
@@ -599,39 +723,146 @@ class AnotherEventListener {}
 
 $container = Container::getInstance();
 $listeners = $container->tagged('event.listener'); // Get all services with the tag</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        Ultimately, Forge's dependency injection is about keeping things clean, manageable, and flexible
-                        – the way I like to build. It's there to help you, the builder, focus on the actual
-                        logic of your project without getting bogged down in the details of creating and managing dependencies.
-                    </p>
-                </section>
+                        <p class="text-gray-600 mb-4">
+                            Ultimately, Forge's dependency injection is about keeping things clean, manageable, and flexible
+                            – the way I like to build. It's there to help you, the builder, focus on the actual
+                            logic of your project without getting bogged down in the details of creating and managing dependencies.
+                        </p>
+                    </section>
 
-                <section id="capability-system">
-                    <h2>Capability System</h2>
-                    <p>
-                        Forge uses a capability system. Capabilities are optional, pluggable modules that extend the kernel's functionality.
-                    </p>
-                    <p>
-                        Think of capabilities like modular additions to a house. The kernel gives you the foundation. Capabilities add what you need: database, ORM, authentication, storage, testing — all optional, all pluggable.
-                    </p>
-                    <p>
-                        Need a database? Install a database capability. Need an ORM? Install an ORM capability. Don't need authentication? Don't install it. The kernel stays lean. You stay in control.
-                    </p>
-                    <p>
-                        See the <a href="modules.html">Capabilities</a> section for more details on installing and managing capabilities.
-                    </p>
-                </section>
+                    <section id="capability-system" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Capability System</h2>
+                        <p class="text-gray-600 mb-4">
+                            Forge uses a capability system. Capabilities are optional, pluggable modules that extend the kernel's functionality.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Think of capabilities like modular additions to a house. The kernel gives you the foundation. Capabilities add what you need: database, ORM, authentication, storage, testing — all optional, all pluggable.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Need a database? Install a database capability. Need an ORM? Install an ORM capability. Don't need authentication? Don't install it. The kernel stays lean. You stay in control.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            See the <a href="modules.html" class="text-blue-600 hover:underline">Capabilities</a> section for more details on installing and managing capabilities.
+                        </p>
+                    </section>
 
-                <section id="configuration">
-                    <h2>Configuration</h2>
-                    <p>Work in progress..</p>
-                </section>
-            </article>
-        </main>
+                    <section id="configuration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration</h2>
+                        <p class="text-gray-600 mb-4">Work in progress..</p>
+                    </section>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src="assets/js/docs.js"></script>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
+            </div>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileSidebarButton = document.getElementById('mobile-sidebar-button');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const sidebar = document.getElementById('sidebar-nav');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function openMobileSidebar() {
+            sidebar.classList.add('mobile-menu-open');
+            mobileMenuOverlay.classList.add('active');
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.remove('mobile-menu-open');
+            mobileMenuOverlay.classList.remove('active');
+        }
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        }
+
+        if (mobileSidebarButton) {
+            mobileSidebarButton.addEventListener('click', openMobileSidebar);
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileSidebar);
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideMenu = mobileMenu && mobileMenu.contains(event.target);
+            const isClickOnMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
+
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu and sidebar on window resize if above mobile breakpoint
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 640) {
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                closeMobileSidebar();
+            }
+        });
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>

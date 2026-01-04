@@ -1,128 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Core Concepts - Forge Kernel Documentation</title>
-    <link rel="stylesheet" href="assets/css/forge-docs.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background: #2d3748;
+            border-radius: 0.5rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #f3f4f6;
+            padding-left: 1.5rem;
+        }
+
+        .nav-link.active {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            border-left: 4px solid #6366f1;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Mobile menu styles */
+        #mobile-menu {
+            display: none;
+        }
+
+        #mobile-menu:not(.hidden) {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .lg\:w-1\/4 {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 80%;
+                max-width: 320px;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                background: white;
+                overflow-y: auto;
+            }
+
+            .lg\:w-1\/4.mobile-menu-open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+                display: none;
+            }
+
+            .mobile-menu-overlay.active {
+                display: block;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="docs-container">
-        <aside class="sidebar">
-            <nav>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">Navigation</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="index.html" class="sidebar-nav-link">Home</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="introduction.html" class="sidebar-nav-link">Introduction</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="getting-started.html" class="sidebar-nav-link">Getting Started</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="core-concepts.html" class="sidebar-nav-link active">Core Concepts</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="modules.html" class="sidebar-nav-link">Capabilities</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-reference.html" class="sidebar-nav-link">API Reference</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">On This Page</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="#architecture" class="sidebar-nav-link">Architecture</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#dependency-injection" class="sidebar-nav-link">Dependency Injection</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#routing-system" class="sidebar-nav-link">Routing System</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#middleware" class="sidebar-nav-link">Middleware</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#view-engine" class="sidebar-nav-link">View Engine</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#database-orm" class="sidebar-nav-link">Database & ORM</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#capability-system" class="sidebar-nav-link">Capability System</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#configuration" class="sidebar-nav-link">Configuration</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#async-processing" class="sidebar-nav-link">Async Processing</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#cli-kernel" class="sidebar-nav-link">CLI Kernel</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
 
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
-        <div class="mobile-overlay"></div>
+<body class="bg-gray-50 text-gray-900" style="font-size: 17px;">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Modules
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-        <main class="main-content">
-            <article>
-                <header class="docs-header">
-                    <h1>Core Concepts</h1>
-                    <p>How Forge Kernel works under the hood.</p>
-                </header>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Home
+                </a>
+                <a href="getting-started.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Getting Started
+                </a>
+                <a href="core-concepts.html"
+                    class="block px-3 py-2 text-blue-600 font-medium">
+                    Core Concepts
+                </a>
+                <a href="modules.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Modules
+                </a>
+                <a href="api-reference.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    API Reference
+                </a>
+            </div>
+        </div>
+    </nav>
 
-                <section id="architecture">
-                    <h2>Architecture</h2>
-                    <p>
-                        Forge Kernel uses a modular architecture with dependency injection. It's built to be simple and flexible. Think of it like a foundation with utilities — you get the foundation, plumbing, electrical, and basic structure. You decide what to build on top.
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <!-- Mobile menu overlay -->
+                <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        Core Concepts
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#architecture"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Architecture
+                        </a>
+                        <a href="#dependency-injection"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Dependency Injection
+                        </a>
+                        <a href="#routing-system"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Routing System
+                        </a>
+                        <a href="#middleware"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Middleware
+                        </a>
+                        <a href="#view-engine"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            View Engine
+                        </a>
+                        <a href="#components"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Components
+                        </a>
+                        <a href="#database-orm"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Database & ORM
+                        </a>
+                        <a href="#capability-system"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Capability System
+                        </a>
+                        <a href="#configuration"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Configuration
+                        </a>
+                        <a href="#async-processing"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Async Processing
+                        </a>
+                        <a href="#cli-kernel"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            CLI Kernel
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">
+                        Core Concepts
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        How Forge Kernel works under the hood.
                     </p>
 
-                    <h3>Kernel Components (Built-in)</h3>
-                    <ul>
-                        <li>Kernel Core</li>
-                        <li>Router</li>
-                        <li>View Engine</li>
-                        <li>DI Container</li>
-                        <li>Capability Loader</li>
-                        <li>CLI Kernel</li>
-                        <li>Bootstrap</li>
-                        <li>Config Manager</li>
-                    </ul>
+                        <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture</h2>
+                        <p class="text-gray-600 mb-4">
+                            Forge Kernel uses a modular architecture with dependency injection. It's built to be simple and flexible. Think of it like a foundation with utilities — you get the foundation, plumbing, electrical, and basic structure. You decide what to build on top.
+                        </p>
 
-                    <h3>Capabilities (Pluggable)</h3>
-                    <p>
-                        These are <strong>not</strong> built into the kernel. Install them as capabilities when needed:
-                    </p>
-                    <ul>
-                        <li>Database (ForgeDatabaseSQL)</li>
-                        <li>ORM (ForgeSqlOrm)</li>
-                        <li>Authentication (ForgeAuth)</li>
-                        <li>Storage (ForgeStorage)</li>
-                        <li>And more...</li>
-                    </ul>
-                </section>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Kernel Components (Built-in)</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Kernel Core</li>
+                            <li>Router</li>
+                            <li>View Engine</li>
+                            <li>DI Container</li>
+                            <li>Capability Loader</li>
+                            <li>CLI Kernel</li>
+                            <li>Bootstrap</li>
+                            <li>Config Manager</li>
+                        </ul>
 
-                <section id="dependency-injection">
-                    <h2>Dependency Injection</h2>
-                    <p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Capabilities (Pluggable)</h3>
+                        <p class="text-gray-600 mb-4">
+                            These are <strong>not</strong> built into the kernel. Install them as capabilities when needed:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Database (ForgeDatabaseSQL)</li>
+                            <li>ORM (ForgeSqlOrm)</li>
+                            <li>Authentication (ForgeAuth)</li>
+                            <li>Storage (ForgeStorage)</li>
+                            <li>And more...</li>
+                        </ul>
+                    </section>
+
+                    <section id="dependency-injection">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Dependency Injection</h2>
+                        <p class="text-gray-600 mb-4">
                         Forge's DI container is like a smart warehouse manager. It knows where everything is stored, gets you what you need when you ask, and manages dependencies automatically. It resolves dependencies using PHP attributes, keeping code testable and clean.
                     </p>
 
-                    <h3>Service Registration</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Service Registration</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use Forge\Core\DI\Attributes\Service;
 
@@ -154,9 +301,9 @@ class CacheService
 }</code></pre>
                     </div>
 
-                    <h3>Interface Binding</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Interface Binding</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use Forge\Core\DI\Attributes\Bind;
 
@@ -178,14 +325,14 @@ class StripePaymentGateway implements PaymentGatewayInterface
                     </div>
                 </section>
 
-                <section id="routing-system">
-                    <h2>Routing System</h2>
-                    <p>
+                    <section id="routing-system">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Routing System</h2>
+                        <p class="text-gray-600 mb-4">
                         Attribute-based routing that auto-discovers routes from controllers. No separate route files needed.
                     </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use Forge\Core\Routing\Route;
 use Forge\Core\Http\Request;
@@ -224,20 +371,20 @@ class ApiController
 }</code></pre>
                     </div>
 
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         <strong>Note:</strong> Use curly braces for route parameters. Names must match method params.
                     </p>
                 </section>
 
-                <section id="middleware">
-                    <h2>Middleware</h2>
-                    <p>
+                    <section id="middleware">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Middleware</h2>
+                        <p class="text-gray-600 mb-4">
                         Filter HTTP requests before they hit your application.
                     </p>
 
-                    <h3>Creating Middleware</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Creating Middleware</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use Forge\Core\Http\Middleware;
 use Forge\Core\Http\Request;
@@ -257,9 +404,9 @@ class AuthMiddleware extends Middleware
 }</code></pre>
                     </div>
 
-                    <h3>Applying Middleware</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Applying Middleware</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use Forge\Core\Http\Attributes\Middleware;
 
@@ -301,20 +448,20 @@ class UserController
 }</code></pre>
                     </div>
 
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         Use <code>#[Middleware]</code> for controllers/methods, or <code>middlewares</code> in <code>#[Route]</code> for routes.
                     </p>
                 </section>
 
-                <section id="view-engine">
-                    <h2>View Engine</h2>
-                    <p>
+                    <section id="view-engine">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">View Engine</h2>
+                        <p class="text-gray-600 mb-4">
                         PHP-first templating. No new syntax to learn.
                     </p>
 
-                    <h3>Template Inheritance</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;!-- layouts/app.php --&gt;
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Template Inheritance</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;!-- layouts/app.php --&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
@@ -338,9 +485,9 @@ class UserController
 &lt;/html&gt;</code></pre>
                     </div>
 
-                    <h3>Child Templates</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;!-- pages/home.php --&gt;
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Child Templates</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;!-- pages/home.php --&gt;
 &lt;?php use Forge\Core\View\View; View::layout(name: "layouts/app", loadFromModule: false); ?&gt;
 
 &lt;?php View::startSection('head'); ?&gt;
@@ -355,28 +502,28 @@ class UserController
 &lt;?php View::endSection(); ?&gt;</code></pre>
                     </div>
 
-                    <h3>Components</h3>
-                    <p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Components</h3>
+                        <p class="text-gray-600 mb-4">
                         Components are reusable UI pieces. Forge provides flexible ways to create components — with or without PHP classes, with or without view files, in app scope or module scope, with or without DTOs. Choose the approach that fits your needs.
                     </p>
 
-                    <h4>Component Locations</h4>
-                    <p>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Component Locations</h4>
+                        <p class="text-gray-600 mb-4">
                         Components can be created in two scopes:
                     </p>
-                    <ul>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
                         <li><strong>App Scope:</strong> <code>app/Components/</code> — Components specific to your application</li>
                         <li><strong>Module Scope:</strong> <code>modules/ModuleName/src/Resources/components/</code> — Components bundled with capabilities</li>
                     </ul>
 
-                    <h4>1. Class-Based Components (With PHP Class)</h4>
-                    <p>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">1. Class-Based Components (With PHP Class)</h4>
+                        <p class="text-gray-600 mb-4">
                         Class-based components extend <code>BaseComponent</code> and can use DTOs, view files, or return HTML directly.
                     </p>
 
                     <h5>App Scope Component with DTO</h5>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // app/Components/Ui/Alert.php
 namespace App\Components\Ui;
 
@@ -392,13 +539,13 @@ final class Alert extends BaseComponent
     }
 }</code></pre>
                     </div>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         The DTO class (<code>AlertPropsDto</code>) is automatically created and used when <code>useDto: true</code>.
                     </p>
 
                     <h5>Module Scope Component with DTO</h5>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // modules/ForgeUi/src/Resources/components/Ui/Alert.php
 namespace App\Modules\ForgeUi\Resources\Components\Ui;
 
@@ -418,13 +565,13 @@ final class Alert extends BaseComponent
     }
 }</code></pre>
                     </div>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         Module components use the <code>ModuleName:Path</code> syntax and set <code>loadFromModule: true</code> when rendering views.
                     </p>
 
                     <h5>Component Without DTO (Direct Props)</h5>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // app/Components/Ui/Button.php
 namespace App\Components\Ui;
 
@@ -450,8 +597,8 @@ final class Button extends BaseComponent
                     </div>
 
                     <h5>Component Returning HTML Directly (No View File)</h5>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // app/Components/Ui/Badge.php
 namespace App\Components\Ui;
 
@@ -478,33 +625,33 @@ final class Badge extends BaseComponent
     }
 }</code></pre>
                     </div>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         Use the <code>raw()</code> helper when returning HTML directly without a view file.
                     </p>
 
-                    <h4>2. View-Only Components (Without PHP Class)</h4>
-                    <p>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">2. View-Only Components (Without PHP Class)</h4>
+                        <p class="text-gray-600 mb-4">
                         For simple presentational components, create only a view file. No PHP class needed.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         Create a view file at <code>app/resources/components/ui/alert.php</code>:
                     </p>
-                    <div class="code-block">
-                        <pre><code>&lt;!-- app/resources/components/ui/alert.php --&gt;
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;!-- app/resources/components/ui/alert.php --&gt;
 &lt;div class="alert alert-&lt;?= $type ?? 'info' ?&gt;"&gt;
     &lt;?= htmlspecialchars($message ?? '') ?&gt;
 &lt;/div&gt;</code></pre>
                     </div>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         For module-scoped view components, place them in <code>modules/ModuleName/src/Resources/views/components/</code>.
                     </p>
 
-                    <h4>Using Components</h4>
-                    <p>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Using Components</h4>
+                        <p class="text-gray-600 mb-4">
                         Use the <code>component()</code> helper function to render components:
                     </p>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // App scope class-based component
 echo component('Ui/Alert', 'class', [
     'type' => 'success',
@@ -544,12 +691,12 @@ echo View::viewComponent('ui/alert', [
 ]);</code></pre>
                     </div>
 
-                    <h4>Real-World Example</h4>
-                    <p>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Real-World Example</h4>
+                        <p class="text-gray-600 mb-4">
                         Here's how a module component is used in practice:
                     </p>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // modules/ForgeUi/src/Resources/views/components/ui/flash-message.php
 use Forge\Core\Helpers\Flash;
 
@@ -569,8 +716,8 @@ $flashMessages = Flash::flat() ?? [];
 &lt;?php endif; ?&gt;</code></pre>
                     </div>
 
-                    <h4>When to Use Each Approach</h4>
-                    <ul>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">When to Use Each Approach</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
                         <li><strong>Class-based with DTO:</strong> When you want type safety and IDE autocomplete for component props. Best for reusable components with multiple properties.</li>
                         <li><strong>Class-based without DTO:</strong> For simpler components where direct constructor parameters are sufficient.</li>
                         <li><strong>Class-based returning HTML:</strong> For very simple components that don't need a separate view file. Useful for small, self-contained UI elements.</li>
@@ -580,18 +727,18 @@ $flashMessages = Flash::flat() ?? [];
                     </ul>
                 </section>
 
-                <section id="database-orm">
-                    <h2>Database & ORM (Capabilities)</h2>
-                    <p>
+                    <section id="database-orm">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Database & ORM (Capabilities)</h2>
+                        <p class="text-gray-600 mb-4">
                         Database and ORM are <strong>not built into the kernel</strong>. They're capabilities you install when you need them. Install a database capability like <code>ForgeDatabaseSQL</code> or an ORM capability like <code>ForgeSqlOrm</code>.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         <strong>Note:</strong> The examples below assume you've installed a database/ORM capability. The kernel itself doesn't include these features.
                     </p>
 
-                    <h3>Model Definition</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Model Definition</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use App\Modules\ForgeSqlOrm\ORM\Model;
 use App\Modules\ForgeSqlOrm\ORM\Attributes\Table;
@@ -633,9 +780,9 @@ class User extends Model
 }</code></pre>
                     </div>
 
-                    <h3>Query Builder</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Query Builder</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 // Get all records
 $users = User::query()->get();
@@ -662,23 +809,23 @@ $user = User::query()
 // Access relationship
 $posts = $user->load('posts');</code></pre>
                     </div>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         <strong>Note:</strong> Forge uses a query builder pattern. Always start with <code>Model::query()</code> to build queries. There are no static methods like <code>all()</code> or <code>find()</code> directly on the Model class.
                     </p>
                 </section>
 
-                <section id="capability-system">
-                    <h2>Capability System</h2>
-                    <p>
+                    <section id="capability-system">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Capability System</h2>
+                        <p class="text-gray-600 mb-4">
                         Extend Forge Kernel with self-contained capability modules. Think of capabilities like modular additions to a house. The kernel gives you the foundation. Capabilities add what you need: database, ORM, authentication, storage — all optional, all pluggable.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         Need a database? Install a database capability. Need an ORM? Install an ORM capability. Don't need authentication? Don't install it. The kernel stays lean. You stay in control.
                     </p>
 
-                    <h3>Capability Structure</h3>
-                    <div class="code-block">
-                        <pre><code>{
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Capability Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">{
   "$schema": "./../../engine/Core/Schema/module-schema.json",
   "name": "forge-my-module",
   "version": "1.0.0",
@@ -690,9 +837,9 @@ $posts = $user->load('posts');</code></pre>
 }</code></pre>
                     </div>
 
-                    <h3>Capability Class</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Capability Class</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 namespace App\Modules\MyModule;
 
@@ -731,14 +878,14 @@ final class MyModule
                     </div>
                 </section>
 
-                <section id="configuration">
-                    <h2>Configuration Management</h2>
-                    <p>
+                    <section id="configuration">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration Management</h2>
+                        <p class="text-gray-600 mb-4">
                         Environment-based configuration that's secure and flexible.
                     </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use Forge\Core\Config\Config;
 use Forge\Core\Config\Environment;
@@ -765,59 +912,59 @@ if (config('services.stripe.key')) {
                     </div>
                 </section>
 
-                <section id="async-processing">
-                    <h2>Asynchronous Processing & Queues</h2>
-                    <p>
+                    <section id="async-processing">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Asynchronous Processing & Queues</h2>
+                        <p class="text-gray-600 mb-4">
                         Understanding when and why to use queues, workers, and asynchronous processing.
                     </p>
 
-                    <h3>The Cashier & Warehouse Analogy</h3>
-                    <p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">The Cashier & Warehouse Analogy</h3>
+                        <p class="text-gray-600 mb-4">
                         Imagine a store with a cashier taking orders. Most orders are simple — "I want a sheet of paper" — and the cashier handles them quickly because the paper is right next to them. Everyone in line moves smoothly, no one notices any slowdown.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         But sometimes, someone needs something from the warehouse — like a screw that's 3 feet away. Now the cashier has to walk, pick up the screw, come back, and deliver both items. The person behind has to wait. This is called <strong>latency</strong> — the delay caused by the slower operation.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         If it's just one person, nothing bad happens. But what if 4 people in a row each need something from the warehouse? Or what if someone needs 2 shovels from deep in the warehouse, and the cashier doesn't know where they are? Now the whole process stops for everyone.
                     </p>
 
-                    <h3>The Solution: Workers</h3>
-                    <p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">The Solution: Workers</h3>
+                        <p class="text-gray-600 mb-4">
                         To solve this, you hire a warehouse worker. The cashier handles simple orders (synchronous — fast). The warehouse worker handles complex orders (asynchronous — doesn't block the cashier). When an order needs something from the warehouse, the cashier writes it down and puts it in a queue. The warehouse worker picks up multiple orders at once (batch processing), goes to the warehouse, brings back all the items, and delivers them.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         If you need more capacity, you hire more workers. You can plan ahead — before a big sale or holiday, you allocate more workers a few hours before the rush. Everything feels smooth.
                     </p>
 
-                    <h3>In Your Application</h3>
-                    <p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">In Your Application</h3>
+                        <p class="text-gray-600 mb-4">
                         <strong>Synchronous (Cashier):</strong> Simple operations that are fast — rendering a view, returning JSON, simple database queries. These happen immediately and don't need queues.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         <strong>Asynchronous (Warehouse Worker):</strong> Complex operations that take time — sending emails, processing images, generating reports, calling external APIs. These go into a queue and are processed by workers.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         <strong>Batch Processing:</strong> Workers can process multiple jobs at once, like the warehouse worker bringing back multiple items in one trip.
                     </p>
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         <strong>Scaling:</strong> Add more workers before peak times (holidays, promotions, scheduled events) to handle increased load smoothly.
                     </p>
 
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         <strong>Key Takeaway:</strong> Not every task needs to go to a queue or be processed by a worker. Use queues for operations that would block or slow down your main application flow. Keep simple operations synchronous.
                     </p>
                 </section>
 
-                <section id="cli-kernel">
-                    <h2>CLI Kernel</h2>
-                    <p>
+                    <section id="cli-kernel">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Kernel</h2>
+                        <p class="text-gray-600 mb-4">
                         Create custom commands and automate tasks.
                     </p>
 
-                    <h3>Creating Custom Commands</h3>
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Creating Custom Commands</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -855,14 +1002,121 @@ class SendEmailsCommand extends Command
 }</code></pre>
                     </div>
 
-                    <p>
+                        <p class="text-gray-600 mb-4">
                         Commands auto-discover. Just create and use.
                     </p>
-                </section>
-            </article>
-        </main>
+                    </section>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src="assets/js/docs.js"></script>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
+            </div>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileSidebarButton = document.getElementById('mobile-sidebar-button');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const sidebar = document.getElementById('sidebar-nav');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function openMobileSidebar() {
+            sidebar.classList.add('mobile-menu-open');
+            mobileMenuOverlay.classList.add('active');
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.remove('mobile-menu-open');
+            mobileMenuOverlay.classList.remove('active');
+        }
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        }
+
+        if (mobileSidebarButton) {
+            mobileSidebarButton.addEventListener('click', openMobileSidebar);
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileSidebar);
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideMenu = mobileMenu && mobileMenu.contains(event.target);
+            const isClickOnMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
+
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu and sidebar on window resize if above mobile breakpoint
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 640) {
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                closeMobileSidebar();
+            }
+        });
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>

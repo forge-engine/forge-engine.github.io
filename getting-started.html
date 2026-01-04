@@ -1,134 +1,277 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Getting Started - Forge Kernel Documentation</title>
-    <link rel="stylesheet" href="assets/css/forge-docs.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background: #2d3748;
+            border-radius: 0.5rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #f3f4f6;
+            padding-left: 1.5rem;
+        }
+
+        .nav-link.active {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            border-left: 4px solid #6366f1;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Mobile menu styles */
+        #mobile-menu {
+            display: none;
+        }
+
+        #mobile-menu:not(.hidden) {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .lg\:w-1\/4 {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 80%;
+                max-width: 320px;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                background: white;
+                overflow-y: auto;
+            }
+
+            .lg\:w-1\/4.mobile-menu-open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+                display: none;
+            }
+
+            .mobile-menu-overlay.active {
+                display: block;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="docs-container">
-        <aside class="sidebar">
-            <nav>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">Navigation</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="index.html" class="sidebar-nav-link">Home</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="introduction.html" class="sidebar-nav-link">Introduction</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="getting-started.html" class="sidebar-nav-link active">Getting Started</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="core-concepts.html" class="sidebar-nav-link">Core Concepts</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="modules.html" class="sidebar-nav-link">Capabilities</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="api-reference.html" class="sidebar-nav-link">API Reference</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-nav-group">
-                        <div class="sidebar-nav-group-title">On This Page</div>
-                        <ul class="sidebar-nav" style="list-style: none; padding-left: 0;">
-                            <li class="sidebar-nav-item">
-                                <a href="#requirements" class="sidebar-nav-link">Requirements</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#installation" class="sidebar-nav-link">Installation</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#configuration" class="sidebar-nav-link">Configuration</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#first-controller" class="sidebar-nav-link">First Controller</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#services" class="sidebar-nav-link">Services & DI</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#routing" class="sidebar-nav-link">Routing</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#views-templates" class="sidebar-nav-link">Views & Templates</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#database" class="sidebar-nav-link">Database & ORM</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#developer-mode" class="sidebar-nav-link">Developer Mode</a>
-                            </li>
-                            <li class="sidebar-nav-item">
-                                <a href="#cli-commands" class="sidebar-nav-link">CLI Commands</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
 
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
-        <div class="mobile-overlay"></div>
-
-        <main class="main-content">
-            <article>
-                <header class="docs-header">
-                    <h1>Getting Started with Forge</h1>
-                    <p>This guide will help you get Forge up and running. It's pretty straightforward.</p>
-                </header>
-
-                <section id="requirements">
-                    <h2>Requirements</h2>
-                    <ul>
-                        <li>PHP 8.2 or higher</li>
-                        <li>Web server (Apache, Nginx, or PHP CLI built-in server)</li>
-                        <li>SQLite, MySQL, or PostgreSQL (optional, install via database capability if needed)</li>
-                    </ul>
-                    <p>
-                        <strong>Note:</strong> Forge doesn't require Composer. The kernel is dependency-free. Database and ORM are capabilities you install when needed, not built-in requirements.
-                    </p>
-                </section>
-
-                <section id="installation">
-                    <h2>Installation</h2>
-                    <p>A few ways to get Forge running.</p>
-
-                    <div class="code-block">
-                        <pre><code># Quick install with one command
-bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/main/installer.sh)</code></pre>
+<body class="bg-gray-50 text-gray-900" style="font-size: 17px;">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
                     </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Modules
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-                    <p>
-                        That's it! This command will clone the starter project, set up the folder structure, and give you a working Forge app you can run immediately.
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Home
+                </a>
+                <a href="getting-started.html"
+                    class="block px-3 py-2 text-blue-600 font-medium">
+                    Getting Started
+                </a>
+                <a href="core-concepts.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Core Concepts
+                </a>
+                <a href="modules.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Modules
+                </a>
+                <a href="api-reference.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    API Reference
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <!-- Mobile menu overlay -->
+                <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        Getting Started
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#requirements"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Requirements
+                        </a>
+                        <a href="#installation"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Installation
+                        </a>
+                        <a href="#configuration"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Configuration
+                        </a>
+                        <a href="#first-controller"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            First Controller
+                        </a>
+                        <a href="#services"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Services & DI
+                        </a>
+                        <a href="#routing"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Routing
+                        </a>
+                        <a href="#views-templates"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Views & Templates
+                        </a>
+                        <a href="#database"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Database & ORM
+                        </a>
+                        <a href="#developer-mode"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Developer Mode
+                        </a>
+                        <a href="#cli-commands"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            CLI Commands
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">
+                        Getting Started with Forge
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        This guide will help you get Forge up and running. It's pretty straightforward.
                     </p>
 
-                    <h3>Manual Installation</h3>
-                    <p>If you prefer to set things up manually:</p>
-                    
-                    <div class="code-block">
-                        <pre><code>git clone https://github.com/forge-engine/forge-starter
+                    <section id="requirements" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Requirements</h2>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>PHP 8.2 or higher</li>
+                            <li>Web server (Apache, Nginx, or PHP CLI built-in server)</li>
+                            <li>SQLite, MySQL, or PostgreSQL (optional, install via database capability if needed)</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> Forge doesn't require Composer. The kernel is dependency-free. Database and ORM are capabilities you install when needed, not built-in requirements.
+                        </p>
+                    </section>
+
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-4">A few ways to get Forge running.</p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Quick install with one command
+bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/main/installer.sh)</code></pre>
+                        </div>
+
+                        <p class="text-gray-600 mb-4">
+                            That's it! This command will clone the starter project, set up the folder structure, and give you a working Forge app you can run immediately.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Manual Installation</h3>
+                        <p class="text-gray-600 mb-4">If you prefer to set things up manually:</p>
+                        
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">git clone https://github.com/forge-engine/forge-starter
 cd forge-starter
 cp env-example .env
 php install.php
 php forge.php key:generate
 php forge.php package:install-project</code></pre>
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                <section id="configuration">
-                    <h2>Configuration</h2>
-                    <p>
-                        Forge uses environment variables for configuration. Edit your <code>.env</code> file:
-                    </p>
+                    <section id="configuration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration</h2>
+                        <p class="text-gray-600 mb-4">
+                            Forge uses environment variables for configuration. Edit your <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code># Application Settings
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Application Settings
 APP_NAME="My Forge App"
 APP_ENV=development
 APP_DEBUG=true
@@ -151,38 +294,38 @@ CACHE_DRIVER=file
 # Session Configuration
 SESSION_DRIVER=file
 SESSION_LIFETIME=1440</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        Start the development server to test your installation:
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Start the development server to test your installation:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>php forge.php serve</code></pre>
-                    </div>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php serve</code></pre>
+                        </div>
 
-                    <p>
-                        Visit <code>http://localhost:8000</code> to see your application running!
-                    </p>
-                </section>
+                        <p class="text-gray-600 mb-4">
+                            Visit <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:8000</code> to see your application running!
+                        </p>
+                    </section>
 
-                <section id="first-controller">
-                    <h2>Creating Your First Controller</h2>
-                    <p>
-                        Let's create a simple controller to handle HTTP requests:
-                    </p>
+                    <section id="first-controller" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Creating Your First Controller</h2>
+                        <p class="text-gray-600 mb-4">
+                            Let's create a simple controller to handle HTTP requests:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code># Generate a new controller
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Generate a new controller
 php forge.php generate:controller WelcomeController</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        This creates a controller in <code>app/Controllers/WelcomeController.php</code>:
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            This creates a controller in <code class="bg-gray-100 px-2 py-1 rounded">app/Controllers/WelcomeController.php</code>:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -212,17 +355,17 @@ final class WelcomeController
         return $this->view(view: "pages/welcome/index", data: $data);
     }
 }</code></pre>
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                <section id="services">
-                    <h2>Services & Dependency Injection</h2>
-                    <p>
-                        Forge uses attributes for dependency injection. Services are just PHP classes with the <code>#[Service]</code> attribute.
-                    </p>
+                    <section id="services" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Services & Dependency Injection</h2>
+                        <p class="text-gray-600 mb-4">
+                            Forge uses attributes for dependency injection. Services are just PHP classes with the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute.
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 namespace App\Services;
 
 use Forge\Core\DI\Attributes\Service;
@@ -237,14 +380,14 @@ class UserService
         // return User::query()->id($id)->first();
     }
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        Use services in controllers by adding them to the constructor:
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Use services in controllers by adding them to the constructor:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 namespace App\Controllers;
 
 use App\Services\UserService;
@@ -266,21 +409,21 @@ class UserController
         return $this->view('users/show', ['user' => $user]);
     }
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        <strong>Note:</strong> Services are automatically resolved by the container. Just add them to your constructor and they'll be injected.
-                    </p>
-                </section>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> Services are automatically resolved by the container. Just add them to your constructor and they'll be injected.
+                        </p>
+                    </section>
 
-                <section id="routing">
-                    <h2>Routing</h2>
-                    <p>
-                        Forge uses attribute-based routing. Define routes directly on your controller methods:
-                    </p>
+                    <section id="routing" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Routing</h2>
+                        <p class="text-gray-600 mb-4">
+                            Forge uses attribute-based routing. Define routes directly on your controller methods:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 #[Route("/")]
 public function home(): Response
 {
@@ -313,25 +456,25 @@ class WebController
         return $this->view("profile/index");
     }
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        <strong>Note:</strong> The <code>method</code> parameter accepts a single HTTP method as a string (e.g., "GET", "POST", "PUT", "DELETE"), not an array.
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> The <code class="bg-gray-100 px-2 py-1 rounded">method</code> parameter accepts a single HTTP method as a string (e.g., "GET", "POST", "PUT", "DELETE"), not an array.
+                        </p>
 
-                    <p>
-                        Routes are automatically discovered from your controllers. No need for separate route files! Use <code>#[Middleware]</code> attribute for cleaner middleware application on controllers/methods.
-                    </p>
-                </section>
+                        <p class="text-gray-600 mb-4">
+                            Routes are automatically discovered from your controllers. No need for separate route files! Use <code class="bg-gray-100 px-2 py-1 rounded">#[Middleware]</code> attribute for cleaner middleware application on controllers/methods.
+                        </p>
+                    </section>
 
-                <section id="views-templates">
-                    <h2>Views & Templates</h2>
-                    <p>
-                        Forge uses PHP-first templating. Create views in <code>app/resources/views/</code>:
-                    </p>
+                    <section id="views-templates" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Views & Templates</h2>
+                        <p class="text-gray-600 mb-4">
+                            Forge uses PHP-first templating. Create views in <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/</code>:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;!-- app/resources/views/pages/welcome/index.php --&gt;
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;!-- app/resources/views/pages/welcome/index.php --&gt;
 &lt;?php
 use Forge\Core\View\View;
 
@@ -346,14 +489,14 @@ View::layout(name: "layouts/app", loadFromModule: false);
         &lt;?= $message ?&gt;
     &lt;/p&gt;
 &lt;/div&gt;</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        Create a layout file:
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Create a layout file:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;!DOCTYPE html&gt;
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -367,77 +510,80 @@ View::layout(name: "layouts/app", loadFromModule: false);
     ?&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                <section id="database">
-                    <h2>Database & ORM (Capabilities)</h2>
-                    <p>
-                        Database and ORM are not built into the kernel. They're capabilities you install when you need them.
-                    </p>
-                    <p>
-                        Install a database capability first:
-                    </p>
+                    <section id="database" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Database & ORM (Capabilities)</h2>
+                        <p class="text-gray-600 mb-4">
+                            Database and ORM are not built into the kernel. They're capabilities you install when you need them.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Install a database capability first:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code># Install a database capability
-php forge.php package:install-module ForgeDatabaseSQL
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install a database capability (with wizard)
+php forge.php package:install-module
+
+# Or skip wizard and specify directly
+php forge.php package:install-module --module=ForgeDatabaseSQL
 
 # Or install an ORM capability
-php forge.php package:install-module ForgeSqlOrm</code></pre>
-                    </div>
+php forge.php package:install-module --module=ForgeSqlOrm</code></pre>
+                        </div>
 
-                    <p>
-                        Once installed, you can create migrations and models:
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Once installed, you can create migrations and models:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code># Create a migration
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Create a migration
 php forge.php generate:migration CreateUsersTable
 
 # Run migrations
 php forge.php db:migrate</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        <strong>Note:</strong> Database and ORM functionality requires installing the appropriate capability module first. The kernel doesn't include these by default.
-                    </p>
-                </section>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> Database and ORM functionality requires installing the appropriate capability module first. The kernel doesn't include these by default.
+                        </p>
+                    </section>
 
-                <section id="developer-mode">
-                    <h2>Developer Mode</h2>
-                    <p>
-                        Developer mode unlocks advanced CLI commands for working with registries and publishing kernel/capability versions. You only need this if you're building your own kernel or publishing capabilities.
-                    </p>
+                    <section id="developer-mode" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Developer Mode</h2>
+                        <p class="text-gray-600 mb-4">
+                            Developer mode unlocks advanced CLI commands for working with registries and publishing kernel/capability versions. You only need this if you're building your own kernel or publishing capabilities.
+                        </p>
 
-                    <h3>Enabling Developer Mode</h3>
-                    <p>
-                        Set <code>FORGE_DEVELOPER_MODE=true</code> in your <code>.env</code> file:
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Enabling Developer Mode</h3>
+                        <p class="text-gray-600 mb-4">
+                            Set <code class="bg-gray-100 px-2 py-1 rounded">FORGE_DEVELOPER_MODE=true</code> in your <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>FORGE_DEVELOPER_MODE=true</code></pre>
-                    </div>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">FORGE_DEVELOPER_MODE=true</code></pre>
+                        </div>
 
-                    <p>
-                        Or set it in <code>config/app.php</code>:
-                    </p>
+                        <p class="text-gray-600 mb-4">
+                            Or set it in <code class="bg-gray-100 px-2 py-1 rounded">config/app.php</code>:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code>&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 return [
     'developer_mode' => true,
     // ... other config
 ];</code></pre>
-                    </div>
+                        </div>
 
-                    <h3>Commands Unlocked</h3>
-                    <p>
-                        When developer mode is enabled, these commands become available:
-                    </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Commands Unlocked</h3>
+                        <p class="text-gray-600 mb-4">
+                            When developer mode is enabled, these commands become available:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code># Framework/Kernel registry commands
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Framework/Kernel registry commands
 php forge.php dev:framework:list          # List available kernel versions
 php forge.php dev:framework:publish        # Publish kernel registry changes
 php forge.php dev:framework:version        # Create new kernel version
@@ -450,21 +596,21 @@ php forge.php dev:module:version           # Create new capability version
 # Registry management
 php forge.php dev:registry:config          # Configure registry settings
 php forge.php dev:registry:init             # Initialize new registry</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        <strong>When to enable:</strong> Only enable developer mode if you're building your own kernel fork or publishing capabilities to registries. For regular application development, you don't need it.
-                    </p>
-                </section>
+                        <p class="text-gray-600 mb-4">
+                            <strong>When to enable:</strong> Only enable developer mode if you're building your own kernel fork or publishing capabilities to registries. For regular application development, you don't need it.
+                        </p>
+                    </section>
 
-                <section id="cli-commands">
-                    <h2>CLI Commands</h2>
-                    <p>
-                        Some commands to help you work:
-                    </p>
+                    <section id="cli-commands" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Commands</h2>
+                        <p class="text-gray-600 mb-4">
+                            Some commands to help you work:
+                        </p>
 
-                    <div class="code-block">
-                        <pre><code># Generate files
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Generate files
 php forge.php generate:controller UserController
 php forge.php generate:middleware AuthMiddleware
 php forge.php generate:migration CreatePostsTable
@@ -488,33 +634,141 @@ php forge.php up
 php forge.php key:generate
 
 # Package management (ForgePackageManager)
-php forge.php package:install-module ForgeAuth
-php forge.php package:install-module ForgeAuth@1.2.0
-php forge.php package:remove-module ForgeAuth
+# Commands use wizards by default, use --module= to skip wizard
+php forge.php package:install-module --module=ForgeAuth
+php forge.php package:install-module --module=ForgeAuth@1.2.0
+php forge.php package:remove-module --module=ForgeAuth
 php forge.php package:list-modules</code></pre>
-                    </div>
+                        </div>
 
-                    <p>
-                        Run <code>php forge.php help</code> to see all available commands.
-                    </p>
-                </section>
+                        <p class="text-gray-600 mb-4">
+                            Run <code class="bg-gray-100 px-2 py-1 rounded">php forge.php help</code> to see all available commands.
+                        </p>
+                    </section>
 
-                <section id="next-steps">
-                    <h2>Next Steps</h2>
-                    <p>
-                        What you might want to look at next:
-                    </p>
+                    <section id="next-steps" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Next Steps</h2>
+                        <p class="text-gray-600 mb-4">
+                            What you might want to look at next:
+                        </p>
 
-                    <ul>
-                        <li><strong><a href="core-concepts.html">Core Concepts</a></strong> — How dependency injection, middleware, and the module system work.</li>
-                        <li><strong><a href="modules.html">Capabilities</a></strong> — Available capabilities and how to make your own.</li>
-                        <li><strong><a href="api-reference.html">API Reference</a></strong> — Complete API documentation for all kernel components.</li>
-                    </ul>
-                </section>
-            </article>
-        </main>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong><a href="core-concepts.html" class="text-blue-600 hover:underline">Core Concepts</a></strong> — How dependency injection, middleware, and the module system work.</li>
+                            <li><strong><a href="modules.html" class="text-blue-600 hover:underline">Capabilities</a></strong> — Available capabilities and how to make your own.</li>
+                            <li><strong><a href="api-reference.html" class="text-blue-600 hover:underline">API Reference</a></strong> — Complete API documentation for all kernel components.</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src="assets/js/docs.js"></script>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
+            </div>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileSidebarButton = document.getElementById('mobile-sidebar-button');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const sidebar = document.getElementById('sidebar-nav');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function openMobileSidebar() {
+            sidebar.classList.add('mobile-menu-open');
+            mobileMenuOverlay.classList.add('active');
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.remove('mobile-menu-open');
+            mobileMenuOverlay.classList.remove('active');
+        }
+
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        }
+
+        if (mobileSidebarButton) {
+            mobileSidebarButton.addEventListener('click', openMobileSidebar);
+        }
+
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileSidebar);
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideMenu = mobileMenu && mobileMenu.contains(event.target);
+            const isClickOnMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
+
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu and sidebar on window resize if above mobile breakpoint
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 640) {
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                closeMobileSidebar();
+            }
+        });
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>

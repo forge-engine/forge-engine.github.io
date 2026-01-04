@@ -97,7 +97,7 @@
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-gray-50 text-gray-900" style="font-size: 17px;">
     <!-- Navigation -->
     <nav class="bg-white shadow-sm border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -225,6 +225,10 @@
                         <a href="#configuration"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
                             Configuration
+                        </a>
+                        <a href="#developer-mode"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Developer Mode
                         </a>
                         <a href="#usage"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
@@ -407,7 +411,7 @@
                         </div>
 
                         <p class="text-gray-600 mb-4">
-                            The package manager automates this navigation. When you run <code class="bg-gray-100 px-2 py-1 rounded">package:install-module forge-auth@0.2.4</code>, it:
+                            The package manager automates this navigation. When you run <code class="bg-gray-100 px-2 py-1 rounded">package:install-module --module=forge-auth@0.2.4</code>, it:
                         </p>
                         <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
                             <li>Reads <code class="bg-gray-100 px-2 py-1 rounded">modules.json</code> to find the capability</li>
@@ -839,11 +843,14 @@ return [
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Install ForgePackageManager capability
-php forge.php package:install-module ForgePackageManager
+                            <pre><code class="language-bash"># Install ForgePackageManager capability (with wizard)
+php forge.php package:install-module
 
-# Install specific version
-php forge.php package:install-module ForgePackageManager@1.0.0
+# Install specific module (skip wizard)
+php forge.php package:install-module --module=ForgePackageManager
+
+# Install specific version (skip wizard)
+php forge.php package:install-module --module=ForgePackageManager@1.0.0
 
 # Verify installation
 php forge.php package:list-modules | grep ForgePackageManager</code></pre>
@@ -933,6 +940,49 @@ CACHE_TTL=7200</code></pre>
                         </div>
                     </section>
 
+                    <!-- Developer Mode -->
+                    <section id="developer-mode" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Developer Mode
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            Enable developer mode to unlock registry management commands. Set <code class="bg-gray-100 px-2 py-1 rounded">FORGE_DEVELOPER_MODE=true</code> in your <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Initializing a Registry</h3>
+                        <p class="text-gray-600 mb-4">
+                            Once developer mode is enabled, you can use <code class="bg-gray-100 px-2 py-1 rounded">dev:registry:init</code> to initialize a new registry. The command uses a wizard that asks:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Registry type:</strong> Choose <code class="bg-gray-100 px-2 py-1 rounded">framework</code> or <code class="bg-gray-100 px-2 py-1 rounded">modules</code> (defaults to <code class="bg-gray-100 px-2 py-1 rounded">modules</code> if not specified)</li>
+                            <li><strong>Git repository URL:</strong> The URL of your Git repository</li>
+                            <li><strong>Branch name:</strong> The branch to use (defaults to <code class="bg-gray-100 px-2 py-1 rounded">main</code>)</li>
+                            <li><strong>Is this a private repository?</strong> Answer <code class="bg-gray-100 px-2 py-1 rounded">yes</code> or <code class="bg-gray-100 px-2 py-1 rounded">no</code> (defaults to <code class="bg-gray-100 px-2 py-1 rounded">no</code>)</li>
+                        </ol>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Initialize with wizard (interactive)
+php forge.php dev:registry:init
+
+# Initialize modules registry (skip wizard)
+php forge.php dev:registry:init --type=modules
+
+# Initialize framework registry (skip wizard)
+php forge.php dev:registry:init --type=framework</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Manual Registry Management</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can still manage your registry manually if you prefer. Create the directory structure, add your modules, and update <code class="bg-gray-100 px-2 py-1 rounded">modules.json</code> manually. However, developer mode commands make it easier and ensure proper structure.
+                        </p>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Note:</strong> Developer mode commands are only available when <code>FORGE_DEVELOPER_MODE=true</code> is set in your <code>.env</code> file. This prevents accidental use of development commands in production environments.
+                            </p>
+                        </div>
+                    </section>
+
                     <!-- Usage -->
                     <section id="usage" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">
@@ -940,12 +990,18 @@ CACHE_TTL=7200</code></pre>
                         </h2>
 
                         <h3 class="text-lg font-semibold mb-3">Installing Capabilities</h3>
+                        <p class="text-gray-600 mb-3">
+                            Commands use interactive wizards by default. Use the <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> parameter to skip the wizard and specify the module directly.
+                        </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Install latest version of a capability
-php forge.php package:install-module ForgeAuth
+                            <pre><code class="language-bash"># Install with wizard (interactive - prompts for module name)
+php forge.php package:install-module
 
-# Install specific version
-php forge.php package:install-module ForgeAuth@1.2.0
+# Install latest version (skip wizard)
+php forge.php package:install-module --module=ForgeAuth
+
+# Install specific version (skip wizard)
+php forge.php package:install-module --module=ForgeAuth@1.2.0
 
 # Install all capabilities from lock file and scaffold app structure
 php forge.php package:install-project</code></pre>
@@ -953,8 +1009,11 @@ php forge.php package:install-project</code></pre>
 
                         <h3 class="text-lg font-semibold mb-3">Removing Capabilities</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Remove a capability
-php forge.php package:remove-module ForgeAuth</code></pre>
+                            <pre><code class="language-bash"># Remove with wizard (interactive)
+php forge.php package:remove-module
+
+# Remove a capability (skip wizard)
+php forge.php package:remove-module --module=ForgeAuth</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Listing Capabilities</h3>
@@ -1125,16 +1184,17 @@ return [
                                 <h3 class="font-semibold text-lg mb-2">
                                     <code class="bg-gray-100 px-2 py-1 rounded text-sm">package:install-module</code>
                                 </h3>
-                                <p class="text-gray-600 text-sm mb-3">Install a module from the configured registries.
+                                <p class="text-gray-600 text-sm mb-3">Install a module from the configured registries. Uses an interactive wizard by default. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
                                 </p>
                                 <div class="code-block p-4 text-white rounded-lg">
-                                    <pre><code class="language-bash">php forge.php package:install-module [module-name] [version]</code></pre>
+                                    <pre><code class="language-bash">php forge.php package:install-module [--module=&lt;module-name[@version]&gt;] [--force]</code></pre>
                                 </div>
                                 <div class="mt-3 text-xs text-gray-500">
                                     <strong>Examples:</strong>
                                     <ul class="mt-1 space-y-1">
-                                        <li>• <code>php forge.php package:install-module ForgeAuth</code></li>
-                                        <li>• <code>php forge.php package:install-module ForgeAuth@1.2.0</code></li>
+                                        <li>• <code>php forge.php package:install-module</code> (interactive wizard)</li>
+                                        <li>• <code>php forge.php package:install-module --module=ForgeAuth</code></li>
+                                        <li>• <code>php forge.php package:install-module --module=ForgeAuth@1.2.0</code></li>
                                     </ul>
                                 </div>
                             </div>
@@ -1143,10 +1203,17 @@ return [
                                 <h3 class="font-semibold text-lg mb-2">
                                     <code class="bg-gray-100 px-2 py-1 rounded text-sm">package:remove-module</code>
                                 </h3>
-                                <p class="text-gray-600 text-sm mb-3">Remove an installed module from your application.
+                                <p class="text-gray-600 text-sm mb-3">Remove an installed module from your application. Uses an interactive wizard by default. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
                                 </p>
                                 <div class="code-block p-4 text-white rounded-lg">
-                                    <pre><code class="language-bash">php forge.php package:remove-module [module-name]</code></pre>
+                                    <pre><code class="language-bash">php forge.php package:remove-module [--module=&lt;module-name&gt;] [--force]</code></pre>
+                                </div>
+                                <div class="mt-3 text-xs text-gray-500">
+                                    <strong>Examples:</strong>
+                                    <ul class="mt-1 space-y-1">
+                                        <li>• <code>php forge.php package:remove-module</code> (interactive wizard)</li>
+                                        <li>• <code>php forge.php package:remove-module --module=ForgeAuth</code></li>
+                                    </ul>
                                 </div>
                             </div>
 
@@ -1208,13 +1275,22 @@ return [
 }</code></pre>
                         </div>
 
-                        <h3 class="text-lg font-semibold mb-3">Generating Lock File</h3>
+                        <h3 class="text-lg font-semibold mb-3">Automatic Lock File Generation</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">forge-lock.json</code> file is automatically generated when you install modules. It records:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Installed module versions</li>
+                            <li>Integrity hashes</li>
+                            <li>Registry sources</li>
+                            <li>Source configurations (without sensitive data like personal tokens)</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            You don't need to manually generate or manage the lock file — it's created and updated automatically during installation. To install from an existing lock file, use:
+                        </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Generate lock file from current installations
-php forge.php modules:lock
-
-# Install from existing lock file
-php forge.php install:from-lock</code></pre>
+                            <pre><code class="language-bash"># Install all modules from forge-lock.json and scaffold app structure
+php forge.php package:install-project</code></pre>
                         </div>
 
                         <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
