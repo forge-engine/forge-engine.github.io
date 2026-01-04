@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeDatabaseSql</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-blue-600 font-medium">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ForgeDatabaseSql</h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#architecture" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture & Design</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#database-drivers" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Database Drivers</a>
+                        <a href="#connection-management" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Connection Management</a>
+                        <a href="#migrations-overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Migrations Overview</a>
+                        <a href="#attribute-migrations" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Attribute-Based Migrations</a>
+                        <a href="#raw-sql-migrations" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Raw SQL Migrations</a>
+                        <a href="#migration-scoping" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Migration Scoping</a>
+                        <a href="#migration-grouping" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Migration Grouping</a>
+                        <a href="#migration-commands" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Migration Commands</a>
+                        <a href="#seeders" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Seeders</a>
+                        <a href="#seeder-commands" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Seeder Commands</a>
+                        <a href="#schema-formatters" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Schema Formatters</a>
+                        <a href="#column-types" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Column Types</a>
+                        <a href="#direct-database-access" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Direct Database Access</a>
+                        <a href="#examples" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage Examples</a>
+                        <a href="#best-practices" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best Practices</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">ForgeDatabaseSql</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        SQL database support for Forge Kernel. Multi-database support (SQLite, MySQL, PostgreSQL), flexible migrations (attribute-based and raw SQL), seeders with auto-rollback, and comprehensive connection management.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDatabaseSql provides comprehensive SQL database support for Forge Kernel applications. It offers multi-database driver support, flexible migration systems, seeders, and direct database access through a clean PDO-based abstraction.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Multi-database support (SQLite, MySQL, PostgreSQL)</span></div>
+                                    <div class="flex items-center"><span>Attribute-based migrations</span></div>
+                                    <div class="flex items-center"><span>Raw SQL migrations</span></div>
+                                    <div class="flex items-center"><span>Migration scoping (app, engine, module)</span></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Migration grouping</span></div>
+                                    <div class="flex items-center"><span>Seeders with auto-rollback</span></div>
+                                    <div class="flex items-center"><span>Schema formatters for cross-database compatibility</span></div>
+                                    <div class="flex items-center"><span>Full transaction support</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeDatabaseSql Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Multi-Database Support:</strong> SQLite, MySQL, and PostgreSQL with automatic SQL formatting</li>
+                            <li><strong>Flexible Migrations:</strong> Both attribute-based and raw SQL migration approaches</li>
+                            <li><strong>Migration Scoping:</strong> Organize migrations by app, engine, or module</li>
+                            <li><strong>Migration Grouping:</strong> Group migrations by feature or domain</li>
+                            <li><strong>Seeders:</strong> Database seeding with automatic rollback support</li>
+                            <li><strong>Schema Formatters:</strong> Database-specific SQL generation for cross-database compatibility</li>
+                            <li><strong>Connection Management:</strong> PDO-based abstraction with transaction support</li>
+                            <li><strong>Direct Database Access:</strong> Full access to PDO methods for custom queries</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Core Module:</strong> ForgeDatabaseSql is a core database module (type: 'database', order: 0), providing essential database functionality for Forge Kernel applications.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture & Design Philosophy</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDatabaseSql is built with flexibility, cross-database compatibility, and developer experience in mind.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">PDO-Based Connection Abstraction</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeDatabaseSql uses PDO as the foundation:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>PDO provides consistent interface across database drivers</li>
+                            <li>Connection class wraps PDO with Forge-specific features</li>
+                            <li>Implements DatabaseConnectionInterface for dependency injection</li>
+                            <li>Full transaction support with beginTransaction(), commit(), rollBack()</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Database Driver Abstraction</h3>
+                        <p class="text-gray-600 mb-4">
+                            DatabaseDriverInterface provides driver abstraction:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>PdoDatabaseDriver implements driver-specific DSN generation</li>
+                            <li>Automatic driver detection from connection</li>
+                            <li>Driver-specific SQL formatting via schema formatters</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Schema Formatters for Cross-Database Compatibility</h3>
+                        <p class="text-gray-600 mb-4">
+                            Schema formatters ensure SQL compatibility:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>MySqlFormatter for MySQL-specific SQL</li>
+                            <li>PostgreSqlFormatter for PostgreSQL-specific SQL</li>
+                            <li>SqliteFormatter for SQLite-specific SQL</li>
+                            <li>Automatic formatter selection based on driver</li>
+                            <li>Column type mapping for cross-database compatibility</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Flexible Migration System</h3>
+                        <p class="text-gray-600 mb-4">
+                            Two migration approaches for different needs:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Attribute-Based:</strong> Use PHP 8 attributes to define schema, automatic SQL generation</li>
+                            <li><strong>Raw SQL:</strong> Full control with createTable(), dropTable(), execute() methods</li>
+                            <li>Both approaches support migration scoping and grouping</li>
+                        </ul>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDatabaseSql is a core module and is typically available by default. It can also be installed via ForgePackageManager.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using ForgePackageManager</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install with wizard (interactive)
+php forge.php package:install-module
+
+# Install directly (skip wizard)
+php forge.php package:install-module --module=ForgeDatabaseSql
+
+# Install specific version
+php forge.php package:install-module --module=ForgeDatabaseSql@0.2.1</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Database Configuration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Configure your database connection in your environment configuration:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Database configuration
+'database' => [
+    'driver' => 'sqlite', // or 'mysql', 'pgsql'
+    'host' => 'localhost',
+    'Database' => 'forge_app', // or file path for SQLite
+    'username' => 'root',
+    'password' => '',
+]</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Connection Setup</h3>
+                        <p class="text-gray-600 mb-4">
+                            The module automatically sets up the database connection via DatabaseSetup:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">public function register(Container $container): void
+{
+    $env = Environment::getInstance();
+    DatabaseSetup::setup($container, $env);
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Database Drivers -->
+                    <section id="database-drivers" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Database Drivers</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDatabaseSql supports three database drivers, each with specific features and use cases.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">SQLite</h3>
+                        <p class="text-gray-600 mb-4">
+                            File-based database, perfect for development and small applications:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>No server required — single file database</li>
+                            <li>Perfect for development and testing</li>
+                            <li>Foreign keys enabled by default (PRAGMA foreign_keys = ON)</li>
+                            <li>Busy timeout configured (2000ms)</li>
+                            <li>Limited ALTER TABLE support (foreign keys handled differently)</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">'database' => [
+    'driver' => 'sqlite',
+    'Database' => BASE_PATH . '/storage/database.sqlite',
+]</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">MySQL</h3>
+                        <p class="text-gray-600 mb-4">
+                            Production-ready database with InnoDB engine:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>InnoDB engine with utf8mb4 charset</li>
+                            <li>Full foreign key support</li>
+                            <li>Production-ready for high-traffic applications</li>
+                            <li>Auto-increment support</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">'database' => [
+    'driver' => 'mysql',
+    'host' => 'localhost',
+    'Database' => 'forge_app',
+    'username' => 'root',
+    'password' => 'password',
+]</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">PostgreSQL</h3>
+                        <p class="text-gray-600 mb-4">
+                            Advanced database with JSON support and advanced features:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Advanced JSON support</li>
+                            <li>SERIAL types for auto-increment (instead of AUTO_INCREMENT)</li>
+                            <li>Full foreign key support</li>
+                            <li>Advanced data types and features</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">'database' => [
+    'driver' => 'pgsql',
+    'host' => 'localhost',
+    'Database' => 'forge_app',
+    'username' => 'postgres',
+    'password' => 'password',
+]</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Driver Detection</h3>
+                        <p class="text-gray-600 mb-4">
+                            The driver is automatically detected from the connection:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$driver = $connection->getDriver(); // Returns: 'sqlite', 'mysql', or 'pgsql'</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Connection Management -->
+                    <section id="connection-management" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Connection Management</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDatabaseSql provides a PDO-based connection abstraction through DatabaseConnectionInterface.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Connection Methods</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Execute DDL statements (CREATE, DROP, ALTER)
+$connection->exec("CREATE TABLE users (id INTEGER PRIMARY KEY)");
+
+// Execute SELECT queries
+$stmt = $connection->query("SELECT * FROM users LIMIT 10");
+$results = $stmt->fetchAll();
+
+// Prepare parameterized queries
+$stmt = $connection->prepare("SELECT * FROM users WHERE id = :id");
+$stmt->execute([':id' => 1]);
+$user = $stmt->fetch();
+
+// Get underlying PDO instance
+$pdo = $connection->getPdo();
+
+// Get database driver
+$driver = $connection->getDriver(); // 'sqlite', 'mysql', or 'pgsql'</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Transaction Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            Full transaction support for data integrity:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$connection->beginTransaction();
+try {
+    $stmt = $connection->prepare("INSERT INTO users (name) VALUES (:name)");
+    $stmt->execute([':name' => 'John']);
+    $connection->commit();
+} catch (\Exception $e) {
+    $connection->rollBack();
+    throw $e;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Using in Controllers</h3>
+                        <p class="text-gray-600 mb-4">
+                            Inject DatabaseConnectionInterface in your controllers:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use Forge\Core\Contracts\Database\DatabaseConnectionInterface;
+
+final class HomeController
+{
+    public function __construct(
+        public readonly DatabaseConnectionInterface $connection,
+    ) {
+    }
+
+    public function index(): Response
+    {
+        $stmt = $this->connection->query("SELECT * FROM users LIMIT 5");
+        $users = $stmt->fetchAll();
+        // ...
+    }
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Migrations Overview -->
+                    <section id="migrations-overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Migrations Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDatabaseSql provides two migration approaches: attribute-based and raw SQL. Both support migration scoping, grouping, and batching.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Two Migration Approaches</h3>
+                        <div class="grid md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">Attribute-Based</h4>
+                                <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                                    <li>Use PHP 8 attributes</li>
+                                    <li>Automatic schema reflection</li>
+                                    <li>Automatic SQL generation</li>
+                                    <li>Type-safe column definitions</li>
+                                    <li>Best for standard schemas</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">Raw SQL</h4>
+                                <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                                    <li>Full SQL control</li>
+                                    <li>Use createTable(), dropTable()</li>
+                                    <li>Custom SQL with execute()</li>
+                                    <li>Driver-specific optimizations</li>
+                                    <li>Best for complex schemas</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Migration Tracking</h3>
+                        <p class="text-gray-600 mb-4">
+                            Migrations are tracked in the <code class="bg-gray-100 px-2 py-1 rounded">forge_migrations</code> table:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-sql">CREATE TABLE forge_migrations (
+    migration VARCHAR(255) PRIMARY KEY,
+    batch INT NOT NULL,
+    type VARCHAR(50) NOT NULL,        -- 'app', 'core', or 'module'
+    module VARCHAR(255) NULL,         -- Module name if type='module'
+    migration_group VARCHAR(255) NULL -- Group name if grouped
+)</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Migration Batching</h3>
+                        <p class="text-gray-600 mb-4">
+                            Migrations run in batches for atomic execution:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>All migrations in a batch run in a single transaction</li>
+                            <li>If any migration fails, the entire batch is rolled back</li>
+                            <li>Batch numbers increment automatically</li>
+                            <li>Rollback can target specific batches</li>
+                        </ul>
+                    </section>
+
+                    <!-- Attribute-Based Migrations -->
+                    <section id="attribute-migrations" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Attribute-Based Migrations</h2>
+                        <p class="text-gray-600 mb-6">
+                            Use PHP 8 attributes to define your database schema. The migration system automatically reflects the schema and generates SQL.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Attributes\Table;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Column;
+use App\Modules\ForgeDatabaseSQL\DB\Migrations\Migration;
+use App\Modules\ForgeDatabaseSQL\DB\Enums\ColumnType;
+
+#[Table('users')]
+class CreateUsersTable extends Migration
+{
+    #[Column('id', ColumnType::INTEGER, primaryKey: true, autoIncrement: true)]
+    public int $id;
+
+    #[Column('email', ColumnType::STRING, length: 255, unique: true)]
+    public string $email;
+
+    #[Column('password', ColumnType::STRING, length: 255)]
+    public string $password;
+
+    // up() and down() are automatically generated
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Column Attributes</h3>
+                        <p class="text-gray-600 mb-4">
+                            Define columns using the #[Column] attribute:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Column(
+    name: 'email',
+    type: ColumnType::STRING,
+    length: 255,
+    nullable: false,
+    unique: true,
+    default: null
+)]
+public string $email;</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Special Attributes</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use special attributes for common patterns:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Attributes\Timestamps;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\SoftDelete;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Status;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\MetaData;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Index;
+
+#[Table('posts')]
+class CreatePostsTable extends Migration
+{
+    // Timestamps (created_at, updated_at)
+    #[Timestamps]
+    public string $created_at;
+    public string $updated_at;
+
+    // Soft delete (deleted_at)
+    #[SoftDelete]
+    public ?string $deleted_at;
+
+    // Status enum column
+    #[Status(values: ['draft', 'published', 'archived'])]
+    public string $status;
+
+    // JSON metadata column
+    #[MetaData]
+    public ?array $metadata;
+
+    // Index
+    #[Index(name: 'idx_posts_user_id', columns: ['user_id'], unique: false)]
+    public int $user_id;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Relationship Attributes</h3>
+                        <p class="text-gray-600 mb-4">
+                            Define relationships using relationship attributes:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Attributes\Relations\BelongsTo;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Relations\HasMany;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Relations\ManyToMany;
+
+#[Table('posts')]
+class CreatePostsTable extends Migration
+{
+    // BelongsTo relationship
+    #[BelongsTo(related: 'User', foreignKey: 'user_id', onDelete: 'CASCADE')]
+    public int $user_id;
+
+    // ManyToMany relationship (creates join table)
+    #[ManyToMany(
+        related: 'Tag',
+        joinTable: 'post_tags',
+        foreignKey: 'post_id',
+        relatedKey: 'tag_id'
+    )]
+    public array $tags;
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Raw SQL Migrations -->
+                    <section id="raw-sql-migrations" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Raw SQL Migrations</h2>
+                        <p class="text-gray-600 mb-6">
+                            For full control, use raw SQL migrations with helper methods for cross-database compatibility.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Attributes\GroupMigration;
+use App\Modules\ForgeDatabaseSQL\DB\Migrations\Migration;
+
+#[GroupMigration(name: 'security')]
+class CreateRateLimitsTable extends Migration
+{
+    public function up(): void
+    {
+        $sql = $this->createTable('rate_limits', [
+            'id' => 'INTEGER PRIMARY KEY AUTOINCREMENT',
+            'ip_address' => 'VARCHAR(255) NOT NULL',
+            'request_count' => 'INTEGER NOT NULL DEFAULT 1',
+            'last_request' => 'TIMESTAMP NULL',
+        ]);
+        $this->execute($sql);
+        
+        $indexSql = $this->createIndex('rate_limits', 'idx_rate_limits_id', ['id']);
+        $this->execute($indexSql);
+    }
+
+    public function down(): void
+    {
+        $this->execute($this->dropTable('rate_limits'));
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Helper Methods</h3>
+                        <p class="text-gray-600 mb-4">
+                            Migration class provides helper methods for common operations:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Create table
+$sql = $this->createTable('users', [
+    'id' => 'INTEGER PRIMARY KEY AUTOINCREMENT',
+    'name' => 'VARCHAR(255) NOT NULL',
+    'email' => 'VARCHAR(255) UNIQUE',
+], ifNotExists: true);
+$this->execute($sql);
+
+// Drop table
+$sql = $this->dropTable('users');
+$this->execute($sql);
+
+// Create index
+$sql = $this->createIndex('users', 'idx_users_email', ['email'], unique: true);
+$this->execute($sql);
+
+// Add foreign key (returns null for SQLite)
+$sql = $this->addForeignKey(
+    'posts',
+    'user_id',
+    'users',
+    'id',
+    'CASCADE'
+);
+if ($sql !== null) {
+    $this->execute($sql);
+}
+
+// Execute custom SQL
+$this->execute("ALTER TABLE users ADD COLUMN status VARCHAR(50)");</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Driver-Specific SQL Normalization</h3>
+                        <p class="text-gray-600 mb-4">
+                            Helper methods automatically normalize SQL for different drivers:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>SQLite:</strong> AUTOINCREMENT, INTEGER type</li>
+                            <li><strong>MySQL:</strong> AUTO_INCREMENT, INT type, InnoDB engine</li>
+                            <li><strong>PostgreSQL:</strong> SERIAL/BIGSERIAL types, no AUTO_INCREMENT</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Complete Example</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[GroupMigration(name: 'security')]
+class CreateCircuitBreakerTable extends Migration
+{
+    public function up(): void
+    {
+        $sql = $this->createTable('circuit_breaker', [
+            'id' => 'INTEGER PRIMARY KEY AUTOINCREMENT',
+            'ip_address' => 'VARCHAR(45) NOT NULL',
+            'fail_count' => 'INT NOT NULL DEFAULT 1',
+            'first_failure' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+        ]);
+        $this->execute($sql);
+    }
+
+    public function down(): void
+    {
+        $this->execute($this->dropTable('circuit_breaker'));
+    }
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Migration Scoping -->
+                    <section id="migration-scoping" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Migration Scoping</h2>
+                        <p class="text-gray-600 mb-6">
+                            Migrations can be organized by scope: app, engine, or module. This allows you to run migrations selectively.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">App Migrations</h3>
+                        <p class="text-gray-600 mb-4">
+                            Application-specific migrations in <code class="bg-gray-100 px-2 py-1 rounded">app/Database/migrations/</code>:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php db:migrate --type=app</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Engine Migrations</h3>
+                        <p class="text-gray-600 mb-4">
+                            Core engine migrations in <code class="bg-gray-100 px-2 py-1 rounded">engine/Database/Migrations/</code>:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php db:migrate --type=engine</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Module Migrations</h3>
+                        <p class="text-gray-600 mb-4">
+                            Module-specific migrations in <code class="bg-gray-100 px-2 py-1 rounded">modules/{ModuleName}/src/Database/Migrations/</code>:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Run all module migrations
+php forge.php db:migrate --type=module
+
+# Run specific module migrations
+php forge.php db:migrate --type=module --module=ForgeAuth</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Tenant Migrations</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tenant-specific migrations in <code class="bg-gray-100 px-2 py-1 rounded">modules/{ModuleName}/src/Database/Migrations/Tenants/</code>:
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Automatically discovered when running module migrations.
+                        </p>
+                    </section>
+
+                    <!-- Migration Grouping -->
+                    <section id="migration-grouping" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Migration Grouping</h2>
+                        <p class="text-gray-600 mb-6">
+                            Group migrations using the <code class="bg-gray-100 px-2 py-1 rounded">#[GroupMigration]</code> attribute to organize related migrations.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using GroupMigration Attribute</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Attributes\GroupMigration;
+
+#[GroupMigration(name: 'security')]
+class CreateRateLimitsTable extends Migration
+{
+    // Migration code
+}
+
+#[GroupMigration(name: 'security')]
+class CreateCircuitBreakerTable extends Migration
+{
+    // Migration code
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Running Migrations by Group</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Run only security group migrations
+php forge.php db:migrate --group=security
+
+# Run security group for specific module
+php forge.php db:migrate --type=module --module=ForgeAuth --group=security</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Use Cases</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Feature Groups:</strong> Group migrations by feature (e.g., 'users', 'products')</li>
+                            <li><strong>Domain Groups:</strong> Group by domain (e.g., 'security', 'billing')</li>
+                            <li><strong>Module Groups:</strong> Group module-specific migrations</li>
+                        </ul>
+                    </section>
+
+                    <!-- Migration Commands -->
+                    <section id="migration-commands" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Migration Commands</h2>
+                        <p class="text-gray-600 mb-6">
+                            Run migrations using the <code class="bg-gray-100 px-2 py-1 rounded">db:migrate</code> command with various options.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Commands</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Run all migrations (starts wizard)
+php forge.php db:migrate
+
+# Run app migrations
+php forge.php db:migrate --type=app
+
+# Run engine migrations
+php forge.php db:migrate --type=engine
+
+# Run all module migrations
+php forge.php db:migrate --type=module
+
+# Run specific module migrations
+php forge.php db:migrate --type=module --module=ForgeAuth</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Group Filtering</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Run migrations by group
+php forge.php db:migrate --group=security
+
+# Combine type and group
+php forge.php db:migrate --type=module --module=ForgeAuth --group=security</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Preview Migrations</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Preview pending migrations without running
+php forge.php db:migrate --preview
+
+# Preview with filters
+php forge.php db:migrate --type=app --preview
+php forge.php db:migrate --group=security --preview</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Rollback Migrations</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Rollback last batch
+php forge.php db:migrate:rollback
+
+# Rollback specific number of batches
+php forge.php db:migrate:rollback --steps=3
+
+# Rollback by type
+php forge.php db:migrate:rollback --type=app
+
+# Rollback by group
+php forge.php db:migrate:rollback --group=security</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Seeders -->
+                    <section id="seeders" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Seeders</h2>
+                        <p class="text-gray-600 mb-6">
+                            Seeders populate your database with test or initial data. They support automatic rollback for easy cleanup.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Seeders\Seeder;
+
+class UserSeeder extends Seeder
+{
+    public function up(): void
+    {
+        $this->insertBatch('users', [
+            ['email' => 'admin@example.com', 'name' => 'Admin'],
+            ['email' => 'user@example.com', 'name' => 'User'],
+        ]);
+    }
+
+    public function down(): void
+    {
+        // Optional: define rollback logic
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Rollback</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">#[AutoRollback]</code> attribute for automatic rollback:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Seeders\Attributes\AutoRollback;
+
+#[AutoRollback(table: 'users', where: ['email' => 'admin@example.com'])]
+class UserSeeder extends Seeder
+{
+    public function up(): void
+    {
+        $this->insertBatch('users', [
+            ['email' => 'admin@example.com', 'name' => 'Admin'],
+        ]);
+    }
+
+    // down() automatically deletes where email = 'admin@example.com'
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Batch Insertion</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">insertBatch()</code> for efficient bulk inserts:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Insert in batches of 500 (default)
+$this->insertBatch('users', $users);
+
+// Custom batch size
+$this->insertBatch('users', $users, batchSize: 1000);</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Seeder Commands -->
+                    <section id="seeder-commands" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Seeder Commands</h2>
+                        <p class="text-gray-600 mb-6">
+                            Run seeders using the <code class="bg-gray-100 px-2 py-1 rounded">db:seed</code> command.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Commands</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Run all seeders (starts wizard)
+php forge.php db:seed
+
+# Run app seeders
+php forge.php db:seed --type=app
+
+# Run engine seeders
+php forge.php db:seed --type=engine
+
+# Run module seeders
+php forge.php db:seed --type=module --module=ForgeAuth</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Preview Seeders</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Preview seeders without running
+php forge.php db:seed:preview</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Rollback Seeders</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Rollback seeders
+php forge.php db:seed:rollback</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Schema Formatters -->
+                    <section id="schema-formatters" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Schema Formatters</h2>
+                        <p class="text-gray-600 mb-6">
+                            Schema formatters generate database-specific SQL, ensuring cross-database compatibility.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Formatter Selection</h3>
+                        <p class="text-gray-600 mb-4">
+                            Formatters are automatically selected based on the database driver:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$driver = $connection->getDriver();
+$formatter = match ($driver) {
+    'mysql' => new MySqlFormatter(),
+    'sqlite' => new SqliteFormatter(),
+    'pgsql' => new PostgreSqlFormatter(),
+    default => throw new RuntimeException("Unsupported driver: $driver")
+};</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">MySqlFormatter</h3>
+                        <p class="text-gray-600 mb-4">
+                            MySQL-specific SQL generation:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Uses backticks for identifiers</li>
+                            <li>AUTO_INCREMENT for auto-increment columns</li>
+                            <li>InnoDB engine with utf8mb4 charset</li>
+                            <li>INT type (not INTEGER)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">PostgreSqlFormatter</h3>
+                        <p class="text-gray-600 mb-4">
+                            PostgreSQL-specific SQL generation:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Uses double quotes for identifiers</li>
+                            <li>SERIAL/BIGSERIAL for auto-increment (not AUTO_INCREMENT)</li>
+                            <li>Advanced JSON support</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">SqliteFormatter</h3>
+                        <p class="text-gray-600 mb-4">
+                            SQLite-specific SQL generation:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Uses double quotes for identifiers</li>
+                            <li>AUTOINCREMENT (not AUTO_INCREMENT)</li>
+                            <li>INTEGER type</li>
+                            <li>Limited ALTER TABLE support</li>
+                        </ul>
+                    </section>
+
+                    <!-- Column Types -->
+                    <section id="column-types" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Column Types</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDatabaseSql supports a comprehensive set of column types, automatically mapped to database-specific types.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Supported Column Types</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Enums\ColumnType;
+
+// Available types:
+ColumnType::UUID        // CHAR(36) in MySQL, UUID in PostgreSQL
+ColumnType::STRING      // VARCHAR(255)
+ColumnType::TEXT        // TEXT
+ColumnType::INTEGER     // INT in MySQL, INTEGER in SQLite, INT in PostgreSQL
+ColumnType::BOOLEAN     // BOOLEAN
+ColumnType::FLOAT       // FLOAT
+ColumnType::DECIMAL     // DECIMAL
+ColumnType::DATE        // DATE
+ColumnType::DATETIME    // DATETIME
+ColumnType::TIMESTAMP   // TIMESTAMP
+ColumnType::ENUM        // ENUM (MySQL), VARCHAR with check (PostgreSQL)
+ColumnType::JSON        // JSON
+ColumnType::BLOB        // BLOB
+ColumnType::ARRAY       // JSON (mapped to JSON type)</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Type Mapping</h3>
+                        <p class="text-gray-600 mb-4">
+                            Column types are automatically mapped to database-specific types:
+                        </p>
+                        <div class="bg-gray-100 border border-gray-300 rounded-lg p-4 mb-6">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left p-2">ColumnType</th>
+                                        <th class="text-left p-2">MySQL</th>
+                                        <th class="text-left p-2">PostgreSQL</th>
+                                        <th class="text-left p-2">SQLite</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b">
+                                        <td class="p-2">UUID</td>
+                                        <td class="p-2">CHAR(36)</td>
+                                        <td class="p-2">UUID</td>
+                                        <td class="p-2">TEXT</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="p-2">STRING</td>
+                                        <td class="p-2">VARCHAR(255)</td>
+                                        <td class="p-2">VARCHAR(255)</td>
+                                        <td class="p-2">TEXT</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="p-2">INTEGER</td>
+                                        <td class="p-2">INT</td>
+                                        <td class="p-2">INT</td>
+                                        <td class="p-2">INTEGER</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="p-2">JSON</td>
+                                        <td class="p-2">JSON</td>
+                                        <td class="p-2">JSON</td>
+                                        <td class="p-2">TEXT</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Direct Database Access -->
+                    <section id="direct-database-access" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Direct Database Access</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDatabaseSql provides direct access to database operations through DatabaseConnectionInterface.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Executing DDL Statements</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">exec()</code> for DDL statements:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Create table
+$this->connection->exec(
+    "CREATE TABLE IF NOT EXISTS example_table (id INTEGER PRIMARY KEY, name TEXT)"
+);
+
+// Alter table
+$this->connection->exec("ALTER TABLE users ADD COLUMN status VARCHAR(50)");</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Querying Data</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">query()</code> for SELECT statements:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$stmt = $this->connection->query("SELECT * FROM users LIMIT 5");
+$users = $stmt->fetchAll();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Parameterized Queries</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">prepare()</code> for parameterized queries:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$stmt = $this->connection->prepare("SELECT * FROM users WHERE id = :id");
+$stmt->execute([':id' => 1]);
+$user = $stmt->fetch();</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Transactions</h3>
+                        <p class="text-gray-600 mb-4">
+                            Full transaction support for data integrity:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Commit example
+$this->connection->beginTransaction();
+try {
+    $stmt = $this->connection->prepare("INSERT INTO example_table (name) VALUES (:name)");
+    $stmt->execute([':name' => 'transaction_test_commit']);
+    $this->connection->commit();
+    return ['status' => 'committed'];
+} catch (\Exception $e) {
+    $this->connection->rollBack();
+    return ['status' => 'error', 'message' => $e->getMessage()];
+}
+
+// Rollback example
+$this->connection->beginTransaction();
+try {
+    $stmt = $this->connection->prepare("INSERT INTO example_table (name) VALUES (:name)");
+    $stmt->execute([':name' => 'transaction_test_rollback']);
+    throw new \Exception('Simulated error');
+} catch (\Exception $e) {
+    $this->connection->rollBack();
+    // Changes are rolled back
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+                        <p class="text-gray-600 mb-6">
+                            Complete examples from the Forge Kernel codebase.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Raw SQL Migration Example</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Attributes\GroupMigration;
+use App\Modules\ForgeDatabaseSQL\DB\Migrations\Migration;
+
+#[GroupMigration(name: 'security')]
+class CreateRateLimitsTable extends Migration
+{
+    public function up(): void
+    {
+        $sql = $this->createTable('rate_limits', [
+            'id' => 'INTEGER PRIMARY KEY AUTOINCREMENT',
+            'ip_address' => 'VARCHAR(255) NOT NULL',
+            'request_count' => 'INTEGER NOT NULL DEFAULT 1',
+            'last_request' => 'TIMESTAMP NULL',
+        ]);
+        $this->execute($sql);
+        
+        $indexSql = $this->createIndex('rate_limits', 'idx_rate_limits_id', ['id']);
+        $this->execute($indexSql);
+    }
+
+    public function down(): void
+    {
+        $this->execute($this->dropTable('rate_limits'));
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Direct Database Access Example</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use Forge\Core\Contracts\Database\DatabaseConnectionInterface;
+
+final class HomeController
+{
+    public function __construct(
+        public readonly DatabaseConnectionInterface $connection,
+    ) {
+    }
+
+    private function forgeDatabaseSQLExecExample(): array
+    {
+        $this->connection->exec(
+            "CREATE TABLE IF NOT EXISTS example_table (id INTEGER PRIMARY KEY, name TEXT)"
+        );
+        return ['status' => 'exec executed'];
+    }
+
+    private function forgeDatabaseSQLQueryExample(): array
+    {
+        $stmt = $this->connection->query("SELECT * FROM users LIMIT 5");
+        return $stmt->fetchAll();
+    }
+
+    private function forgeDatabaseSQLPrepareExample(): array
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->execute([':id' => 1]);
+        return $stmt->fetchAll();
+    }
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+                        <p class="text-gray-600 mb-6">
+                            Recommendations for using ForgeDatabaseSql effectively.
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-green-600">Things That Often Help</h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Use attribute-based migrations for standard schemas</li>
+                                    <li>• Use raw SQL migrations for complex or driver-specific features</li>
+                                    <li>• Group related migrations using #[GroupMigration]</li>
+                                    <li>• Use migration scoping to organize by app, engine, module</li>
+                                    <li>• Use transactions for data integrity</li>
+                                    <li>• Use parameterized queries to prevent SQL injection</li>
+                                    <li>• Use insertBatch() for efficient bulk inserts in seeders</li>
+                                    <li>• Use #[AutoRollback] for easy seeder cleanup</li>
+                                </ul>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">Things to Consider</h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Don't mix attribute-based and raw SQL in the same migration</li>
+                                    <li>• Don't forget to implement down() methods for rollback</li>
+                                    <li>• Don't use raw SQL without parameterization for user input</li>
+                                    <li>• Don't forget to test migrations on all target databases</li>
+                                    <li>• Don't create migrations that depend on specific data</li>
+                                    <li>• Don't forget to handle SQLite's limited ALTER TABLE support</li>
+                                    <li>• Don't use seeders for production data</li>
+                                    <li>• Don't forget to preview migrations before running</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">When to Use Attribute-Based vs Raw SQL</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">Attribute-Based</h4>
+                                <p class="text-sm text-gray-600 mb-2">Use when:</p>
+                                <ul class="text-sm text-gray-600 list-disc list-inside">
+                                    <li>Schema is standard and straightforward</li>
+                                    <li>You want type-safe column definitions</li>
+                                    <li>You need automatic relationship handling</li>
+                                    <li>Cross-database compatibility is important</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2">Raw SQL</h4>
+                                <p class="text-sm text-gray-600 mb-2">Use when:</p>
+                                <ul class="text-sm text-gray-600 list-disc list-inside">
+                                    <li>You need driver-specific optimizations</li>
+                                    <li>Schema is complex or non-standard</li>
+                                    <li>You need full control over SQL generation</li>
+                                    <li>You're migrating from existing SQL</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
+            </div>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+
