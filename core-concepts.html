@@ -354,6 +354,100 @@ class UserController
     &lt;/div&gt;
 &lt;?php View::endSection(); ?&gt;</code></pre>
                     </div>
+
+                    <h3>Components</h3>
+                    <p>
+                        Components are reusable UI pieces. Forge supports two ways to create components:
+                    </p>
+
+                    <h4>1. Class-Based Components (With PHP Class)</h4>
+                    <p>
+                        Use class-based components when you need logic, state management, or complex behavior. These require a PHP class that extends <code>BaseComponent</code>.
+                    </p>
+                    <div class="code-block">
+                        <pre><code>&lt;?php
+// app/Components/Ui/Alert.php
+namespace App\Components\Ui;
+
+use Forge\Core\View\BaseComponent;
+use Forge\Core\View\Component;
+
+#[Component('Ui/Alert')]
+class Alert extends BaseComponent
+{
+    public function __construct(
+        public string $type = 'info',
+        public string $message = ''
+    ) {}
+    
+    public function render(): string
+    {
+        return $this->view('ui/alert', [
+            'type' => $this->type,
+            'message' => $this->message
+        ]);
+    }
+}</code></pre>
+                    </div>
+                    <p>
+                        Use it in your views:
+                    </p>
+                    <div class="code-block">
+                        <pre><code>&lt;?php
+use Forge\Core\View\Component;
+
+// Render using Component class
+echo Component::render('Ui/Alert', [
+    'type' => 'success',
+    'message' => 'User created successfully!'
+]);
+
+// Or use the helper function
+echo component('Ui/Alert', 'class', [
+    'type' => 'success',
+    'message' => 'User created successfully!'
+]);</code></pre>
+                    </div>
+
+                    <h4>2. View-Only Components (Without PHP Class)</h4>
+                    <p>
+                        For simple presentational components that don't need logic, you can create components using only view files. No PHP class required.
+                    </p>
+                    <p>
+                        Create a view file at <code>app/resources/components/ui/alert.php</code>:
+                    </p>
+                    <div class="code-block">
+                        <pre><code>&lt;!-- app/resources/components/ui/alert.php --&gt;
+&lt;div class="alert alert-&lt;?= $type ?? 'info' ?&gt;"&gt;
+    &lt;?= htmlspecialchars($message ?? '') ?&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                    <p>
+                        Use it in your views:
+                    </p>
+                    <div class="code-block">
+                        <pre><code>&lt;?php
+use Forge\Core\View\View;
+
+// Render using View::viewComponent
+echo View::viewComponent('ui/alert', [
+    'type' => 'success',
+    'message' => 'User created successfully!'
+]);
+
+// Or use the helper function with 'view' type
+echo component('ui/alert', 'view', [
+    'type' => 'success',
+    'message' => 'User created successfully!'
+]);</code></pre>
+                    </div>
+                    <p>
+                        <strong>When to use each approach:</strong>
+                    </p>
+                    <ul>
+                        <li><strong>Class-based components:</strong> When you need logic, state, validation, or complex behavior. Examples: forms with validation, interactive components, components that need to process data.</li>
+                        <li><strong>View-only components:</strong> For simple presentational components that just display data. Examples: alerts, badges, cards, simple buttons. These are faster to create and perfect for static or mostly-static UI elements.</li>
+                    </ul>
                 </section>
 
                 <section id="database-orm">

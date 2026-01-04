@@ -14,12 +14,14 @@
     function openMenu() {
       sidebar.classList.add('open');
       if (overlay) overlay.classList.add('active');
+      toggle.classList.add('menu-open');
       document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
       sidebar.classList.remove('open');
       if (overlay) overlay.classList.remove('active');
+      toggle.classList.remove('menu-open');
       document.body.style.overflow = '';
     }
 

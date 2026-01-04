@@ -219,6 +219,7 @@ pre code {
   max-width: calc(var(--content-max-width) + var(--content-padding-desktop) * 2);
   margin: 0 auto;
   width: 100%;
+  min-width: 0; /* Prevent grid overflow */
 }
 
 article {
@@ -326,14 +327,19 @@ th {
     position: fixed;
     top: var(--spacing-sm);
     left: var(--spacing-sm);
-    z-index: 1001;
+    z-index: 1001; /* Above overlay when closed */
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 4px;
+    transition: z-index 0.3s ease;
+  }
+  
+  .mobile-menu-toggle.menu-open {
+    z-index: 999; /* Behind sidebar when open */
   }
   
   .main-content {
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: calc(var(--spacing-lg) + 3rem) var(--spacing-md) var(--spacing-lg); /* Top padding for button */
   }
   
   .mobile-overlay {
@@ -363,6 +369,11 @@ th {
 }
 
 @media (min-width: 1024px) {
+  .sidebar {
+    position: static; /* Remove sticky positioning, let grid handle it */
+    height: auto; /* Remove fixed height */
+  }
+  
   .main-content {
     padding: var(--content-padding-desktop);
   }
