@@ -1,147 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Forge Kernel</title>
-        <link rel="stylesheet" href="/assets/css/style.css">
-        <style>
-            body {
-                font-family: system-ui, sans-serif;
-                margin: 0;
-                padding: 0;
-                background: #f9f9f9;
-                color: #222;
-            }
-
-            .container {
-                max-width: 100%;
-                margin: 0 auto;
-                padding: 2rem 1rem;
-            }
-
-            header {
-                margin-bottom: 2rem;
-                text-align: center;
-            }
-
-            header h1 {
-                font-size: 4rem;
-                font-weight: 500;
-                margin-bottom: 0.5rem;
-            }
-
-            header p {
-                font-size: 1.5rem;
-                color: #555;
-            }
-
-            nav {
-                display: flex;
-                justify-content: center;
-                gap: 1.5rem;
-                margin-top: 2rem;
-            }
-
-            nav a {
-                text-decoration: none;
-                color: #0055aa;
-                font-size: 1.1rem;
-                font-weight: 500;
-            }
-
-            section {
-                margin-top: 3rem;
-                padding-right: 0.5rem;
-                padding-left: 0.5rem;
-            }
-
-            section h2 {
-                font-size: 1.75rem;
-                margin-bottom: 1rem;
-            }
-
-            section p, ul {
-                font-size: 1.2rem;
-                line-height: 1.6;
-            }
-
-            pre {
-                background: #eee;
-                padding: 1rem;
-                border-radius: 4px;
-                overflow-x: auto;
-                font-size: 1.1rem;
-            }
-
-            footer {
-                text-align: center;
-                margin-top: 4rem;
-                padding: 2rem 0;
-                color: #888;
-                font-size: 1rem;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="container">
-            <header>
-                <h1>Forge Kernel</h1>
-                <p>an Application Hosted Kernel with pluggable capabilities.</p>
-                <nav>
-                    <a href="getting-started.html">Get Started</a>
-                    <a href="core-concepts.html">Core Concepts</a>
-                    <a href="https://github.com/forge-engine">Github</a>
-                </nav>
-            </header>
-
-            <section>
-                <h2>install</h2>
-                <pre><code>bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/main/installer.sh)</code></pre>
-            </section>
-
-            <section>
-                <p>
-                    Forge is an Application Hosted Kernel with pluggable capabilities. It's a minimal, dependency-free PHP kernel I built to serve my own projects. It's fully open source under the MIT license. <br/>— take what helps, ignore what doesn't, fork it if you need to.
-                </p>
-                <h3>This organization contains:</h3>
-                <ul>
-                    <li>🧱 The Forge Kernel — a minimal, dependency-free PHP kernel (DI, routing, bootstrapping, view engine, configuration manager, and core services).</li>
-                    <li>🧩 Forge Capabilities — self-contained, optional capability modules (database, ORM, auth, storage, etc.) that you plug in when needed.</li>
-                    <li>🛠️ Utilities & Installers — scripts and helpers for easier setup and tooling.</li>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel</title>
+    <link rel="stylesheet" href="assets/css/forge-docs.css">
+</head>
+<body>
+    <div class="docs-container">
+        <aside class="sidebar">
+            <nav>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-item">
+                        <a href="index.html" class="sidebar-nav-link active">Home</a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a href="introduction.html" class="sidebar-nav-link">Introduction</a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a href="getting-started.html" class="sidebar-nav-link">Getting Started</a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a href="core-concepts.html" class="sidebar-nav-link">Core Concepts</a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a href="modules.html" class="sidebar-nav-link">Capabilities</a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a href="api-reference.html" class="sidebar-nav-link">API Reference</a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a href="https://github.com/forge-engine" class="sidebar-nav-link">GitHub</a>
+                    </li>
                 </ul>
-                <p>
-                    <strong>Capabilities, not built-ins.</strong> Database, ORM, authentication, storage — these aren't built into the kernel. They're capabilities you plug in via modules when you need them. The kernel stays lean. You stay in control.
-                </p>
-            </section>
+            </nav>
+        </aside>
 
-            <section>
-                <h2>philosophy</h2>
-                <p>
-                    This isn’t a product. There’s no company behind it. No support SLA. No roadmap you should depend on.
-                </p>
-                <p>
-                    Forge exists because I like to understand and own my stack. If others find value in it — awesome. If not — that’s cool too.
-                </p>
-                <h3>You’re not a user here. You’re a builder.</h3>
-                <ul>
-                    <li>If you use Forge, it’s yours now. Your rules. Your path.</li>
-                    <li>If I publish updates, they’re for my use case. Pull them in if they help.</li>
-                    <li>If my direction doesn’t match yours, fork it. Change everything. That’s the point.</li>
-                </ul>
-            </section>
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+        <div class="mobile-overlay"></div>
 
-            <section>
-                <h2>want to build your own thing?</h2>
-                <p>You can fork the entire kernel and capability ecosystem to start your own direction. Check out <a href="https://github.com/forge-engine/forge/blob/main/docs/FORGING-YOUR-OWN.md">FORGING-YOUR-OWN.md</a> in the main repo for notes on how everything is structured and how to get started.</p>
-            </section>
+        <main class="main-content">
+            <article>
+                <header class="docs-header">
+                    <h1>Forge Kernel</h1>
+                    <p>an Application Hosted Kernel with pluggable capabilities.</p>
+                </header>
 
-            <footer>
-                Forge Kernel is open source. licensed under MIT.
-            </footer>
-        </div>
-    </body>
+                <section>
+                    <h2>install</h2>
+                    <div class="code-block">
+                        <pre><code>bash &lt;(curl -Ls https://raw.githubusercontent.com/forge-engine/installer/main/installer.sh)</code></pre>
+                    </div>
+                </section>
 
+                <section>
+                    <p>
+                        Forge is an Application Hosted Kernel with pluggable capabilities. It's a minimal, dependency-free PHP kernel I built to serve my own projects. It's fully open source under the MIT license.
+                    </p>
+                    <p>
+                        — take what helps, ignore what doesn't, fork it if you need to.
+                    </p>
+                    
+                    <h3>This organization contains:</h3>
+                    <ul>
+                        <li><strong>The Forge Kernel</strong> — a minimal, dependency-free PHP kernel (DI, routing, bootstrapping, view engine, configuration manager, and core services).</li>
+                        <li><strong>Forge Capabilities</strong> — self-contained, optional capability modules (database, ORM, auth, storage, etc.) that you plug in when needed.</li>
+                        <li><strong>Utilities & Installers</strong> — scripts and helpers for easier setup and tooling.</li>
+                    </ul>
+                    
+                    <p>
+                        <strong>Capabilities, not built-ins.</strong> Database, ORM, authentication, storage — these aren't built into the kernel. They're capabilities you plug in via modules when you need them. The kernel stays lean. You stay in control.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>philosophy</h2>
+                    <p>
+                        This isn't a product. There's no company behind it. No support SLA. No roadmap you should depend on.
+                    </p>
+                    <p>
+                        Forge exists because I like to understand and own my stack. If others find value in it — awesome. If not — that's cool too.
+                    </p>
+                    
+                    <h3>You're not a user here. You're a builder.</h3>
+                    <ul>
+                        <li>If you use Forge, it's yours now. Your rules. Your path.</li>
+                        <li>If I publish updates, they're for my use case. Pull them in if they help.</li>
+                        <li>If my direction doesn't match yours, fork it. Change everything. That's the point.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>want to build your own thing?</h2>
+                    <p>
+                        You can fork the entire kernel and capability ecosystem to start your own direction. Check out <a href="https://github.com/forge-engine/forge/blob/main/docs/FORGING-YOUR-OWN.md">FORGING-YOUR-OWN.md</a> in the main repo for notes on how everything is structured and how to get started.
+                    </p>
+                </section>
+
+                <footer style="margin-top: var(--spacing-xxl); padding-top: var(--spacing-lg); border-top: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+                    <p>Forge Kernel is open source. Licensed under MIT.</p>
+                </footer>
+            </article>
+        </main>
+    </div>
+
+    <script src="assets/js/docs.js"></script>
+</body>
 </html>
