@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeWire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-blue-600 font-medium">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ForgeWire</h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#architecture" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture & Design</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#asset-management" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Asset Management</a>
+                        <a href="#basic-usage" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Basic Usage</a>
+                        <a href="#component-structure" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Component Structure</a>
+                        <a href="#attributes" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Attributes System</a>
+                        <a href="#security" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Security Features</a>
+                        <a href="#state-management" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">State Management</a>
+                        <a href="#complex-data" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Complex Data Types</a>
+                        <a href="#actions" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Actions & Methods</a>
+                        <a href="#computed" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Computed Properties</a>
+                        <a href="#validation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Validation</a>
+                        <a href="#frontend" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Frontend Integration</a>
+                        <a href="#wire-protocol" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Wire Protocol</a>
+                        <a href="#performance" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Performance</a>
+                        <a href="#vs-livewire" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Differences from Livewire</a>
+                        <a href="#examples" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage Examples</a>
+                        <a href="#best-practices" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best Practices</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">ForgeWire</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Lightweight Livewire-like reactive components for Forge Kernel. Build dynamic interfaces with server-side interactivity, security by default, and support for complex data types.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire provides Livewire-like reactive components for Forge Kernel applications. It enables server-side interactivity without WebSockets, JavaScript frameworks, or complex client-side state management. Built with security, performance, and developer experience in mind.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Security by default (explicit attributes)</span></div>
+                                    <div class="flex items-center"><span>Support for DTOs, Models, Services</span></div>
+                                    <div class="flex items-center"><span>Checksum verification</span></div>
+                                    <div class="flex items-center"><span>Recipe caching for performance</span></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Session-based state storage</span></div>
+                                    <div class="flex items-center"><span>Lightweight JavaScript client</span></div>
+                                    <div class="flex items-center"><span>Automatic asset injection</span></div>
+                                    <div class="flex items-center"><span>No layout changes needed</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeWire Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Reactive Components:</strong> Build interactive UI components that update without full page reloads</li>
+                            <li><strong>Security by Default:</strong> Properties require explicit attributes to be accessible — no accidental exposure</li>
+                            <li><strong>Complex Data Support:</strong> Native support for DTOs, Models, and Services — not just simple state</li>
+                            <li><strong>Performance Optimized:</strong> Recipe caching, lazy loading, efficient polling with IntersectionObserver</li>
+                            <li><strong>Zero Configuration:</strong> Automatic asset injection — no manual layout changes required</li>
+                            <li><strong>Lightweight:</strong> Minimal JavaScript footprint, no heavy frameworks</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Different from Livewire:</strong> ForgeWire takes a security-first approach with explicit attribute-based access control. You can't accidentally expose properties — they must be explicitly marked with attributes. This makes it more secure by default while still being easy to use.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture & Design Philosophy</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire is built with security, performance, and developer experience as core principles. It differs from Livewire in fundamental ways that make it more secure and performant.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Security-First Design</h3>
+                        <p class="text-gray-600 mb-4">
+                            Unlike Livewire where all public properties are automatically accessible, ForgeWire requires explicit attributes:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Explicit Access Control:</strong> Properties must have #[State], #[DTO], #[Model], or #[Service] attributes to be accessible</li>
+                            <li><strong>No Accidental Exposure:</strong> You can't accidentally expose sensitive data by making a property public</li>
+                            <li><strong>Action Validation:</strong> Methods must have #[Action] attribute to be callable from frontend</li>
+                            <li><strong>Checksum Verification:</strong> Every request is verified to prevent tampering</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Recipe-Based Hydration</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeWire uses a "recipe" system that's built once per component class and cached:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Recipe is built by analyzing component class attributes</li>
+                            <li>Cached in memory for performance (no repeated reflection)</li>
+                            <li>Defines how to hydrate/dehydrate each property</li>
+                            <li>Supports different "kinds": state, model, dto, service</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Session-Based State</h3>
+                        <p class="text-gray-600 mb-4">
+                            State is stored in sessions, not fully serialized:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Simple state (scalar/array) stored directly in session</li>
+                            <li>Models stored as references (class + ID) — loaded on demand</li>
+                            <li>DTOs stored as arrays — reconstructed on hydration</li>
+                            <li>More efficient than full object serialization</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Performance:</strong> Recipe caching means reflection only happens once per component class, not on every request. This makes ForgeWire very fast even with complex components.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-6">
+                            Install ForgeWire using ForgePackageManager. The module automatically handles asset linking and injection.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using ForgePackageManager</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install with wizard (interactive)
+php forge.php package:install-module
+
+# Install directly (skip wizard)
+php forge.php package:install-module --module=ForgeWire
+
+# Install specific version
+php forge.php package:install-module --module=ForgeWire@1.0.9</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Post-Installation</h3>
+                        <p class="text-gray-600 mb-4">
+                            After installation, ForgeWire automatically:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Runs <code class="bg-gray-100 px-2 py-1 rounded">asset:link</code> command to create symlink</li>
+                            <li>Links <code class="bg-gray-100 px-2 py-1 rounded">modules/ForgeWire/src/resources/assets</code> → <code class="bg-gray-100 px-2 py-1 rounded">public/assets/modules/forge-wire</code></li>
+                            <li>Injects JavaScript automatically via lifecycle hook (no layout changes needed)</li>
+                        </ol>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Zero Configuration:</strong> Unlike other modules that require manual asset loading in layouts, ForgeWire injects its JavaScript automatically. You don't need to modify any layout files.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Asset Management -->
+                    <section id="asset-management" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Asset Management</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire uses automatic asset injection via lifecycle hooks. No manual layout changes are required.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Injection</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeWire uses the <code class="bg-gray-100 px-2 py-1 rounded">InjectsAssets</code> trait with the <code class="bg-gray-100 px-2 py-1 rounded">AFTER_REQUEST</code> lifecycle hook:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use Forge\Traits\InjectsAssets;
+use Forge\Core\Module\Attributes\LifecycleHook;
+use Forge\Core\Module\LifecycleHookName;
+
+final class ForgeWireModule
+{
+    use InjectsAssets;
+
+    #[LifecycleHook(hook: LifecycleHookName::AFTER_REQUEST)]
+    public function onAfterRequest(Request $request, Response $response): void
+    {
+        $this->registerWireAssets();
+        $this->injectAssets($response);
+    }
+
+    private function registerWireAssets(): void
+    {
+        $assetHtml = '<script src="/assets/modules/forge-wire/js/forgewire.js" async></script>';
+        $this->registerAsset(assetHtml: $assetHtml, beforeTag: '</body>');
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">How It Works</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Module registers asset HTML in <code class="bg-gray-100 px-2 py-1 rounded">onAfterRequest</code> hook</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">injectAssets()</code> injects script before <code class="bg-gray-100 px-2 py-1 rounded">&lt;/body&gt;</code> tag</li>
+                            <li>Works for all HTML responses automatically</li>
+                            <li>No layout file modifications needed</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Comparison: Manual vs Automatic</h3>
+                        <div class="grid md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">Manual (ModuleResources)</h4>
+                                <p class="text-xs text-gray-600 mb-2">Requires layout changes:</p>
+                                <div class="code-block p-3 text-white rounded text-xs">
+                                    <pre><code class="language-php"><?= ModuleResources::loadScripts("forge-ui") ?></code></pre>
+                                </div>
+                            </div>
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">Automatic (InjectsAssets)</h4>
+                                <p class="text-xs text-gray-600 mb-2">No layout changes needed:</p>
+                                <p class="text-xs text-gray-600">Injected automatically via lifecycle hook</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Asset Path</h3>
+                        <p class="text-gray-600 mb-4">
+                            After installation, the JavaScript file is available at:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-text">/assets/modules/forge-wire/js/forgewire.js</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            This is a symlink to <code class="bg-gray-100 px-2 py-1 rounded">modules/ForgeWire/src/resources/assets/js/forgewire.js</code>
+                        </p>
+                    </section>
+
+                    <!-- Basic Usage -->
+                    <section id="basic-usage" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Basic Usage</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire provides three helper functions for rendering components.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using wire() Function</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">wire()</code> function renders a component by class name:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Components\Wire\Counter;
+
+// Render with default props
+<?= wire(Counter::class) ?>
+
+// Render with props
+<?= wire(Counter::class, ['start' => 10]) ?>
+
+// Render with custom ID
+<?= wire(Counter::class, 'counter-1') ?>
+
+// Render with props and custom ID
+<?= wire(Counter::class, ['start' => 10], 'counter-1') ?></code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Using w() Alias</h3>
+                        <p class="text-gray-600 mb-4">
+                            Shorter alias for convenience:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Same as wire()
+<?= w(Counter::class, ['start' => 10]) ?></code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Using wire_name() Function</h3>
+                        <p class="text-gray-600 mb-4">
+                            Convert kebab-case/snake_case names to component classes:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Converts 'counter' to App\Components\Wire\Counter
+<?= wire_name('counter') ?>
+
+// With props
+<?= wire_name('counter', ['start' => 10]) ?>
+
+// With custom ID
+<?= wire_name('counter', [], 'counter-1') ?>
+
+// Nested: 'products-table' → App\Components\Wire\ProductsTable
+<?= wire_name('products-table') ?>
+
+// Module components: 'module:component' → App\Modules\Module\Resources\Components\Wire\Component
+<?= wire_name('module:component') ?></code></pre>
+                        </div>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Name Resolution:</strong> <code class="bg-blue-100 px-2 py-1 rounded">wire_name()</code> converts kebab-case, snake_case, and dot notation to PascalCase class names. Perfect for dynamic component loading.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Component Structure -->
+                    <section id="component-structure" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Component Structure</h2>
+                        <p class="text-gray-600 mb-6">
+                            All ForgeWire components extend <code class="bg-gray-100 px-2 py-1 rounded">WireComponent</code> and implement required methods.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Component</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeWire\Core\WireComponent;
+
+final class Counter extends WireComponent
+{
+    #[State]
+    public int $count = 0;
+
+    public function mount(array $props = []): void
+    {
+        // Initialize component with props
+        $this->count = (int)($props['start'] ?? 0);
+    }
+
+    public function render(): string
+    {
+        return raw($this->view('wire/counter', [
+            'count' => $this->count,
+        ]));
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Component Lifecycle</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>mount():</strong> Called once when component is first rendered. Receives props array.</li>
+                            <li><strong>render():</strong> Called on every update. Returns HTML string.</li>
+                            <li><strong>Actions:</strong> Methods marked with #[Action] can be called from frontend.</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">View Rendering</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use the <code class="bg-gray-100 px-2 py-1 rounded">view()</code> method to render component views:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">public function render(): string
+{
+    // View path relative to app/resources/views/
+    return raw($this->view('wire/counter', [
+        'count' => $this->count,
+        'parity' => $this->parity(),
+    ]));
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Attributes System -->
+                    <section id="attributes" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Attributes System</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire uses PHP 8 attributes to explicitly mark what's accessible. This is the core security feature.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">#[State] - Reactive State</h3>
+                        <p class="text-gray-600 mb-4">
+                            Mark properties as reactive state. Only scalar values and arrays are allowed:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[State]
+public int $count = 0;
+
+#[State]
+public string $query = '';
+
+#[State]
+public array $items = [];
+
+// ❌ NOT ALLOWED - complex objects need #[DTO] or #[Model]
+#[State]
+public object $user; // Will throw RuntimeException</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Action] - Callable Methods</h3>
+                        <p class="text-gray-600 mb-4">
+                            Mark methods as callable from frontend. Methods without this attribute cannot be called:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Action]
+public function increment(): void
+{
+    $this->count++;
+}
+
+// ❌ This cannot be called from frontend
+public function internalMethod(): void
+{
+    // Only callable internally
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Computed] - Computed Properties</h3>
+                        <p class="text-gray-600 mb-4">
+                            Mark methods as computed properties (cached):
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Computed]
+public function parity(): string
+{
+    return $this->count % 2 ? 'odd' : 'even';
+}
+
+// Use in render()
+public function render(): string
+{
+    return raw($this->view('wire/counter', [
+        'parity' => $this->parity(), // Cached computation
+    ]));
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">#[DTO] - Data Transfer Objects</h3>
+                        <p class="text-gray-600 mb-4">
+                            Support for complex DTOs. Requires <code class="bg-gray-100 px-2 py-1 rounded">toArray()</code> and <code class="bg-gray-100 px-2 py-1 rounded">fromArray()</code> methods:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[DTO(SignupDTO::class)]
+public SignupDTO $form;
+
+// SignupDTO must have:
+class SignupDTO
+{
+    public function toArray(): array { /* ... */ }
+    public static function fromArray(array $data): self { /* ... */ }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Model] - ORM Models</h3>
+                        <p class="text-gray-600 mb-4">
+                            Support for ORM models. Stored as references and loaded on demand:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Model(User::class, idField: 'id')]
+public ?User $user;
+
+// Model is stored as: [UserRepository::class, 'id', $userId]
+// Loaded from database on hydration</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Service] - Dependency Injection</h3>
+                        <p class="text-gray-600 mb-4">
+                            Inject services into components:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Service(ProductService::class)]
+public ProductService $products;
+
+// Or auto-detect from type hint
+#[Service]
+public ProductService $products;</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Validate] - Validation Rules</h3>
+                        <p class="text-gray-600 mb-4">
+                            Add validation rules to properties:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[State]
+#[Validate(rules: 'required|min:3', messages: '{"required": "Field is required"}')]
+public string $name = '';</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Security Features -->
+                    <section id="security" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Security Features</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire is secure by default. You can't accidentally expose data or methods.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Explicit Attribute Requirements</h3>
+                        <p class="text-gray-600 mb-4">
+                            Properties without attributes are <strong>not accessible</strong> from the frontend:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// ✅ Accessible - has #[State] attribute
+#[State]
+public string $query = '';
+
+// ❌ NOT accessible - no attribute
+public string $secretKey = 'abc123'; // Safe, cannot be accessed
+
+// ❌ NOT accessible - no attribute
+public function deleteAll(): void // Safe, cannot be called</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Checksum Verification</h3>
+                        <p class="text-gray-600 mb-4">
+                            Every request includes a checksum that's verified server-side:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Checksum is calculated from component state, models, DTOs, class, and path</li>
+                            <li>Signed with application secret key (HMAC-SHA256)</li>
+                            <li>Prevents tampering with component state</li>
+                            <li>Throws exception if checksum doesn't match</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Fingerprint Verification</h3>
+                        <p class="text-gray-600 mb-4">
+                            Component class and path are tracked to prevent component swapping attacks:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Fingerprint includes:
+[
+    'class' => 'App\\Components\\Wire\\Counter',
+    'path' => '/dashboard'
+]
+
+// If class or path changes, request is rejected</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Action Method Validation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Only methods with #[Action] attribute can be called:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// ✅ Can be called
+#[Action]
+public function increment(): void { }
+
+// ❌ Cannot be called - throws RuntimeException
+public function deleteDatabase(): void { }</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Argument Type Validation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Action methods can only receive scalar arguments (no arrays/objects):
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// ✅ Allowed
+#[Action]
+public function update(int $id, string $name): void { }
+
+// ❌ Throws RuntimeException
+#[Action]
+public function update(array $data): void { }</code></pre>
+                        </div>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Security by Default:</strong> The explicit attribute requirement means you can't accidentally expose sensitive data. Every property and method must be intentionally marked as accessible.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- State Management -->
+                    <section id="state-management" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">State Management</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire uses session-based state storage with efficient hydration/dehydration.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">State Storage</h3>
+                        <p class="text-gray-600 mb-4">
+                            #[State] properties are stored in session:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Stored under key: <code class="bg-gray-100 px-2 py-1 rounded">forgewire:{component-id}</code></li>
+                            <li>Only scalar values and arrays are stored directly</li>
+                            <li>Complex objects require #[DTO] or #[Model] attributes</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Dirty State Tracking</h3>
+                        <p class="text-gray-600 mb-4">
+                            Only changed values are sent from frontend:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-json">// Request includes only changed values
+{
+  "dirty": {
+    "query": "search term",
+    "page": 2
+  }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Hydration Process</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Component instance is created</li>
+                            <li>Recipe is built (or retrieved from cache)</li>
+                            <li>Dirty values are applied</li>
+                            <li>Session state is merged with dirty values</li>
+                            <li>Models are loaded from database (if needed)</li>
+                            <li>DTOs are reconstructed from arrays</li>
+                            <li>Services are injected from container</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Dehydration Process</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Recipe defines how to extract each property</li>
+                            <li>State properties → stored directly in session</li>
+                            <li>Models → stored as [RepositoryClass, idField, id]</li>
+                            <li>DTOs → converted to arrays via toArray()</li>
+                            <li>Checksum is calculated and signed</li>
+                        </ol>
+                    </section>
+
+                    <!-- Complex Data Types -->
+                    <section id="complex-data" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Complex Data Types</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire supports complex data types through DTOs, Models, and Services.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">DTOs (Data Transfer Objects)</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use #[DTO] for complex form data:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\DTO\SignupDTO;
+
+final class SignupWizard extends WireComponent
+{
+    #[DTO(SignupDTO::class)]
+    public SignupDTO $form;
+
+    public function mount(array $props = []): void
+    {
+        $this->form = $this->form ?? new SignupDTO();
+    }
+
+    #[Action]
+    public function input(...$keys): void
+    {
+        // DTO properties are updated via wire:model
+        // e.g., wire:model="form.email"
+    }
+}</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            DTO must implement <code class="bg-gray-100 px-2 py-1 rounded">toArray()</code> and <code class="bg-gray-100 px-2 py-1 rounded">fromArray()</code>:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">class SignupDTO
+{
+    public string $email = '';
+    public string $password = '';
+    public string $fullName = '';
+
+    public function toArray(): array
+    {
+        return [
+            'email' => $this->email,
+            'password' => $this->password,
+            'fullName' => $this->fullName,
+        ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $dto = new self();
+        $dto->email = $data['email'] ?? '';
+        $dto->password = $data['password'] ?? '';
+        $dto->fullName = $data['fullName'] ?? '';
+        return $dto;
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Models (ORM)</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use #[Model] for database models:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Models\User;
+
+#[Model(User::class, idField: 'id')]
+public ?User $user;
+
+// Model is stored as reference: [UserRepository::class, 'id', $userId]
+// Loaded from database on hydration</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Services</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use #[Service] for dependency injection:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Services\ProductService;
+
+final class ProductSearch extends WireComponent
+{
+    #[Service(ProductService::class)]
+    public ProductService $products;
+
+    #[Action]
+    public function search(): void
+    {
+        $results = $this->products->list($this->query);
+        // ...
+    }
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Actions & Methods -->
+                    <section id="actions" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Actions & Methods</h2>
+                        <p class="text-gray-600 mb-6">
+                            Methods marked with #[Action] can be called from the frontend via wire directives.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Defining Actions</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Action]
+public function increment(): void
+{
+    $this->count++;
+}
+
+#[Action]
+public function update(int $id, string $name): void
+{
+    // Only scalar arguments allowed
+    $this->items[$id] = $name;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Built-in input() Action</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">input()</code> action is built-in and handles wire:model updates:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Automatically called for wire:model
+#[Action]
+public function input(...$keys): void
+{
+    // Called when wire:model values change
+    // $keys contains which properties changed
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Calling Actions from Frontend</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html"><!-- wire:click -->
+<button wire:click="increment">+</button>
+<button wire:click="update(5, 'New Name')">Update</button>
+
+<!-- wire:submit -->
+<form wire:submit="save">
+    <input wire:model="name" type="text">
+    <button type="submit">Save</button>
+</form></code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Computed Properties -->
+                    <section id="computed" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Computed Properties</h2>
+                        <p class="text-gray-600 mb-6">
+                            Use #[Computed] for derived values that are cached.
+                        </p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Computed]
+public function parity(): string
+{
+    return $this->count % 2 ? 'odd' : 'even';
+}
+
+public function render(): string
+{
+    return raw($this->view('wire/counter', [
+        'count' => $this->count,
+        'parity' => $this->parity(), // Cached
+    ]));
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Validation -->
+                    <section id="validation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Validation</h2>
+                        <p class="text-gray-600 mb-6">
+                            Add validation rules to properties using #[Validate] attribute.
+                        </p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeWire\Attributes\Validate;
+
+#[State]
+#[Validate(rules: 'required|min:3')]
+public string $name = '';
+
+#[State]
+#[Validate(
+    rules: 'required|email',
+    messages: '{"required": "Email is required", "email": "Invalid email"}'
+)]
+public string $email = '';</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Validation runs automatically when dirty state includes the property.
+                        </p>
+                    </section>
+
+                    <!-- Frontend Integration -->
+                    <section id="frontend" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Frontend Integration</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire's JavaScript client handles all frontend interactions automatically.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Wire Directives</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:click="method"</code> — Call action on click</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:model="property"</code> — Two-way binding (immediate)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:model.lazy</code> — Update on blur/change</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:model.debounce</code> — Debounced updates (600ms default)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:model.debounce.300ms</code> — Custom debounce time</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:submit="method"</code> — Form submission</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:poll</code> — Auto-refresh every 2 seconds</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:poll.5s</code> — Custom poll interval</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Example HTML</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html"><div wire:id="fw-0b4c5e3d9e83" wire:component="App\Components\Wire\Counter">
+    <div class="counter">
+        <button wire:click="decrement">–</button>
+        <span>2 (even)</span>
+        <button wire:click="increment">+</button>
+    </div>
+</div></code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Polling with IntersectionObserver</h3>
+                        <p class="text-gray-600 mb-4">
+                            Components only poll when visible on screen (performance optimization):
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html"><div wire:id="..." wire:component="..." wire:poll.5s>
+    <!-- Only polls when visible -->
+</div></code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Wire Protocol -->
+                    <section id="wire-protocol" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Wire Protocol</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire uses a JSON-based protocol for client-server communication.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Request Format</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-json">{
+  "id": "fw-0b4c5e3d9e83",
+  "component": "App\\Components\\Wire\\Counter",
+  "action": "increment",
+  "args": [],
+  "dirty": {},
+  "checksum": "632b5d500042bb4361657ea9f2991132d8a18208d0e38bf6a801f127f48f4e8c",
+  "fingerprint": {
+    "path": "/"
+  }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Response Format</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-json">{
+  "html": "<div wire:id=\"fw-0b4c5e3d9e83\"...>...</div>",
+  "state": {},
+  "checksum": "632b5d500042bb4361657ea9f2991132d8a18208d0e38bf6a801f127f48f4e8c",
+  "events": [],
+  "redirect": null,
+  "flash": []
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Checksum Calculation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Checksum is HMAC-SHA256 of canonicalized JSON containing:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Component class name</li>
+                            <li>Current path</li>
+                            <li>Session ID</li>
+                            <li>State bag (scalar values)</li>
+                            <li>Models bag (references)</li>
+                            <li>DTOs bag (arrays)</li>
+                        </ul>
+                    </section>
+
+                    <!-- Performance -->
+                    <section id="performance" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Performance Optimizations</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire includes several performance optimizations.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Recipe Caching</h3>
+                        <p class="text-gray-600 mb-4">
+                            Component recipes are built once per class and cached in memory:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>No repeated reflection on every request</li>
+                            <li>Recipe defines hydration/dehydration strategy</li>
+                            <li>Cached in static array: <code class="bg-gray-100 px-2 py-1 rounded">self::$recipe[$class]</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Lazy Model Loading</h3>
+                        <p class="text-gray-600 mb-4">
+                            Models are stored as references, not fully serialized:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Stored as: <code class="bg-gray-100 px-2 py-1 rounded">[RepositoryClass, idField, id]</code></li>
+                            <li>Loaded from database only when needed</li>
+                            <li>More efficient than full serialization</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">IntersectionObserver Polling</h3>
+                        <p class="text-gray-600 mb-4">
+                            Components only poll when visible on screen:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Uses browser IntersectionObserver API</li>
+                            <li>Stops polling when component is off-screen</li>
+                            <li>Resumes automatically when visible again</li>
+                            <li>Saves server resources</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Request Prioritization</h3>
+                        <p class="text-gray-600 mb-4">
+                            Input events have lower priority than actions:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Actions (priority 2) can cancel input requests (priority 1)</li>
+                            <li>Prevents race conditions</li>
+                            <li>Ensures actions execute first</li>
+                        </ul>
+                    </section>
+
+                    <!-- Differences from Livewire -->
+                    <section id="vs-livewire" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Differences from Livewire</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire takes a different approach than Laravel Livewire in several key areas.
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3">Security</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Explicit attributes required (#[State], #[Action])</p>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> All public properties accessible</p>
+                                <p class="text-xs text-gray-500">ForgeWire is secure by default</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3">Complex Data</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Native DTO/Model support</p>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Serialization-based</p>
+                                <p class="text-xs text-gray-500">ForgeWire handles complex objects natively</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3">State Storage</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Session-based with references</p>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Full serialization</p>
+                                <p class="text-xs text-gray-500">ForgeWire is more efficient</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3">Performance</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Recipe caching, lazy loading</p>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Reflection on every request</p>
+                                <p class="text-xs text-gray-500">ForgeWire caches component recipes</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3">Protocol</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Custom JSON protocol</p>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Different format</p>
+                                <p class="text-xs text-gray-500">Optimized for Forge's architecture</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3">Checksum</h3>
+                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Built-in tamper detection</p>
+                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Different verification</p>
+                                <p class="text-xs text-gray-500">ForgeWire verifies every request</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+                        <p class="text-gray-600 mb-6">
+                            Complete examples of ForgeWire components.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Simple Counter</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">final class Counter extends WireComponent
+{
+    #[State]
+    public int $count = 0;
+
+    public function mount(array $props = []): void
+    {
+        $this->count = (int)($props['start'] ?? 0);
+    }
+
+    #[Action]
+    public function increment(): void
+    {
+        $this->count++;
+    }
+
+    #[Action]
+    public function decrement(): void
+    {
+        $this->count--;
+    }
+
+    #[Computed]
+    public function parity(): string
+    {
+        return $this->count % 2 ? 'odd' : 'even';
+    }
+
+    public function render(): string
+    {
+        return raw($this->view('wire/counter', [
+            'count' => $this->count,
+            'parity' => $this->parity(),
+        ]));
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Component with Service</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">final class ProductSearch extends WireComponent
+{
+    #[State]
+    public string $query = '';
+
+    #[Service(ProductService::class)]
+    public ProductService $products;
+
+    #[Action]
+    public function input(): void
+    {
+        // Called when query changes
+        $results = $this->products->list($this->query);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Component with DTO</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">final class SignupWizard extends WireComponent
+{
+    #[DTO(SignupDTO::class)]
+    public SignupDTO $form;
+
+    #[Service(SignupService::class)]
+    public SignupService $signup;
+
+    #[Action]
+    public function submit(): void
+    {
+        $id = $this->signup->register($this->form);
+    }
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+                        <p class="text-gray-600 mb-6">
+                            Recommendations for using ForgeWire effectively.
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-green-600">Things That Often Help</h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Use #[State] for simple scalar/array values</li>
+                                    <li>• Use #[DTO] for complex form data</li>
+                                    <li>• Use #[Model] for database entities</li>
+                                    <li>• Use #[Service] for dependency injection</li>
+                                    <li>• Keep components focused and single-purpose</li>
+                                    <li>• Use computed properties for derived values</li>
+                                    <li>• Leverage wire:model.debounce for search inputs</li>
+                                    <li>• Use wire:poll sparingly (only when needed)</li>
+                                </ul>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">Things to Consider</h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Don't expose sensitive data without attributes</li>
+                                    <li>• Don't use complex objects with #[State]</li>
+                                    <li>• Don't forget #[Action] on callable methods</li>
+                                    <li>• Don't pass arrays/objects to action methods</li>
+                                    <li>• Don't poll too frequently (performance impact)</li>
+                                    <li>• Don't store large amounts of state in session</li>
+                                    <li>• Don't forget to implement toArray()/fromArray() for DTOs</li>
+                                    <li>• Don't skip validation for user input</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">When to Use State vs DTO vs Model</h3>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>• <strong>#[State]:</strong> Simple values (strings, numbers, arrays) that change frequently</li>
+                                <li>• <strong>#[DTO]:</strong> Complex form data with multiple related fields</li>
+                                <li>• <strong>#[Model]:</strong> Database entities that need to be loaded/saved</li>
+                                <li>• <strong>#[Service]:</strong> Business logic services, repositories, external APIs</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
+            </div>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+ENDOFFILE
+
