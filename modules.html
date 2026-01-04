@@ -399,7 +399,7 @@ public function onAppBooted(): void
                                     class="module-card bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 hover:shadow-lg">
                                     <h3 class="text-lg font-semibold mb-3">ForgeAuth</h3>
                                     <p class="text-gray-600 text-sm mb-4">
-                                        Complete authentication system with user registration, login, password management, and session handling. Provides middleware, validation, and user management services.
+                                        Complete authentication system with user registration, login, password management, and session handling. Provides middleware, validation, and user management services. Includes optional JWT support for mobile applications when enabled via configuration.
                                     </p>
                                     <div class="flex flex-wrap gap-2">
                                         <span
@@ -407,7 +407,9 @@ public function onAppBooted(): void
                                         <span
                                             class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Sessions</span>
                                         <span
-                                            class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Security</span>
+                                            class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">JWT</span>
+                                        <span
+                                            class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Mobile</span>
                                     </div>
                                 </div>
                             </a>
@@ -417,13 +419,13 @@ public function onAppBooted(): void
                                 class="module-card bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6 hover:shadow-lg">
                                 <h3 class="text-lg font-semibold mb-3">ForgeUI</h3>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Comprehensive UI component library for building modern web interfaces. Includes reusable components that work in both app and module scope, with support for DTOs, views, and raw HTML rendering.
+                                    Example module demonstrating how to create your own design system as a module capability. Shows that you can package UI components, styles, and design patterns as a reusable module that can be shared across Forge applications.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span
-                                        class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Components</span>
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">UI</span>
+                                        class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Example</span>
                                     <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Design System</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Template</span>
                                 </div>
                             </div>
 
@@ -903,40 +905,6 @@ final class MyCustomModule
                                 <li><code class="bg-blue-100 px-2 py-1 rounded">#[PostUninstall]</code> — Automatically run CLI commands after module uninstallation.</li>
                             </ul>
                         </div>
-
-                        <h3 class="text-lg font-semibold mb-3">Module Service</h3>
-                        <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">&lt;?php
-
-namespace MyCustomModule\Services;
-
-use Forge\Core\DI\Attributes\Service;
-use MyCustomModule\Contracts\CustomInterface;
-
-#[Service]
-class CustomService implements CustomInterface
-{
-    public function __construct(
-        private LoggerInterface $logger
-    ) {}
-    
-    public function initialize(): void
-    {
-        $this->logger->info('CustomService initialized');
-    }
-    
-    public function processData(array $data): array
-    {
-        // Your custom logic here
-        return array_map('strtoupper', $data);
-    }
-    
-    public function onUserCreated(UserCreatedEvent $event): void
-    {
-        $this->logger->info('User created: ' . $event->user->email);
-    }
-}</code></pre>
-                        </div>
                     </section>
 
                     <!-- Lifecycle Hooks -->
@@ -945,64 +913,79 @@ class CustomService implements CustomInterface
                             Lifecycle Hooks
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            Modules can hook into the application lifecycle at various points to perform
-                            initialization,
-                            cleanup, and other tasks.
+                            Modules can hook into the application lifecycle at various points using the <code class="bg-gray-100 px-2 py-1 rounded">#[LifecycleHook]</code> attribute. The only method you implement in your module class is <code class="bg-gray-100 px-2 py-1 rounded">register()</code> for service registration.
                         </p>
 
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                            <h3 class="font-semibold text-lg mb-4">Available Hooks</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-start">
-                                    <div class="w-24 text-sm font-medium text-blue-800">register</div>
-                                    <div class="text-sm text-gray-600">Called when the module is first loaded.
-                                        Register
-                                        services and bindings here.</div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="w-24 text-sm font-medium text-blue-800">boot</div>
-                                    <div class="text-sm text-gray-600">Called after all modules are registered.
-                                        Perform
-                                        initialization logic here.</div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="w-24 text-sm font-medium text-blue-800">shutdown</div>
-                                    <div class="text-sm text-gray-600">Called when the application is shutting down.
-                                        Cleanup resources here.</div>
-                                </div>
+                        <h3 class="text-lg font-semibold mb-3">Available Lifecycle Hooks</h3>
+                        <div class="grid md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">After Boot</h4>
+                                <p class="text-gray-600 text-sm">Executed after the application has booted</p>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">After Module Load</h4>
+                                <p class="text-gray-600 text-sm">Executed after all modules are loaded</p>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">After Module Register</h4>
+                                <p class="text-gray-600 text-sm">Executed after a module is registered</p>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">After Config Loaded</h4>
+                                <p class="text-gray-600 text-sm">Executed after configuration is loaded</p>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">App Booted</h4>
+                                <p class="text-gray-600 text-sm">Executed when the application is fully booted</p>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">Before Request</h4>
+                                <p class="text-gray-600 text-sm">Executed before each HTTP request</p>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">After Request</h4>
+                                <p class="text-gray-600 text-sm">Executed after each HTTP request</p>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">After Response</h4>
+                                <p class="text-gray-600 text-sm">Executed after HTTP response is sent</p>
                             </div>
                         </div>
 
+                        <h3 class="text-lg font-semibold mb-3">Using Lifecycle Hooks</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
 
-class Bootstrap implements ModuleInterface
+declare(strict_types=1);
+
+namespace App\Modules\MyCustomModule;
+
+use Forge\Core\DI\Container;
+use Forge\Core\Module\Attributes\Module;
+use Forge\Core\Module\Attributes\LifecycleHook;
+use Forge\Core\Module\LifecycleHookName;
+
+#[Module(name: 'MyCustomModule', description: 'A custom module', order: 100)]
+final class MyCustomModule
 {
-    public static function register(Container $container): void
+    public function register(Container $container): void
     {
-        // Early registration - services, bindings, configuration
-        $container->bind(PaymentService::class);
-        $container->singleton(CacheManager::class);
+        // Register services and bindings here
+        $container->bind(CustomInterface::class, CustomService::class);
     }
-    
-    public static function boot(Container $container): void
+
+    #[LifecycleHook(hook: LifecycleHookName::AFTER_MODULE_REGISTER)]
+    public function onAfterModuleRegister(): void
     {
-        // Late initialization - event listeners, middleware, routes
-        $router = $container->get('router');
-        $router->group(['prefix' => 'api/payments'], function($router) {
-            require __DIR__ . '/Routes/api.php';
-        });
-        
-        // Register middleware
-        $middleware = $container->get('middleware');
-        $middleware->register('payment.auth', PaymentAuthMiddleware::class);
+        // This hook is called after this module is registered
+        // Perform initialization logic here
     }
-    
-    public static function shutdown(Container $container): void
+
+    #[LifecycleHook(hook: LifecycleHookName::APP_BOOTED)]
+    public function onAppBooted(): void
     {
-        // Cleanup - close connections, save state, etc.
-        $paymentService = $container->get(PaymentService::class);
-        $paymentService->closeConnections();
+        // This hook is called when the application is fully booted
+        // Initialize services, register listeners, etc.
     }
 }</code></pre>
                         </div>
@@ -1127,38 +1110,41 @@ php forge.php dev:module:publish --name=MyCustomModule</code></pre>
                         </div>
                     </section>
 
-                    <!-- Best Practices -->
-                    <section id="best-practices" class="mb-12">
+                    <!-- Suggestions -->
+                    <section id="suggestions" class="mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">
-                            Best Practices
+                            Some Suggestions
                         </h2>
+                        <p class="text-gray-600 mb-6">
+                            These are just suggestions based on what tends to work well. You do you. Build modules however makes sense for your project.
+                        </p>
 
                         <div class="grid md:grid-cols-2 gap-6">
                             <div class="border border-gray-200 rounded-lg p-6">
                                 <h3 class="font-semibold text-lg mb-3 text-green-600">
-                                    Do
+                                    Things That Often Help
                                 </h3>
                                 <ul class="space-y-2 text-sm text-gray-600">
-                                    <li>• Use descriptive module names</li>
-                                    <li>• Follow PSR-4 autoloading standards</li>
-                                    <li>• Include comprehensive tests</li>
-                                    <li>• Document your public API</li>
-                                    <li>• Use semantic versioning</li>
-                                    <li>• Handle dependencies gracefully</li>
+                                    <li>• Descriptive module names make things easier to find</li>
+                                    <li>• PSR-4 autoloading keeps things organized</li>
+                                    <li>• Tests can catch issues before they reach production</li>
+                                    <li>• Documentation helps others (and future you) understand your code</li>
+                                    <li>• Semantic versioning makes dependency management clearer</li>
+                                    <li>• Handling dependencies gracefully reduces surprises</li>
                                 </ul>
                             </div>
 
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3 text-red-600">
-                                    Don't
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">
+                                    Things to Consider
                                 </h3>
                                 <ul class="space-y-2 text-sm text-gray-600">
-                                    <li>• Modify core framework files</li>
-                                    <li>• Create tight coupling between modules</li>
-                                    <li>• Ignore error handling</li>
-                                    <li>• Skip version constraints</li>
-                                    <li>• Hardcode configuration values</li>
-                                    <li>• Forget to clean up resources</li>
+                                    <li>• Modifying core files can make upgrades harder</li>
+                                    <li>• Tight coupling between modules reduces flexibility</li>
+                                    <li>• Error handling prevents unexpected failures</li>
+                                    <li>• Version constraints help avoid compatibility issues</li>
+                                    <li>• Hardcoded values can make configuration difficult</li>
+                                    <li>• Cleaning up resources prevents memory leaks</li>
                                 </ul>
                             </div>
                         </div>
