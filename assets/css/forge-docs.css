@@ -154,8 +154,7 @@ pre code {
 
 /* Layout - Main Container */
 .docs-container {
-  display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr;
+  display: flex;
   min-height: 100vh;
 }
 
@@ -168,6 +167,8 @@ pre code {
   position: sticky;
   top: 0;
   height: 100vh;
+  width: var(--sidebar-width);
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
 }
 
 .sidebar-nav {
@@ -216,10 +217,11 @@ pre code {
 /* Main Content */
 .main-content {
   padding: var(--content-padding-mobile);
-  max-width: calc(var(--content-max-width) + var(--content-padding-desktop) * 2);
+  max-width: calc(var(--content-max-width) + var(--content-padding-desktop) * 20);
   margin: 0 auto;
   width: 100%;
-  min-width: 0; /* Prevent grid overflow */
+  flex: 1; /* Take remaining space */
+  min-width: 0; /* Prevent flex overflow */
 }
 
 article {
@@ -304,7 +306,7 @@ th {
 /* Responsive Design */
 @media (max-width: 767px) {
   .docs-container {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
   
   .sidebar {
@@ -370,8 +372,8 @@ th {
 
 @media (min-width: 1024px) {
   .sidebar {
-    position: static; /* Remove sticky positioning, let grid handle it */
-    height: auto; /* Remove fixed height */
+    position: sticky; /* Keep sticky for navigation while scrolling */
+    height: 100vh; /* Full viewport height */
   }
   
   .main-content {
@@ -388,7 +390,7 @@ th {
   }
   
   .docs-container {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
   
   .main-content {
