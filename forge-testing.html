@@ -190,7 +190,7 @@
                         </a>
                         <a href="#best-practices"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
-                            Best Practices
+                            Some Suggestions
                         </a>
                     </nav>
                 </div>
@@ -774,8 +774,11 @@ final class AuthenticationTest extends TestCase
                     <div id="best-practices" class="section-anchor mb-12">
                         <h2 class="text-2xl font-semibold text-gray-800 mb-4">
                             <i class="fas fa-lightbulb mr-2 text-blue-600"></i>
-                            Best Practices
+                            Some Suggestions
                         </h2>
+                        <p class="text-gray-600 mb-6">
+                            These are just suggestions based on what tends to work well. You do you. Build however makes sense for your project.
+                        </p>
 
                         <div class="space-y-6">
                             <div class="bg-blue-50 p-6 rounded-lg">
@@ -784,10 +787,10 @@ final class AuthenticationTest extends TestCase
                                     Test Organization
                                 </h3>
                                 <ul class="text-blue-700 space-y-2">
-                                    <li>Use meaningful test method names that describe what is being tested</li>
-                                    <li>Group related tests using the <code>#[Group]</code> attribute</li>
-                                    <li>Keep tests focused and test one thing at a time</li>
-                                    <li>Use descriptive test descriptions in the <code>#[Test]</code> attribute</li>
+                                    <li>Meaningful test method names that describe what is being tested make tests easier to understand</li>
+                                    <li>Grouping related tests using the <code class="bg-blue-100 px-2 py-1 rounded">#[Group]</code> attribute helps organize tests</li>
+                                    <li>Keeping tests focused and testing one thing at a time makes failures easier to diagnose</li>
+                                    <li>Using descriptive test descriptions in the <code class="bg-blue-100 px-2 py-1 rounded">#[Test]</code> attribute helps document intent</li>
                                 </ul>
                             </div>
 
@@ -797,10 +800,10 @@ final class AuthenticationTest extends TestCase
                                     Test Independence
                                 </h3>
                                 <ul class="text-green-700 space-y-2">
-                                    <li>Ensure tests don't depend on each other's execution order</li>
-                                    <li>Clean up test data in <code>tearDown()</code> methods</li>
-                                    <li>Use fresh test data for each test run</li>
-                                    <li>Avoid shared state between tests</li>
+                                    <li>Ensuring tests don't depend on each other's execution order makes tests more reliable</li>
+                                    <li>Cleaning up test data in <code class="bg-green-100 px-2 py-1 rounded">tearDown()</code> methods prevents test pollution</li>
+                                    <li>Using fresh test data for each test run ensures consistent results</li>
+                                    <li>Avoiding shared state between tests prevents unexpected interactions</li>
                                 </ul>
                             </div>
 
@@ -810,10 +813,10 @@ final class AuthenticationTest extends TestCase
                                     Performance Considerations
                                 </h3>
                                 <ul class="text-purple-700 space-y-2">
-                                    <li>Use <code>#[Skip]</code> for tests that are not ready</li>
-                                    <li>Mark incomplete tests with <code>#[Incomplete]</code> and provide reasons</li>
-                                    <li>Benchmark critical code paths to detect performance regressions</li>
-                                    <li>Use data providers to test multiple scenarios efficiently</li>
+                                    <li>Using <code class="bg-purple-100 px-2 py-1 rounded">#[Skip]</code> for tests that are not ready keeps test runs clean</li>
+                                    <li>Marking incomplete tests with <code class="bg-purple-100 px-2 py-1 rounded">#[Incomplete]</code> and providing reasons documents progress</li>
+                                    <li>Benchmarking critical code paths can help detect performance regressions</li>
+                                    <li>Using data providers to test multiple scenarios efficiently reduces duplication</li>
                                 </ul>
                             </div>
                         </div>

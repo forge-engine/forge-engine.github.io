@@ -197,7 +197,7 @@
                         </a>
                         <a href="#best-practices"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
-                            Best Practices
+                            Some Suggestions
                         </a>
                     </nav>
                 </div>
@@ -824,38 +824,41 @@ wire_name('user-profile', ['userId' => 1], 'profile-1');</code></pre>
                         </div>
                     </section>
 
-                    <!-- Best Practices -->
+                    <!-- Some Suggestions -->
                     <section id="best-practices" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-6">
-                            Best Practices
+                            Some Suggestions
                         </h2>
+                        <p class="text-gray-600 mb-6">
+                            These are just suggestions based on what tends to work well. You do you. Build however makes sense for your project.
+                        </p>
 
                         <div class="grid md:grid-cols-2 gap-6">
-                            <div class="bg-white border border-gray-200 p-6 rounded-lg">
-                                <h4 class="font-semibold text-gray-900 mb-3">
-                                    <i class="fas fa-check-circle text-green-600 mr-2"></i>Do's
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-3 text-green-600">
+                                    Things That Often Help
                                 </h4>
                                 <ul class="text-sm text-gray-600 space-y-2">
-                                    <li>• Keep components focused and single-purpose</li>
-                                    <li>• Use proper state management</li>
-                                    <li>• Validate user inputs</li>
-                                    <li>• Handle errors gracefully</li>
-                                    <li>• Use meaningful component names</li>
-                                    <li>• Document component APIs</li>
+                                    <li>• Keeping components focused and single-purpose makes them easier to maintain</li>
+                                    <li>• Using proper state management keeps data flow clear</li>
+                                    <li>• Validating user inputs helps prevent errors</li>
+                                    <li>• Handling errors gracefully improves user experience</li>
+                                    <li>• Using meaningful component names makes code easier to understand</li>
+                                    <li>• Documenting component APIs helps other developers</li>
                                 </ul>
                             </div>
 
-                            <div class="bg-white border border-gray-200 p-6 rounded-lg">
-                                <h4 class="font-semibold text-gray-900 mb-3">
-                                    <i class="fas fa-times-circle text-red-600 mr-2"></i>Don'ts
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-900 mb-3 text-orange-600">
+                                    Things to Consider
                                 </h4>
                                 <ul class="text-sm text-gray-600 space-y-2">
-                                    <li>• Don't create overly complex components</li>
-                                    <li>• Don't expose sensitive data in state</li>
-                                    <li>• Don't ignore validation errors</li>
-                                    <li>• Don't use direct DOM manipulation</li>
-                                    <li>• Don't bypass the component lifecycle</li>
-                                    <li>• Don't forget about security</li>
+                                    <li>• Creating overly complex components can make them hard to maintain</li>
+                                    <li>• Exposing sensitive data in state can be a security risk</li>
+                                    <li>• Ignoring validation errors can lead to unexpected behavior</li>
+                                    <li>• Using direct DOM manipulation can bypass the component system</li>
+                                    <li>• Bypassing the component lifecycle can cause issues</li>
+                                    <li>• Forgetting about security can create vulnerabilities</li>
                                 </ul>
                             </div>
                         </div>

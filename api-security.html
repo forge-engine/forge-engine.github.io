@@ -993,45 +993,48 @@ class SecurityHeadersMiddleware
                         </div>
                     </section>
 
-                    <!-- Best Practices -->
+                    <!-- Some Suggestions -->
                     <section id="best-practices" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">
-                            <i class="fas fa-lightbulb text-blue-600 mr-3"></i>Security Best Practices
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            <i class="fas fa-lightbulb text-blue-600 mr-3"></i>Some Suggestions
                         </h2>
+                        <p class="text-gray-600 mb-6">
+                            These are just suggestions based on what tends to work well for security. You do you. Build however makes sense for your project.
+                        </p>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-8">
-                            <div class="bg-green-50 border border-green-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-green-800 mb-3">
-                                    <i class="fas fa-check-circle mr-2"></i>Do's
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-green-600 mb-3">
+                                    <i class="fas fa-check-circle mr-2"></i>Things That Often Help
                                 </h3>
                                 <ul class="text-sm text-green-700 space-y-2">
-                                    <li>✅ Use HTTPS everywhere</li>
-                                    <li>✅ Implement proper authentication</li>
-                                    <li>✅ Use parameterized queries</li>
-                                    <li>✅ Validate and sanitize all input</li>
-                                    <li>✅ Use strong encryption for sensitive data</li>
-                                    <li>✅ Implement rate limiting</li>
-                                    <li>✅ Keep dependencies updated</li>
-                                    <li>✅ Use security headers</li>
-                                    <li>✅ Implement proper logging</li>
-                                    <li>✅ Regular security audits</li>
+                                    <li>• Using HTTPS everywhere helps protect data in transit</li>
+                                    <li>• Implementing proper authentication ensures only authorized access</li>
+                                    <li>• Using parameterized queries helps prevent SQL injection</li>
+                                    <li>• Validating and sanitizing all input helps prevent attacks</li>
+                                    <li>• Using strong encryption for sensitive data protects data at rest</li>
+                                    <li>• Implementing rate limiting can prevent abuse</li>
+                                    <li>• Keeping dependencies updated patches known vulnerabilities</li>
+                                    <li>• Using security headers adds an extra layer of protection</li>
+                                    <li>• Implementing proper logging helps detect security issues</li>
+                                    <li>• Regular security audits can identify vulnerabilities</li>
                                 </ul>
                             </div>
-                            <div class="bg-red-50 border border-red-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-red-800 mb-3">
-                                    <i class="fas fa-times-circle mr-2"></i>Don'ts
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-orange-600 mb-3">
+                                    <i class="fas fa-exclamation-circle mr-2"></i>Things to Consider
                                 </h3>
                                 <ul class="text-sm text-red-700 space-y-2">
-                                    <li>❌ Don't store passwords in plain text</li>
-                                    <li>❌ Don't trust user input</li>
-                                    <li>❌ Don't expose sensitive data in URLs</li>
-                                    <li>❌ Don't use weak encryption</li>
-                                    <li>❌ Don't disable CSRF protection</li>
-                                    <li>❌ Don't store secrets in code</li>
-                                    <li>❌ Don't ignore security warnings</li>
-                                    <li>❌ Don't use outdated libraries</li>
-                                    <li>❌ Don't expose error details</li>
-                                    <li>❌ Don't skip input validation</li>
+                                    <li>• Storing passwords in plain text can be a serious security risk</li>
+                                    <li>• Trusting user input without validation can lead to attacks</li>
+                                    <li>• Exposing sensitive data in URLs can leak information</li>
+                                    <li>• Using weak encryption can be easily broken</li>
+                                    <li>• Disabling CSRF protection can allow cross-site attacks</li>
+                                    <li>• Storing secrets in code can expose them in version control</li>
+                                    <li>• Ignoring security warnings can leave vulnerabilities unaddressed</li>
+                                    <li>• Using outdated libraries can have known vulnerabilities</li>
+                                    <li>• Exposing error details can reveal system information</li>
+                                    <li>• Skipping input validation can allow malicious input</li>
                                 </ul>
                             </div>
                         </div>

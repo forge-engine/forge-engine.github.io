@@ -190,7 +190,7 @@
                         </a>
                         <a href="#best-practices"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
-                            Best Practices
+                            Some Suggestions
                         </a>
                     </nav>
                 </div>
@@ -652,32 +652,42 @@ $container->bind('cache.manager', function($container) {
                     </section>
 
                     <section id="best-practices" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
-                        <p class="text-gray-600 mb-4">Recommended patterns and guidelines for working with the Dependency Injection Container.</p>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Some Suggestions</h2>
+                        <p class="text-gray-600 mb-6">These are just suggestions based on what tends to work well with the Dependency Injection Container. You do you. Build however makes sense for your project.</p>
 
-                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Do's</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Use constructor injection for required dependencies</li>
-                            <li>Program to interfaces, not implementations</li>
-                            <li>Use singletons for stateless services</li>
-                            <li>Keep service providers focused and small</li>
-                            <li>Use method injection for optional dependencies</li>
-                            <li>Register services in register(), boot in boot()</li>
-                            <li>Use tags for related services</li>
-                            <li>Document service contracts clearly</li>
-                        </ul>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-green-600">
+                                    Things That Often Help
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Constructor injection for required dependencies keeps things explicit</li>
+                                    <li>• Programming to interfaces, not implementations, increases flexibility</li>
+                                    <li>• Using singletons for stateless services can improve performance</li>
+                                    <li>• Keeping service providers focused and small makes code easier to understand</li>
+                                    <li>• Using method injection for optional dependencies can be convenient</li>
+                                    <li>• Registering services in register() keeps initialization organized</li>
+                                    <li>• Using tags for related services can help with organization</li>
+                                    <li>• Documenting service contracts clearly helps other developers</li>
+                                </ul>
+                            </div>
 
-                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Don'ts</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Don't use the container as a service locator</li>
-                            <li>Don't inject the container into services</li>
-                            <li>Don't create circular dependencies</li>
-                            <li>Don't register services in boot() method</li>
-                            <li>Don't use property injection</li>
-                            <li>Don't make every service a singleton</li>
-                            <li>Don't ignore dependency cycles</li>
-                            <li>Don't hardcode service names</li>
-                        </ul>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">
+                                    Things to Consider
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Using the container as a service locator can make dependencies unclear</li>
+                                    <li>• Injecting the container into services can create tight coupling</li>
+                                    <li>• Creating circular dependencies can cause initialization issues</li>
+                                    <li>• Registering services in boot() can lead to unexpected behavior</li>
+                                    <li>• Property injection can make dependencies less obvious</li>
+                                    <li>• Making every service a singleton can cause state issues</li>
+                                    <li>• Ignoring dependency cycles can lead to runtime errors</li>
+                                    <li>• Hardcoding service names can reduce flexibility</li>
+                                </ul>
+                            </div>
+                        </div>
                     </section>
                 </div>
             </div>

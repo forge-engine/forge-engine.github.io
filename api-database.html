@@ -94,7 +94,7 @@
                                 <a href="#examples" class="sidebar-nav-link">Usage Examples</a>
                             </li>
                             <li class="sidebar-nav-item">
-                                <a href="#best-practices" class="sidebar-nav-link">Best Practices</a>
+                                <a href="#best-practices" class="sidebar-nav-link">Some Suggestions</a>
                             </li>
                         </ul>
                     </li>
@@ -620,34 +620,40 @@ $users = $connection->query('
                 </section>
 
                 <section id="best-practices">
-                    <h2>Best Practices</h2>
+                    <h2>Some Suggestions</h2>
                     <p>
-                        Recommended patterns and guidelines for working with the Database & ORM layer.
+                        These are just suggestions based on what tends to work well with the Database & ORM layer. You do you. Build however makes sense for your project.
                     </p>
 
-                    <h3>Do's</h3>
-                    <ul>
-                        <li>Use prepared statements and parameter binding</li>
-                        <li>Leverage eager loading to avoid N+1 queries</li>
-                        <li>Use transactions for related operations</li>
-                        <li>Index frequently queried columns</li>
-                        <li>Use query builders for complex queries</li>
-                        <li>Validate data before database operations</li>
-                        <li>Use migrations for schema changes</li>
-                        <li>Implement proper error handling</li>
-                    </ul>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                        <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem;">
+                            <h3 style="font-weight: 600; margin-bottom: 1rem; color: #16a34a;">Things That Often Help</h3>
+                            <ul style="list-style: disc; padding-left: 1.5rem; color: #4b5563; font-size: 0.875rem;">
+                                <li>Using prepared statements and parameter binding helps prevent SQL injection</li>
+                                <li>Leveraging eager loading can avoid N+1 query problems</li>
+                                <li>Using transactions for related operations ensures data consistency</li>
+                                <li>Indexing frequently queried columns can improve performance</li>
+                                <li>Using query builders for complex queries keeps code readable</li>
+                                <li>Validating data before database operations catches errors early</li>
+                                <li>Using migrations for schema changes makes changes trackable</li>
+                                <li>Implementing proper error handling improves reliability</li>
+                            </ul>
+                        </div>
 
-                    <h3>Don'ts</h3>
-                    <ul>
-                        <li>Don't use raw SQL for simple queries</li>
-                        <li>Don't ignore SQL injection vulnerabilities</li>
-                        <li>Don't load all relationships at once</li>
-                        <li>Don't ignore database connection pooling</li>
-                        <li>Don't skip transaction rollback on errors</li>
-                        <li>Don't ignore query performance optimization</li>
-                        <li>Don't store sensitive data in plain text</li>
-                        <li>Don't ignore database backup strategies</li>
-                    </ul>
+                        <div style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem;">
+                            <h3 style="font-weight: 600; margin-bottom: 1rem; color: #ea580c;">Things to Consider</h3>
+                            <ul style="list-style: disc; padding-left: 1.5rem; color: #4b5563; font-size: 0.875rem;">
+                                <li>Using raw SQL for simple queries can sometimes be more direct</li>
+                                <li>Ignoring SQL injection vulnerabilities can create security risks</li>
+                                <li>Loading all relationships at once can cause performance issues</li>
+                                <li>Ignoring database connection pooling can limit scalability</li>
+                                <li>Skipping transaction rollback on errors can leave data inconsistent</li>
+                                <li>Ignoring query performance optimization can slow down applications</li>
+                                <li>Storing sensitive data in plain text can be a security risk</li>
+                                <li>Ignoring database backup strategies can lead to data loss</li>
+                            </ul>
+                        </div>
+                    </div>
                 </section>
             </article>
         </main>

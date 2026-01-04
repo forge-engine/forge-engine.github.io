@@ -1598,24 +1598,23 @@ $users = User::updatedInLast('24 hours')->get();</code></pre>
                         </div>
                     </section>
 
-                    <!-- Best Practices -->
+                    <!-- Some Suggestions -->
                     <section id="best-practices" class="section-anchor mb-12">
                         <div class="bg-indigo-50 border-l-4 border-indigo-500 p-6 mb-8">
                             <h2 class="text-2xl font-bold text-gray-900 mb-4">
-                                <i class="fas fa-lightbulb text-indigo-600 mr-3"></i>Best Practices
+                                <i class="fas fa-lightbulb text-indigo-600 mr-3"></i>Some Suggestions
                             </h2>
                             <p class="text-gray-700">
-                                Guidelines and recommendations for effectively using helpers and traits in your Forge
-                                Engine applications.
+                                These are just suggestions based on what tends to work well with helpers and traits. You do you. Build however makes sense for your project.
                             </p>
                         </div>
 
                         <div class="mb-8">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-4">String Helper Best Practices</h3>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4">String Helper Suggestions</h3>
 
                             <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
                                 <h4 class="font-semibold text-green-800 mb-3">
-                                    <i class="fas fa-check-circle mr-2"></i>Do's
+                                    <i class="fas fa-check-circle mr-2"></i>Things That Often Help
                                 </h4>
                                 <ul class="text-green-700 space-y-2">
                                     <li><strong>Use multibyte-safe functions:</strong> Always use <code>Str::mb*</code>
@@ -1631,9 +1630,9 @@ $users = User::updatedInLast('24 hours')->get();</code></pre>
                                 </ul>
                             </div>
 
-                            <div class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
-                                <h4 class="font-semibold text-red-800 mb-3">
-                                    <i class="fas fa-times-circle mr-2"></i>Don'ts
+                            <div class="bg-orange-50 border border-orange-200 rounded-lg p-6 mb-6">
+                                <h4 class="font-semibold text-orange-800 mb-3">
+                                    <i class="fas fa-exclamation-circle mr-2"></i>Things to Consider
                                 </h4>
                                 <ul class="text-red-700 space-y-2">
                                     <li><strong>Don't use regular expressions for simple operations:</strong> Use
@@ -1669,11 +1668,11 @@ $users = User::updatedInLast('24 hours')->get();</code></pre>
                         </div>
 
                         <div class="mb-8">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Array Helper Best Practices</h3>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Array Helper Suggestions</h3>
 
                             <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
                                 <h4 class="font-semibold text-green-800 mb-3">
-                                    <i class="fas fa-check-circle mr-2"></i>Do's
+                                    <i class="fas fa-check-circle mr-2"></i>Things That Often Help
                                 </h4>
                                 <ul class="text-green-700 space-y-2">
                                     <li><strong>Use dot notation for nested access:</strong> Simplifies working with
@@ -1688,9 +1687,9 @@ $users = User::updatedInLast('24 hours')->get();</code></pre>
                                 </ul>
                             </div>
 
-                            <div class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
-                                <h4 class="font-semibold text-red-800 mb-3">
-                                    <i class="fas fa-times-circle mr-2"></i>Don'ts
+                            <div class="bg-orange-50 border border-orange-200 rounded-lg p-6 mb-6">
+                                <h4 class="font-semibold text-orange-800 mb-3">
+                                    <i class="fas fa-exclamation-circle mr-2"></i>Things to Consider
                                 </h4>
                                 <ul class="text-red-700 space-y-2">
                                     <li><strong>Don't modify arrays during iteration:</strong> Create new arrays instead
@@ -1708,11 +1707,11 @@ $users = User::updatedInLast('24 hours')->get();</code></pre>
                         </div>
 
                         <div class="mb-8">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Trait Usage Best Practices</h3>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Trait Usage Suggestions</h3>
 
                             <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
                                 <h4 class="font-semibold text-green-800 mb-3">
-                                    <i class="fas fa-check-circle mr-2"></i>Do's
+                                    <i class="fas fa-check-circle mr-2"></i>Things That Often Help
                                 </h4>
                                 <ul class="text-green-700 space-y-2">
                                     <li><strong>Use traits for cross-cutting concerns:</strong> Apply to multiple
@@ -1730,7 +1729,7 @@ $users = User::updatedInLast('24 hours')->get();</code></pre>
 
                             <div class="bg-red-50 border border-red-200 rounded-lg p-6">
                                 <h4 class="font-semibold text-red-800 mb-3">
-                                    <i class="fas fa-times-circle mr-2"></i>Don'ts
+                                    <i class="fas fa-exclamation-circle mr-2"></i>Things to Consider
                                 </h4>
                                 <ul class="text-red-700 space-y-2">
                                     <li><strong>Don't use traits as interfaces:</strong> Traits provide implementation,

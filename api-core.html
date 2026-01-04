@@ -467,30 +467,40 @@ foreach ($modules as $module) {
                     </section>
 
                     <section id="best-practices" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
-                        <p class="text-gray-600 mb-4">
-                            Recommended patterns and guidelines for working with the Core Kernel.
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Some Suggestions</h2>
+                        <p class="text-gray-600 mb-6">
+                            These are just suggestions based on what tends to work well with the Core Kernel. You do you. Build however makes sense for your project.
                         </p>
 
-                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Do's</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Always register the autoloader first</li>
-                            <li>Use dependency injection for service management</li>
-                            <li>Follow PSR-4 autoloading standards</li>
-                            <li>Register services as singletons when appropriate</li>
-                            <li>Use interfaces for service contracts</li>
-                            <li>Bootstrap the application before running the engine</li>
-                        </ul>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-green-600">
+                                    Things That Often Help
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Registering the autoloader first ensures classes can be found</li>
+                                    <li>• Using dependency injection for service management keeps code organized</li>
+                                    <li>• Following PSR-4 autoloading standards makes code more portable</li>
+                                    <li>• Registering services as singletons when appropriate can improve performance</li>
+                                    <li>• Using interfaces for service contracts increases flexibility</li>
+                                    <li>• Bootstrapping the application before running the engine ensures proper initialization</li>
+                                </ul>
+                            </div>
 
-                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Don'ts</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Don't create circular dependencies</li>
-                            <li>Don't manually require class files</li>
-                            <li>Don't bypass the container for service creation</li>
-                            <li>Don't register services in the wrong order</li>
-                            <li>Don't ignore namespace conventions</li>
-                            <li>Don't skip error handling in service registration</li>
-                        </ul>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">
+                                    Things to Consider
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Creating circular dependencies can cause initialization issues</li>
+                                    <li>• Manually requiring class files can bypass autoloading benefits</li>
+                                    <li>• Bypassing the container for service creation can make testing harder</li>
+                                    <li>• Registering services in the wrong order can cause dependency issues</li>
+                                    <li>• Ignoring namespace conventions can make code harder to maintain</li>
+                                    <li>• Skipping error handling in service registration can hide problems</li>
+                                </ul>
+                            </div>
+                        </div>
                     </section>
                 </div>
             </div>

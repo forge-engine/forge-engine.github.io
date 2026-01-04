@@ -194,7 +194,7 @@
                         </a>
                         <a href="#best-practices"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
-                            Best Practices
+                            Some Suggestions
                         </a>
                     </nav>
                 </div>
@@ -633,30 +633,40 @@ public function getUser(Request $request, $id)
                     </section>
 
                     <section id="best-practices" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
-                        <p class="text-gray-600 mb-4">Recommended patterns and guidelines for working with the HTTP Layer.</p>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Some Suggestions</h2>
+                        <p class="text-gray-600 mb-6">These are just suggestions based on what tends to work well with the HTTP Layer. You do you. Build however makes sense for your project.</p>
 
-                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Do's</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Always validate request data before processing</li>
-                            <li>Use appropriate HTTP status codes</li>
-                            <li>Set proper Content-Type headers</li>
-                            <li>Handle file uploads securely</li>
-                            <li>Use middleware for cross-cutting concerns</li>
-                            <li>Return consistent response formats</li>
-                            <li>Handle errors gracefully</li>
-                        </ul>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-green-600">
+                                    Things That Often Help
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Validating request data before processing can catch issues early</li>
+                                    <li>• Using appropriate HTTP status codes makes APIs clearer</li>
+                                    <li>• Setting proper Content-Type headers helps clients parse responses</li>
+                                    <li>• Handling file uploads securely prevents security issues</li>
+                                    <li>• Using middleware for cross-cutting concerns keeps code organized</li>
+                                    <li>• Returning consistent response formats makes APIs easier to use</li>
+                                    <li>• Handling errors gracefully improves user experience</li>
+                                </ul>
+                            </div>
 
-                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Don'ts</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Don't trust user input without validation</li>
-                            <li>Don't expose sensitive information in responses</li>
-                            <li>Don't ignore HTTP method semantics</li>
-                            <li>Don't bypass middleware for security</li>
-                            <li>Don't return generic error messages</li>
-                            <li>Don't ignore content negotiation</li>
-                            <li>Don't store large files in memory</li>
-                        </ul>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">
+                                    Things to Consider
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Trusting user input without validation can lead to security issues</li>
+                                    <li>• Exposing sensitive information in responses can be a security risk</li>
+                                    <li>• Ignoring HTTP method semantics can confuse API consumers</li>
+                                    <li>• Bypassing middleware for security can create vulnerabilities</li>
+                                    <li>• Returning generic error messages can make debugging harder</li>
+                                    <li>• Ignoring content negotiation can limit API flexibility</li>
+                                    <li>• Storing large files in memory can cause performance issues</li>
+                                </ul>
+                            </div>
+                        </div>
                     </section>
                 </div>
             </div>
