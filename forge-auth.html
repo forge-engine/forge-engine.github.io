@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeAuth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Modules
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Home
+                </a>
+                <a href="getting-started.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Getting Started
+                </a>
+                <a href="core-concepts.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Core Concepts
+                </a>
+                <a href="modules.html"
+                    class="block px-3 py-2 text-blue-600 font-medium">
+                    Modules
+                </a>
+                <a href="api-reference.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    API Reference
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        ForgeAuth
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#overview"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Overview
+                        </a>
+                        <a href="#architecture"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Architecture & Design
+                        </a>
+                        <a href="#installation"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Installation
+                        </a>
+                        <a href="#configuration"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Configuration
+                        </a>
+                        <a href="#web-authentication"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Web Authentication
+                        </a>
+                        <a href="#api-mobile-authentication"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            API/Mobile Authentication
+                        </a>
+                        <a href="#services"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Services
+                        </a>
+                        <a href="#middleware"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Middleware
+                        </a>
+                        <a href="#models-data"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Models & Data
+                        </a>
+                        <a href="#validation"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Validation
+                        </a>
+                        <a href="#controllers"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Controllers
+                        </a>
+                        <a href="#database-migrations"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Database Migrations
+                        </a>
+                        <a href="#usage-examples"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Usage Examples
+                        </a>
+                        <a href="#mobile-support"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Mobile Support
+                        </a>
+                        <a href="#best-practices"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Best Practices
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">
+                        ForgeAuth
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Complete authentication system for Forge Kernel with session-based web authentication and optional JWT support for mobile and API applications.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Overview
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth provides a complete, production-ready authentication system for Forge Kernel applications. It offers session-based authentication for traditional web applications and optional JWT (JSON Web Token) support for mobile apps and API clients. Built with simplicity, robustness, and flexibility in mind.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center">
+                                        <span>Session-based web authentication</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span>Optional JWT for mobile/API</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span>User registration and login</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span>Password hashing (bcrypt)</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center">
+                                        <span>Login attempt throttling</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span>Route protection middleware</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span>User repository with caching</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span>Custom JWT claims support</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeAuth Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Web Authentication:</strong> Session-based authentication for traditional web applications. Users log in with credentials, and sessions are managed automatically.</li>
+                            <li><strong>API/Mobile Authentication:</strong> Optional JWT support for mobile applications and API clients. JWT is opt-in via configuration — not enabled by default.</li>
+                            <li><strong>User Management:</strong> Complete user registration, login, logout, and user data management with repository pattern.</li>
+                            <li><strong>Security Features:</strong> Password hashing with bcrypt, login attempt throttling, session regeneration, and secure token handling.</li>
+                            <li><strong>Middleware Protection:</strong> Easy-to-use middleware for protecting routes — <code class="bg-gray-100 px-2 py-1 rounded">AuthMiddleware</code> for web, <code class="bg-gray-100 px-2 py-1 rounded">ApiJwtMiddleware</code> for API.</li>
+                            <li><strong>Validation:</strong> Built-in validation helpers for login and registration forms.</li>
+                            <li><strong>Flexible Architecture:</strong> Service-based design with clear separation between web and API authentication flows.</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Simple Yet Powerful:</strong> ForgeAuth is designed to be simple to use while providing robust security features. Web authentication works out of the box with no configuration. JWT support is available when you need it, but it's opt-in so you're not forced to use it.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Architecture & Design Philosophy
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth is built with a clear separation of concerns and a focus on simplicity without sacrificing power or security.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Why It's Built This Way</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeAuth follows a service-based architecture that separates authentication logic from controllers and routes. This design provides:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Simplicity:</strong> Easy to use with minimal boilerplate. Web authentication works immediately after installation.</li>
+                            <li><strong>Robustness:</strong> Built-in security features like login throttling, password hashing, and session management.</li>
+                            <li><strong>Flexibility:</strong> Web sessions by default, JWT opt-in for mobile. Use what you need, when you need it.</li>
+                            <li><strong>Power:</strong> Full user management, relationships, caching, and extensibility through custom claims.</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Separation of Concerns</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeAuth clearly separates web and API authentication:
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">Web Authentication</h4>
+                                <p class="text-gray-600 text-sm mb-2">Session-based, works out of the box</p>
+                                <ul class="text-xs text-gray-500 space-y-1">
+                                    <li>• Uses PHP sessions</li>
+                                    <li>• Automatic session management</li>
+                                    <li>• <code class="bg-gray-100 px-1 rounded">AuthMiddleware</code> for protection</li>
+                                    <li>• <code class="bg-gray-100 px-1 rounded">WebLoginController</code> for routes</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">API/Mobile Authentication</h4>
+                                <p class="text-gray-600 text-sm mb-2">JWT-based, opt-in via configuration</p>
+                                <ul class="text-xs text-gray-500 space-y-1">
+                                    <li>• JWT tokens (access + refresh)</li>
+                                    <li>• Stateless authentication</li>
+                                    <li>• <code class="bg-gray-100 px-1 rounded">ApiJwtMiddleware</code> for protection</li>
+                                    <li>• <code class="bg-gray-100 px-1 rounded">ApiLoginController</code> for routes</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Opt-In JWT Design</h3>
+                        <p class="text-gray-600 mb-4">
+                            JWT support is <strong>opt-in</strong>, not enabled by default. This means:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Web applications work immediately without any JWT configuration</li>
+                            <li>You only enable JWT when you need it for mobile apps or API clients</li>
+                            <li>No unnecessary complexity for simple web applications</li>
+                            <li>Clear separation between web and API authentication flows</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Design Decision:</strong> By making JWT opt-in, ForgeAuth stays simple for web applications while still providing powerful mobile/API capabilities when needed. You're not forced to configure JWT if you only need web authentication.
+                            </p>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Repository Pattern</h3>
+                        <p class="text-gray-600 mb-4">
+                            User data access uses the repository pattern with built-in caching:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Separation of data access logic from business logic</li>
+                            <li>Query caching for performance</li>
+                            <li>Easy to extend and customize</li>
+                            <li>Interface-based design for testability</li>
+                        </ul>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Installation
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            Install ForgeAuth using ForgePackageManager. The module includes database migrations that will run automatically after installation.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using ForgePackageManager</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install with wizard (interactive)
+php forge.php package:install-module
+
+# Install directly (skip wizard)
+php forge.php package:install-module --module=ForgeAuth
+
+# Install specific version
+php forge.php package:install-module --module=ForgeAuth@0.2.4</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Post-Installation</h3>
+                        <p class="text-gray-600 mb-4">
+                            After installation, ForgeAuth automatically runs database migrations to create the necessary tables:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">users</code> table for user accounts</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">profiles</code> table for user profiles (optional)</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Automatic Migrations:</strong> The module uses <code class="bg-green-100 px-2 py-1 rounded">#[PostInstall]</code> attribute to automatically run migrations after installation. No manual steps required.
+                            </p>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Verify Installation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Verify that ForgeAuth is installed correctly:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># List installed modules
+php forge.php package:list-modules | grep ForgeAuth
+
+# Check if tables were created
+php forge.php db:migrate:status</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Configuration
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth requires minimal configuration. Web authentication works out of the box. JWT support is opt-in and requires additional configuration.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Session-Based Authentication (Default)</h3>
+                        <p class="text-gray-600 mb-4">
+                            Web authentication using PHP sessions requires <strong>no configuration</strong>. It works immediately after installation. The session configuration is handled by Forge Kernel's session system.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">JWT Configuration (Opt-In)</h3>
+                        <p class="text-gray-600 mb-4">
+                            To enable JWT support for mobile applications or API clients, add the following to your <code class="bg-gray-100 px-2 py-1 rounded">config/security.php</code> or <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// config/security.php
+return [
+    'jwt' => [
+        'enabled' => true,  // Enable JWT support
+        'secret' => env('JWT_SECRET', 'your-secret-key-here'),  // Required if enabled
+        'ttl' => 900,  // Access token TTL in seconds (default: 15 minutes)
+        'refresh_ttl' => 604800,  // Refresh token TTL in seconds (default: 7 days)
+    ],
+];</code></pre>
+                        </div>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># .env file
+JWT_SECRET=your-very-secure-secret-key-here-minimum-32-characters</code></pre>
+                        </div>
+
+                        <h4 class="text-md font-semibold mb-3">JWT Configuration Options</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">security.jwt.enabled</code> (default: <code class="bg-gray-100 px-2 py-1 rounded">false</code>) — Enable or disable JWT support</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">security.jwt.secret</code> (required if enabled) — Secret key for signing JWT tokens. Use a strong, random string.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">security.jwt.ttl</code> (default: <code class="bg-gray-100 px-2 py-1 rounded">900</code>) — Access token time-to-live in seconds (15 minutes)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">security.jwt.refresh_ttl</code> (default: <code class="bg-gray-100 px-2 py-1 rounded">604800</code>) — Refresh token time-to-live in seconds (7 days)</li>
+                        </ul>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Security Warning:</strong> If you enable JWT, you <strong>must</strong> set a strong secret key. Use a random string of at least 32 characters. Never commit secrets to version control — use environment variables.
+                            </p>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Login Attempt Throttling</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeAuth includes built-in login attempt throttling to prevent brute-force attacks. Configure it in <code class="bg-gray-100 px-2 py-1 rounded">config/security.php</code>:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// config/security.php
+return [
+    'password' => [
+        'max_login_attempts' => 5,  // Maximum failed login attempts
+        'lockout_time' => 300,  // Lockout duration in seconds (default: 5 minutes)
+    ],
+];</code></pre>
+                        </div>
+
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">security.password.max_login_attempts</code> (default: <code class="bg-gray-100 px-2 py-1 rounded">5</code>) — Maximum failed login attempts before lockout</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">security.password.lockout_time</code> (default: <code class="bg-gray-100 px-2 py-1 rounded">300</code>) — Lockout duration in seconds (5 minutes)</li>
+                        </ul>
+                    </section>
+
+                    <!-- Web Authentication -->
+                    <section id="web-authentication" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Web Authentication
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            Session-based authentication for traditional web applications. Works out of the box with no JWT configuration required.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Authentication Flow</h3>
+                        <p class="text-gray-600 mb-4">
+                            Web authentication uses PHP sessions:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>User submits login credentials</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">ForgeAuthService::login()</code> validates credentials</li>
+                            <li>Session is regenerated for security</li>
+                            <li>User ID and identifier are stored in session</li>
+                            <li>User is redirected to protected area</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Using ForgeAuthService</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">ForgeAuthService</code> provides the main authentication methods:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+
+class MyController
+{
+    public function __construct(
+        private readonly ForgeAuthService $authService
+    ) {}
+
+    public function login(array $credentials): Response
+    {
+        // Login user (throws LoginException on failure)
+        $user = $this->authService->login($credentials);
+        
+        // Get current authenticated user
+        $user = $this->authService->user();
+        
+        // Logout user
+        $this->authService->logout();
+        
+        // Register new user
+        $this->authService->register($credentials);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Protecting Routes with Middleware</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">AuthMiddleware</code> to protect routes that require authentication:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Middlewares\AuthMiddleware;
+use Forge\Core\Http\Attributes\Middleware;
+use Forge\Core\Routing\Route;
+
+#[Middleware("web")]
+final class DashboardController
+{
+    #[Route("/dashboard")]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+    public function welcome(): Response
+    {
+        // This route requires authentication
+        // Users will be redirected to /auth/login if not authenticated
+        $user = $this->authService->user();
+        
+        return $this->view("pages/dashboard/index", [
+            "user" => $user,
+        ]);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Registration Example</h3>
+                        <p class="text-gray-600 mb-4">
+                            Here's a complete example of user registration from <code class="bg-gray-100 px-2 py-1 rounded">HomeController</code>:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeAuth\Validation\ForgeAuthValidate;
+use Forge\Core\Helpers\Flash;
+use Forge\Core\Helpers\Redirect;
+use Forge\Exceptions\ValidationException;
+
+#[Route("/", "POST")]
+public function register(Request $request): Response
+{
+    try {
+        // Validate input
+        ForgeAuthValidate::register($request->postData);
+        
+        // Sanitize input
+        $credentials = $this->sanitize($request->postData);
+        
+        // Register user
+        $this->forgeAuthService->register($credentials);
+        
+        Flash::set("success", "User registered successfully");
+        return Redirect::to("/");
+    } catch (ValidationException) {
+        return Redirect::to("/");
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Login Attempt Throttling</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeAuth automatically throttles login attempts to prevent brute-force attacks:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>After <code class="bg-gray-100 px-2 py-1 rounded">max_login_attempts</code> failed attempts, the user is locked out</li>
+                            <li>Lockout lasts for <code class="bg-gray-100 px-2 py-1 rounded">lockout_time</code> seconds</li>
+                            <li>Failed attempts are tracked in the session</li>
+                            <li>Successful login resets the attempt counter</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Automatic Protection:</strong> Login throttling is built into <code class="bg-blue-100 px-2 py-1 rounded">ForgeAuthService::login()</code>. No additional configuration needed — it works automatically.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- API/Mobile Authentication -->
+                    <section id="api-mobile-authentication" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            API/Mobile Authentication (JWT)
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            Optional JWT support for mobile applications and API clients. JWT is opt-in — enable it in configuration when you need it.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Enabling JWT</h3>
+                        <p class="text-gray-600 mb-4">
+                            First, enable JWT in your configuration (see <a href="#configuration" class="text-blue-600 hover:underline">Configuration</a> section). Once enabled, you can use JWT authentication for API routes and mobile applications.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">JWT Token Flow</h3>
+                        <p class="text-gray-600 mb-4">
+                            JWT authentication uses access tokens and refresh tokens:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>User logs in via API endpoint</li>
+                            <li>Server issues access token (short-lived) and refresh token (long-lived)</li>
+                            <li>Client includes access token in <code class="bg-gray-100 px-2 py-1 rounded">Authorization: Bearer &lt;token&gt;</code> header</li>
+                            <li>When access token expires, client uses refresh token to get new tokens</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">API Login Example</h3>
+                        <p class="text-gray-600 mb-4">
+                            Here's how API login works with JWT tokens:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeAuth\Validation\ForgeAuthValidate;
+
+#[ApiRoute('/auth/login', 'POST')]
+public function login(Request $request): Response
+{
+    try {
+        $data = $request->json() ?: $request->postData;
+        ForgeAuthValidate::login($data);
+        $loginCredentials = $this->sanitize($data);
+        
+        // Login user (creates session for web, but we'll use JWT)
+        $user = $this->forgeAuthService->login($loginCredentials);
+        
+        // Issue JWT tokens
+        $tokens = $this->forgeAuthService->issueToken($user);
+        
+        // Returns: {
+        //   "user": {...},
+        //   "tokens": {
+        //     "access_token": "...",
+        //     "refresh_token": "...",
+        //     "expires_in": 900
+        //   }
+        // }
+        return $this->apiResponse([
+            'user' => $user,
+            'tokens' => $tokens,
+        ]);
+    } catch (LoginException $e) {
+        return $this->apiError('Invalid credentials', 401);
+    } catch (\RuntimeException $e) {
+        return $this->apiError('JWT is not enabled', 500);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Token Refresh</h3>
+                        <p class="text-gray-600 mb-4">
+                            When the access token expires, use the refresh token to get new tokens:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[ApiRoute('/auth/refresh', 'POST')]
+public function refresh(Request $request): Response
+{
+    $data = $request->json() ?: $request->postData;
+    $refreshToken = $data['refresh_token'] ?? null;
+    
+    if (!$refreshToken) {
+        return $this->apiError('Refresh token is required', 400);
+    }
+    
+    $tokens = $this->forgeAuthService->refreshToken($refreshToken);
+    
+    if (!$tokens) {
+        return $this->apiError('Invalid refresh token', 401);
+    }
+    
+    // Returns new access_token and refresh_token
+    return $this->apiResponse($tokens);
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Protecting API Routes</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">ApiJwtMiddleware</code> to protect API routes:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Middlewares\ApiJwtMiddleware;
+use Forge\Core\Http\Attributes\ApiRoute;
+use Forge\Core\Http\Attributes\Middleware;
+
+#[Middleware('api')]
+final class ApiUserController
+{
+    #[ApiRoute('/users', 'GET')]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\ApiJwtMiddleware")]
+    public function index(Request $request): Response
+    {
+        // This route requires valid JWT token
+        // Token is validated and user is loaded automatically
+        $user = $this->authService->user();
+        
+        return $this->apiResponse($user);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Custom JWT Claims</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can add custom claims to JWT tokens using callbacks:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+
+// Add custom claims callback
+ForgeAuthService::addCustomClaimsCallback(function ($user, $basePayload) {
+    return [
+        'role' => $user->role,
+        'permissions' => $user->permissions,
+        // Add any custom data you need
+    ];
+});
+
+// Now when tokens are issued, they'll include your custom claims
+$tokens = $authService->issueToken($user);</code></pre>
+                        </div>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Protected Claims:</strong> The following claims are protected and cannot be overridden: <code class="bg-blue-100 px-2 py-1 rounded">user_id</code>, <code class="bg-blue-100 px-2 py-1 rounded">exp</code>, <code class="bg-blue-100 px-2 py-1 rounded">iat</code>, <code class="bg-blue-100 px-2 py-1 rounded">jti</code>, <code class="bg-blue-100 px-2 py-1 rounded">type</code>.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Services -->
+                    <section id="services" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Services
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth provides several services for authentication and user management.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">ForgeAuthService</h3>
+                        <p class="text-gray-600 mb-4">
+                            The main authentication service providing core authentication methods:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">interface ForgeAuthInterface
+{
+    // Web authentication
+    public function register(array $credentials): bool;
+    public function login(array $credentials): User;
+    public function logout(): void;
+    public function user(): ?User;
+    
+    // JWT methods (available when JWT is enabled)
+    public function issueToken(User $user): array;
+    public function refreshToken(string $refreshToken): ?array;
+    public function resolveUserFromToken(string $token): ?User;
+}</code></pre>
+                        </div>
+
+                        <h4 class="text-md font-semibold mb-3">Method Details</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">register($credentials)</code> — Register a new user. Throws <code class="bg-gray-100 px-2 py-1 rounded">UserRegistrationException</code> on failure.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">login($credentials)</code> — Authenticate user and create session. Throws <code class="bg-gray-100 px-2 py-1 rounded">LoginException</code> on failure.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">logout()</code> — Clear user session.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">user()</code> — Get current authenticated user from session or JWT token.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">issueToken($user)</code> — Issue JWT access and refresh tokens. Requires JWT to be enabled.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">refreshToken($refreshToken)</code> — Refresh access token using refresh token.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">resolveUserFromToken($token)</code> — Resolve user from JWT token. Used by middleware.</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">JwtService</h3>
+                        <p class="text-gray-600 mb-4">
+                            Handles JWT encoding and decoding:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">class JwtService
+{
+    public function encode(array $payload): string;
+    public function decode(string $token): array;
+}</code></pre>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Uses HS256 algorithm for signing</li>
+                            <li>Validates token signature and expiration</li>
+                            <li>Throws <code class="bg-gray-100 px-2 py-1 rounded">JwtTokenInvalidException</code> for invalid tokens</li>
+                            <li>Throws <code class="bg-gray-100 px-2 py-1 rounded">JwtTokenExpiredException</code> for expired tokens</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">UserRepository</h3>
+                        <p class="text-gray-600 mb-4">
+                            Repository for user data access with built-in caching:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">interface UserRepositoryInterface
+{
+    public function create(CreateUserData $data): User;
+    public function findById(int $id): ?User;
+    public function findByIdentifier(string $identifier): ?User;
+    public function findByEmail(string $email): ?User;
+}</code></pre>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Query results are cached for performance</li>
+                            <li>Cache is invalidated on user creation/update</li>
+                            <li>Implements <code class="bg-gray-100 px-2 py-1 rounded">UserRepositoryInterface</code> for testability</li>
+                        </ul>
+                    </section>
+
+                    <!-- Middleware -->
+                    <section id="middleware" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Middleware
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth provides two middleware classes for protecting routes.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">AuthMiddleware</h3>
+                        <p class="text-gray-600 mb-4">
+                            Protects web routes using session-based authentication:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Middlewares\AuthMiddleware;
+
+#[Route("/dashboard")]
+#[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+public function dashboard(): Response
+{
+    // User is authenticated via session
+    $user = $this->authService->user();
+    return $this->view("dashboard", ["user" => $user]);
+}</code></pre>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Checks if user is authenticated via session</li>
+                            <li>Redirects to <code class="bg-gray-100 px-2 py-1 rounded">/auth/login</code> if not authenticated</li>
+                            <li>Returns 401 status code on redirect</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">ApiJwtMiddleware</h3>
+                        <p class="text-gray-600 mb-4">
+                            Protects API routes using JWT tokens:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Middlewares\ApiJwtMiddleware;
+
+#[ApiRoute("/api/users", "GET")]
+#[Middleware("App\Modules\ForgeAuth\Middlewares\ApiJwtMiddleware")]
+public function getUsers(): Response
+{
+    // User is authenticated via JWT token
+    $user = $this->authService->user();
+    return $this->apiResponse($user);
+}</code></pre>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Validates <code class="bg-gray-100 px-2 py-1 rounded">Authorization: Bearer &lt;token&gt;</code> header</li>
+                            <li>Decodes and validates JWT token</li>
+                            <li>Resolves user from token</li>
+                            <li>Returns 401 JSON response if token is invalid or missing</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Automatic User Resolution:</strong> Both middleware classes automatically resolve the authenticated user and make it available via <code class="bg-blue-100 px-2 py-1 rounded">$authService->user()</code>.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Models & Data -->
+                    <section id="models-data" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Models & Data
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth provides models and DTOs for user data management.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">User Model</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">User</code> model represents authenticated users:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Table("users")]
+#[ProtectedFields(['password'])]
+class User extends Model
+{
+    use HasTimeStamps;
+    use CanLoadRelations;
+
+    public int $id;
+    public string $status;  // 'active', 'inactive', 'pending'
+    public string $identifier;  // Unique username
+    public string $email;  // Unique email
+    public string $password;  // Hashed password (protected)
+    public ?UserMetadataDto $metadata;  // JSON metadata
+
+    #[Relate(RelationKind::HasOne, Profile::class, "user_id")]
+    public function profile(): Relation;
+}</code></pre>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Password field is protected from serialization</li>
+                            <li>Supports relationships (e.g., Profile)</li>
+                            <li>Includes timestamps (created_at, updated_at)</li>
+                            <li>Metadata field supports JSON data</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Profile Model</h3>
+                        <p class="text-gray-600 mb-4">
+                            Optional profile model for extended user information:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Table("profiles")]
+class Profile extends Model
+{
+    public int $id;
+    public int $userId;
+    public string $firstName;
+    public ?string $lastName;
+    public ?string $avatar;
+    public ?string $email;
+    public ?string $phone;
+    // ... other fields
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">DTOs (Data Transfer Objects)</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeAuth uses DTOs for type-safe data handling:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">CreateUserData</code> — For user registration</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">UserDto</code> — For user data transfer</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">ProfileDto</code> — For profile data</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">UserMetadataDto</code> — For user metadata</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">UserNotificationDto</code> — For notification preferences</li>
+                        </ul>
+                    </section>
+
+                    <!-- Validation -->
+                    <section id="validation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Validation
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth provides validation helpers for login and registration.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">ForgeAuthValidate</h3>
+                        <p class="text-gray-600 mb-4">
+                            Static validation methods for authentication forms:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Validation\ForgeAuthValidate;
+
+// Validate login credentials
+ForgeAuthValidate::login([
+    'identifier' => 'username',
+    'password' => 'password123'
+]);
+
+// Validate registration data
+ForgeAuthValidate::register([
+    'identifier' => 'username',
+    'email' => 'user@example.com',
+    'password' => 'password123'
+]);</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Validation Rules</h3>
+                        <h4 class="text-md font-semibold mb-2">Login Validation</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">identifier</code> — Required</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">password</code> — Required</li>
+                        </ul>
+
+                        <h4 class="text-md font-semibold mb-2">Registration Validation</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">identifier</code> — Required, minimum 3 characters, unique in users table</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">password</code> — Required, minimum 8 characters</li>
+                        </ul>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Custom validation messages
+ForgeAuthValidate::register($data, [
+    'required' => 'The :field field is required!',
+    'min' => 'The :field field must be at least :value characters.',
+    'unique' => 'The :field is already taken.'
+]);</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Controllers -->
+                    <section id="controllers" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Controllers
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth includes ready-to-use controllers for authentication and user management.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">WebLoginController</h3>
+                        <p class="text-gray-600 mb-4">
+                            Handles web login and logout routes:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">GET /auth/login</code> — Show login form</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">POST /auth/login</code> — Process login</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">POST /auth/logout</code> — Logout user</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">ApiLoginController</h3>
+                        <p class="text-gray-600 mb-4">
+                            Handles API login and token refresh:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">POST /api/auth/login</code> — Login and get JWT tokens</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">POST /api/auth/refresh</code> — Refresh access token</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">WebUserController</h3>
+                        <p class="text-gray-600 mb-4">
+                            Web routes for user management:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">GET /users</code> — List users (with pagination)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">GET /users/{id}</code> — Get user by ID</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">GET /users/export</code> — Export users to CSV</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">ApiUserController</h3>
+                        <p class="text-gray-600 mb-4">
+                            API routes for user management:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">GET /api/users</code> — List users (with pagination)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">GET /api/users/{id}</code> — Get user by ID</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">GET /api/users/export</code> — Export users to CSV</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Customization:</strong> You can extend or replace these controllers with your own implementations. They're provided as examples and starting points.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Database Migrations -->
+                    <section id="database-migrations" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Database Migrations
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth includes database migrations that run automatically after installation.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Users Table</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">users</code> table stores user accounts:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Migration: CreateUsersTable
+#[Table(name: "users")]
+#[Timestamps]
+#[SoftDelete]
+#[MetaData]
+class CreateUsersTable extends Migration
+{
+    public int $id;  // Primary key
+    public string $status;  // ENUM: 'active', 'inactive', 'pending'
+    public string $identifier;  // Unique username
+    public string $email;  // Unique email
+    public string $password;  // Hashed password
+}</code></pre>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Includes <code class="bg-gray-100 px-2 py-1 rounded">created_at</code> and <code class="bg-gray-100 px-2 py-1 rounded">updated_at</code> timestamps</li>
+                            <li>Supports soft deletes (<code class="bg-gray-100 px-2 py-1 rounded">deleted_at</code>)</li>
+                            <li>Includes metadata column for JSON data</li>
+                            <li>Indexes on <code class="bg-gray-100 px-2 py-1 rounded">id</code>, <code class="bg-gray-100 px-2 py-1 rounded">email</code>, and <code class="bg-gray-100 px-2 py-1 rounded">deleted_at</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Profiles Table</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">profiles</code> table stores extended user information:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Migration: CreateProfilesTable
+#[Table(name: "profiles")]
+#[Timestamps]
+#[SoftDelete]
+#[MetaData]
+class CreateProfilesTable extends Migration
+{
+    public int $id;
+    public int $userId;  // Foreign key to users
+    public string $firstName;
+    public ?string $lastName;
+    public ?string $avatar;
+    public ?string $email;
+    public ?string $phone;
+    // ... other fields
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Tenant Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeAuth includes tenant-specific migrations for multi-tenant applications:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">Tenants/CreateTenantUsersTable.php</code> — Tenant-specific users table</li>
+                            <li>Works with ForgeMultiTenant module</li>
+                        </ul>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="usage-examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Usage Examples
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            Complete examples of using ForgeAuth in your controllers.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">User Registration</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeAuth\Validation\ForgeAuthValidate;
+use Forge\Core\Helpers\Flash;
+use Forge\Core\Helpers\Redirect;
+use Forge\Exceptions\ValidationException;
+
+#[Route("/", "POST")]
+public function register(Request $request): Response
+{
+    try {
+        // Validate input
+        ForgeAuthValidate::register($request->postData);
+        
+        // Sanitize input
+        $credentials = $this->sanitize($request->postData);
+        
+        // Register user
+        $this->forgeAuthService->register($credentials);
+        
+        Flash::set("success", "User registered successfully");
+        return Redirect::to("/");
+    } catch (ValidationException) {
+        return Redirect::to("/");
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Protected Route</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeAuth\Middlewares\AuthMiddleware;
+use Forge\Core\Http\Attributes\Middleware;
+use Forge\Core\Routing\Route;
+
+#[Service]
+#[Middleware("web")]
+final class DashboardController
+{
+    public function __construct(
+        private readonly ForgeAuthService $authService
+    ) {}
+
+    #[Route("/dashboard")]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+    public function welcome(): Response
+    {
+        $data = [
+            "title" => "Welcome to Dashboard",
+            "user" => $this->authService->user() ?? [],
+        ];
+
+        return $this->view(view: "pages/dashboard/index", data: $data);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">API Authentication with JWT</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeAuth\Middlewares\ApiJwtMiddleware;
+use Forge\Core\Http\Attributes\ApiRoute;
+use Forge\Core\Http\Attributes\Middleware;
+
+#[Middleware('api')]
+final class ApiUserController
+{
+    public function __construct(
+        private readonly ForgeAuthService $authService
+    ) {}
+
+    #[ApiRoute('/api/users/me', 'GET')]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\ApiJwtMiddleware")]
+    public function getCurrentUser(): Response
+    {
+        // User is automatically loaded from JWT token
+        $user = $this->authService->user();
+        
+        return $this->apiResponse([
+            'user' => $user,
+        ]);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Using JWT Tokens in Mobile Apps</h3>
+                        <p class="text-gray-600 mb-4">
+                            Example of how mobile apps would use JWT tokens:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-javascript">// Login and get tokens
+const response = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        identifier: 'username',
+        password: 'password123'
+    })
+});
+
+const { user, tokens } = await response.json();
+
+// Store tokens securely
+localStorage.setItem('access_token', tokens.access_token);
+localStorage.setItem('refresh_token', tokens.refresh_token);
+
+// Use access token for API requests
+const apiResponse = await fetch('/api/users/me', {
+    headers: {
+        'Authorization': `Bearer ${tokens.access_token}`
+    }
+});
+
+// Refresh token when access token expires
+const refreshResponse = await fetch('/api/auth/refresh', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        refresh_token: tokens.refresh_token
+    })
+});
+
+const newTokens = await refreshResponse.json();</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Mobile Support -->
+                    <section id="mobile-support" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Mobile Support
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeAuth provides opt-in JWT support for mobile applications. JWT is not enabled by default — you enable it when you need it.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Why Opt-In JWT?</h3>
+                        <p class="text-gray-600 mb-4">
+                            JWT support is opt-in because:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Most web applications don't need JWT — sessions work perfectly</li>
+                            <li>JWT adds complexity (secret management, token refresh, etc.)</li>
+                            <li>You should only enable what you need</li>
+                            <li>Clear separation between web and mobile authentication</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Enabling JWT for Mobile</h3>
+                        <p class="text-gray-600 mb-4">
+                            To enable JWT support for mobile applications:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Set <code class="bg-gray-100 px-2 py-1 rounded">security.jwt.enabled = true</code> in configuration</li>
+                            <li>Set a strong <code class="bg-gray-100 px-2 py-1 rounded">security.jwt.secret</code> key</li>
+                            <li>Configure token TTL values if needed</li>
+                            <li>Use <code class="bg-gray-100 px-2 py-1 rounded">ApiLoginController</code> for login endpoints</li>
+                            <li>Use <code class="bg-gray-100 px-2 py-1 rounded">ApiJwtMiddleware</code> to protect API routes</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Mobile Authentication Flow</h3>
+                        <p class="text-gray-600 mb-4">
+                            Mobile apps authenticate using this flow:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>User enters credentials in mobile app</li>
+                            <li>App sends credentials to <code class="bg-gray-100 px-2 py-1 rounded">POST /api/auth/login</code></li>
+                            <li>Server validates credentials and issues JWT tokens</li>
+                            <li>App stores tokens securely (keychain, secure storage, etc.)</li>
+                            <li>App includes access token in <code class="bg-gray-100 px-2 py-1 rounded">Authorization: Bearer &lt;token&gt;</code> header for API requests</li>
+                            <li>When access token expires, app uses refresh token to get new tokens</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Token Refresh Flow</h3>
+                        <p class="text-gray-600 mb-4">
+                            Access tokens are short-lived (default: 15 minutes). Use refresh tokens to get new access tokens:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-javascript">// When access token expires (401 response)
+async function refreshAccessToken() {
+    const refreshToken = localStorage.getItem('refresh_token');
+    
+    const response = await fetch('/api/auth/refresh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: refreshToken })
+    });
+    
+    if (response.ok) {
+        const tokens = await response.json();
+        localStorage.setItem('access_token', tokens.access_token);
+        localStorage.setItem('refresh_token', tokens.refresh_token);
+        return tokens.access_token;
+    } else {
+        // Refresh token expired, user must login again
+        redirectToLogin();
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Custom Claims for Mobile</h3>
+                        <p class="text-gray-600 mb-4">
+                            Add custom claims to JWT tokens for mobile-specific data:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+
+// Add custom claims callback
+ForgeAuthService::addCustomClaimsCallback(function ($user, $basePayload) {
+    return [
+        'role' => $user->role,
+        'permissions' => $user->permissions,
+        'subscription_tier' => $user->subscriptionTier,
+        // Any data your mobile app needs
+    ];
+});</code></pre>
+                        </div>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Mobile-First Design:</strong> JWT tokens are designed for stateless authentication, perfect for mobile apps that need to work offline or with intermittent connectivity.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Best Practices
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            Recommendations for using ForgeAuth effectively and securely.
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-green-600">
+                                    Things That Often Help
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Use web sessions for traditional web applications</li>
+                                    <li>• Only enable JWT when you need mobile/API support</li>
+                                    <li>• Use strong, random JWT secrets (minimum 32 characters)</li>
+                                    <li>• Store JWT secrets in environment variables, never in code</li>
+                                    <li>• Use HTTPS in production for all authentication endpoints</li>
+                                    <li>• Implement proper error handling for authentication failures</li>
+                                    <li>• Use the provided middleware instead of manual checks</li>
+                                    <li>• Leverage login throttling to prevent brute-force attacks</li>
+                                </ul>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">
+                                    Things to Consider
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Don't enable JWT if you only need web authentication</li>
+                                    <li>• Don't store JWT secrets in version control</li>
+                                    <li>• Don't use weak passwords or skip validation</li>
+                                    <li>• Don't expose sensitive user data in JWT tokens</li>
+                                    <li>• Don't ignore login throttling warnings</li>
+                                    <li>• Don't use HTTP for authentication in production</li>
+                                    <li>• Don't store passwords in plain text (bcrypt is automatic)</li>
+                                    <li>• Don't skip session regeneration on login</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Security Considerations</h3>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>• <strong>Password Hashing:</strong> ForgeAuth automatically hashes passwords with bcrypt. Never store plain text passwords.</li>
+                                <li>• <strong>Session Security:</strong> Sessions are automatically regenerated on login to prevent session fixation attacks.</li>
+                                <li>• <strong>JWT Secrets:</strong> Use strong, random secrets. Rotate secrets periodically in production.</li>
+                                <li>• <strong>Token Expiration:</strong> Access tokens are short-lived (15 minutes). Use refresh tokens for long-term authentication.</li>
+                                <li>• <strong>HTTPS:</strong> Always use HTTPS in production. Never send credentials or tokens over HTTP.</li>
+                                <li>• <strong>Login Throttling:</strong> Built-in throttling prevents brute-force attacks. Adjust limits based on your needs.</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">When to Use Web vs API Authentication</h3>
+                        <div class="grid md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">Use Web Sessions When:</h4>
+                                <ul class="text-xs text-gray-600 space-y-1">
+                                    <li>• Building traditional web applications</li>
+                                    <li>• Users interact via browser</li>
+                                    <li>• You want automatic session management</li>
+                                    <li>• You don't need stateless authentication</li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-sm mb-2">Use JWT When:</h4>
+                                <ul class="text-xs text-gray-600 space-y-1">
+                                    <li>• Building mobile applications</li>
+                                    <li>• Building API services</li>
+                                    <li>• You need stateless authentication</li>
+                                    <li>• You need cross-domain authentication</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
+            </div>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+
