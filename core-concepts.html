@@ -1178,52 +1178,199 @@ if (config('services.stripe.key')) {
                     <section id="cli-kernel">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Kernel</h2>
                         <p class="text-gray-600 mb-4">
-                        Create custom commands and automate tasks.
+                        The kernel provides a powerful CLI system for creating custom commands and automating tasks. Commands can be created in your application or provided by capabilities (modules).
                     </p>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Creating Custom Commands</h3>
+                        <p class="text-gray-600 mb-4">
+                            Commands use the <code class="bg-gray-100 px-2 py-1 rounded">#[Cli]</code> attribute to define the command name, description, usage, and examples. Arguments are defined using the <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attribute on class properties.
+                        </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
-namespace App\Modules\MyModule\Commands;
+namespace App\Commands;
 
+use Forge\CLI\Attributes\Arg;
+use Forge\CLI\Attributes\Cli;
 use Forge\CLI\Command;
-use Forge\Core\Module\Attributes\CLICommand;
+use Forge\CLI\Traits\CliGenerator;
+use Forge\Traits\StringHelper;
 
-#[CLICommand(name: 'app:send-emails', description: 'Send pending emails to users')]
-class SendEmailsCommand extends Command
+#[Cli(
+    command: 'my:command',
+    description: 'A custom command example',
+    usage: 'my:command [--type=app|module] [--module=ModuleName] [--name=Example]',
+    examples: [
+        'my:command --type=app --name=Example',
+        'my:command --type=module --module=Blog --name=Example',
+        'my:command   (starts wizard)',
+    ]
+)]
+final class MyCommand extends Command
 {
+    use StringHelper;
+    use CliGenerator;  // Optional: for code generation commands
+
+    #[Arg(name: 'type', description: 'app or module', default: 'app', validate: 'app|module')]
+    private string $type = 'app';
+
+    #[Arg(name: 'module', description: 'Module name when type=module', required: false)]
+    private ?string $module = null;
+
+    #[Arg(name: 'name', description: 'Name parameter')]
+    private string $name = '';
+
     public function execute(array $args): int
     {
-        $user = $this->argument('name', $args) ?? 'all users';
-        $useQueue = $this->option('queue', $args) !== null;
-        
-        $this->info('Starting email sending process...');
-        
-        if ($user !== 'all users') {
-            $this->line("Sending emails to user: {$user}");
-        } else {
-            $this->line('Sending emails to all users');
+        $this->wizard($args);  // Interactive prompts if args missing
+
+        if ($this->type === 'module' && !$this->module) {
+            $this->error('--module=Name required when --type=module');
+            return 1;
         }
-        
-        if ($useQueue) {
-            $this->line('Using queue for processing');
-        }
-        
-        // Your email sending logic here
-        
-        $this->info('Emails sent successfully!');
+
+        $this->info("Processing: {$this->name}");
+        $this->success('Command completed successfully!');
         
         return 0;
     }
 }</code></pre>
-                    </div>
+                        </div>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Command Discovery</h3>
                         <p class="text-gray-600 mb-4">
-                        Commands auto-discover. Just create and use.
-                    </p>
+                            Commands are automatically discovered from:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Commands/</code> — Application-scoped commands</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Commands/</code> — Module-scoped commands</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Commands must:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Extend the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base class</li>
+                            <li>Use the <code class="bg-gray-100 px-2 py-1 rounded">#[Cli]</code> attribute</li>
+                            <li>Implement the <code class="bg-gray-100 px-2 py-1 rounded">execute(array $args): int</code> method</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Commands are cached for performance. If you add a new command and it's not discovered, clear the cache with <code class="bg-gray-100 px-2 py-1 rounded">php forge.php cache:flush</code>.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Kernel-Provided Commands</h3>
+                        <p class="text-gray-600 mb-4">
+                            The kernel comes with a comprehensive set of built-in commands:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Generate commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">generate:controller</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:model</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:migration</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:service</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:component</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:command</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:test</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:trait</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:enum</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:dto</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:event</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:middleware</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:seeder</code>, <code class="bg-gray-100 px-2 py-1 rounded">generate:module</code></li>
+                            <li><strong>Asset commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">asset:link</code>, <code class="bg-gray-100 px-2 py-1 rounded">asset:unlink</code></li>
+                            <li><strong>Storage commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">storage:link</code>, <code class="bg-gray-100 px-2 py-1 rounded">storage:unlink</code></li>
+                            <li><strong>Cache commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">cache:flush</code></li>
+                            <li><strong>Server commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">serve</code></li>
+                            <li><strong>Key commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">key:generate</code></li>
+                            <li><strong>Maintenance commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">maintenance:up</code>, <code class="bg-gray-100 px-2 py-1 rounded">maintenance:down</code></li>
+                            <li><strong>Help commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">help</code></li>
+                            <li><strong>Stats commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">stats</code></li>
+                            <li><strong>Registry commands</strong> (developer mode): <code class="bg-gray-100 px-2 py-1 rounded">dev:registry:init</code>, <code class="bg-gray-100 px-2 py-1 rounded">dev:registry:list</code>, <code class="bg-gray-100 px-2 py-1 rounded">dev:registry:publish</code>, <code class="bg-gray-100 px-2 py-1 rounded">dev:registry:version</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Module-Provided Commands</h3>
+                        <p class="text-gray-600 mb-4">
+                            Capabilities (modules) can provide their own commands. These commands are automatically discovered and work just like kernel commands:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>ForgePackageManager:</strong> <code class="bg-gray-100 px-2 py-1 rounded">package:install-module</code>, <code class="bg-gray-100 px-2 py-1 rounded">package:remove-module</code>, <code class="bg-gray-100 px-2 py-1 rounded">package:list-modules</code>, <code class="bg-gray-100 px-2 py-1 rounded">package:install-project</code></li>
+                            <li><strong>ForgeDatabaseSQL:</strong> <code class="bg-gray-100 px-2 py-1 rounded">migrate</code>, <code class="bg-gray-100 px-2 py-1 rounded">migrate:rollback</code>, <code class="bg-gray-100 px-2 py-1 rounded">seed</code>, <code class="bg-gray-100 px-2 py-1 rounded">seed:rollback</code></li>
+                            <li><strong>ForgeTesting:</strong> <code class="bg-gray-100 px-2 py-1 rounded">test</code></li>
+                            <li><strong>ForgeStorage:</strong> <code class="bg-gray-100 px-2 py-1 rounded">storage:*</code> commands</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Module commands are placed in <code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Commands/</code> and follow the same structure as app commands.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Available Traits</h3>
+                        <p class="text-gray-600 mb-4">
+                            Commands can use various traits to add functionality:
+                        </p>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">OutputHelper</h4>
+                        <p class="text-gray-600 mb-4">
+                            Included in the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base class. Provides colored output methods:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">info($message)</code> — Blue informational messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">error($message)</code> — Red error messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">warning($message)</code> — Yellow warning messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">success($message)</code> — Green success messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">comment($message)</code> — Yellow comment messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">debug($message)</code> — Magenta debug messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">line($message)</code> — Simple line output</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">log($message, $context)</code> — Timestamped logging</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">table($headers, $rows)</code> — Display tabular data</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">array($data, $title)</code> — Display array data</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">clearScreen()</code> — Clear terminal screen</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Wizard</h4>
+                        <p class="text-gray-600 mb-4">
+                            Provides interactive prompts for missing required arguments. Automatically prompts users when arguments are not provided via command line:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wizard($args)</code> — Automatically prompts for missing required arguments</li>
+                            <li>Uses <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attributes to determine what to prompt</li>
+                            <li>Validates input based on <code class="bg-gray-100 px-2 py-1 rounded">validate</code> parameter in <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code></li>
+                            <li>Supports default values — if a default is provided and user presses Enter, the default is used</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+// In your execute() method
+public function execute(array $args): int
+{
+    $this->wizard($args);  // Prompts for any missing required arguments
+    
+    // Your command logic here
+    return 0;
+}</code></pre>
+                        </div>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">CliGenerator</h4>
+                        <p class="text-gray-600 mb-4">
+                            Used by code generation commands (all <code class="bg-gray-100 px-2 py-1 rounded">generate:*</code> commands). Provides methods for generating files from stub templates:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">generateFromStub($stub, $targetPath, $tokens, $force)</code> — Generate files from stub templates</li>
+                            <li>Helper methods for resolving paths: <code class="bg-gray-100 px-2 py-1 rounded">controllerPath()</code>, <code class="bg-gray-100 px-2 py-1 rounded">modelPath()</code>, <code class="bg-gray-100 px-2 py-1 rounded">migrationPath()</code>, etc.</li>
+                            <li>Helper methods for resolving namespaces: <code class="bg-gray-100 px-2 py-1 rounded">controllerNamespace()</code>, <code class="bg-gray-100 px-2 py-1 rounded">modelNamespace()</code>, etc.</li>
+                            <li>Automatically handles app vs module scope</li>
+                            <li>Creates parent directories if they don't exist</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">StringHelper</h4>
+                        <p class="text-gray-600 mb-4">
+                            Provides string transformation methods useful for code generation and formatting:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toCamelCase($string)</code> — Convert to camelCase</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toPascalCase($string)</code> — Convert to PascalCase</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toSnakeCase($string)</code> — Convert to snake_case</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toKebabCase($string)</code> — Convert to kebab-case</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toTitleCase($string)</code> — Convert to Title Case</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">isCamelCase($string)</code>, <code class="bg-gray-100 px-2 py-1 rounded">isPascalCase($string)</code>, etc. — Validation methods</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">truncate($string, $length, $suffix)</code> — Truncate strings</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">slugify($string)</code> — Create URL-friendly slugs</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">CommandOptionTrait</h4>
+                        <p class="text-gray-600 mb-4">
+                            Included in the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base class. Provides methods for parsing command-line arguments:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">option($name, $args)</code> — Get option value (e.g., <code class="bg-gray-100 px-2 py-1 rounded">--option=value</code>)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">flag($name, $args)</code> — Check if flag is present (e.g., <code class="bg-gray-100 px-2 py-1 rounded">--flag</code>)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">argument($name, $args)</code> — Get argument value (legacy method, prefer <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attributes)</li>
+                        </ul>
                     </section>
                 </div>
             </div>
