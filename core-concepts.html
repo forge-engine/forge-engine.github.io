@@ -848,11 +848,46 @@ $flashMessages = Flash::flat() ?? [];
                     <section id="database-orm">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Database & ORM (Capabilities)</h2>
                         <p class="text-gray-600 mb-4">
-                        Database and ORM are <strong>not built into the kernel</strong>. They're capabilities you install when you need them. Install a database capability like <code>ForgeDatabaseSQL</code> or an ORM capability like <code>ForgeSqlOrm</code>.
+                        Database and ORM are <strong>not built into the kernel</strong>. They're capabilities you install when you need them. Install a database capability like <code class="bg-gray-100 px-2 py-1 rounded">ForgeDatabaseSQL</code> or an ORM capability like <code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code>.
                     </p>
                         <p class="text-gray-600 mb-4">
-                        <strong>Note:</strong> The examples below assume you've installed a database/ORM capability. The kernel itself doesn't include these features.
+                        Forge provides <strong>three ways to work with data</strong>:
                     </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Raw SQL Queries:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> or <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code> directly, even without installing an ORM capability. This is available through the kernel's database contracts.</li>
+                            <li><strong>Query Builder:</strong> Use the fluent query builder interface for type-safe database operations.</li>
+                            <li><strong>ORM:</strong> Use the ForgeSqlOrm capability for attribute-based models and relationships.</li>
+                        </ol>
+                        <p class="text-gray-600 mb-4">
+                        <strong>Note:</strong> The ORM examples below assume you've installed the <code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code> capability. Raw queries and query builder are available through the kernel's database contracts.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Raw SQL Queries</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can use raw SQL queries without installing any ORM capability. The kernel provides <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> and <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code> for direct database access. This is how migrations work internally.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+use Forge\Core\Contracts\Database\QueryBuilderInterface;
+use Forge\Core\Contracts\Database\DatabaseConnectionInterface;
+use Forge\Core\DI\Container;
+
+// Using QueryBuilderInterface
+$queryBuilder = Container::getInstance()->get(QueryBuilderInterface::class);
+$results = $queryBuilder->table('users')
+    ->where('status', '=', 'active')
+    ->get();
+
+// Using DatabaseConnectionInterface for raw SQL
+$connection = Container::getInstance()->get(DatabaseConnectionInterface::class);
+$stmt = $connection->prepare('SELECT * FROM users WHERE status = :status');
+$stmt->execute(['status' => 'active']);
+$results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+// Execute raw SQL
+$queryBuilder->execute('CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY, title TEXT)');</code></pre>
+                        </div>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Model Definition</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
@@ -956,6 +991,13 @@ $posts = $user->load('posts');</code></pre>
                     </div>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Capability Class</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">#[Module]</code> attribute supports several options to control module behavior:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">core: true</code> — Module won't be auto-loaded. You must wire it manually in your bootstrap or service providers.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">isCli: true</code> — Module won't be loaded in web context. Only loaded when running CLI commands.</li>
+                        </ul>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
 
@@ -965,6 +1007,9 @@ use Forge\Core\DI\Container;
 use Forge\Core\Module\Attributes\Compatibility;
 use Forge\Core\Module\Attributes\Module;
 use Forge\Core\Module\Attributes\Repository;
+use Forge\Core\Module\Attributes\ConfigDefaults;
+use Forge\Core\Module\Attributes\PostInstall;
+use Forge\Core\Module\Attributes\PostUninstall;
 use Forge\Core\DI\Attributes\Service;
 use Forge\Core\Module\Attributes\LifecycleHook;
 use Forge\Core\Module\LifecycleHookName;
@@ -974,11 +1019,21 @@ use App\Modules\MyModule\Services\MyModuleService;
 #[Module(
     name: 'MyModule',
     description: 'A custom module for my application',
-    order: 100
+    order: 100,
+    core: false,  // Set to true to disable auto-loading
+    isCli: false  // Set to true to only load in CLI context
 )]
 #[Service]
 #[Compatibility(kernel: '>=0.1.0', php: '>=8.3')]
 #[Repository(type: 'git', url: 'https://github.com/your-repo/modules')]
+#[ConfigDefaults(defaults: [
+    'my_module' => [
+        'enabled' => true,
+        'default_option' => 'value'
+    ]
+])]
+#[PostInstall(command: 'migrate', args: ['--type=module', '--module=my-module'])]
+#[PostUninstall(command: 'migrate:rollback', args: ['--type=module', '--module=my-module'])]
 final class MyModule
 {
     public function register(Container $container): void
@@ -993,7 +1048,53 @@ final class MyModule
         // Boot logic after module registration
     }
 }</code></pre>
-                    </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Configuration Defaults</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">#[ConfigDefaults]</code> attribute allows you to define default configuration values directly in your module class, eliminating the need for a separate <code class="bg-gray-100 px-2 py-1 rounded">config/</code> folder and config file.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            You can still override these defaults by creating a config file in <code class="bg-gray-100 px-2 py-1 rounded">/config/</code> (e.g., <code class="bg-gray-100 px-2 py-1 rounded">config/my_module.php</code>). When loading configuration in your module, you need to explicitly define that the config can be overridden from the <code class="bg-gray-100 px-2 py-1 rounded">/config/</code> directory.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+#[ConfigDefaults(defaults: [
+    'my_module' => [
+        'enabled' => true,
+        'default_option' => 'value',
+        'nested' => [
+            'setting' => 'default'
+        ]
+    ]
+])]
+class MyModule
+{
+    // Config defaults are automatically available
+    // Can be overridden in config/my_module.php
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Post-Install and Post-Uninstall Hooks</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">#[PostInstall]</code> and <code class="bg-gray-100 px-2 py-1 rounded">#[PostUninstall]</code> attributes to automatically run CLI commands after a module is installed or removed. This is useful for running migrations, linking assets, seeding data, or performing other setup/cleanup tasks.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+#[PostInstall(command: 'migrate', args: ['--type=module', '--module=my-module'])]
+#[PostInstall(command: 'asset:link', args: ['--type=module', '--module=my-module'])]
+#[PostUninstall(command: 'migrate:rollback', args: ['--type=module', '--module=my-module'])]
+#[PostUninstall(command: 'asset:unlink', args: ['--type=module', '--module=my-module'])]
+class MyModule
+{
+    // Commands run automatically after install/uninstall
+}</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            You can specify multiple <code class="bg-gray-100 px-2 py-1 rounded">#[PostInstall]</code> or <code class="bg-gray-100 px-2 py-1 rounded">#[PostUninstall]</code> attributes. Commands are executed in the order they appear on the class.
+                        </p>
                 </section>
 
                     <section id="configuration">
