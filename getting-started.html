@@ -312,12 +312,38 @@ SESSION_LIFETIME=1440</code></pre>
                     <section id="first-controller" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Creating Your First Controller</h2>
                         <p class="text-gray-600 mb-4">
-                            Let's create a simple controller to handle HTTP requests:
+                            Most Forge commands use interactive wizards by default. Let's create a simple controller to handle HTTP requests:
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Using the Wizard</h3>
+                        <p class="text-gray-600 mb-4">
+                            Run the command without arguments to start the interactive wizard:
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Generate a new controller
-php forge.php generate:controller WelcomeController</code></pre>
+                            <pre><code class="language-bash"># Run wizard (interactive)
+php forge.php generate:controller
+
+# The wizard will ask:
+# Type (app or module): app
+# Name (Controller class name without suffix): Welcome
+# Path (Optional subfolder inside Controllers): [press Enter for none]</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Skipping the Wizard</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can skip the wizard by providing options directly:
+                        </p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Skip wizard for app scope
+php forge.php generate:controller --type=app --name=Welcome
+
+# Skip wizard for module scope
+php forge.php generate:controller --type=module --module=Blog --name=Post
+
+# With optional subfolder path
+php forge.php generate:controller --type=app --name=User --path=Admin</code></pre>
                         </div>
 
                         <p class="text-gray-600 mb-4">
@@ -361,7 +387,24 @@ final class WelcomeController
                     <section id="services" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Services & Dependency Injection</h2>
                         <p class="text-gray-600 mb-4">
-                            Forge uses attributes for dependency injection. Services are just PHP classes with the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute.
+                            Forge uses attributes for dependency injection. Services are automatically discovered from specific directories when they have the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Service Discovery</h3>
+                        <p class="text-gray-600 mb-4">
+                            Services are automatically discovered at bootstrap from these directories:
+                        </p>
+
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Services/</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Repositories/</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Middlewares/</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Events/</code></li>
+                            <li>Same structure in modules: <code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Services/</code>, etc.</li>
+                        </ul>
+
+                        <p class="text-gray-600 mb-4">
+                            <strong>Important:</strong> Services must be placed in these proper directories and have the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute to be automatically discovered. This applies to both app and module (capability) services.
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
@@ -382,6 +425,7 @@ class UserService
 }</code></pre>
                         </div>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Using Services</h3>
                         <p class="text-gray-600 mb-4">
                             Use services in controllers by adding them to the constructor:
                         </p>
@@ -411,8 +455,17 @@ class UserController
 }</code></pre>
                         </div>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Service Discovery Cache</h3>
                         <p class="text-gray-600 mb-4">
-                            <strong>Note:</strong> Services are automatically resolved by the container. Just add them to your constructor and they'll be injected.
+                            Service discovery happens once at bootstrap and uses a class map cache for performance. The cache is automatically updated when files change. If you add a new service with <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> and it's not being discovered, clear the cache:
+                        </p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php cache:flush</code></pre>
+                        </div>
+
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> Services are automatically resolved by the container. Just add them to your constructor and they'll be injected. The discovery process has no performance trade-off since it uses class mapping and only updates entries when files change.
                         </p>
                     </section>
 
@@ -422,18 +475,13 @@ class UserController
                             Forge uses attribute-based routing. Define routes directly on your controller methods:
                         </p>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Basic Routes</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
 #[Route("/")]
 public function home(): Response
 {
     return $this->view("pages/home");
-}
-
-#[Route("/users/{id}")]
-public function showUser(Request $request, int $id): Response
-{
-    return $this->json(["user_id" => $id]);
 }
 
 #[Route("/api/posts", method: "POST")]
@@ -458,6 +506,58 @@ class WebController
 }</code></pre>
                         </div>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Route Parameters</h3>
+                        <p class="text-gray-600 mb-4">
+                            Routes support parameters that are automatically extracted and type-cast based on your method signature:
+                        </p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+// Basic parameter - automatically cast to int
+#[Route("/users/{id}")]
+public function showUser(Request $request, int $id): Response
+{
+    // $id is automatically cast to int
+    return $this->json(["user_id" => $id]);
+}
+
+// Multiple parameters
+#[Route("/posts/{year}/{month}/{slug}")]
+public function showPost(int $year, int $month, string $slug): Response
+{
+    return $this->json([
+        "year" => $year,
+        "month" => $month,
+        "slug" => $slug
+    ]);
+}
+
+// Complex parameter with constraint - matches anything including slashes
+#[Route("/files/{path:.+}")]
+public function serveFile(string $path): Response
+{
+    // {path:.+} matches any path including slashes (e.g., /files/docs/user-guide.pdf)
+    return $this->file($path);
+}
+
+// Mix Request object with route parameters
+#[Route("/users/{id}/posts/{postId}")]
+public function showUserPost(Request $request, int $id, int $postId): Response
+{
+    // Both $id and $postId are extracted from the route
+    // $request is injected automatically
+    return $this->json([
+        "user_id" => $id,
+        "post_id" => $postId,
+        "query" => $request->query("filter")
+    ]);
+}</code></pre>
+                        </div>
+
+                        <p class="text-gray-600 mb-4">
+                            <strong>Parameter Constraints:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">{param:.+}</code> to match any path including slashes. Route parameters are automatically type-cast (int, float, bool) based on your method signature types.
+                        </p>
+
                         <p class="text-gray-600 mb-4">
                             <strong>Note:</strong> The <code class="bg-gray-100 px-2 py-1 rounded">method</code> parameter accepts a single HTTP method as a string (e.g., "GET", "POST", "PUT", "DELETE"), not an array.
                         </p>
@@ -470,14 +570,31 @@ class WebController
                     <section id="views-templates" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Views & Templates</h2>
                         <p class="text-gray-600 mb-4">
-                            Forge uses PHP-first templating. Create views in <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/</code>:
+                            Forge uses PHP-first templating. Views can be created in your app or within modules (capabilities).
                         </p>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">View Locations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>App scope:</strong> <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/</code></li>
+                            <li><strong>Module scope:</strong> <code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Resources/views/</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Layout Locations</h3>
+                        <p class="text-gray-600 mb-4">
+                            Layouts are expected to be in:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>App scope:</strong> <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/layouts/</code></li>
+                            <li><strong>Module scope:</strong> <code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Resources/views/layouts/</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Using Views</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;!-- app/resources/views/pages/welcome/index.php --&gt;
 &lt;?php
 use Forge\Core\View\View;
 
+// Load layout from app
 View::layout(name: "layouts/app", loadFromModule: false);
 ?&gt;
 
@@ -492,11 +609,25 @@ View::layout(name: "layouts/app", loadFromModule: false);
                         </div>
 
                         <p class="text-gray-600 mb-4">
-                            Create a layout file:
+                            To load a layout from a module (like ForgeUi):
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+                            <pre><code class="language-php">&lt;?php
+use Forge\Core\View\View;
+
+// Load layout from module
+View::layout(name: "layouts/app", loadFromModule: true, moduleName: "ForgeUi");</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Creating Layouts</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create a layout file in your app:
+                        </p>
+
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html">&lt;!-- app/resources/views/layouts/app.php --&gt;
+&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -511,6 +642,10 @@ View::layout(name: "layouts/app", loadFromModule: false);
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
                         </div>
+
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> See the <code class="bg-gray-100 px-2 py-1 rounded">ForgeUi</code> module for reference on module folder structure and component organization.
+                        </p>
                     </section>
 
                     <section id="database" class="section-anchor mb-12">
@@ -606,44 +741,77 @@ php forge.php dev:registry:init             # Initialize new registry</code></pr
                     <section id="cli-commands" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Commands</h2>
                         <p class="text-gray-600 mb-4">
-                            Some commands to help you work:
+                            Most commands use interactive wizards by default. You can skip wizards by providing options with <code class="bg-gray-100 px-2 py-1 rounded">--option=value</code> flags.
                         </p>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Generate Commands</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Generate files
-php forge.php generate:controller UserController
-php forge.php generate:middleware AuthMiddleware
-php forge.php generate:migration CreatePostsTable
-php forge.php generate:module BlogModule
+                            <pre><code class="language-bash"># Generate files (wizards ask for type: app/module, name, etc.)
+php forge.php generate:controller
+php forge.php generate:middleware
+php forge.php generate:migration
+php forge.php generate:model
+php forge.php generate:service
+php forge.php generate:component
 
-# Database operations
-php forge.php db:migrate
-php forge.php db:migrate:rollback
+# Skip wizards with options
+php forge.php generate:controller --type=app --name=User
+php forge.php generate:controller --type=module --module=Blog --name=Post
 
-# Development server
-php forge.php serve
+# Generate test (wizard can ask for type: app/module/engine)
+php forge.php generate:test
+php forge.php generate:test --type=app --group=example
+php forge.php generate:test --type=module --module=Blog --group=example
+# Note: engine scope is for testing the kernel itself</code></pre>
+                        </div>
 
-# Cache management
-php forge.php cache:clear
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Database Operations</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php db:migrate
+php forge.php db:migrate:rollback</code></pre>
+                        </div>
 
-# Application maintenance
-php forge.php down
-php forge.php up
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Development Server</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php serve</code></pre>
+                        </div>
 
-# Generate application key
-php forge.php key:generate
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Cache Management</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php cache:clear
+php forge.php cache:flush  # Flush service discovery cache</code></pre>
+                        </div>
 
-# Package management (ForgePackageManager)
-# Commands use wizards by default, use --module= to skip wizard
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Application Maintenance</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php down
+php forge.php up</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Package Management</h3>
+                        <p class="text-gray-600 mb-4">
+                            Package management commands use wizards by default. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># With wizard (interactive)
+php forge.php package:install-module
+php forge.php package:remove-module
+
+# Skip wizard
 php forge.php package:install-module --module=ForgeAuth
 php forge.php package:install-module --module=ForgeAuth@1.2.0
 php forge.php package:remove-module --module=ForgeAuth
 php forge.php package:list-modules</code></pre>
                         </div>
 
-                        <p class="text-gray-600 mb-4">
-                            Run <code class="bg-gray-100 px-2 py-1 rounded">php forge.php help</code> to see all available commands.
-                        </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Other Commands</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Generate application key
+php forge.php key:generate
+
+# See all available commands
+php forge.php help</code></pre>
+                        </div>
                     </section>
 
                     <section id="next-steps" class="section-anchor mb-12">
