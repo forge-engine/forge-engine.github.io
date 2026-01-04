@@ -848,90 +848,311 @@ $flashMessages = Flash::flat() ?? [];
                     <section id="database-orm">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Database & ORM (Capabilities)</h2>
                         <p class="text-gray-600 mb-4">
-                        Database and ORM are <strong>not built into the kernel</strong>. They're capabilities you install when you need them. Install a database capability like <code class="bg-gray-100 px-2 py-1 rounded">ForgeDatabaseSQL</code> or an ORM capability like <code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code>.
+                        Database and ORM are <strong>not built into the kernel</strong>. They're capabilities you install when you need them. The kernel provides <strong>contracts (interfaces)</strong> for database operations, but these contracts must be implemented by a module.
                     </p>
+                        <p class="text-gray-600 mb-4">
+                        <strong>Important:</strong> The kernel provides <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code> and <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> contracts, but they won't work unless you install a module that implements them. For example:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">ForgeDatabaseSQL</code> implements <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code> implements <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code></li>
+                            <li>You can also create your own module that implements these contracts</li>
+                        </ul>
                         <p class="text-gray-600 mb-4">
                         Forge provides <strong>three ways to work with data</strong>:
-                    </p>
+                        </p>
                         <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
-                            <li><strong>Raw SQL Queries:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> or <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code> directly, even without installing an ORM capability. This is available through the kernel's database contracts.</li>
-                            <li><strong>Query Builder:</strong> Use the fluent query builder interface for type-safe database operations.</li>
+                            <li><strong>Raw SQL Queries:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code> (requires ForgeDatabaseSQL) or <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> (requires ForgeSqlOrm) for direct database access.</li>
+                            <li><strong>Query Builder:</strong> Use the fluent query builder interface for type-safe database operations (requires ForgeSqlOrm).</li>
                             <li><strong>ORM:</strong> Use the ForgeSqlOrm capability for attribute-based models and relationships.</li>
                         </ol>
-                        <p class="text-gray-600 mb-4">
-                        <strong>Note:</strong> The ORM examples below assume you've installed the <code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code> capability. Raw queries and query builder are available through the kernel's database contracts.
-                        </p>
 
-                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Raw SQL Queries</h3>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Raw SQL Queries with DatabaseConnectionInterface</h3>
                         <p class="text-gray-600 mb-4">
-                            You can use raw SQL queries without installing any ORM capability. The kernel provides <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> and <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code> for direct database access. This is how migrations work internally.
+                            When using <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code>, you have direct access to PDO methods. This requires the <code class="bg-gray-100 px-2 py-1 rounded">ForgeDatabaseSQL</code> module to be installed.
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
 
-use Forge\Core\Contracts\Database\QueryBuilderInterface;
 use Forge\Core\Contracts\Database\DatabaseConnectionInterface;
-use Forge\Core\DI\Container;
 
-// Using QueryBuilderInterface
-$queryBuilder = Container::getInstance()->get(QueryBuilderInterface::class);
-$results = $queryBuilder->table('users')
-    ->where('status', '=', 'active')
-    ->get();
+class MyController
+{
+    public function __construct(
+        private readonly DatabaseConnectionInterface $connection
+    ) {}
 
-// Using DatabaseConnectionInterface for raw SQL
-$connection = Container::getInstance()->get(DatabaseConnectionInterface::class);
-$stmt = $connection->prepare('SELECT * FROM users WHERE status = :status');
-$stmt->execute(['status' => 'active']);
-$results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    // Execute raw SQL (DDL statements)
+    public function createTable(): void
+    {
+        $this->connection->exec(
+            "CREATE TABLE IF NOT EXISTS example_table (id INTEGER PRIMARY KEY, name TEXT)"
+        );
+    }
 
-// Execute raw SQL
-$queryBuilder->execute('CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY, title TEXT)');</code></pre>
+    // Query with prepared statements
+    public function findUser(int $id): array
+    {
+        $stmt = $this->connection->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // Simple query (no parameters)
+    public function getAllUsers(): array
+    {
+        $stmt = $this->connection->query("SELECT * FROM users LIMIT 5");
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Raw SQL Queries with QueryBuilderInterface</h3>
+                        <p class="text-gray-600 mb-4">
+                            When using <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code>, you can use raw SQL methods or combine them with the query builder. This requires the <code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code> module to be installed.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+use App\Modules\ForgeSqlOrm\ORM\QueryBuilder;
+
+class MyController
+{
+    public function __construct(
+        private readonly QueryBuilder $builder
+    ) {}
+
+    // Raw SQL query
+    public function rawQuery(): array
+    {
+        return $this->builder->raw(
+            "SELECT * FROM users WHERE status = :status",
+            [':status' => 'active']
+        );
+    }
+
+    // WhereRaw with query builder
+    public function whereRawExample(): array
+    {
+        return $this->builder
+            ->table('users')
+            ->whereRaw('status = :status', [':status' => 'active'])
+            ->get();
+    }
+
+    // Combined: query builder + raw SQL
+    public function combinedExample(): array
+    {
+        return $this->builder
+            ->table('users')
+            ->select('id', 'email', 'identifier')
+            ->where('status', '=', 'active')
+            ->whereRaw('identifier IS NOT NULL', [])
+            ->orderBy('created_at', 'DESC')
+            ->limit(10)
+            ->get();
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Transactions</h3>
+                        <p class="text-gray-600 mb-4">
+                            Both interfaces support database transactions. Here are examples of commit and rollback operations:
+                        </p>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Transactions with DatabaseConnectionInterface</h4>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+// Transaction with commit
+public function transactionCommit(): array
+{
+    $this->connection->beginTransaction();
+    try {
+        $stmt = $this->connection->prepare("INSERT INTO example_table (name) VALUES (:name)");
+        $stmt->execute([':name' => 'transaction_test_commit']);
+        $this->connection->commit();
+        return ['status' => 'committed', 'message' => 'Transaction committed successfully'];
+    } catch (\Exception $e) {
+        $this->connection->rollBack();
+        return ['status' => 'error', 'message' => $e->getMessage()];
+    }
+}
+
+// Transaction with rollback
+public function transactionRollback(): array
+{
+    $this->connection->beginTransaction();
+    try {
+        $stmt = $this->connection->prepare("INSERT INTO example_table (name) VALUES (:name)");
+        $stmt->execute([':name' => 'transaction_test_rollback']);
+        throw new \Exception('Simulated error to trigger rollback');
+    } catch (\Exception $e) {
+        $this->connection->rollBack();
+        return ['status' => 'rolled_back', 'message' => 'Transaction rolled back successfully'];
+    }
+}</code></pre>
+                        </div>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Transactions with QueryBuilderInterface</h4>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+// Transaction with commit
+public function transactionCommit(): array
+{
+    try {
+        $this->builder->beginTransaction();
+        $id = $this->builder->table('example_table')->insert(['name' => 'orm_transaction_commit']);
+        $this->builder->commit();
+        return ['status' => 'committed', 'inserted_id' => $id];
+    } catch (\Exception $e) {
+        $this->builder->rollback();
+        return ['status' => 'error', 'message' => $e->getMessage()];
+    }
+}
+
+// Transaction with rollback
+public function transactionRollback(): array
+{
+    try {
+        $this->builder->beginTransaction();
+        $this->builder->table('example_table')->insert(['name' => 'orm_transaction_rollback']);
+        throw new \Exception('Simulated error to trigger rollback');
+        $this->builder->commit();
+    } catch (\Exception $e) {
+        $this->builder->rollback();
+        return ['status' => 'rolled_back', 'message' => 'Transaction rolled back successfully'];
+    }
+}</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Model Definition</h3>
+                        <p class="text-gray-600 mb-4">
+                            Models extend the <code class="bg-gray-100 px-2 py-1 rounded">Model</code> base class and use attributes to define table structure, columns, and relationships. You can also use traits to add common functionality.
+                        </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
 
 use App\Modules\ForgeSqlOrm\ORM\Model;
 use App\Modules\ForgeSqlOrm\ORM\Attributes\Table;
 use App\Modules\ForgeSqlOrm\ORM\Attributes\Column;
-use App\Modules\ForgeSqlOrm\ORM\Attributes\Hidden;
 use App\Modules\ForgeSqlOrm\ORM\Attributes\ProtectedFields;
 use App\Modules\ForgeSqlOrm\ORM\Values\Cast;
 use App\Modules\ForgeSqlOrm\ORM\Values\Relate;
+use App\Modules\ForgeSqlOrm\ORM\Values\Relation;
 use App\Modules\ForgeSqlOrm\ORM\Values\RelationKind;
+use App\Modules\ForgeSqlOrm\Traits\HasTimeStamps;
+use App\Modules\ForgeSqlOrm\Traits\HasMetaData;
+use App\Modules\ForgeSqlOrm\ORM\CanLoadRelations;
 
 #[Table('users')]
-#[ProtectedFields('password', 'remember_token')]
+#[ProtectedFields(['password'])]
 class User extends Model
 {
-    #[Column(primary: true, cast: Cast::INTEGER)]
+    use HasTimeStamps;  // Adds created_at and updated_at columns
+    use CanLoadRelations;  // Enables relationship loading methods
+    use HasMetaData;  // Adds metadata column for JSON data
+
+    #[Column(primary: true, cast: Cast::INT)]
     public int $id;
-    
+
     #[Column(cast: Cast::STRING)]
-    public string $name;
-    
+    public string $status;
+
+    #[Column(cast: Cast::STRING)]
+    public string $identifier;
+
     #[Column(cast: Cast::STRING)]
     public string $email;
-    
+
     #[Column(cast: Cast::STRING)]
-    #[Hidden]
     public string $password;
-    
+
+    #[Column(cast: Cast::JSON)]
+    public ?UserMetadataDto $metadata;  // Uses HasMetaData trait
+
     // Relationships use #[Relate] attribute
-    #[Relate(
-        kind: RelationKind::HasMany,
-        target: Post::class,
-        foreignKey: 'user_id',
-        localKey: 'id'
-    )]
-    public function posts()
+    #[Relate(RelationKind::HasOne, Profile::class, "user_id")]
+    public function profile(): Relation
     {
-        return $this->relation('posts');
+        return self::describe(__FUNCTION__);
     }
 }</code></pre>
-                    </div>
+                        </div>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Available Traits</h4>
+                        <p class="text-gray-600 mb-4">
+                            ForgeSqlOrm provides several traits to add common functionality to your models:
+                        </p>
+
+                        <h5 class="text-lg font-semibold mb-3 text-gray-900">HasTimeStamps</h5>
+                        <p class="text-gray-600 mb-4">
+                            Automatically adds <code class="bg-gray-100 px-2 py-1 rounded">created_at</code> and <code class="bg-gray-100 px-2 py-1 rounded">updated_at</code> timestamp columns to your model. These are automatically managed by the ORM when creating or updating records.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+use App\Modules\ForgeSqlOrm\Traits\HasTimeStamps;
+
+class User extends Model
+{
+    use HasTimeStamps;
+    
+    // Automatically adds:
+    // public ?DateTimeImmutable $created_at = null;
+    // public ?DateTimeImmutable $updated_at = null;
+}</code></pre>
+                        </div>
+
+                        <h5 class="text-lg font-semibold mb-3 text-gray-900">HasMetaData</h5>
+                        <p class="text-gray-600 mb-4">
+                            Adds a <code class="bg-gray-100 px-2 py-1 rounded">metadata</code> column for storing JSON data. Useful for flexible, schema-less data that doesn't need its own table.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+use App\Modules\ForgeSqlOrm\Traits\HasMetaData;
+
+class User extends Model
+{
+    use HasMetaData;
+    
+    // Automatically adds:
+    // public ?array $metadata = null;
+    
+    // Usage:
+    // $user->metadata = ['preferences' => ['theme' => 'dark']];
+    // $user->save();
+}</code></pre>
+                        </div>
+
+                        <h5 class="text-lg font-semibold mb-3 text-gray-900">CanLoadRelations</h5>
+                        <p class="text-gray-600 mb-4">
+                            Provides methods for loading and working with relationships. This trait is already included in the <code class="bg-gray-100 px-2 py-1 rounded">Model</code> base class, but you can use it explicitly if needed.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Key methods:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">with(string ...$paths)</code> — Eager load relationships when querying</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">load(string ...$relations)</code> — Lazy load relationships on an existing model instance</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">relation(string $name)</code> — Get a query builder for a relationship</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">describe(string $method)</code> — Get relationship metadata</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+
+// Eager loading relationships
+$user = User::with('profile')->id(1)->first();
+
+// Lazy loading relationships
+$user = User::query()->id(1)->first();
+$user->load('profile');
+
+// Using relation() to build queries
+$posts = $user->relation('posts')->where('status', '=', 'published')->get();</code></pre>
+                        </div>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Query Builder</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
@@ -953,18 +1174,25 @@ $users = User::query()
     ->where('created_at', '>', '2024-01-01')
     ->get();
 
-// With relationships
+// Eager load relationships (using with() static method)
+$user = User::with('profile', 'posts')->id(1)->first();
+
+// Or using query builder with with()
 $user = User::query()
-    ->with('posts')
+    ->with('profile', 'posts')
     ->id(1)
     ->first();
 
-// Access relationship
-$posts = $user->load('posts');</code></pre>
+// Lazy load relationships on existing instance
+$user = User::query()->id(1)->first();
+$user->load('profile', 'posts');
+
+// Access relationship using relation() method
+$posts = $user->relation('posts')->where('status', '=', 'published')->get();</code></pre>
                     </div>
                         <p class="text-gray-600 mb-4">
-                        <strong>Note:</strong> Forge uses a query builder pattern. Always start with <code>Model::query()</code> to build queries. There are no static methods like <code>all()</code> or <code>find()</code> directly on the Model class.
-                    </p>
+                        <strong>Note:</strong> Forge uses a query builder pattern. Always start with <code class="bg-gray-100 px-2 py-1 rounded">Model::query()</code> to build queries. There are no static methods like <code class="bg-gray-100 px-2 py-1 rounded">all()</code> or <code class="bg-gray-100 px-2 py-1 rounded">find()</code> directly on the Model class. Use <code class="bg-gray-100 px-2 py-1 rounded">with()</code> for eager loading relationships, or <code class="bg-gray-100 px-2 py-1 rounded">load()</code> for lazy loading on existing instances.
+                        </p>
                 </section>
 
                     <section id="capability-system">
