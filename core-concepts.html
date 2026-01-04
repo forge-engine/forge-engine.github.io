@@ -267,6 +267,21 @@
                         Forge's DI container is like a smart warehouse manager. It knows where everything is stored, gets you what you need when you ask, and manages dependencies automatically. It resolves dependencies using PHP attributes, keeping code testable and clean.
                     </p>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Service Discovery</h3>
+                        <p class="text-gray-600 mb-4">
+                            Services with the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute are automatically discovered from specific directories:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Services/</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Repositories/</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Middlewares/</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Events/</code></li>
+                            <li>Same structure in modules: <code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Services/</code>, etc.</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Service discovery happens once at bootstrap and uses a class map cache for performance. If you add a new service and it's not being discovered, clear the cache with <code class="bg-gray-100 px-2 py-1 rounded">php forge.php cache:flush</code>.
+                        </p>
+
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Service Registration</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
@@ -302,28 +317,35 @@ class CacheService
                     </div>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Interface Binding</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can bind interfaces to implementations using the container's <code class="bg-gray-100 px-2 py-1 rounded">bind()</code> method. In modules, this is typically done in the module's <code class="bg-gray-100 px-2 py-1 rounded">register()</code> method.
+                        </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
+// In a module's register() method
+namespace App\Modules\ForgeAuth;
 
-use Forge\Core\DI\Attributes\Bind;
+use Forge\Core\DI\Container;
+use App\Modules\ForgeAuth\Contracts\ForgeAuthInterface;
+use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeAuth\Contracts\UserRepositoryInterface;
+use App\Modules\ForgeAuth\Repositories\UserRepository;
 
-interface PaymentGatewayInterface
+public function register(Container $container): void
 {
-    public function charge(float $amount): bool;
-}
-
-#[Service]
-#[Bind(PaymentGatewayInterface::class)]
-class StripePaymentGateway implements PaymentGatewayInterface
-{
-    public function charge(float $amount): bool
-    {
-        // Stripe implementation
-        return true;
-    }
+    // Bind interface to implementation
+    $container->bind(ForgeAuthInterface::class, ForgeAuthService::class);
+    
+    // Bind with closure for complex dependencies
+    $container->bind(UserRepositoryInterface::class, function ($container) {
+        return new UserRepository($container->get(QueryCache::class));
+    });
 }</code></pre>
-                    </div>
-                </section>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> There is no <code class="bg-gray-100 px-2 py-1 rounded">#[Bind]</code> attribute. Interface binding is done programmatically in the container, typically in module registration or service providers.
+                        </p>
+                    </section>
 
                     <section id="routing-system">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Routing System</h2>
@@ -381,6 +403,73 @@ class ApiController
                         <p class="text-gray-600 mb-4">
                         Filter HTTP requests before they hit your application.
                     </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Built-in Middleware</h3>
+                        <p class="text-gray-600 mb-4">
+                            The engine comes with a comprehensive set of middleware organized into groups:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Global group:</strong>
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">SessionMiddleware</code> (order: 0)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">RateLimitMiddleware</code> (order: 0)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">CircuitBreakerMiddleware</code> (order: 1)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">CorsMiddleware</code> (order: 2)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">SanitizeInputMiddleware</code> (order: 3, enabled: false by default)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">CompressionMiddleware</code> (order: 4)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Web group:</strong>
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">CsrfMiddleware</code> (order: 1)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">RelaxSecurityHeadersMiddleware</code> (order: 3)</li>
+                                </ul>
+                            </li>
+                            <li><strong>API group:</strong>
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">IpWhiteListMiddleware</code> (order: 0)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">ApiKeyMiddleware</code> (order: 1)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">ApiMiddleware</code> (order: 2)</li>
+                                    <li><code class="bg-gray-100 px-2 py-1 rounded">CookieMiddleware</code> (order: 2)</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Middleware Configuration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Configure middleware groups, order, and overrides in <code class="bg-gray-100 px-2 py-1 rounded">config/middleware.php</code>:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+// config/middleware.php
+return [
+    'global' => [
+        // Add your own middleware to global group
+        \App\Middlewares\CustomMiddleware::class,
+    ],
+    'web' => [
+        // Override order or add middleware to web group
+        \App\Middlewares\CustomWebMiddleware::class,
+    ],
+    'api' => [
+        // Create custom API middleware groups
+        \App\Middlewares\ApiAuthMiddleware::class,
+    ],
+    'api-auth' => [
+        // Create new middleware groups
+        App\Modules\ForgeAuth\Middlewares\ApiJwtMiddleware::class,
+    ]
+];</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            You can:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Create new middleware groups:</strong> Add new keys to the array</li>
+                            <li><strong>Override order:</strong> Change the order of built-in middleware by adjusting their position in the array</li>
+                            <li><strong>Override built-in middleware:</strong> If you create a middleware with the same class name as a built-in one, your custom version will be used instead</li>
+                            <li><strong>Apply groups:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">#[Middleware("group-name")]</code> on controllers or methods</li>
+                        </ul>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Creating Middleware</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
@@ -486,9 +575,23 @@ class UserController
                     </div>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Child Templates</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">loadFromModule</code> parameter is optional and defaults to <code class="bg-gray-100 px-2 py-1 rounded">false</code>. When <code class="bg-gray-100 px-2 py-1 rounded">false</code> (default), the layout must exist in <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/layouts/</code>. When <code class="bg-gray-100 px-2 py-1 rounded">true</code>, the layout is loaded from <code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Resources/views/layouts/</code>.
+                        </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;!-- pages/home.php --&gt;
-&lt;?php use Forge\Core\View\View; View::layout(name: "layouts/app", loadFromModule: false); ?&gt;
+&lt;?php 
+use Forge\Core\View\View; 
+
+// Default (loadFromModule: false) - layout must be in app/resources/views/layouts/
+View::layout(name: "layouts/app");
+
+// Or explicitly specify
+View::layout(name: "layouts/app", loadFromModule: false);
+
+// Load from module
+View::layout(name: "layouts/app", loadFromModule: true);
+?&gt;
 
 &lt;?php View::startSection('head'); ?&gt;
     &lt;link rel="stylesheet" href="/css/home.css"&gt;
@@ -500,7 +603,7 @@ class UserController
         &lt;p&gt;&lt;?= $description ?&gt;&lt;/p&gt;
     &lt;/div&gt;
 &lt;?php View::endSection(); ?&gt;</code></pre>
-                    </div>
+                        </div>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Components</h3>
                         <p class="text-gray-600 mb-4">
@@ -522,8 +625,23 @@ class UserController
                     </p>
 
                     <h5>App Scope Component with DTO</h5>
+                        <p class="text-gray-600 mb-4">
+                            When using <code class="bg-gray-100 px-2 py-1 rounded">useDto: true</code>, you must create the DTO class manually. The DTO should be placed in the same directory as the component.
+                        </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;?php
+// app/Components/Ui/AlertPropsDto.php
+namespace App\Components\Ui;
+
+class AlertPropsDto
+{
+    public function __construct(
+        public string $type = 'info',
+        public string $message = '',
+        public ?string $title = null
+    ) {}
+}
+
 // app/Components/Ui/Alert.php
 namespace App\Components\Ui;
 
@@ -538,10 +656,10 @@ final class Alert extends BaseComponent
         return $this->renderview('ui/alert', $this->props);
     }
 }</code></pre>
-                    </div>
+                        </div>
                         <p class="text-gray-600 mb-4">
-                        The DTO class (<code>AlertPropsDto</code>) is automatically created and used when <code>useDto: true</code>.
-                    </p>
+                            <strong>Note:</strong> DTOs are not created automatically. You must create the DTO class yourself when using <code class="bg-gray-100 px-2 py-1 rounded">useDto: true</code>. The DTO will be automatically instantiated and passed as <code class="bg-gray-100 px-2 py-1 rounded">$this->props</code>.
+                        </p>
 
                     <h5>Module Scope Component with DTO</h5>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
