@@ -357,13 +357,24 @@ class UserController
 
                     <h3>Components</h3>
                     <p>
-                        Components are reusable UI pieces. Forge supports two ways to create components:
+                        Components are reusable UI pieces. Forge provides flexible ways to create components — with or without PHP classes, with or without view files, in app scope or module scope, with or without DTOs. Choose the approach that fits your needs.
                     </p>
+
+                    <h4>Component Locations</h4>
+                    <p>
+                        Components can be created in two scopes:
+                    </p>
+                    <ul>
+                        <li><strong>App Scope:</strong> <code>app/Components/</code> — Components specific to your application</li>
+                        <li><strong>Module Scope:</strong> <code>modules/ModuleName/src/Resources/components/</code> — Components bundled with capabilities</li>
+                    </ul>
 
                     <h4>1. Class-Based Components (With PHP Class)</h4>
                     <p>
-                        Use class-based components when you need logic, state management, or complex behavior. These require a PHP class that extends <code>BaseComponent</code>.
+                        Class-based components extend <code>BaseComponent</code> and can use DTOs, view files, or return HTML directly.
                     </p>
+
+                    <h5>App Scope Component with DTO</h5>
                     <div class="code-block">
                         <pre><code>&lt;?php
 // app/Components/Ui/Alert.php
@@ -372,46 +383,108 @@ namespace App\Components\Ui;
 use Forge\Core\View\BaseComponent;
 use Forge\Core\View\Component;
 
-#[Component('Ui/Alert')]
-class Alert extends BaseComponent
+#[Component(name: 'Ui/Alert', useDto: true)]
+final class Alert extends BaseComponent
 {
-    public function __construct(
-        public string $type = 'info',
-        public string $message = ''
-    ) {}
-    
     public function render(): string
     {
-        return $this->view('ui/alert', [
-            'type' => $this->type,
-            'message' => $this->message
-        ]);
+        return $this->renderview('ui/alert', $this->props);
     }
 }</code></pre>
                     </div>
                     <p>
-                        Use it in your views:
+                        The DTO class (<code>AlertPropsDto</code>) is automatically created and used when <code>useDto: true</code>.
                     </p>
+
+                    <h5>Module Scope Component with DTO</h5>
                     <div class="code-block">
                         <pre><code>&lt;?php
+// modules/ForgeUi/src/Resources/components/Ui/Alert.php
+namespace App\Modules\ForgeUi\Resources\Components\Ui;
+
+use Forge\Core\View\BaseComponent;
 use Forge\Core\View\Component;
 
-// Render using Component class
-echo Component::render('Ui/Alert', [
-    'type' => 'success',
-    'message' => 'User created successfully!'
-]);
-
-// Or use the helper function
-echo component('Ui/Alert', 'class', [
-    'type' => 'success',
-    'message' => 'User created successfully!'
-]);</code></pre>
+#[Component(name: "ForgeUi:Ui/Alert", useDto: true)]
+final class Alert extends BaseComponent
+{
+    public function render(): string
+    {
+        return $this->renderview(
+            viewPath: "ui/alert",
+            data: $this->props,
+            loadFromModule: true
+        );
+    }
+}</code></pre>
                     </div>
+                    <p>
+                        Module components use the <code>ModuleName:Path</code> syntax and set <code>loadFromModule: true</code> when rendering views.
+                    </p>
+
+                    <h5>Component Without DTO (Direct Props)</h5>
+                    <div class="code-block">
+                        <pre><code>&lt;?php
+// app/Components/Ui/Button.php
+namespace App\Components\Ui;
+
+use Forge\Core\View\BaseComponent;
+use Forge\Core\View\Component;
+
+#[Component(name: 'Ui/Button')]
+final class Button extends BaseComponent
+{
+    public function __construct(
+        public string $text = '',
+        public string $type = 'button'
+    ) {}
+    
+    public function render(): string
+    {
+        return $this->renderview('ui/button', [
+            'text' => $this->text,
+            'type' => $this->type
+        ]);
+    }
+}</code></pre>
+                    </div>
+
+                    <h5>Component Returning HTML Directly (No View File)</h5>
+                    <div class="code-block">
+                        <pre><code>&lt;?php
+// app/Components/Ui/Badge.php
+namespace App\Components\Ui;
+
+use Forge\Core\View\BaseComponent;
+use Forge\Core\View\Component;
+
+#[Component(name: 'Ui/Badge')]
+final class Badge extends BaseComponent
+{
+    public function __construct(
+        public string $text = '',
+        public string $color = 'blue'
+    ) {}
+    
+    public function render(): string
+    {
+        return raw(
+            '&lt;span class="badge badge-' . 
+            htmlspecialchars($this->color) . 
+            '"&gt;' . 
+            htmlspecialchars($this->text) . 
+            '&lt;/span&gt;'
+        );
+    }
+}</code></pre>
+                    </div>
+                    <p>
+                        Use the <code>raw()</code> helper when returning HTML directly without a view file.
+                    </p>
 
                     <h4>2. View-Only Components (Without PHP Class)</h4>
                     <p>
-                        For simple presentational components that don't need logic, you can create components using only view files. No PHP class required.
+                        For simple presentational components, create only a view file. No PHP class needed.
                     </p>
                     <p>
                         Create a view file at <code>app/resources/components/ui/alert.php</code>:
@@ -423,30 +496,87 @@ echo component('Ui/Alert', 'class', [
 &lt;/div&gt;</code></pre>
                     </div>
                     <p>
-                        Use it in your views:
+                        For module-scoped view components, place them in <code>modules/ModuleName/src/Resources/views/components/</code>.
+                    </p>
+
+                    <h4>Using Components</h4>
+                    <p>
+                        Use the <code>component()</code> helper function to render components:
                     </p>
                     <div class="code-block">
                         <pre><code>&lt;?php
-use Forge\Core\View\View;
-
-// Render using View::viewComponent
-echo View::viewComponent('ui/alert', [
+// App scope class-based component
+echo component('Ui/Alert', 'class', [
     'type' => 'success',
     'message' => 'User created successfully!'
 ]);
 
-// Or use the helper function with 'view' type
+// Module scope class-based component (auto-detected by ":" syntax)
+echo component('ForgeUi:Ui/Alert', 'class', [
+    'type' => 'success',
+    'children' => 'User created successfully!'
+], fromModule: true);
+
+// View-only component (app scope)
 echo component('ui/alert', 'view', [
+    'type' => 'success',
+    'message' => 'User created successfully!'
+]);
+
+// View-only component (module scope)
+echo component('ui/alert', 'view', [
+    'type' => 'success',
+    'message' => 'User created successfully!'
+], fromModule: true);
+
+// Using Component class directly
+use Forge\Core\View\Component;
+echo Component::render('Ui/Alert', [
+    'type' => 'success',
+    'message' => 'User created successfully!'
+]);
+
+// Using View class for view-only components
+use Forge\Core\View\View;
+echo View::viewComponent('ui/alert', [
     'type' => 'success',
     'message' => 'User created successfully!'
 ]);</code></pre>
                     </div>
+
+                    <h4>Real-World Example</h4>
                     <p>
-                        <strong>When to use each approach:</strong>
+                        Here's how a module component is used in practice:
                     </p>
+                    <div class="code-block">
+                        <pre><code>&lt;?php
+// modules/ForgeUi/src/Resources/views/components/ui/flash-message.php
+use Forge\Core\Helpers\Flash;
+
+$flashMessages = Flash::flat() ?? [];
+?&gt;
+&lt;?php if (!empty($flashMessages)): ?&gt;
+    &lt;div&gt;
+        &lt;?php foreach ($flashMessages as $msg): ?&gt;
+            &lt;?=
+            component(name: "ForgeUi:Ui/Alert", props: [
+                "type" => $msg["type"],
+                "children" => $msg["message"]
+            ], fromModule: true)
+            ?&gt;
+        &lt;?php endforeach; ?&gt;
+    &lt;/div&gt;
+&lt;?php endif; ?&gt;</code></pre>
+                    </div>
+
+                    <h4>When to Use Each Approach</h4>
                     <ul>
-                        <li><strong>Class-based components:</strong> When you need logic, state, validation, or complex behavior. Examples: forms with validation, interactive components, components that need to process data.</li>
-                        <li><strong>View-only components:</strong> For simple presentational components that just display data. Examples: alerts, badges, cards, simple buttons. These are faster to create and perfect for static or mostly-static UI elements.</li>
+                        <li><strong>Class-based with DTO:</strong> When you want type safety and IDE autocomplete for component props. Best for reusable components with multiple properties.</li>
+                        <li><strong>Class-based without DTO:</strong> For simpler components where direct constructor parameters are sufficient.</li>
+                        <li><strong>Class-based returning HTML:</strong> For very simple components that don't need a separate view file. Useful for small, self-contained UI elements.</li>
+                        <li><strong>View-only components:</strong> Perfect for simple presentational components that just display data. Fastest to create, no PHP class needed.</li>
+                        <li><strong>App scope:</strong> Use for application-specific components that won't be shared.</li>
+                        <li><strong>Module scope:</strong> Use when creating reusable capability components that can be distributed with your module.</li>
                     </ul>
                 </section>
 
