@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - Building Admin Panels & Dashboards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                        <a href="tutorial.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Tutorials
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+                <a href="tutorial.html" class="block px-3 py-2 text-blue-600 font-medium">Tutorials</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-6" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2 text-sm text-gray-500">
+                <li><a href="index.html" class="hover:text-blue-600">Home</a></li>
+                <li><i class="fas fa-chevron-right text-xs"></i></li>
+                <li><a href="tutorial.html" class="hover:text-blue-600">Tutorials</a></li>
+                <li><i class="fas fa-chevron-right text-xs"></i></li>
+                <li class="text-gray-900 font-medium">Building Admin Panels & Dashboards</li>
+            </ol>
+        </nav>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Tutorial</h3>
+                    <nav class="space-y-2">
+                        <a href="#introduction" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Introduction</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-yellow-100 text-yellow-800 text-sm font-semibold px-3 py-1 rounded-full mr-3">Intermediate</span>
+                        <span class="text-sm text-gray-500"><i class="far fa-clock mr-1"></i> 2-3 hours</span>
+                    </div>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">Building Admin Panels & Dashboards</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Create a comprehensive admin panel with dashboards, data tables, charts, and management interfaces using Forge Kernel modules.
+                    </p>
+
+                    <!-- Coming Soon -->
+                    <section id="introduction" class="section-anchor mb-12">
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-info-circle text-yellow-600 text-2xl mr-3"></i>
+                                <h2 class="text-2xl font-bold text-gray-900">Coming Soon</h2>
+                            </div>
+                            <p class="text-gray-700 mb-4">
+                                This tutorial is currently under development. It will cover:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                                <li>Admin panel architecture</li>
+                                <li>Dashboard design and data visualization</li>
+                                <li>Data tables with filtering and pagination</li>
+                                <li>Role-based access control</li>
+                                <li>Admin-specific routes and middleware</li>
+                                <li>Bulk operations</li>
+                                <li>Admin UI components</li>
+                            </ul>
+                            <p class="text-gray-700">
+                                Check back soon for the complete tutorial!
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu?.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>
+
