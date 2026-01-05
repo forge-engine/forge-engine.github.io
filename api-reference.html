@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - API Reference</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Home
+                </a>
+                <a href="getting-started.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Getting Started
+                </a>
+                <a href="core-concepts.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Core Concepts
+                </a>
+                <a href="modules.html"
+                    class="block px-3 py-2 text-gray-900 hover:text-blue-600">
+                    Capabilities
+                </a>
+                <a href="api-reference.html"
+                    class="block px-3 py-2 text-blue-600 font-medium">
+                    API Reference
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        API Reference
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#overview"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Overview
+                        </a>
+                        <a href="#performance-optimizations"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Performance Optimizations
+                        </a>
+                        <a href="#traits"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Traits
+                        </a>
+                        <a href="#helper-functions"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Helper Functions
+                        </a>
+                        <a href="#helper-classes"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Helper Classes
+                        </a>
+                        <a href="#di-container"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Dependency Injection
+                        </a>
+                        <a href="#contracts"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Contracts & Interfaces
+                        </a>
+                        <a href="#core-services"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Core Services
+                        </a>
+                        <a href="#autoloader"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Autoloader
+                        </a>
+                        <a href="#bootstrap"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Bootstrap Process
+                        </a>
+                        <a href="#cache-system"
+                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">
+                            Cache System
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">
+                        API Reference
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Comprehensive reference for Forge Kernel internals, APIs, and developer utilities.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            This API reference provides detailed documentation for Forge Kernel internals, including
+                            performance optimizations, traits, helper functions, services, and architectural components.
+                            This documentation is intended for developers who need to understand or extend the kernel.
+                        </p>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Note:</strong> Some APIs marked as internal may change between versions. Stable
+                                APIs are clearly indicated.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Performance Optimizations -->
+                    <section id="performance-optimizations" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Performance Optimizations</h2>
+                        <p class="text-gray-600 mb-6">
+                            Forge Kernel includes several performance optimizations to minimize reflection overhead and
+                            improve runtime performance.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Class Maps</h3>
+                        <p class="text-gray-600 mb-4">
+                            Class maps cache the location of classes to avoid repeated file system scans and reflection
+                            operations. Maps are generated during development and cached in production.
+                        </p>
+
+                        <h4 class="text-md font-semibold mb-2 mt-4">AppCommandSetup</h4>
+                        <p class="text-gray-600 mb-3">
+                            Caches command class locations to avoid scanning the commands directory on every request.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Cache File:</strong> <code class="bg-gray-100 px-2 py-1 rounded">storage/framework/cache/app_command_class_map.php</code></li>
+                            <li><strong>Scans:</strong> <code class="bg-gray-100 px-2 py-1 rounded">app/Commands</code></li>
+                            <li><strong>Rebuilds:</strong> Automatically on file changes in development</li>
+                        </ul>
+
+                        <h4 class="text-md font-semibold mb-2 mt-4">ServiceDiscoverSetup</h4>
+                        <p class="text-gray-600 mb-3">
+                            Caches service class locations for automatic service discovery.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Cache File:</strong> <code class="bg-gray-100 px-2 py-1 rounded">storage/framework/cache/class-map.php</code></li>
+                            <li><strong>Scans:</strong> Repositories, Middlewares, Services, Events directories</li>
+                            <li><strong>Production:</strong> Uses cached map, skips scanning</li>
+                        </ul>
+
+                        <h4 class="text-md font-semibold mb-2 mt-4">MiddlewareLoader</h4>
+                        <p class="text-gray-600 mb-3">
+                            Caches middleware class locations and their registration attributes.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Cache File:</strong> <code class="bg-gray-100 px-2 py-1 rounded">storage/framework/cache/middleware-map.php</code></li>
+                            <li><strong>Scans:</strong> <code class="bg-gray-100 px-2 py-1 rounded">app/Middlewares</code>, <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/Http/Middlewares</code>, module middlewares</li>
+                        </ul>
+
+                        <h4 class="text-md font-semibold mb-2 mt-4">HelperDiscoverSetup</h4>
+                        <p class="text-gray-600 mb-3">
+                            Caches helper file locations for automatic inclusion.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Cache File:</strong> <code class="bg-gray-100 px-2 py-1 rounded">storage/framework/cache/helper-map.php</code></li>
+                            <li><strong>Scans:</strong> <code class="bg-gray-100 px-2 py-1 rounded">app/helpers</code>, module helper directories</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Autoloader Optimizations</h3>
+                        <p class="text-gray-600 mb-4">
+                            The PSR-4 autoloader includes file existence caching to avoid repeated file system checks.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Web (APCu):</strong> Uses APCu for file existence caching with 1-hour TTL</li>
+                            <li><strong>CLI (Memory):</strong> Uses in-memory array cache (max 8,000 entries)</li>
+                            <li><strong>Namespace Mapping:</strong> Maps <code class="bg-gray-100 px-2 py-1 rounded">app</code>, <code class="bg-gray-100 px-2 py-1 rounded">forge</code>, <code class="bg-gray-100 px-2 py-1 rounded">modules</code> namespaces</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Cache Proxy Generation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Methods annotated with <code class="bg-gray-100 px-2 py-1 rounded">#[Cache]</code> are wrapped with runtime-generated proxy classes.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Proxy Classes:</strong> Generated once per class, cached in temp directory</li>
+                            <li><strong>Performance:</strong> Avoids reflection on every method call</li>
+                            <li><strong>Reuse:</strong> Proxies are reused across requests</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Lazy Module Loading</h3>
+                        <p class="text-gray-600 mb-4">
+                            Modules are loaded on-demand when their classes are first requested, reducing initial bootstrap time.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Trigger:</strong> Container automatically loads modules when <code class="bg-gray-100 px-2 py-1 rounded">App\Modules\*</code> classes are resolved</li>
+                            <li><strong>Benefit:</strong> Only loaded modules consume memory and processing time</li>
+                        </ul>
+                    </section>
+
+                    <!-- Traits -->
+                    <section id="traits" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Traits</h2>
+                        <p class="text-gray-600 mb-6">
+                            Forge Kernel provides numerous traits organized by category for common functionality.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Core Traits</h3>
+                        <p class="text-gray-600 mb-4">Located in <code class="bg-gray-100 px-2 py-1 rounded">engine/Traits/</code></p>
+
+                        <div class="overflow-x-auto mb-6">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trait</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">AuthorizeRequests</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Authorization helpers for request validation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">CacheLifecycleHooks</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Cache lifecycle integration hooks</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ControllerHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Controller utilities: jsonResponse, view, apiResponse, apiError, csvResponse</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">DataFormatter</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Debug data formatting utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">DTOHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Data Transfer Object utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">EnumHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Enum manipulation utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">FileHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">File operation helpers</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">HasEnvironmentVariables</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Environment variable access</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">HasMetaData</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Metadata support for models</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">HasMetadataToJson</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Metadata JSON serialization</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">HasTimestamps</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Automatic timestamp management</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">InjectsAssets</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Asset injection: registerAsset, injectAssets</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">Metadata</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Metadata operations</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ModuleHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Module utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">NamespaceHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Namespace manipulation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">PaginationHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Pagination utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">PathHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Path manipulation: stripBasePath</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">RepositoryTrait</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Repository pattern support</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ResponseHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Response creation: createErrorResponse, createResponse</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">SecurityHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Security utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">SoftDeletes</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Soft delete functionality</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">StringHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">String manipulation utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">TimeTrait</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Time utilities</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">CLI Traits</h3>
+                        <p class="text-gray-600 mb-4">Located in <code class="bg-gray-100 px-2 py-1 rounded">engine/CLI/Traits/</code></p>
+
+                        <div class="overflow-x-auto mb-6">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trait</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">CliGenerator</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">CLI generation utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">CommandOptionTrait</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Command option handling</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ManagesAssetLinks</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Asset link management</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ManagesMaintenanceMode</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Maintenance mode management</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">OutputHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">CLI output formatting (info, error, success, warning)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">Wizard</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Interactive CLI wizards</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Cache Traits</h3>
+                        <p class="text-gray-600 mb-4">Located in <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/Cache/Traits/</code></p>
+
+                        <div class="overflow-x-auto mb-6">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trait</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">CacheTrait</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Cache operations and utilities</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Helper Functions -->
+                    <section id="helper-functions" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Helper Functions</h2>
+                        <p class="text-gray-600 mb-6">
+                            Global helper functions available throughout the application. Defined in <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/Support/helpers.php</code>.
+                        </p>
+
+                        <div class="space-y-6">
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">env($key, $default = null)</h4>
+                                <p class="text-gray-600 mb-2">Get environment variable value.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$dbHost = env('DB_HOST', 'localhost');
+$debug = env('APP_DEBUG', false);</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">cache($key, $value = null, $ttl = null)</h4>
+                                <p class="text-gray-600 mb-2">Cache operations. Get with one argument, set with two or three.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">// Get
+$data = cache('user:123');
+
+// Set
+cache('user:123', $userData, 3600);</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">config($key, $default = null)</h4>
+                                <p class="text-gray-600 mb-2">Get configuration value using dot notation.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$timezone = config('app.timezone', 'UTC');</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">request_host()</h4>
+                                <p class="text-gray-600 mb-2">Get the current request host (domain + port).</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$host = request_host(); // Returns: example.com:8080</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">data_get($target, $key, $default = null)</h4>
+                                <p class="text-gray-600 mb-2">Get an item from an array or object using dot notation.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$street = data_get($user, 'address.street');
+$value = data_get($array, 'nested.key', 'default');</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">e($value)</h4>
+                                <p class="text-gray-600 mb-2">Escape HTML entities in a string.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo e($userInput); // Escapes HTML</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">raw($value)</h4>
+                                <p class="text-gray-600 mb-2">Output a value without escaping.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo raw($htmlContent); // No escaping</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">csrf_token()</h4>
+                                <p class="text-gray-600 mb-2">Get the current CSRF token.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$token = csrf_token();</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">csrf_meta()</h4>
+                                <p class="text-gray-600 mb-2">Generate CSRF meta tag for HTML head.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo csrf_meta(); // &lt;meta name="csrf-token" content="..."&gt;</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">window_csrf_token()</h4>
+                                <p class="text-gray-600 mb-2">Generate JavaScript to set window.csrfToken.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo window_csrf_token();</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">csrf_input()</h4>
+                                <p class="text-gray-600 mb-2">Generate hidden CSRF input field.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo csrf_input(); // &lt;input type="hidden" name="_token" value="..."&gt;</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">tap($value, $callback)</h4>
+                                <p class="text-gray-600 mb-2">Tap utility: execute callback and return value.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$result = tap($value, function($v) {
+    // Do something with $v
+});</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">component($name, $type = 'class', $props = [], $fromModule = false)</h4>
+                                <p class="text-gray-600 mb-2">Render a view component.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo component('Button', 'class', ['label' => 'Click']);
+echo component('module:Button', 'class', [], true);</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">layout($name, $fromModule = false)</h4>
+                                <p class="text-gray-600 mb-2">Load a layout template.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">layout('main');
+layout('module:layout', true);</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">section($name)</h4>
+                                <p class="text-gray-600 mb-2">Render a section in a layout.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo section('content');</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">form_open($action, $method = 'POST', $attrs = [])</h4>
+                                <p class="text-gray-600 mb-2">Generate form opening tag with CSRF protection.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo form_open('/submit', 'POST', ['class' => 'form']);</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">form_close()</h4>
+                                <p class="text-gray-600 mb-2">Generate form closing tag.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">echo form_close(); // &lt;/form&gt;</code></pre>
+                            </div>
+
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">dd(...$vars)</h4>
+                                <p class="text-gray-600 mb-2">Dump variables and exit (debug helper).</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">dd($var1, $var2); // Dumps and exits</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Helper Classes -->
+                    <section id="helper-classes" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Helper Classes</h2>
+                        <p class="text-gray-600 mb-6">
+                            Static helper classes providing common utilities. Located in <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/Helpers/</code>.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Strings</h3>
+                        <p class="text-gray-600 mb-4">String manipulation utilities.</p>
+                        <div class="bg-gray-50 p-4 rounded mb-4">
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><code class="bg-gray-100 px-1 rounded">toCamelCase($string)</code> - Convert to camelCase</li>
+                                <li><code class="bg-gray-100 px-1 rounded">toPascalCase($string)</code> - Convert to PascalCase</li>
+                                <li><code class="bg-gray-100 px-1 rounded">toSnakeCase($string)</code> - Convert to snake_case</li>
+                                <li><code class="bg-gray-100 px-1 rounded">toKebabCase($string)</code> - Convert to kebab-case</li>
+                                <li><code class="bg-gray-100 px-1 rounded">toTitleCase($string)</code> - Convert to Title Case</li>
+                                <li><code class="bg-gray-100 px-1 rounded">isCamelCase($string)</code> - Check if camelCase</li>
+                                <li><code class="bg-gray-100 px-1 rounded">isPascalCase($string)</code> - Check if PascalCase</li>
+                                <li><code class="bg-gray-100 px-1 rounded">isSnakeCase($string)</code> - Check if snake_case</li>
+                                <li><code class="bg-gray-100 px-1 rounded">isKebabCase($string)</code> - Check if kebab-case</li>
+                                <li><code class="bg-gray-100 px-1 rounded">truncate($string, $length, $suffix = '...')</code> - Truncate string</li>
+                                <li><code class="bg-gray-100 px-1 rounded">slugify($string, $character = '-')</code> - Create URL slug</li>
+                                <li><code class="bg-gray-100 px-1 rounded">toPlural($string)</code> - Convert to plural form</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Url</h3>
+                        <p class="text-gray-600 mb-4">URL generation utilities.</p>
+                        <div class="bg-gray-50 p-4 rounded mb-4">
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><code class="bg-gray-100 px-1 rounded">generateLinks($page, $perPage, $totalPages, $orderBy, $sortBy)</code> - Generate pagination links</li>
+                                <li><code class="bg-gray-100 px-1 rounded">getUrl($path = 'file/uploads')</code> - Get upload URL</li>
+                                <li><code class="bg-gray-100 px-1 rounded">baseUrl($path = '')</code> - Get base URL</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">UUID</h3>
+                        <p class="text-gray-600 mb-4">ID generation utilities (UUID, NanoID, ULID).</p>
+                        <div class="bg-gray-50 p-4 rounded mb-4">
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><code class="bg-gray-100 px-1 rounded">generate($type = 'uuid', $options = [])</code> - Generate ID</li>
+                                <li>Types: <code class="bg-gray-100 px-1 rounded">'uuid'</code> (v1/v4), <code class="bg-gray-100 px-1 rounded">'nanoid'</code>, <code class="bg-gray-100 px-1 rounded">'ulid'</code></li>
+                            </ul>
+                            <pre class="bg-gray-100 p-3 rounded mt-3"><code class="language-php">UUID::generate('uuid', ['version' => 4]);
+UUID::generate('nanoid', ['size' => 21]);
+UUID::generate('ulid');</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Hash</h3>
+                        <p class="text-gray-600 mb-4">Password hashing utilities.</p>
+                        <div class="bg-gray-50 p-4 rounded mb-4">
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><code class="bg-gray-100 px-1 rounded">make($password)</code> - Hash password</li>
+                                <li><code class="bg-gray-100 px-1 rounded">check($password, $hash)</code> - Verify password</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Other Helper Classes</h3>
+                        <div class="overflow-x-auto mb-6">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Class</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">Debuger</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Debug utilities: dumpAndExit</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">File</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">File operations</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">FileHelper</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">File helper methods</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">Flash</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Flash message handling</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">Format</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Data formatting</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">Framework</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Framework utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ModuleResources</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Module resource management</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">Redirect</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Redirect utilities</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">TimeConverter</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Time conversion utilities</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- DI Container -->
+                    <section id="di-container" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Dependency Injection Container</h2>
+                        <p class="text-gray-600 mb-6">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">Container</code> class provides dependency injection and service management.
+                            Located in <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/DI/Container.php</code>.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Singleton Pattern</h3>
+                        <p class="text-gray-600 mb-4">
+                            The container is a singleton, accessed via <code class="bg-gray-100 px-2 py-1 rounded">Container::getInstance()</code>.
+                        </p>
+                        <pre class="bg-gray-100 p-3 rounded mb-4"><code class="language-php">$container = Container::getInstance();</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Service Registration</h3>
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">register($class)</h4>
+                                <p class="text-gray-600 mb-2">Register a service class with <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$container->register(MyService::class);</code></pre>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">bind($id, $concrete, $singleton = false)</h4>
+                                <p class="text-gray-600 mb-2">Bind an interface or abstract class to a concrete implementation.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$container->bind(LoggerInterface::class, FileLogger::class, true);</code></pre>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">singleton($abstract, $concrete)</h4>
+                                <p class="text-gray-600 mb-2">Register a singleton binding.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$container->singleton(CacheManager::class, CacheManager::class);</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Service Resolution</h3>
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">make($abstract)</h4>
+                                <p class="text-gray-600 mb-2">Resolve a service instance. Uses reflection for constructor injection.</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$service = $container->make(MyService::class);</code></pre>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">get($id)</h4>
+                                <p class="text-gray-600 mb-2">Get a service by ID (alias for make).</p>
+                                <pre class="bg-gray-100 p-3 rounded"><code class="language-php">$service = $container->get(MyService::class);</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Service Tags</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tag services for grouped retrieval.
+                        </p>
+                        <pre class="bg-gray-100 p-3 rounded mb-4"><code class="language-php">$container->tag('middleware', [
+    AuthMiddleware::class,
+    CsrfMiddleware::class,
+]);
+
+$middlewares = $container->tagged('middleware');</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Instance Management</h3>
+                        <p class="text-gray-600 mb-4">
+                            Manually set or override service instances.
+                        </p>
+                        <pre class="bg-gray-100 p-3 rounded mb-4"><code class="language-php">$container->setInstance(MyService::class, $customInstance);</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Automatic Module Loading</h3>
+                        <p class="text-gray-600 mb-4">
+                            When resolving <code class="bg-gray-100 px-2 py-1 rounded">App\Modules\*</code> classes, the container automatically loads the corresponding module if not already loaded.
+                        </p>
+                        <pre class="bg-gray-100 p-3 rounded mb-4"><code class="language-php">// Module is automatically loaded when this class is resolved
+$service = $container->make(\App\Modules\ForgeAuth\Services\AuthService::class);</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Cache Proxy Wrapping</h3>
+                        <p class="text-gray-600 mb-4">
+                            Services with methods annotated with <code class="bg-gray-100 px-2 py-1 rounded">#[Cache]</code> are automatically wrapped with cache proxy classes for performance.
+                        </p>
+                    </section>
+
+                    <!-- Contracts -->
+                    <section id="contracts" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Contracts & Interfaces</h2>
+                        <p class="text-gray-600 mb-6">
+                            Interfaces and contracts available in the kernel. Located in <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/Contracts/</code>.
+                        </p>
+
+                        <div class="overflow-x-auto mb-6">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Interface</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">DatabaseConfigInterface</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Database configuration contract</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">DatabaseConnectionInterface</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Database connection contract (exec, query, prepare, transactions)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">QueryBuilderInterface</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Query builder contract (select, where, orderBy, etc.)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">DebugBarInterface</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Debug bar integration contract</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Core Services -->
+                    <section id="core-services" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Core Services</h2>
+                        <p class="text-gray-600 mb-6">
+                            Core services available in the kernel. Located in <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/Services/</code>.
+                        </p>
+
+                        <div class="overflow-x-auto mb-6">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Service</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ArchiveService</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Archive operations (zip, tar, etc.)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">CacheRefreshListener</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Cache refresh event handling</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">DatabaseManager</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Database connection and management</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">GitService</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Git repository operations</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">InteractiveSelect</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Interactive CLI selection menus</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ManifestService</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Module manifest management</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">ModuleAssetManager</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Module asset linking and management</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">RegistryService</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Module registry operations</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">TemplateGenerator</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Code template generation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">TokenManager</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">CSRF token generation and management</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm font-mono">VersionService</td>
+                                        <td class="px-4 py-3 text-sm text-gray-600">Version management and comparison</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Autoloader -->
+                    <section id="autoloader" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Autoloader</h2>
+                        <p class="text-gray-600 mb-6">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">Autoloader</code> class implements PSR-4 autoloading with performance optimizations.
+                            Located in <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/Autoloader.php</code>.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">PSR-4 Autoloading</h3>
+                        <p class="text-gray-600 mb-4">
+                            Implements the PSR-4 autoloading standard for automatic class loading.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Namespace Mapping</h3>
+                        <p class="text-gray-600 mb-4">
+                            Maps namespaces to base directories:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app</code> → <code class="bg-gray-100 px-2 py-1 rounded">BASE_PATH/app</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">forge</code> → <code class="bg-gray-100 px-2 py-1 rounded">BASE_PATH/engine</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">modules</code> → <code class="bg-gray-100 px-2 py-1 rounded">BASE_PATH/modules</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">File Existence Caching</h3>
+                        <p class="text-gray-600 mb-4">
+                            Caches file existence checks to avoid repeated file system operations:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Web (APCu):</strong> Uses APCu for file existence caching with 1-hour TTL</li>
+                            <li><strong>CLI (Memory):</strong> Uses in-memory array cache with maximum 8,000 entries</li>
+                            <li><strong>Performance:</strong> Significantly reduces file system I/O</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Path Registration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Register additional namespace paths programmatically.
+                        </p>
+                        <pre class="bg-gray-100 p-3 rounded mb-4"><code class="language-php">Autoloader::addPath('MyNamespace', '/path/to/classes');</code></pre>
+                    </section>
+
+                    <!-- Bootstrap -->
+                    <section id="bootstrap" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Bootstrap Process</h2>
+                        <p class="text-gray-600 mb-6">
+                            The bootstrap process initializes the kernel. Setup classes are located in <code class="bg-gray-100 px-2 py-1 rounded">engine/Core/Bootstrap/</code>.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Bootstrap</h3>
+                        <p class="text-gray-600 mb-4">
+                            Main bootstrap orchestrator that coordinates all setup classes.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Setup Classes</h3>
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">AppCommandSetup</h4>
+                                <p class="text-gray-600 mb-2">Discovers and registers application commands. Builds command class map cache.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">ContainerCLISetup</h4>
+                                <p class="text-gray-600 mb-2">Initializes the dependency injection container for CLI context.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">ContainerWebSetup</h4>
+                                <p class="text-gray-600 mb-2">Initializes the dependency injection container for web context.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">HelperDiscoverSetup</h4>
+                                <p class="text-gray-600 mb-2">Discovers and includes helper files. Builds helper map cache.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">ModuleSetup</h4>
+                                <p class="text-gray-600 mb-2">Loads and initializes modules from the modules directory.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">RouterSetup</h4>
+                                <p class="text-gray-600 mb-2">Initializes the routing system and loads route definitions.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-2">ServiceDiscoverSetup</h4>
+                                <p class="text-gray-600 mb-2">Discovers services with <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute and registers them. Builds service class map cache.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Cache System -->
+                    <section id="cache-system" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Cache System</h2>
+                        <p class="text-gray-600 mb-6">
+                            The cache system provides method-level caching with automatic proxy generation.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Cache Drivers</h3>
+                        <p class="text-gray-600 mb-4">
+                            Multiple cache drivers are available:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>File:</strong> File-based caching (default)</li>
+                            <li><strong>Memory:</strong> In-memory caching for single request</li>
+                            <li><strong>SQLite:</strong> SQLite database caching</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Cache Manager</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">CacheManager</code> provides cache operations with tag support.
+                        </p>
+                        <pre class="bg-gray-100 p-3 rounded mb-4"><code class="language-php">$cache = Container::getInstance()->make(CacheManager::class);
+$cache->set('key', $value, 3600);
+$value = $cache->get('key');
+
+// Tagged cache
+$cache->tags(['users', 'profile'])->set('user:123', $user);
+$cache->clearTag('users');</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Cache Attributes</h3>
+                        <p class="text-gray-600 mb-4">
+                            Methods can be annotated with <code class="bg-gray-100 px-2 py-1 rounded">#[Cache]</code> for automatic caching.
+                        </p>
+                        <pre class="bg-gray-100 p-3 rounded mb-4"><code class="language-php">use Forge\Core\Cache\Attributes\Cache;
+
+class UserService
+{
+    #[Cache(ttl: 3600)]
+    public function getUser(int $id): User
+    {
+        // Expensive operation
+        return $this->repository->find($id);
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Cache Interceptor</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">CacheInterceptor</code> intercepts method calls and handles cache lookup/storage.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Proxy Generation</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">ProxyGenerator</code> creates runtime proxy classes for services with cached methods.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Proxies are generated once per class and cached in the temp directory</li>
+                            <li>Proxies extend the original class and implement <code class="bg-gray-100 px-2 py-1 rounded">ProxyMarkerInterface</code></li>
+                            <li>Method calls are intercepted and routed through the cache interceptor</li>
+                            <li>Avoids reflection overhead on every method call</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu?.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active nav link
+        const sections = document.querySelectorAll('.section-anchor');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        highlightNav();
+    </script>
+</body>
+
+</html>
+

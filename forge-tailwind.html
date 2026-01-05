@@ -80,6 +80,7 @@
                         <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
                         <a href="#why-forgetailwind" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Why ForgeTailwind?</a>
                         <a href="#cli-commands" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">CLI Commands</a>
+                        <a href="#configuration" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Configuration</a>
                         <a href="#binary-management" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Binary Management</a>
                         <a href="#platform-support" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Platform Support</a>
                         <a href="#hmr" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">HMR (Hot Module Replacement)</a>
@@ -178,6 +179,39 @@
                             <li>Automatic binary management</li>
                             <li>Platform detection and binary selection</li>
                         </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Configuration File Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            The Tailwind CSS binary reads <code class="bg-gray-100 px-2 py-1 rounded">tailwind.config.js</code> just like the npm version:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Full Configuration Support:</strong> All Tailwind configuration options are supported</li>
+                            <li><strong>Plugin Support:</strong> Plugins defined in <code class="bg-gray-100 px-2 py-1 rounded">tailwind.config.js</code> are fully supported</li>
+                            <li><strong>Content Paths:</strong> Content paths in config are respected</li>
+                            <li><strong>Theme Customization:</strong> Theme extensions and overrides work as expected</li>
+                            <li><strong>Same as npm:</strong> The binary behaves identically to npm-based Tailwind CSS</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Example <code class="bg-gray-100 px-2 py-1 rounded">tailwind.config.js</code>:
+                        </p>
+                        <pre><code class="language-javascript">module.exports = {
+    content: [
+        '/app/resources/views/**/*.php',
+        '/modules/**/src/resources/views/**/*.php',
+    ],
+    theme: {
+        extend: {},
+    },
+    plugins: [
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/typography")
+    ],
+};</code></pre>
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Note:</strong> The standalone binary reads and processes <code class="bg-gray-100 px-2 py-1 rounded">tailwind.config.js</code> exactly like the npm version. All plugins, theme customizations, and configuration options work identically.
+                            </p>
+                        </div>
 
                         <h3 class="text-lg font-semibold mb-3">HMR Integration</h3>
                         <p class="text-gray-600 mb-4">
@@ -574,6 +608,72 @@ APP_HMR=true</code></pre>
                         </ul>
                     </section>
 
+                    <!-- Configuration -->
+                    <section id="configuration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind uses the standard <code class="bg-gray-100 px-2 py-1 rounded">tailwind.config.js</code> file, which is read by the Tailwind binary just like with npm.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Configuration File</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create a <code class="bg-gray-100 px-2 py-1 rounded">tailwind.config.js</code> file in your project root:
+                        </p>
+                        <pre><code class="language-javascript">module.exports = {
+    content: [
+        '/app/resources/views/**/*.php',
+        '/app/resources/assets/**/*.js',
+        '/modules/**/src/resources/views/**/*.php',
+    ],
+    theme: {
+        extend: {},
+    },
+    plugins: [
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/typography")
+    ],
+};</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Plugin Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            Plugins are fully supported. The binary reads and processes plugins from <code class="bg-gray-100 px-2 py-1 rounded">tailwind.config.js</code>:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Plugins must be installed via npm (for the <code class="bg-gray-100 px-2 py-1 rounded">require()</code> to work)</li>
+                            <li>The binary processes plugins the same way as npm-based Tailwind</li>
+                            <li>All official Tailwind plugins work</li>
+                            <li>Custom plugins are supported</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Note:</strong> While ForgeTailwind avoids npm for the Tailwind binary itself, you may still need npm to install plugin packages if you use plugins. The binary reads the config file and processes plugins, but the plugin packages themselves need to be available via <code class="bg-gray-100 px-2 py-1 rounded">require()</code>.
+                            </p>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Content Paths</h3>
+                        <p class="text-gray-600 mb-4">
+                            Define which files Tailwind should scan for classes:
+                        </p>
+                        <pre><code class="language-javascript">content: [
+    '/app/resources/views/**/*.php',
+    '/app/resources/assets/**/*.js',
+    '/modules/**/src/resources/views/**/*.php',
+]</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Theme Customization</h3>
+                        <p class="text-gray-600 mb-4">
+                            Customize the Tailwind theme just like with npm:
+                        </p>
+                        <pre><code class="language-javascript">theme: {
+    extend: {
+        colors: {
+            'brand': '#1da1f2',
+        },
+    },
+}</code></pre>
+                    </section>
+
                     <!-- Default File Paths -->
                     <section id="default-paths" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Default File Paths</h2>
@@ -703,12 +803,12 @@ APP_ENV=local</code></pre>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tailwind Plugins</td>
-                                        <td class="px-6 py-4 text-sm text-gray-500">Limited (standalone binary)</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Full support (reads tailwind.config.js)</td>
                                         <td class="px-6 py-4 text-sm text-gray-500">Full plugin ecosystem</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Configuration</td>
-                                        <td class="px-6 py-4 text-sm text-gray-500">Basic (via CLI args)</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Full (tailwind.config.js, same as npm)</td>
                                         <td class="px-6 py-4 text-sm text-gray-500">Full (tailwind.config.js)</td>
                                     </tr>
                                     <tr>
@@ -729,18 +829,18 @@ APP_ENV=local</code></pre>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
                             <li>You want to avoid npm/node_modules</li>
                             <li>You prefer a lightweight setup</li>
-                            <li>You don't need Tailwind plugins</li>
                             <li>You want a simple, binary-based approach</li>
-                            <li>You're building a simple project</li>
+                            <li>You want full Tailwind configuration and plugins without npm</li>
+                            <li>You're building a simple to medium project</li>
                         </ul>
 
                         <h3 class="text-lg font-semibold mb-3">When to Use npm-based Setup</h3>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>You need Tailwind plugins</li>
-                            <li>You want full Tailwind configuration options</li>
+                            <li>You're already using npm/Node.js in your project</li>
                             <li>You're using a build tool (Vite, Webpack, etc.)</li>
-                            <li>You prefer the standard approach</li>
-                            <li>You're building a complex project</li>
+                            <li>You prefer the standard npm-based approach</li>
+                            <li>You need integration with other npm-based tools</li>
+                            <li>You're building a complex project with multiple npm dependencies</li>
                         </ul>
 
                         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
