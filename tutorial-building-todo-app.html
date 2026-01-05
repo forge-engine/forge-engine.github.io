@@ -244,6 +244,7 @@ use App\Modules\ForgeDatabaseSQL\DB\Attributes\BelongsTo;
 use App\Modules\ForgeDatabaseSQL\DB\Attributes\Column;
 use App\Modules\ForgeDatabaseSQL\DB\Attributes\Index;
 use App\Modules\ForgeDatabaseSQL\DB\Attributes\Table;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Timestamps;
 use App\Modules\ForgeDatabaseSQL\DB\Enums\ColumnType;
 use App\Modules\ForgeDatabaseSQL\DB\Migrations\Migration;
 
@@ -251,6 +252,7 @@ use App\Modules\ForgeDatabaseSQL\DB\Migrations\Migration;
 #[BelongsTo(related: User::class)]
 #[Index(columns: ['user_id'], name: 'idx_todos_user_id')]
 #[Index(columns: ['completed'], name: 'idx_todos_completed')]
+#[Timestamps]
 class CreateTodosTable extends Migration
 {
     #[Column(name: 'id', type: ColumnType::INTEGER, primaryKey: true, autoIncrement: true)]
@@ -340,12 +342,23 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Dto\CreateTodoDTO;
 use App\Models\Todo;
 use App\Modules\ForgeSqlOrm\ORM\RecordRepository;
 
 class TodoRepository extends RecordRepository
 {
     protected string $model = Todo::class;
+
+    public function create(CreateTodoDTO $dto, int $userId): Todo
+    {
+        return parent::create([
+            'user_id' => $userId,
+            'title' => $dto->title,
+            'description' => $dto->description,
+            'completed' => $dto->completed,
+        ]);
+    }
 
     public function findByUserId(int $userId): array
     {
@@ -374,7 +387,7 @@ class TodoRepository extends RecordRepository
     }
 }</code></pre>
                         <p class="text-gray-600 mb-4">
-                            The repository extends <code class="bg-gray-100 px-2 py-1 rounded">RecordRepository</code>, which provides a <code class="bg-gray-100 px-2 py-1 rounded">create()</code> method that accepts an array of data and returns the created model instance. This method handles model instantiation, property assignment, saving, and cache invalidation automatically.
+                            The repository extends <code class="bg-gray-100 px-2 py-1 rounded">RecordRepository</code>, which provides a base <code class="bg-gray-100 px-2 py-1 rounded">create()</code> method that accepts an array. We've added a type-safe <code class="bg-gray-100 px-2 py-1 rounded">create()</code> method that accepts a <code class="bg-gray-100 px-2 py-1 rounded">CreateTodoDTO</code> and user ID, which internally calls the parent method with the properly structured data. This provides better type safety and ensures consistent data structure.
                         </p>
                     </section>
 
@@ -567,12 +580,7 @@ final class TodoController
 
         $dto = CreateTodoDTO::fromArray($data);
         
-        $todo = $this->repository->create([
-            'user_id' => $user->id,
-            'title' => $dto->title,
-            'description' => $dto->description,
-            'completed' => $dto->completed,
-        ]);
+        $todo = $this->repository->create($dto, $user->id);
 
         Flash::set("success", "Todo created successfully");
         return Redirect::to("/todos");
@@ -809,6 +817,7 @@ declare(strict_types=1);
 
 namespace App\Components\Wire;
 
+use App\Dto\CreateTodoDTO;
 use App\Models\Todo;
 use App\Modules\ForgeAuth\Services\ForgeAuthService;
 use App\Modules\ForgeWire\Attributes\Action;
@@ -849,12 +858,13 @@ final class TodoList extends WireComponent
             return;
         }
 
-        $this->repository->create([
-            'user_id' => $user->id,
-            'title' => $this->newTodoTitle,
-            'description' => $this->newTodoDescription ?: null,
-            'completed' => false,
-        ]);
+        $dto = new CreateTodoDTO(
+            title: $this->newTodoTitle,
+            description: $this->newTodoDescription ?: null,
+            completed: false,
+        );
+
+        $this->repository->create($dto, $user->id);
 
         $this->newTodoTitle = '';
         $this->newTodoDescription = '';
