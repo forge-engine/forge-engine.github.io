@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeTailwind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-blue-600 font-medium">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ForgeTailwind</h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#architecture" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture & Design</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#why-forgetailwind" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Why ForgeTailwind?</a>
+                        <a href="#cli-commands" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">CLI Commands</a>
+                        <a href="#binary-management" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Binary Management</a>
+                        <a href="#platform-support" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Platform Support</a>
+                        <a href="#hmr" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">HMR (Hot Module Replacement)</a>
+                        <a href="#helper-functions" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Helper Functions</a>
+                        <a href="#default-paths" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Default File Paths</a>
+                        <a href="#examples" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage Examples</a>
+                        <a href="#comparison" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Comparison: ForgeTailwind vs npm</a>
+                        <a href="#best-practices" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best Practices</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">ForgeTailwind</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Tailwind CSS binary wrapper for Forge Kernel. Provides a lightweight alternative to npm-based Tailwind setup with automatic binary download, platform support, and HMR capabilities.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind is a CLI-only module that provides a PHP wrapper around the Tailwind CSS standalone binary. It allows you to use Tailwind CSS without npm, node_modules, or Node.js dependencies, making it a lightweight alternative for those who prefer to avoid the npm ecosystem.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>No npm/node_modules required</span></div>
+                                    <div class="flex items-center"><span>Automatic binary download and setup</span></div>
+                                    <div class="flex items-center"><span>Multiple platform support</span></div>
+                                    <div class="flex items-center"><span>CLI-only module (no runtime dependencies)</span></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Build and watch commands</span></div>
+                                    <div class="flex items-center"><span>HMR (Hot Module Replacement) support</span></div>
+                                    <div class="flex items-center"><span>Minification support</span></div>
+                                    <div class="flex items-center"><span>Lightweight alternative to npm setup</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeTailwind Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Tailwind CSS Binary Wrapper:</strong> PHP CLI wrapper around the standalone Tailwind CSS binary</li>
+                            <li><strong>Automatic Binary Management:</strong> Downloads and sets up the Tailwind binary automatically</li>
+                            <li><strong>Build Command:</strong> Build Tailwind CSS from source files with minification</li>
+                            <li><strong>Watch Command:</strong> Watch for file changes and automatically rebuild</li>
+                            <li><strong>Platform Support:</strong> Supports macOS, Windows, and Linux (multiple architectures)</li>
+                            <li><strong>HMR Support:</strong> Hot Module Replacement for development workflow</li>
+                            <li><strong>No Dependencies:</strong> No npm, node_modules, or Node.js required</li>
+                        </ul>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Optional Alternative:</strong> ForgeTailwind is an optional alternative to the standard npm-based Tailwind setup. You can still use Tailwind CSS the normal way with npm and Node.js if you prefer. This module is provided as a personal preference for those who want to avoid npm/node_modules baggage.
+                            </p>
+                        </div>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>CLI-Only Module:</strong> ForgeTailwind is a CLI-only module (isCli: true, order: 99), providing Tailwind CSS build capabilities without any runtime dependencies. It's a generic module that can be installed as needed.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture & Design Philosophy</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind uses a standalone binary approach, wrapping the official Tailwind CSS standalone binary in PHP CLI commands. This eliminates the need for npm, node_modules, or Node.js while still providing full Tailwind CSS functionality.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Standalone Binary Approach</h3>
+                        <p class="text-gray-600 mb-4">
+                            Instead of using npm to install Tailwind CSS, ForgeTailwind uses the official Tailwind CSS standalone binary:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Single binary file (no dependencies)</li>
+                            <li>Downloaded from GitHub releases</li>
+                            <li>Stored in <code class="bg-gray-100 px-2 py-1 rounded">storage/bin/</code></li>
+                            <li>Platform-specific binaries</li>
+                            <li>Automatic download and setup</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">CLI Wrapper</h3>
+                        <p class="text-gray-600 mb-4">
+                            PHP CLI commands wrap the Tailwind binary:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Build command: Compiles Tailwind CSS from source</li>
+                            <li>Watch command: Watches for changes and rebuilds automatically</li>
+                            <li>Automatic binary management</li>
+                            <li>Platform detection and binary selection</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">HMR Integration</h3>
+                        <p class="text-gray-600 mb-4">
+                            JavaScript-based Hot Module Replacement:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Automatic CSS reloading on file changes</li>
+                            <li>Form state preservation</li>
+                            <li>Development-only feature</li>
+                            <li>Localhost-only for security</li>
+                        </ul>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind can be installed via ForgePackageManager. It's a CLI-only module with no runtime dependencies.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Install via ForgePackageManager</h3>
+                        <pre><code class="language-bash">php forge.php module:install ForgeTailwind</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">No Dependencies Required</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeTailwind requires:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>PHP 8.3+ (for CLI commands)</li>
+                            <li>curl (for binary download)</li>
+                            <li>No npm, Node.js, or node_modules required</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Binary Download</h3>
+                        <p class="text-gray-600 mb-4">
+                            The Tailwind CSS binary is automatically downloaded on first use. No manual setup is required.
+                        </p>
+                    </section>
+
+                    <!-- Why ForgeTailwind? -->
+                    <section id="why-forgetailwind" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Why ForgeTailwind?</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind was created as a personal preference to avoid npm and node_modules baggage. It's an optional alternative that provides the same Tailwind CSS functionality without requiring Node.js or npm.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Personal Preference</h3>
+                        <p class="text-gray-600 mb-4">
+                            This module was created to avoid:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>npm dependency management</li>
+                            <li>node_modules directory bloat</li>
+                            <li>Node.js installation requirements</li>
+                            <li>package.json and package-lock.json files</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Lightweight Alternative</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeTailwind provides:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Single binary file (no dependencies)</li>
+                            <li>No npm/node_modules required</li>
+                            <li>No Node.js required</li>
+                            <li>Pure PHP CLI wrapper</li>
+                            <li>Minimal setup overhead</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Optional Usage</h3>
+                        <p class="text-gray-600 mb-4">
+                            Important points:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Not Required:</strong> You can still use npm-based Tailwind setup</li>
+                            <li><strong>Optional Alternative:</strong> Use ForgeTailwind if you prefer a lightweight approach</li>
+                            <li><strong>Inspiration:</strong> For those who want a similar approach</li>
+                            <li><strong>Standard Way:</strong> npm-based setup is still the standard and recommended approach</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Note:</strong> This module is provided as a personal preference. Users are free to use Tailwind CSS the normal way with npm and Node.js. ForgeTailwind is just an alternative option for those who want to avoid npm dependencies.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- CLI Commands -->
+                    <section id="cli-commands" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Commands</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind provides two CLI commands for building and watching Tailwind CSS.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">tailwind:build</h3>
+                        <p class="text-gray-600 mb-4">
+                            Builds Tailwind CSS from source files:
+                        </p>
+                        <pre><code class="language-bash">php forge.php tailwind:build [--input=CSS_PATH] [--output=CSS_PATH]</code></pre>
+
+                        <h4 class="text-md font-semibold mb-3 mt-4">Options</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">--input</code>: Input CSS file path (default: <code class="bg-gray-100 px-2 py-1 rounded">app/resources/assets/css/tailwind.css</code>)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">--output</code>: Output CSS file path (default: <code class="bg-gray-100 px-2 py-1 rounded">public/assets/css/app.css</code>)</li>
+                        </ul>
+
+                        <h4 class="text-md font-semibold mb-3 mt-4">Features</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Automatic binary download if missing</li>
+                            <li>Minification support (--minify flag)</li>
+                            <li>Custom input/output paths</li>
+                            <li>Error handling and reporting</li>
+                        </ul>
+
+                        <h4 class="text-md font-semibold mb-3 mt-4">Examples</h4>
+                        <pre><code class="language-bash"># Build with default paths
+php forge.php tailwind:build
+
+# Build with custom paths
+php forge.php tailwind:build --input=app/resources/css/tailwind.css --output=public/assets/css/app.css</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">tailwind:watch</h3>
+                        <p class="text-gray-600 mb-4">
+                            Watches for file changes and automatically rebuilds Tailwind CSS:
+                        </p>
+                        <pre><code class="language-bash">php forge.php tailwind:watch [--input=CSS_PATH] [--output=CSS_PATH] [--platform=PLATFORM]</code></pre>
+
+                        <h4 class="text-md font-semibold mb-3 mt-4">Options</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">--input</code>: Input CSS file path (default: <code class="bg-gray-100 px-2 py-1 rounded">app/resources/assets/css/tailwind.css</code>)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">--output</code>: Output CSS file path (default: <code class="bg-gray-100 px-2 py-1 rounded">public/assets/css/app.css</code>)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">--platform</code>: Tailwind binary platform (default: <code class="bg-gray-100 px-2 py-1 rounded">macos-arm64</code>)</li>
+                        </ul>
+
+                        <h4 class="text-md font-semibold mb-3 mt-4">Supported Platforms</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">macos-arm64</code> (default)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">macos-x64</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">windows-x64</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">linux-arm64</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">linux-arm64-musl</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">linux-x64</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">linux-x64-musl</code></li>
+                        </ul>
+
+                        <h4 class="text-md font-semibold mb-3 mt-4">Examples</h4>
+                        <pre><code class="language-bash"># Watch with default settings
+php forge.php tailwind:watch
+
+# Watch with custom paths
+php forge.php tailwind:watch --input=app/resources/css/tailwind.css --output=public/assets/css/app.css
+
+# Watch with specific platform
+php forge.php tailwind:watch --platform=linux-x64</code></pre>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Note:</strong> The watch command runs continuously until stopped (Ctrl-C). It automatically rebuilds Tailwind CSS whenever source files change.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Binary Management -->
+                    <section id="binary-management" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Binary Management</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind automatically manages the Tailwind CSS binary, downloading it from GitHub releases when needed.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Download</h3>
+                        <p class="text-gray-600 mb-4">
+                            The binary is automatically downloaded on first use:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Check if binary exists in <code class="bg-gray-100 px-2 py-1 rounded">storage/bin/</code></li>
+                            <li>If missing, download from GitHub releases</li>
+                            <li>Set executable permissions (Unix systems)</li>
+                            <li>Store binary for future use</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Binary Storage</h3>
+                        <p class="text-gray-600 mb-4">
+                            Binaries are stored in:
+                        </p>
+                        <pre><code class="language-bash">storage/bin/tailwindcss        # Unix systems
+storage/bin/tailwindcss.exe    # Windows</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Download Source</h3>
+                        <p class="text-gray-600 mb-4">
+                            Binaries are downloaded from official Tailwind CSS GitHub releases:
+                        </p>
+                        <pre><code class="language-php">// Example download URL
+https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-macos-arm64</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Binary Caching</h3>
+                        <p class="text-gray-600 mb-4">
+                            The binary is cached after first download:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Only downloads if binary doesn't exist</li>
+                            <li>Reuses existing binary for subsequent builds</li>
+                            <li>Platform-specific binaries are stored separately</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Executable Permissions</h3>
+                        <p class="text-gray-600 mb-4">
+                            On Unix systems, the binary is automatically made executable:
+                        </p>
+                        <pre><code class="language-php">exec("chmod +x " . escapeshellarg($tempBin), $out, $ret);</code></pre>
+                    </section>
+
+                    <!-- Platform Support -->
+                    <section id="platform-support" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Platform Support</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind supports multiple platforms with platform-specific binaries.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Supported Platforms</h3>
+                        <div class="overflow-x-auto mb-4">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Platform</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Binary Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">macOS ARM64</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">tailwindcss-macos-arm64</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">macOS x64</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">tailwindcss-macos-x64</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Windows x64</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">tailwindcss-windows-x64.exe</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Linux ARM64</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">tailwindcss-linux-arm64</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Linux ARM64 (musl)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">tailwindcss-linux-arm64-musl</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Linux x64</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">tailwindcss-linux-x64</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Linux x64 (musl)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">tailwindcss-linux-x64-musl</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Platform Selection</h3>
+                        <p class="text-gray-600 mb-4">
+                            The platform is selected via the <code class="bg-gray-100 px-2 py-1 rounded">--platform</code> argument in the watch command:
+                        </p>
+                        <pre><code class="language-bash">php forge.php tailwind:watch --platform=linux-x64</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Default Platform</h3>
+                        <p class="text-gray-600 mb-4">
+                            The default platform is <code class="bg-gray-100 px-2 py-1 rounded">macos-arm64</code>. For the build command, it automatically detects the platform based on the system.
+                        </p>
+                    </section>
+
+                    <!-- HMR -->
+                    <section id="hmr" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">HMR (Hot Module Replacement)</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind includes JavaScript-based Hot Module Replacement for automatic CSS reloading during development.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">What is HMR?</h3>
+                        <p class="text-gray-600 mb-4">
+                            Hot Module Replacement automatically reloads CSS when Tailwind files are rebuilt, without requiring a full page refresh. This improves the development workflow by preserving form state and scroll position.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Features</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Automatic CSS Reloading:</strong> Detects when CSS file changes and reloads it</li>
+                            <li><strong>Form State Preservation:</strong> Preserves form input values during CSS reload</li>
+                            <li><strong>No Page Refresh:</strong> Only CSS is reloaded, not the entire page</li>
+                            <li><strong>Development Only:</strong> Only active in development environments</li>
+                            <li><strong>Localhost Only:</strong> Only works on localhost/127.0.0.1 for security</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Enabling HMR</h3>
+                        <p class="text-gray-600 mb-4">
+                            HMR is enabled via the <code class="bg-gray-100 px-2 py-1 rounded">APP_HMR</code> environment variable:
+                        </p>
+                        <pre><code class="language-bash"># .env
+APP_HMR=true</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Using HMR in Views</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use the <code class="bg-gray-100 px-2 py-1 rounded">forgetailwind()</code> helper function in your views:
+                        </p>
+                        <pre><code class="language-php">&lt;?php echo forgetailwind(); ?&gt;</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            This will output the HMR script tag if HMR is enabled and conditions are met.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">HMR Conditions</h3>
+                        <p class="text-gray-600 mb-4">
+                            HMR script is only included when:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">APP_HMR</code> is <code class="bg-gray-100 px-2 py-1 rounded">true</code></li>
+                            <li>Environment is not <code class="bg-gray-100 px-2 py-1 rounded">production</code> or <code class="bg-gray-100 px-2 py-1 rounded">staging</code></li>
+                            <li>Host is <code class="bg-gray-100 px-2 py-1 rounded">localhost</code> or <code class="bg-gray-100 px-2 py-1 rounded">127.0.0.1</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">How HMR Works</h3>
+                        <p class="text-gray-600 mb-4">
+                            The HMR JavaScript:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Polls the CSS file for changes (every 1.3 seconds)</li>
+                            <li>Detects file modification time or hash changes</li>
+                            <li>Preserves form state before reload</li>
+                            <li>Reloads the CSS file with a cache-busting query parameter</li>
+                            <li>Restores form state after reload</li>
+                        </ol>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Security:</strong> HMR only works on localhost/127.0.0.1 to prevent potential security issues in production environments.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Helper Functions -->
+                    <section id="helper-functions" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Helper Functions</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind provides a helper function for HMR integration.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">forgetailwind()</h3>
+                        <p class="text-gray-600 mb-4">
+                            Returns the HMR script tag if HMR is enabled and conditions are met:
+                        </p>
+                        <pre><code class="language-php">function forgetailwind(): string
+{
+    $isHmrEnabled = env("APP_HMR", false);
+    $env = env("APP_ENV");
+    $host = request_host();
+
+    if (!$isHmrEnabled) {
+        return "";
+    }
+
+    if (in_array($env, ["production", "staging"], true)) {
+        return "";
+    }
+
+    if (
+        !str_starts_with($host, "localhost") &&
+        !str_starts_with($host, "127.0.0.1")
+    ) {
+        return "";
+    }
+
+    return '&lt;script defer src="/assets/modules/forge-tailwind/js/forge-tailwind-hmr.js"&gt;&lt;/script&gt;';
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Usage in Views</h3>
+                        <pre><code class="language-php">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/assets/css/app.css"&gt;
+    &lt;?php echo forgetailwind(); ?&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Your content --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Return Value</h3>
+                        <p class="text-gray-600 mb-4">
+                            Returns:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>HMR script tag if all conditions are met</li>
+                            <li>Empty string if HMR is disabled or conditions are not met</li>
+                        </ul>
+                    </section>
+
+                    <!-- Default File Paths -->
+                    <section id="default-paths" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Default File Paths</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind uses default file paths that can be customized via command arguments.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Default Input Path</h3>
+                        <pre><code class="language-bash">app/resources/assets/css/tailwind.css</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            This is your source Tailwind CSS file with <code class="bg-gray-100 px-2 py-1 rounded">@tailwind</code> directives.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Default Output Path</h3>
+                        <pre><code class="language-bash">public/assets/css/app.css</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            This is the compiled CSS file that should be included in your HTML.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Customizing Paths</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can customize both paths using command arguments:
+                        </p>
+                        <pre><code class="language-bash">php forge.php tailwind:build \
+    --input=app/resources/css/custom.css \
+    --output=public/css/custom.css</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Example Tailwind Source File</h3>
+                        <pre><code class="language-css">/* app/resources/assets/css/tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your custom CSS here */</code></pre>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Build</h3>
+                        <pre><code class="language-bash"># Build Tailwind CSS with default paths
+php forge.php tailwind:build</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Build with Custom Paths</h3>
+                        <pre><code class="language-bash">php forge.php tailwind:build \
+    --input=app/resources/css/tailwind.css \
+    --output=public/assets/css/app.css</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Watch Mode for Development</h3>
+                        <pre><code class="language-bash"># Watch for changes and rebuild automatically
+php forge.php tailwind:watch
+
+# Watch with custom paths
+php forge.php tailwind:watch \
+    --input=app/resources/css/tailwind.css \
+    --output=public/assets/css/app.css</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Watch with Platform Selection</h3>
+                        <pre><code class="language-bash"># Watch on Linux
+php forge.php tailwind:watch --platform=linux-x64
+
+# Watch on Windows
+php forge.php tailwind:watch --platform=windows-x64</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">HMR Integration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Enable HMR in your <code class="bg-gray-100 px-2 py-1 rounded">.env</code>:
+                        </p>
+                        <pre><code class="language-bash">APP_HMR=true
+APP_ENV=local</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Include HMR script in your layout:
+                        </p>
+                        <pre><code class="language-php">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;link rel="stylesheet" href="/assets/css/app.css"&gt;
+    &lt;?php echo forgetailwind(); ?&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Your content --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Development Workflow</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Start watch mode: <code class="bg-gray-100 px-2 py-1 rounded">php forge.php tailwind:watch</code></li>
+                            <li>Enable HMR: Set <code class="bg-gray-100 px-2 py-1 rounded">APP_HMR=true</code> in <code class="bg-gray-100 px-2 py-1 rounded">.env</code></li>
+                            <li>Include HMR script in your layout</li>
+                            <li>Edit your HTML/Templates with Tailwind classes</li>
+                            <li>CSS automatically rebuilds and reloads in browser</li>
+                        </ol>
+                    </section>
+
+                    <!-- Comparison -->
+                    <section id="comparison" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Comparison: ForgeTailwind vs npm</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeTailwind and npm-based Tailwind setup each have their advantages. Choose the approach that best fits your needs.
+                        </p>
+
+                        <div class="overflow-x-auto mb-6">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feature</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ForgeTailwind</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">npm-based</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Dependencies</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Single binary, no npm</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">npm, Node.js, node_modules</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Setup</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Automatic binary download</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">npm install, package.json</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">File Size</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Small (single binary)</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Large (node_modules)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Tailwind Plugins</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Limited (standalone binary)</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Full plugin ecosystem</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Configuration</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Basic (via CLI args)</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Full (tailwind.config.js)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">HMR</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Built-in JavaScript HMR</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Vite/Webpack HMR</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Use Case</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Lightweight, simple projects</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Full Tailwind ecosystem</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">When to Use ForgeTailwind</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>You want to avoid npm/node_modules</li>
+                            <li>You prefer a lightweight setup</li>
+                            <li>You don't need Tailwind plugins</li>
+                            <li>You want a simple, binary-based approach</li>
+                            <li>You're building a simple project</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">When to Use npm-based Setup</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>You need Tailwind plugins</li>
+                            <li>You want full Tailwind configuration options</li>
+                            <li>You're using a build tool (Vite, Webpack, etc.)</li>
+                            <li>You prefer the standard approach</li>
+                            <li>You're building a complex project</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Recommendation:</strong> For most projects, the standard npm-based Tailwind setup is recommended. ForgeTailwind is best suited for those who specifically want to avoid npm dependencies or prefer a lightweight alternative.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+
+                        <h3 class="text-lg font-semibold mb-3">Development Workflow</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use <code class="bg-gray-100 px-2 py-1 rounded">tailwind:watch</code> during development</li>
+                            <li>Enable HMR for automatic CSS reloading</li>
+                            <li>Keep watch process running while developing</li>
+                            <li>Use build command for production builds</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Production Builds</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use <code class="bg-gray-100 px-2 py-1 rounded">tailwind:build</code> for production</li>
+                            <li>Build is automatically minified</li>
+                            <li>Disable HMR in production (it's disabled by default)</li>
+                            <li>Include built CSS file in your HTML</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Binary Management</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Binary is automatically downloaded when needed</li>
+                            <li>Binary is cached in <code class="bg-gray-100 px-2 py-1 rounded">storage/bin/</code></li>
+                            <li>Delete binary to force re-download if needed</li>
+                            <li>Platform-specific binaries are stored separately</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">HMR Best Practices</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Only enable HMR in development</li>
+                            <li>HMR only works on localhost (security)</li>
+                            <li>Use <code class="bg-gray-100 px-2 py-1 rounded">forgetailwind()</code> helper in layouts</li>
+                            <li>Disable HMR in production/staging environments</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">File Organization</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Keep source Tailwind file in <code class="bg-gray-100 px-2 py-1 rounded">app/resources/assets/css/</code></li>
+                            <li>Output compiled CSS to <code class="bg-gray-100 px-2 py-1 rounded">public/assets/css/</code></li>
+                            <li>Use consistent naming conventions</li>
+                            <li>Add compiled CSS to <code class="bg-gray-100 px-2 py-1 rounded">.gitignore</code> if desired</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Platform Selection</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use appropriate platform for your system</li>
+                            <li>Default (macos-arm64) works for most macOS users</li>
+                            <li>Specify platform explicitly for Linux/Windows</li>
+                            <li>Use musl variants for Alpine Linux</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Alternative Approaches</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Consider npm-based setup for full Tailwind features</li>
+                            <li>Use ForgeTailwind for lightweight projects</li>
+                            <li>Both approaches can coexist in different projects</li>
+                            <li>Choose based on your project needs</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active nav link
+        const sections = document.querySelectorAll('.section-anchor');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        highlightNav();
+    </script>
+</body>
+
+</html>
+

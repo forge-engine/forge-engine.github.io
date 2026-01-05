@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeErrorHandler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-blue-600 font-medium">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ForgeErrorHandler</h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#architecture" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture & Design</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#handler-registration" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Handler Registration</a>
+                        <a href="#error-handling-flow" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Error Handling Flow</a>
+                        <a href="#debug-response" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Debug Response</a>
+                        <a href="#production-response" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Production Response</a>
+                        <a href="#error-logging" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Error Logging</a>
+                        <a href="#security" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Security Features</a>
+                        <a href="#error-fingerprinting" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Error Fingerprinting</a>
+                        <a href="#rate-limiting" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Rate Limiting</a>
+                        <a href="#code-snippets" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Code Snippets</a>
+                        <a href="#request-context" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Request Context</a>
+                        <a href="#integration" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Integration Points</a>
+                        <a href="#examples" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage Examples</a>
+                        <a href="#best-practices" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best Practices</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">ForgeErrorHandler</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Comprehensive error handling for Forge Kernel. Provides automatic PHP error/exception/shutdown handler registration, debug and production error pages, error logging with rate limiting, and security features for sensitive data masking.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler is a core module that provides comprehensive error handling for Forge Kernel applications. It automatically registers PHP error, exception, and shutdown handlers to catch and handle all errors gracefully, with different responses for debug and production environments.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Automatic PHP handler registration</span></div>
+                                    <div class="flex items-center"><span>Debug vs production error pages</span></div>
+                                    <div class="flex items-center"><span>Error logging with rate limiting</span></div>
+                                    <div class="flex items-center"><span>Security: sensitive data masking</span></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Error fingerprinting for duplicate detection</span></div>
+                                    <div class="flex items-center"><span>PSR-3 logger support (optional)</span></div>
+                                    <div class="flex items-center"><span>File-based logging fallback</span></div>
+                                    <div class="flex items-center"><span>Code snippets with highlighted error lines</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeErrorHandler Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Automatic Handler Registration:</strong> Registers PHP error, exception, and shutdown handlers on initialization</li>
+                            <li><strong>Debug Response:</strong> Detailed error page with stack trace, code snippets, request data, and environment information (when APP_DEBUG is true)</li>
+                            <li><strong>Production Response:</strong> User-friendly error page without sensitive information (when APP_DEBUG is false)</li>
+                            <li><strong>Error Logging:</strong> Logs all errors with comprehensive context (request ID, fingerprint, exception details, memory, duration, source)</li>
+                            <li><strong>Rate Limiting:</strong> Prevents log spam from duplicate errors (300 seconds default)</li>
+                            <li><strong>Error Fingerprinting:</strong> Creates unique fingerprints from file, line, and exception class for duplicate detection</li>
+                            <li><strong>Security Masking:</strong> Automatically masks sensitive data (password, token, secret, authorization, cookie) in logs and error pages</li>
+                            <li><strong>Code Snippets:</strong> Extracts and displays code context around error lines with highlighting</li>
+                            <li><strong>PSR-3 Support:</strong> Optional PSR-3 logger injection for production logging</li>
+                            <li><strong>File Logging:</strong> Fallback file-based logging to <code class="bg-gray-100 px-2 py-1 rounded">storage/logs/errors.log</code></li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Core Module:</strong> ForgeErrorHandler is a core module (core: true, order: 2), automatically loaded and initialized during Bootstrap. No manual installation is required.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture & Design Philosophy</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler uses PHP's native error handling mechanisms to catch all errors, exceptions, and fatal errors. It provides different responses based on the application's debug mode and includes comprehensive logging and security features.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Handler Registration</h3>
+                        <p class="text-gray-600 mb-4">
+                            The module automatically registers three PHP handlers on initialization:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Error Handler:</strong> Converts PHP errors to exceptions</li>
+                            <li><strong>Exception Handler:</strong> Handles uncaught exceptions</li>
+                            <li><strong>Shutdown Handler:</strong> Catches fatal errors that occur during script shutdown</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Debug vs Production Mode</h3>
+                        <p class="text-gray-600 mb-4">
+                            The handler detects the application's debug mode via <code class="bg-gray-100 px-2 py-1 rounded">Environment::isDebugEnabled()</code>:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Debug Mode (APP_DEBUG=true):</strong> Shows detailed error page with stack trace, code snippets, request data, and environment information</li>
+                            <li><strong>Production Mode (APP_DEBUG=false):</strong> Shows user-friendly error page without sensitive information</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Error Fingerprinting</h3>
+                        <p class="text-gray-600 mb-4">
+                            Each error is assigned a unique fingerprint based on:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>File path where error occurred</li>
+                            <li>Line number</li>
+                            <li>Exception class name</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            This fingerprint is used for rate limiting to prevent log spam from duplicate errors.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Security by Default</h3>
+                        <p class="text-gray-600 mb-4">
+                            Sensitive data is automatically masked in:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Error logs</li>
+                            <li>Debug error pages</li>
+                            <li>Request parameters (server, query, POST)</li>
+                            <li>Session data</li>
+                            <li>Environment variables</li>
+                        </ul>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler is a core module that is automatically loaded and initialized during Bootstrap. No manual installation is required.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Initialization</h3>
+                        <p class="text-gray-600 mb-4">
+                            The module is automatically initialized in <code class="bg-gray-100 px-2 py-1 rounded">Bootstrap::setupErrorHandling()</code>:
+                        </p>
+                        <pre><code class="language-php">// engine/Core/Bootstrap/Bootstrap.php
+if (file_exists(BASE_PATH . "/modules/ForgeErrorHandler/src/ForgeErrorHandler.php")) {
+    if (class_exists(\App\Modules\ForgeErrorHandler\Services\ForgeErrorHandlerService::class)) {
+        $container->get(\App\Modules\ForgeErrorHandler\Services\ForgeErrorHandlerService::class);
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Module Configuration</h3>
+                        <p class="text-gray-600 mb-4">
+                            The module is marked as a core module:
+                        </p>
+                        <pre><code class="language-php">#[Module(
+    name: 'ForgeErrorHandler',
+    version: '0.1.2',
+    description: 'An error handler by Forge',
+    order: 2,
+    core: true  // Core module, automatically loaded
+)]</code></pre>
+                    </section>
+
+                    <!-- Handler Registration -->
+                    <section id="handler-registration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">PHP Handler Registration</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler automatically registers three PHP handlers to catch all types of errors and exceptions.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Error Handler</h3>
+                        <p class="text-gray-600 mb-4">
+                            Converts PHP errors (warnings, notices, etc.) to exceptions:
+                        </p>
+                        <pre><code class="language-php">set_error_handler([$this, 'phpErrorHandler']);
+
+public function phpErrorHandler(int $severity, string $message, string $file, int $line): bool
+{
+    if (!(error_reporting() & $severity)) {
+        return true;  // Error reporting disabled for this severity
+    }
+    throw new \ErrorException($message, 0, $severity, $file, $line);
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            This ensures all PHP errors are handled consistently as exceptions.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Exception Handler</h3>
+                        <p class="text-gray-600 mb-4">
+                            Handles all uncaught exceptions:
+                        </p>
+                        <pre><code class="language-php">set_exception_handler([$this, 'phpExceptionHandler']);
+
+public function phpExceptionHandler(Throwable $e): void
+{
+    try {
+        $request = Request::createFromGlobals();
+        $this->handle($e, $request)->send();
+    } catch (Throwable $fatal) {
+        $this->emergencyOutput($fatal);
+    } finally {
+        exit(1);
+    }
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            This is the main entry point for handling exceptions. It logs the error, builds an appropriate response, and exits the script.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Shutdown Handler</h3>
+                        <p class="text-gray-600 mb-4">
+                            Catches fatal errors that occur during script shutdown:
+                        </p>
+                        <pre><code class="language-php">register_shutdown_function([$this, 'phpShutdownHandler']);
+
+public function phpShutdownHandler(): void
+{
+    $error = error_get_last();
+    if ($error === null) {
+        return;  // No error occurred
+    }
+    
+    $fatals = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR];
+    if (!in_array($error['type'], $fatals, true)) {
+        return;  // Not a fatal error
+    }
+    
+    $this->phpExceptionHandler(
+        new \ErrorException(
+            $error['message'],
+            $error['type'],
+            0,
+            $error['file'],
+            $error['line']
+        )
+    );
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            This catches fatal errors that cannot be caught by the exception handler, such as parse errors or memory exhaustion.
+                        </p>
+                    </section>
+
+                    <!-- Error Handling Flow -->
+                    <section id="error-handling-flow" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Error Handling Flow</h2>
+                        <p class="text-gray-600 mb-6">
+                            When an error occurs, ForgeErrorHandler follows a consistent flow to log the error and generate an appropriate response.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Error Handling Process</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Error Occurs:</strong> PHP error, exception, or fatal error is triggered</li>
+                            <li><strong>Handler Catches:</strong> Appropriate handler (error, exception, or shutdown) catches the error</li>
+                            <li><strong>Error Fingerprinting:</strong> Unique fingerprint is generated from file, line, and exception class</li>
+                            <li><strong>Rate Limit Check:</strong> Checks if this error was recently logged (prevents spam)</li>
+                            <li><strong>Context Building:</strong> Builds comprehensive context (request ID, exception details, memory, duration, source)</li>
+                            <li><strong>Error Logging:</strong> Logs error to PSR-3 logger (if provided) or file (<code class="bg-gray-100 px-2 py-1 rounded">storage/logs/errors.log</code>)</li>
+                            <li><strong>Response Building:</strong> Builds debug or production response based on APP_DEBUG</li>
+                            <li><strong>Response Sent:</strong> Sends HTTP response and exits</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Main Handle Method</h3>
+                        <pre><code class="language-php">public function handle(Throwable $e, Request $request): Response
+{
+    // Log the error
+    $this->logThrowable($e, $request);
+
+    // Return appropriate response based on debug mode
+    return $this->debug
+        ? $this->buildDebugResponse($e, $request)
+        : $this->buildProductionResponse();
+}</code></pre>
+                    </section>
+
+                    <!-- Debug Response -->
+                    <section id="debug-response" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Debug Response</h2>
+                        <p class="text-gray-600 mb-6">
+                            When <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG</code> is <code class="bg-gray-100 px-2 py-1 rounded">true</code>, ForgeErrorHandler displays a detailed error page with comprehensive debugging information.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Debug Error Page Features</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Exception Details:</strong> Type, message, code, file, and line number</li>
+                            <li><strong>Stack Trace:</strong> Full stack trace with code snippets for each frame</li>
+                            <li><strong>Code Snippets:</strong> Code context around error lines (5 lines before/after) with highlighted error line</li>
+                            <li><strong>Request Information:</strong> HTTP method, URI, headers, server parameters (masked)</li>
+                            <li><strong>Query Parameters:</strong> GET parameters (masked)</li>
+                            <li><strong>POST Data:</strong> POST parameters (masked)</li>
+                            <li><strong>Session Data:</strong> All session variables (masked)</li>
+                            <li><strong>Environment Variables:</strong> All environment variables (masked)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Debug Response Data Structure</h3>
+                        <pre><code class="language-php">$data = [
+    'error' => [
+        'message' => $e->getMessage(),
+        'type'    => get_class($e),
+        'code'    => $e->getCode(),
+        'file'    => $e->getFile(),
+        'line'    => $e->getLine(),
+        'trace'   => $trace,  // Filtered trace with code snippets
+    ],
+    'request' => [
+        'method'     => $request->getMethod(),
+        'uri'        => $request->getUri(),
+        'headers'    => $request->getHeaders(),
+        'parameters' => $this->mask($request->serverParams),
+        'query'      => $this->mask($request->queryParams),
+    ],
+    'session'     => $this->mask($_SESSION ?? []),
+    'environment' => $this->mask($_ENV),
+];</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Code Snippets</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug page extracts code snippets from the stack trace:
+                        </p>
+                        <pre><code class="language-php">private function extractSnippets(Throwable $e): array
+{
+    $out = [];
+    foreach ($e->getTrace() as $frame) {
+        $out[] = $this->codeSnippet(
+            $frame['file'] ?? $e->getFile(),
+            $frame['line'] ?? $e->getLine()
+        );
+    }
+    return $out;
+}
+
+private function codeSnippet(string $file, int $line, int $context = 5): array
+{
+    $real = realpath($file);
+    if (!$real || !str_starts_with($real, $this->basePath) || !is_file($real)) {
+        return [];
+    }
+    $lines = file($real, FILE_IGNORE_NEW_LINES);
+    $start = max(1, $line - $context);
+    $end   = min(count($lines), $line + $context);
+    $slice = [];
+    for ($i = $start; $i <= $end; $i++) {
+        $slice[$i] = $lines[$i - 1];
+    }
+    return $slice;
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Code snippets show 5 lines before and after the error line, with the error line highlighted. Only files within <code class="bg-gray-100 px-2 py-1 rounded">BASE_PATH</code> are shown for security.
+                        </p>
+                    </section>
+
+                    <!-- Production Response -->
+                    <section id="production-response" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Production Response</h2>
+                        <p class="text-gray-600 mb-6">
+                            When <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG</code> is <code class="bg-gray-100 px-2 py-1 rounded">false</code>, ForgeErrorHandler displays a user-friendly error page without exposing sensitive information.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Production Error Page</h3>
+                        <p class="text-gray-600 mb-4">
+                            The production error page is simple and user-friendly:
+                        </p>
+                        <pre><code class="language-php">private function buildProductionResponse(): Response
+{
+    return new Response($this->renderUserFriendlyPage(), 500);
+}
+
+private function renderUserFriendlyPage(): string
+{
+    return &lt;&lt;&lt;HTML
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Error&lt;/title&gt;
+    &lt;style&gt;body{font-family:system-ui,sans-serif;background:#f8fafc;padding:2rem}.box{max-width:600px;margin:2rem auto;padding:2rem;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1)}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="box"&gt;
+        &lt;h1&gt;Something went wrong&lt;/h1&gt;
+        &lt;p&gt;We have been notified. Please try again later.&lt;/p&gt;
+        &lt;p&gt;&lt;a href="/"&gt;Go home&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+HTML;
+}</code></pre>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Security:</strong> The production error page does not expose any sensitive information, stack traces, or file paths. All errors are still logged for debugging purposes.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Error Logging -->
+                    <section id="error-logging" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Error Logging</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler logs all errors with comprehensive context information. It supports both PSR-3 loggers and file-based logging.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Logging Process</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Error Fingerprinting:</strong> Generate unique fingerprint from file, line, and exception class</li>
+                            <li><strong>Rate Limit Check:</strong> Check if this error was recently logged (prevents spam)</li>
+                            <li><strong>Context Building:</strong> Build comprehensive context array</li>
+                            <li><strong>Logger Selection:</strong> Use PSR-3 logger if provided, otherwise use file logging</li>
+                            <li><strong>Error Logged:</strong> Error is logged with full context</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Context Information</h3>
+                        <p class="text-gray-600 mb-4">
+                            Each error log includes comprehensive context:
+                        </p>
+                        <pre><code class="language-php">$context = [
+    'fingerprint' => $fingerprint,      // Unique error fingerprint
+    'request_id'  => $reqId,             // Request ID (from header or generated)
+    'exception'   => get_class($e),      // Exception class name
+    'code'        => $e->getCode(),      // Exception code
+    'file'        => $e->getFile(),      // File where error occurred
+    'line'        => $e->getLine(),      // Line number
+    'trace'       => $e->getTraceAsString(),  // Full stack trace
+    'memory'      => memory_get_peak_usage(true),  // Peak memory usage
+    'duration_ms' => round((microtime(true) - $start) * 1000, 2),  // Request duration
+    'source'      => $source,            // IP, method, URI (or CLI command)
+    'sapi'        => PHP_SAPI,           // Server API (cli, apache2handler, etc.)
+    'user_agent'  => $_SERVER['HTTP_USER_AGENT'] ?? '',  // User agent
+    'session'     => $this->mask($_SESSION ?? []),  // Session data (masked)
+    'get'         => $this->mask($request->queryParams),  // GET params (masked)
+    'post'        => $this->mask($request->postData),     // POST params (masked)
+];</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">PSR-3 Logger Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            If a PSR-3 compatible logger is provided via dependency injection, it will be used:
+                        </p>
+                        <pre><code class="language-php">public function __construct(?object $logger = null)
+{
+    $this->logger = $logger && $this->implementsPsr3($logger) ? $logger : null;
+}
+
+private function logThrowable(Throwable $e, Request $request): void
+{
+    $fingerprint = $this->fingerprint($e);
+    $context     = $this->buildContext($e, $request, $fingerprint);
+
+    if ($this->isRateLimited($fingerprint, 300)) {
+        return;  // Skip logging if rate limited
+    }
+
+    if ($this->logger) {
+        $this->logger->error($e->getMessage(), $context);
+    } else {
+        $this->fileLog($context);
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">File Logging</h3>
+                        <p class="text-gray-600 mb-4">
+                            If no PSR-3 logger is provided, errors are logged to a file:
+                        </p>
+                        <pre><code class="language-php">private function fileLog(array $context): void
+{
+    $dir = dirname($this->logFile);
+    is_dir($dir) || mkdir($dir, 0775, true);
+    
+    $line = sprintf(
+        "[%s] %s [%s] %s – %s:%d | %s\n",
+        date('Y-m-d H:i:s'),      // Timestamp
+        $context['request_id'],    // Request ID
+        $context['fingerprint'],   // Error fingerprint
+        $context['exception'],      // Exception class
+        $context['file'],          // File path
+        $context['line'],          // Line number
+        str_replace(["\n", "\r"], ' ', $context['trace'])  // Stack trace (single line)
+    );
+    
+    file_put_contents($this->logFile, $line, FILE_APPEND | LOCK_EX);
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Log file location: <code class="bg-gray-100 px-2 py-1 rounded">storage/logs/errors.log</code>
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Log format: <code class="bg-gray-100 px-2 py-1 rounded">[timestamp] request_id [fingerprint] exception – file:line | trace</code>
+                        </p>
+                    </section>
+
+                    <!-- Security Features -->
+                    <section id="security" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Security Features</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler automatically masks sensitive data to prevent exposure in error logs and debug pages.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Sensitive Data Masking</h3>
+                        <p class="text-gray-600 mb-4">
+                            The following keys are automatically masked (replaced with <code class="bg-gray-100 px-2 py-1 rounded">*****</code>):
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">password</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">token</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">secret</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">authorization</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">cookie</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Masking Implementation</h3>
+                        <pre><code class="language-php">private array $hiddenKeys = [
+    'password',
+    'token',
+    'secret',
+    'authorization',
+    'cookie'
+];
+
+private function mask(array $input): array
+{
+    array_walk_recursive($input, function (&$v, $k) {
+        if (is_string($k) && in_array(strtolower($k), $this->hiddenKeys, true)) {
+            $v = '*****';
+        }
+    });
+    return $input;
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Masking is applied recursively to nested arrays and affects:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Server parameters</li>
+                            <li>Query parameters</li>
+                            <li>POST data</li>
+                            <li>Session data</li>
+                            <li>Environment variables</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Customizing Hidden Keys</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can customize the list of hidden keys by modifying the <code class="bg-gray-100 px-2 py-1 rounded">$hiddenKeys</code> property in the service class:
+                        </p>
+                        <pre><code class="language-php">private array $hiddenKeys = [
+    'password',
+    'token',
+    'secret',
+    'authorization',
+    'cookie',
+    'api_key',      // Add custom keys
+    'private_key',  // Add custom keys
+];</code></pre>
+                    </section>
+
+                    <!-- Error Fingerprinting -->
+                    <section id="error-fingerprinting" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Error Fingerprinting</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler creates unique fingerprints for each error to enable duplicate detection and rate limiting.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Fingerprint Generation</h3>
+                        <p class="text-gray-600 mb-4">
+                            The fingerprint is generated from:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>File path where error occurred</li>
+                            <li>Line number</li>
+                            <li>Exception class name</li>
+                        </ul>
+                        <pre><code class="language-php">private function fingerprint(Throwable $e): string
+{
+    return substr(
+        md5($e->getFile() . ':' . $e->getLine() . ':' . get_class($e)),
+        0,
+        8
+    );
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            The fingerprint is an 8-character MD5 hash, providing a unique identifier for each unique error location and type.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Use Cases</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Rate Limiting:</strong> Prevents logging the same error multiple times within a time window</li>
+                            <li><strong>Error Tracking:</strong> Enables tracking of specific error patterns</li>
+                            <li><strong>Log Analysis:</strong> Helps identify frequently occurring errors</li>
+                        </ul>
+                    </section>
+
+                    <!-- Rate Limiting -->
+                    <section id="rate-limiting" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Rate Limiting</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler implements rate limiting to prevent log spam from duplicate errors.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Rate Limiting Implementation</h3>
+                        <pre><code class="language-php">private array $rateLimitMap = [];
+
+private function isRateLimited(string $fingerprint, int $seconds): bool
+{
+    $now = time();
+    if (isset($this->rateLimitMap[$fingerprint]) 
+        && ($now - $this->rateLimitMap[$fingerprint]) < $seconds
+    ) {
+        return true;  // Rate limited
+    }
+    $this->rateLimitMap[$fingerprint] = $now;
+    return false;  // Not rate limited
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Default Rate Limit</h3>
+                        <p class="text-gray-600 mb-4">
+                            The default rate limit is <strong>300 seconds</strong> (5 minutes). This means the same error (same fingerprint) will only be logged once every 5 minutes.
+                        </p>
+                        <pre><code class="language-php">if ($this->isRateLimited($fingerprint, 300)) {
+    return;  // Skip logging if rate limited
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">In-Memory Storage</h3>
+                        <p class="text-gray-600 mb-4">
+                            Rate limiting uses an in-memory map that is reset on each request. This is suitable for preventing log spam within a single request cycle.
+                        </p>
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Note:</strong> For persistent rate limiting across requests, consider implementing a database or cache-based solution.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Code Snippets -->
+                    <section id="code-snippets" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Code Snippets</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler extracts code snippets from the stack trace to provide context around error lines in debug mode.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Code Snippet Extraction</h3>
+                        <pre><code class="language-php">private function codeSnippet(string $file, int $line, int $context = 5): array
+{
+    $real = realpath($file);
+    // Security: Only show files within BASE_PATH
+    if (!$real || !str_starts_with($real, $this->basePath) || !is_file($real)) {
+        return [];
+    }
+    
+    $lines = file($real, FILE_IGNORE_NEW_LINES);
+    if ($lines === false) {
+        return [];
+    }
+    
+    $start = max(1, $line - $context);  // 5 lines before
+    $end   = min(count($lines), $line + $context);  // 5 lines after
+    
+    $slice = [];
+    for ($i = $start; $i <= $end; $i++) {
+        $slice[$i] = $lines[$i - 1];
+    }
+    return $slice;
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Security Considerations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Only files within <code class="bg-gray-100 px-2 py-1 rounded">BASE_PATH</code> are shown</li>
+                            <li>File must exist and be readable</li>
+                            <li>Prevents exposure of system files or files outside the application</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Context Size</h3>
+                        <p class="text-gray-600 mb-4">
+                            Default context is 5 lines before and after the error line. This provides enough context to understand the error without overwhelming the debug page.
+                        </p>
+                    </section>
+
+                    <!-- Request Context -->
+                    <section id="request-context" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Request Context</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler captures comprehensive request context for error logging and debugging.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Request ID</h3>
+                        <p class="text-gray-600 mb-4">
+                            Each request is assigned a unique ID:
+                        </p>
+                        <pre><code class="language-php">$reqId = $_SERVER['HTTP_X_REQUEST_ID'] ?? bin2hex(random_bytes(8));</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            The request ID is either taken from the <code class="bg-gray-100 px-2 py-1 rounded">X-Request-ID</code> header (if present) or generated as a random 16-character hex string.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Source Information</h3>
+                        <p class="text-gray-600 mb-4">
+                            Source information varies based on SAPI:
+                        </p>
+                        <pre><code class="language-php">$source = PHP_SAPI === 'cli'
+    ? ['cli' => implode(' ', $_SERVER['argv'] ?? [])]
+    : [
+        'ip'     => $this->clientIp(),
+        'method' => $request->getMethod(),
+        'uri'    => $request->getUri()
+    ];
+</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Client IP Detection</h3>
+                        <p class="text-gray-600 mb-4">
+                            Client IP is detected with proxy support:
+                        </p>
+                        <pre><code class="language-php">private function clientIp(): string
+{
+    return $_SERVER['HTTP_X_FORWARDED_FOR']
+        ?? $_SERVER['HTTP_X_REAL_IP']
+        ?? $_SERVER['REMOTE_ADDR']
+        ?? '0.0.0.0';
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Additional Context</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Memory Usage:</strong> Peak memory usage during request</li>
+                            <li><strong>Duration:</strong> Request duration in milliseconds</li>
+                            <li><strong>SAPI:</strong> Server API (cli, apache2handler, fpm-fcgi, etc.)</li>
+                            <li><strong>User Agent:</strong> HTTP User-Agent header</li>
+                            <li><strong>Session Data:</strong> All session variables (masked)</li>
+                            <li><strong>GET/POST Data:</strong> Query and POST parameters (masked)</li>
+                        </ul>
+                    </section>
+
+                    <!-- Integration Points -->
+                    <section id="integration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Integration Points</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeErrorHandler integrates with the Forge Kernel Bootstrap process and can accept optional PSR-3 loggers.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Bootstrap Integration</h3>
+                        <p class="text-gray-600 mb-4">
+                            The error handler is automatically initialized in <code class="bg-gray-100 px-2 py-1 rounded">Bootstrap::setupErrorHandling()</code>:
+                        </p>
+                        <pre><code class="language-php">// engine/Core/Bootstrap/Bootstrap.php
+public function setupErrorHandling(Container $container): void
+{
+    ini_set(
+        "display_errors",
+        Environment::getInstance()->isDevelopment() ? "1" : "0",
+    );
+    error_reporting(E_ALL);
+
+    if (file_exists(BASE_PATH . "/modules/ForgeErrorHandler/src/ForgeErrorHandler.php")) {
+        if (class_exists(\App\Modules\ForgeErrorHandler\Services\ForgeErrorHandlerService::class)) {
+            $container->get(\App\Modules\ForgeErrorHandler\Services\ForgeErrorHandlerService::class);
+        }
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">PSR-3 Logger Integration</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can inject a PSR-3 compatible logger via dependency injection:
+                        </p>
+                        <pre><code class="language-php">// In your service provider or module
+$container->bind(
+    \App\Modules\ForgeErrorHandler\Services\ForgeErrorHandlerService::class,
+    function (Container $container) {
+        $logger = $container->get(Psr\Log\LoggerInterface::class);
+        return new \App\Modules\ForgeErrorHandler\Services\ForgeErrorHandlerService($logger);
+    }
+);</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            The logger must implement PSR-3 methods: <code class="bg-gray-100 px-2 py-1 rounded">error()</code> and <code class="bg-gray-100 px-2 py-1 rounded">debug()</code>.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Module Registration</h3>
+                        <p class="text-gray-600 mb-4">
+                            The module is registered as a core module:
+                        </p>
+                        <pre><code class="language-php">#[Module(
+    name: 'ForgeErrorHandler',
+    version: '0.1.2',
+    description: 'An error handler by Forge',
+    order: 2,
+    core: true  // Core module, automatically loaded
+)]
+#[Service]
+#[Provides(interface: ForgeErrorHandlerInterface::class, version: '0.1.2')]
+final class ForgeErrorHandlerModule
+{
+    public function register(Container $container): void
+    {
+        $container->bind(
+            ForgeErrorHandlerInterface::class,
+            ForgeErrorHandlerService::class
+        );
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Error Handling</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeErrorHandler automatically catches all errors, exceptions, and fatal errors. No manual configuration is needed:
+                        </p>
+                        <pre><code class="language-php">// This exception will be automatically caught and handled
+throw new \Exception('Something went wrong');
+
+// This error will be converted to an exception and handled
+trigger_error('This is an error', E_USER_ERROR);
+
+// Fatal errors are also caught
+// (e.g., calling undefined function, memory exhaustion, etc.)</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Custom Logger Integration</h3>
+                        <pre><code class="language-php">use Psr\Log\LoggerInterface;
+use App\Modules\ForgeErrorHandler\Services\ForgeErrorHandlerService;
+
+// In your service provider
+$container->bind(ForgeErrorHandlerService::class, function (Container $container) {
+    $logger = $container->get(LoggerInterface::class);
+    return new ForgeErrorHandlerService($logger);
+});</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Error Log File Location</h3>
+                        <p class="text-gray-600 mb-4">
+                            Errors are logged to: <code class="bg-gray-100 px-2 py-1 rounded">storage/logs/errors.log</code>
+                        </p>
+                        <pre><code class="language-bash"># View recent errors
+tail -f storage/logs/errors.log
+
+# Search for specific errors
+grep "Exception" storage/logs/errors.log
+
+# Count errors by fingerprint
+grep -o "\[.*\]" storage/logs/errors.log | sort | uniq -c</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Debug vs Production Behavior</h3>
+                        <p class="text-gray-600 mb-4">
+                            Set <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG</code> in your <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file:
+                        </p>
+                        <pre><code class="language-bash"># Development - shows detailed error page
+APP_DEBUG=true
+
+# Production - shows user-friendly error page
+APP_DEBUG=false</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+
+                        <h3 class="text-lg font-semibold mb-3">Always Enable in Production</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Always enable ForgeErrorHandler in production (with <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG=false</code>)</li>
+                            <li>Never disable error handling in production</li>
+                            <li>Use production mode to hide sensitive information from users</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Monitor Error Logs</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Regularly monitor <code class="bg-gray-100 px-2 py-1 rounded">storage/logs/errors.log</code></li>
+                            <li>Set up log rotation to prevent log files from growing too large</li>
+                            <li>Use log aggregation tools (e.g., ELK, Splunk) for production</li>
+                            <li>Set up alerts for critical errors</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Use PSR-3 Logger for Production</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Inject a PSR-3 compatible logger for production environments</li>
+                            <li>Use log aggregation services (e.g., Monolog with handlers)</li>
+                            <li>Configure log levels appropriately</li>
+                            <li>Ensure logs are stored securely and backed up</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Review Rate Limiting Settings</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Adjust rate limiting window (default: 300 seconds) if needed</li>
+                            <li>Consider persistent rate limiting for high-traffic applications</li>
+                            <li>Monitor rate-limited errors to identify patterns</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Customize Hidden Keys</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Add application-specific sensitive keys to <code class="bg-gray-100 px-2 py-1 rounded">$hiddenKeys</code></li>
+                            <li>Review what data is being logged and ensure sensitive data is masked</li>
+                            <li>Test masking in development to ensure it works correctly</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Error Page Customization</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Customize the production error page to match your application's design</li>
+                            <li>Update <code class="bg-gray-100 px-2 py-1 rounded">renderUserFriendlyPage()</code> method</li>
+                            <li>Consider adding a support email or contact form</li>
+                            <li>Ensure the error page is accessible and user-friendly</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Security Considerations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Never set <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG=true</code> in production</li>
+                            <li>Review error logs for sensitive information</li>
+                            <li>Ensure log files have proper permissions (not world-readable)</li>
+                            <li>Use secure log storage for production</li>
+                            <li>Regularly rotate and archive log files</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Error Handling in Code</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use try-catch blocks for expected exceptions</li>
+                            <li>Let ForgeErrorHandler handle unexpected exceptions</li>
+                            <li>Provide meaningful error messages in your code</li>
+                            <li>Use appropriate exception types for different error scenarios</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active nav link
+        const sections = document.querySelectorAll('.section-anchor');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        highlightNav();
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeDebugbar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-blue-600 font-medium">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ForgeDebugbar</h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#architecture" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture & Design</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#collectors" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Collectors Overview</a>
+                        <a href="#built-in-collectors" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Built-in Collectors</a>
+                        <a href="#helper-functions" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Helper Functions</a>
+                        <a href="#html-injection" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Automatic HTML Injection</a>
+                        <a href="#lifecycle-hooks" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Lifecycle Hooks</a>
+                        <a href="#configuration" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Configuration</a>
+                        <a href="#debug-bar-ui" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Debug Bar UI</a>
+                        <a href="#integration" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Integration Points</a>
+                        <a href="#examples" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage Examples</a>
+                        <a href="#best-practices" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best Practices</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">ForgeDebugbar</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Development debugging toolbar for Forge Kernel. Provides automatic HTML injection, multiple data collectors, and a tabbed interface for debugging information.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDebugbar is a comprehensive debugging toolbar that automatically injects into HTML responses during development. It provides real-time insights into memory usage, execution time, database queries, routes, sessions, views, exceptions, and more.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Automatic HTML injection (non-intrusive)</span></div>
+                                    <div class="flex items-center"><span>Multiple data collectors (memory, time, queries, routes, etc.)</span></div>
+                                    <div class="flex items-center"><span>Tabbed interface with collapsible panels</span></div>
+                                    <div class="flex items-center"><span>Only active in debug mode (APP_DEBUG)</span></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Content-Type aware (only HTML responses)</span></div>
+                                    <div class="flex items-center"><span>Helper functions for custom data</span></div>
+                                    <div class="flex items-center"><span>Lifecycle hook integration</span></div>
+                                    <div class="flex items-center"><span>Extensible collector architecture</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeDebugbar Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Automatic HTML Injection:</strong> Injects debug bar into HTML responses before the &lt;/body&gt; tag without requiring manual integration</li>
+                            <li><strong>Memory Tracking:</strong> Monitors current memory usage, peak memory, and memory percentage of limit</li>
+                            <li><strong>Execution Time:</strong> Tracks total request execution time in milliseconds</li>
+                            <li><strong>Timeline Events:</strong> Custom timeline events for tracking request lifecycle</li>
+                            <li><strong>Debug Messages:</strong> Custom messages with labels (info, warning, error)</li>
+                            <li><strong>Exception Tracking:</strong> Captures exceptions with type, message, code, file, and stack trace</li>
+                            <li><strong>Request Information:</strong> Displays URL, method, IP, headers, query parameters, body, cookies, and files</li>
+                            <li><strong>Route Information:</strong> Shows current route URI, HTTP method, handler, and middleware stack</li>
+                            <li><strong>Session Data:</strong> Displays session ID and all session data</li>
+                            <li><strong>View Tracking:</strong> Lists all rendered views with their data</li>
+                            <li><strong>Database Queries:</strong> Tracks SQL queries with execution time and performance classification (if integrated)</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Generic Module:</strong> ForgeDebugbar is a generic module (type: 'generic', order: 3), providing debugging functionality that can be installed as needed. It has no dependencies and automatically integrates with the request lifecycle.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture & Design Philosophy</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDebugbar uses a collector-based architecture that allows for extensible data collection. It integrates seamlessly with the Forge Kernel lifecycle hooks and automatically injects the debug bar into HTML responses.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Collector-Based Architecture</h3>
+                        <p class="text-gray-600 mb-4">
+                            All debugging data is collected through collectors that implement the <code class="bg-gray-100 px-2 py-1 rounded">CollectorInterface</code>. Collectors are registered with the DebugBar using callables, allowing for lazy evaluation of data.
+                        </p>
+
+                        <pre><code class="language-php">interface CollectorInterface
+{
+    public static function collect(...$args): mixed;
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Singleton Pattern</h3>
+                        <p class="text-gray-600 mb-4">
+                            The DebugBar class uses a singleton pattern to ensure only one instance exists per request, maintaining consistent state across the application lifecycle.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Lifecycle Hook Integration</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeDebugbar integrates with Forge Kernel lifecycle hooks:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>BEFORE_REQUEST:</strong> Initializes timeline tracking</li>
+                            <li><strong>AFTER_REQUEST:</strong> Collects all data and injects debug bar into response</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Content-Type Awareness</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug bar only injects into HTML responses. It checks the Content-Type header and skips:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Non-HTML content types</li>
+                            <li>JSON responses (detects <code class="bg-gray-100 px-2 py-1 rounded">{"html":...</code> pattern)</li>
+                            <li>Responses without a <code class="bg-gray-100 px-2 py-1 rounded">&lt;/body&gt;</code> tag</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Debug Mode Only</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug bar is only active when both conditions are met:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG</code> environment variable is <code class="bg-gray-100 px-2 py-1 rounded">true</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">forge_debug_bar.enabled</code> config is <code class="bg-gray-100 px-2 py-1 rounded">true</code></li>
+                        </ul>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDebugbar can be installed via ForgePackageManager. It's a generic module with no dependencies.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Install via ForgePackageManager</h3>
+                        <pre><code class="language-bash">php forge.php module:install ForgeDebugbar</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Post-Install</h3>
+                        <p class="text-gray-600 mb-4">
+                            After installation, the module automatically:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Links assets via <code class="bg-gray-100 px-2 py-1 rounded">asset:link</code> command</li>
+                            <li>Registers the DebugBar service in the container</li>
+                            <li>Sets up lifecycle hooks for data collection</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Uninstall</h3>
+                        <pre><code class="language-bash">php forge.php module:uninstall ForgeDebugbar</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            On uninstall, the module automatically unlinks assets via <code class="bg-gray-100 px-2 py-1 rounded">asset:unlink</code> command.
+                        </p>
+                    </section>
+
+                    <!-- Collectors Overview -->
+                    <section id="collectors" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Collectors Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            Collectors are the core of ForgeDebugbar's data collection system. Each collector implements the <code class="bg-gray-100 px-2 py-1 rounded">CollectorInterface</code> and provides a static <code class="bg-gray-100 px-2 py-1 rounded">collect()</code> method.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Collector Interface</h3>
+                        <pre><code class="language-php">interface CollectorInterface
+{
+    public static function collect(...$args): mixed;
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Collector Registration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Collectors are registered with the DebugBar using callables, allowing for lazy evaluation:
+                        </p>
+                        <pre><code class="language-php">$debugbar->addCollector('memory', function () {
+    return MemoryCollector::collect();
+});</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Built-in Collectors</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeDebugbar includes the following built-in collectors:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>MemoryCollector - Memory usage tracking</li>
+                            <li>TimeCollector - Request execution time</li>
+                            <li>TimelineCollector - Request lifecycle events</li>
+                            <li>MessageCollector - Debug messages</li>
+                            <li>ExceptionCollector - Exception tracking</li>
+                            <li>RequestCollector - HTTP request information</li>
+                            <li>RouteCollector - Current route information</li>
+                            <li>SessionCollector - Session data</li>
+                            <li>ViewCollector - Rendered views</li>
+                            <li>DatabaseCollector - Database queries (available but requires integration)</li>
+                        </ul>
+                    </section>
+
+                    <!-- Built-in Collectors -->
+                    <section id="built-in-collectors" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Built-in Collectors</h2>
+
+                        <h3 class="text-lg font-semibold mb-3">MemoryCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tracks memory usage throughout the request lifecycle.
+                        </p>
+                        <pre><code class="language-php">class MemoryCollector implements CollectorInterface
+{
+    public static function collect(...$args): array
+    {
+        return self::instance()->getMemoryUsage();
+    }
+
+    public function getMemoryUsage(): array
+    {
+        return [
+            'current' => 'X.XX MB',      // Current memory usage
+            'used' => 'X.XX MB',        // Memory used (delta)
+            'peak' => 'X.XX MB',         // Peak memory usage
+            'percentage' => 'XX.X%'      // Percentage of memory limit
+        ];
+    }
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            The MemoryCollector tracks:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Current memory usage in MB</li>
+                            <li>Memory used since request start (delta)</li>
+                            <li>Peak memory usage during the request</li>
+                            <li>Memory percentage of PHP's memory limit</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">TimeCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tracks total request execution time.
+                        </p>
+                        <pre><code class="language-php">class TimeCollector implements CollectorInterface
+{
+    public static function collect(...$args): string
+    {
+        $startTime = $args[0] ?? microtime(true);
+        return round((microtime(true) - $startTime) * 1000, 2) . 'ms';
+    }
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Returns the total request execution time in milliseconds, calculated from the request start time.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">TimelineCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tracks custom timeline events throughout the request lifecycle.
+                        </p>
+                        <pre><code class="language-php">class TimelineCollector implements CollectorInterface
+{
+    public function addEvent(string $name, string $label = 'event', array $data = []): void
+    {
+        $this->events[] = [
+            'name' => $name,
+            'label' => $label,
+            'time' => microtime(true),
+            'data' => $data,
+            'origin' => Debuger::backtraceOrigin()
+        ];
+    }
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Timeline events include:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Event name and label</li>
+                            <li>Timestamp in microseconds</li>
+                            <li>Optional event data</li>
+                            <li>Origin (class and method where event was added)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">MessageCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Collects custom debug messages with labels.
+                        </p>
+                        <pre><code class="language-php">class MessageCollector implements CollectorInterface
+{
+    public function addMessage(mixed $message, string $label = 'info'): void
+    {
+        $this->messages[] = [
+            'message' => $message,
+            'label' => $label,      // 'info', 'warning', 'error'
+            'time' => microtime(true),
+        ];
+    }
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Messages support labels: <code class="bg-gray-100 px-2 py-1 rounded">info</code>, <code class="bg-gray-100 px-2 py-1 rounded">warning</code>, <code class="bg-gray-100 px-2 py-1 rounded">error</code>.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">ExceptionCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tracks exceptions that occur during the request.
+                        </p>
+                        <pre><code class="language-php">class ExceptionCollector implements CollectorInterface
+{
+    public function addException(\Throwable $exception): void
+    {
+        $this->exceptions[] = [
+            'type' => get_class($exception),
+            'message' => $exception->getMessage(),
+            'code' => $exception->getCode(),
+            'file' => BASE_PATH . $exception->getFile() . ':' . $exception->getLine(),
+            'trace' => $exception->getTraceAsString(),
+        ];
+    }
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Captures exception type, message, code, file location, and full stack trace.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">RequestCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Collects HTTP request information.
+                        </p>
+                        <pre><code class="language-php">class RequestCollector
+{
+    public static function collect(Request $request): array
+    {
+        return [
+            'url' => $request->getUrl(),
+            'method' => $request->getMethod(),
+            'ip' => $request->getClientIp(),
+            'headers' => $request->getHeaders(),
+            'query' => $request->getQuery(),
+            'body' => $request->all(),
+            'cookies' => $_COOKIE,
+            'files' => $_FILES,
+        ];
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">RouteCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Collects current route information.
+                        </p>
+                        <pre><code class="language-php">class RouteCollector implements CollectorInterface
+{
+    public function collectRoutes(): array
+    {
+        return [
+            'uri' => '/example',
+            'method' => 'GET',
+            'handler' => 'App\\Controllers\\HomeController::index',
+            'middleware' => ['auth', 'csrf'],
+        ];
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">SessionCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Collects session data and metadata.
+                        </p>
+                        <pre><code class="language-php">class SessionCollector
+{
+    public function collectSessionData(): array
+    {
+        return [
+            'session_id' => 'abc123...',
+            'data' => [...],      // Formatted session data
+            'count' => 5           // Number of session keys
+        ];
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">ViewCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tracks rendered views and their data.
+                        </p>
+                        <pre><code class="language-php">class ViewCollector implements CollectorInterface
+{
+    public function addView(string $viewPath, array|object $data = []): void
+    {
+        $this->views[] = [
+            'path' => $viewPath,
+            'data' => $this->formatDebugData($data),
+        ];
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">DatabaseCollector</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tracks database queries with execution time and performance classification. <strong>Note:</strong> This collector exists but requires integration with the database layer to automatically collect queries.
+                        </p>
+                        <pre><code class="language-php">class DatabaseCollector implements CollectorInterface
+{
+    public function addQuery(
+        string $query,
+        array $bindings,
+        float $time,
+        string $connectionName,
+        string $origin
+    ): void {
+        $this->queries[] = [
+            'query' => $query,
+            'bindings' => $bindings,
+            'time_ms' => number_format($time, 2),
+            'connection_name' => $connectionName,
+            'origin' => $origin,
+            'performance' => $this->classifyQueryPerformance($time)  // 'fast', 'medium', 'slow'
+        ];
+    }
+
+    private function classifyQueryPerformance(float $time): string
+    {
+        if ($time > 100) return 'slow';
+        if ($time > 50) return 'medium';
+        return 'fast';
+    }
+}</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            Query performance is classified as:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Fast:</strong> &lt; 50ms</li>
+                            <li><strong>Medium:</strong> 50-100ms</li>
+                            <li><strong>Slow:</strong> &gt; 100ms</li>
+                        </ul>
+                    </section>
+
+                    <!-- Helper Functions -->
+                    <section id="helper-functions" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Helper Functions</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDebugbar provides helper functions for easy integration with your application code.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">add_timeline_event()</h3>
+                        <p class="text-gray-600 mb-4">
+                            Adds a custom timeline event to track specific points in your application's execution.
+                        </p>
+                        <pre><code class="language-php">add_timeline_event(string $name, string $label, array $data = []): void</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            <strong>Parameters:</strong>
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">$name</code> - Event name (e.g., 'user_authenticated', 'data_processed')</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">$label</code> - Event label (e.g., 'start', 'end', 'info', 'warning')</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">$data</code> - Optional event data array</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Example:</strong>
+                        </p>
+                        <pre><code class="language-php">// Track when a user is authenticated
+add_timeline_event('user_authenticated', 'info', [
+    'user_id' => $user->id,
+    'method' => 'email'
+]);
+
+// Track start of data processing
+add_timeline_event('data_processing', 'start');
+
+// Track end of data processing
+add_timeline_event('data_processing', 'end');</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            <strong>Note:</strong> This function only works when <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG</code> is <code class="bg-gray-100 px-2 py-1 rounded">true</code>.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">collect_view_data()</h3>
+                        <p class="text-gray-600 mb-4">
+                            Collects view rendering data for debugging. This is automatically called by the View class, but can be called manually if needed.
+                        </p>
+                        <pre><code class="language-php">collect_view_data(string $view, mixed $data = []): void</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            <strong>Parameters:</strong>
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">$view</code> - View path</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">$data</code> - View data (array or object)</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Example:</strong>
+                        </p>
+                        <pre><code class="language-php">// Automatically called by View class
+// But can be called manually if needed
+collect_view_data('pages/home/index', [
+    'title' => 'Home Page',
+    'users' => $users
+]);</code></pre>
+                    </section>
+
+                    <!-- Automatic HTML Injection -->
+                    <section id="html-injection" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Automatic HTML Injection</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDebugbar automatically injects the debug bar into HTML responses without requiring any manual integration. The injection is non-intrusive and only occurs when certain conditions are met.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Injection Process</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug bar is injected during the <code class="bg-gray-100 px-2 py-1 rounded">AFTER_REQUEST</code> lifecycle hook:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>All collectors gather their data</li>
+                            <li>Debug bar HTML is rendered with collected data</li>
+                            <li>CSS and JavaScript assets are injected</li>
+                            <li>Everything is inserted before the <code class="bg-gray-100 px-2 py-1 rounded">&lt;/body&gt;</code> tag</li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3">Injection Conditions</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug bar is only injected when all of the following conditions are met:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG</code> is <code class="bg-gray-100 px-2 py-1 rounded">true</code></li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">forge_debug_bar.enabled</code> config is <code class="bg-gray-100 px-2 py-1 rounded">true</code></li>
+                            <li>Response Content-Type is <code class="bg-gray-100 px-2 py-1 rounded">text/html</code> (or contains 'text/html')</li>
+                            <li>Response content is a string</li>
+                            <li>Response contains a <code class="bg-gray-100 px-2 py-1 rounded">&lt;/body&gt;</code> tag</li>
+                            <li>Response does not start with <code class="bg-gray-100 px-2 py-1 rounded">{"html":</code> (JSON response pattern)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Injection Implementation</h3>
+                        <pre><code class="language-php">public function injectDebugBarIntoHtml(
+    string $htmlContent,
+    string $debugBarHtml,
+    Container $container
+): string {
+    $cssLinkTag = sprintf(
+        '&lt;link rel="stylesheet" href="/assets/modules/forge-debug-bar/css/debugbar.css"&gt;'
+    );
+    $jsScriptTag = sprintf(
+        '&lt;script src="/assets/modules/forge-debug-bar/js/debugbar.js"&gt;&lt;/script&gt;'
+    );
+
+    $injectionPoint = strripos($htmlContent, '&lt;/body&gt;');
+
+    if ($injectionPoint !== false) {
+        $injectedContent = substr($htmlContent, 0, $injectionPoint) .
+            $cssLinkTag . "\n" .
+            $debugBarHtml . "\n" .
+            $jsScriptTag . "\n" .
+            substr($htmlContent, $injectionPoint);
+        return $injectedContent;
+    }
+
+    return $htmlContent . "\n" . $cssLinkTag . "\n" . $debugBarHtml . "\n" . $jsScriptTag;
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Asset Injection</h3>
+                        <p class="text-gray-600 mb-4">
+                            The following assets are automatically injected:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">/assets/modules/forge-debug-bar/css/debugbar.css</code> - Debug bar styles</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">/assets/modules/forge-debug-bar/js/debugbar.js</code> - Debug bar JavaScript</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            These assets are linked during module installation via the <code class="bg-gray-100 px-2 py-1 rounded">asset:link</code> command.
+                        </p>
+                    </section>
+
+                    <!-- Lifecycle Hooks -->
+                    <section id="lifecycle-hooks" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Lifecycle Hooks</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDebugbar integrates with Forge Kernel lifecycle hooks to collect data and inject the debug bar at the appropriate times.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">BEFORE_REQUEST Hook</h3>
+                        <p class="text-gray-600 mb-4">
+                            Initializes timeline tracking at the start of the request:
+                        </p>
+                        <pre><code class="language-php">#[LifecycleHook(hook: LifecycleHookName::BEFORE_REQUEST)]
+public function onBeforeRequest(Request $request): void
+{
+    add_timeline_event('onBeforeRequest', 'start');
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">AFTER_REQUEST Hook</h3>
+                        <p class="text-gray-600 mb-4">
+                            Collects all data and injects the debug bar into the response:
+                        </p>
+                        <pre><code class="language-php">#[LifecycleHook(hook: LifecycleHookName::AFTER_REQUEST)]
+public function onAfterRequest(Request $request, Response $response): void
+{
+    add_timeline_event('onAfterRequest', 'end');
+
+    // Initialize memory collector
+    self::$memoryCollector = MemoryCollector::instance();
+
+    // Get debug bar instance
+    $debugbar = $this->getDebugbarInstance();
+
+    // Register all collectors
+    $requestData = RequestCollector::collect($request);
+    $debugbar->addCollector('request', function () use ($requestData) {
+        return $requestData;
+    });
+
+    $sessionData = SessionCollector::collect();
+    $debugbar->addCollector('session', function () use ($sessionData) {
+        return $sessionData;
+    });
+
+    $debugbar->addCollector('memory', function () {
+        return self::$memoryCollector ? 
+            self::$memoryCollector->getMemoryUsage() : 
+            ['error' => 'Memory collector not initialized'];
+    });
+
+    $timeData = TimeCollector::collect();
+    $debugbar->addCollector('time', function () use ($timeData) {
+        return $timeData;
+    });
+
+    $timelineData = TimelineCollector::collect();
+    $debugbar->addCollector('timeline', function () use ($timelineData) {
+        return $timelineData;
+    });
+
+    $messagesData = MessageCollector::collect();
+    $debugbar->addCollector('messages', function () use ($messagesData) {
+        return $messagesData;
+    });
+
+    $routeData = RouteCollector::collect();
+    $debugbar->addCollector('route', function () use ($routeData) {
+        return $routeData;
+    });
+
+    $viewData = ViewCollector::collect();
+    $debugbar->addCollector('views', function () use ($viewData) {
+        return $viewData;
+    });
+
+    $exceptionData = ExceptionCollector::collect();
+    $debugbar->addCollector('exceptions', function () use ($exceptionData) {
+        return $exceptionData;
+    });
+
+    // Inject debug bar into response
+    DebugBar::getInstance()->injectDebugBarIfEnabled($response, Container::getInstance());
+}</code></pre>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDebugbar requires both an environment variable and a configuration setting to be enabled.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Environment Variable</h3>
+                        <p class="text-gray-600 mb-4">
+                            Set <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG</code> in your <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file:
+                        </p>
+                        <pre><code class="language-bash">APP_DEBUG=true</code></pre>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Security Warning:</strong> Never set <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG=true</code> in production. The debug bar exposes sensitive information and should only be used in development environments.
+                            </p>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Module Configuration</h3>
+                        <p class="text-gray-600 mb-4">
+                            The module provides a default configuration:
+                        </p>
+                        <pre><code class="language-php">#[ConfigDefaults(defaults: [
+    'forge_debug_bar' => [
+        'enabled' => true
+    ]
+])]</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            You can override this in your application configuration:
+                        </p>
+                        <pre><code class="language-php">// config/forge_debug_bar.php
+return [
+    'enabled' => env('APP_DEBUG', false),
+];</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Enablement Check</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug bar is only shown when both conditions are true:
+                        </p>
+                        <pre><code class="language-php">public function shouldEnableDebugBar(Container $container): bool
+{
+    $forgeDebug = env('APP_DEBUG');
+    $config = $container->get(Config::class);
+    $configEnabled = $config->get('forge_debug_bar.enabled', true);
+    
+    return $configEnabled && $forgeDebug;
+}</code></pre>
+                    </section>
+
+                    <!-- Debug Bar UI -->
+                    <section id="debug-bar-ui" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Debug Bar UI</h2>
+                        <p class="text-gray-600 mb-6">
+                            The debug bar provides a tabbed interface with multiple panels for different types of debugging information.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Tabbed Interface</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug bar includes the following tabs:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Memory:</strong> Current memory usage, peak memory, and memory percentage</li>
+                            <li><strong>Messages:</strong> Custom debug messages with labels (info, warning, error)</li>
+                            <li><strong>Timeline:</strong> Request lifecycle events with timestamps and origins</li>
+                            <li><strong>Exceptions:</strong> Exceptions with type, message, code, file, and stack trace</li>
+                            <li><strong>Views:</strong> Rendered views with their data</li>
+                            <li><strong>Route:</strong> Current route URI, method, handler, and middleware</li>
+                            <li><strong>Queries:</strong> Database queries with execution time and performance classification</li>
+                            <li><strong>Session:</strong> Session ID and all session data</li>
+                            <li><strong>Request:</strong> URL, method, IP, headers, query parameters, body, cookies, and files</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Tab Counts</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tabs display counts for collections:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Messages tab shows: <code class="bg-gray-100 px-2 py-1 rounded">Messages (5)</code></li>
+                            <li>Timeline tab shows: <code class="bg-gray-100 px-2 py-1 rounded">Timeline (12)</code></li>
+                            <li>Exceptions tab shows: <code class="bg-gray-100 px-2 py-1 rounded">Exceptions (2)</code></li>
+                            <li>Queries tab shows: <code class="bg-gray-100 px-2 py-1 rounded">Queries (8)</code></li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Collapsible Panels</h3>
+                        <p class="text-gray-600 mb-4">
+                            Panels can be collapsed/expanded by clicking on the Forge logo. Individual sections within panels can also be collapsed for better organization.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">JavaScript Interactivity</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug bar JavaScript handles:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Tab switching</li>
+                            <li>Panel collapse/expand</li>
+                            <li>Section toggle (for nested data)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Display Values</h3>
+                        <p class="text-gray-600 mb-4">
+                            The debug bar header displays key metrics:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Memory usage (current)</li>
+                            <li>Execution time (in milliseconds)</li>
+                            <li>PHP version</li>
+                        </ul>
+                    </section>
+
+                    <!-- Integration Points -->
+                    <section id="integration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Integration Points</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeDebugbar integrates with various parts of the Forge Kernel to collect debugging information.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">View Rendering</h3>
+                        <p class="text-gray-600 mb-4">
+                            The View class automatically calls <code class="bg-gray-100 px-2 py-1 rounded">collect_view_data()</code> when rendering views:
+                        </p>
+                        <pre><code class="language-php">// engine/Core/View/View.php
+private function ensureRequestCollectorExist(string $view, array $data): void
+{
+    $ready = is_file($requestCollectorFile)
+        && class_exists(\App\Modules\ForgeDebugbar\Collectors\RequestCollector::class);
+    
+    if ($ready) {
+        if (function_exists('collect_view_data')) {
+            collect_view_data($view, $data);
+        }
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Exception Handling</h3>
+                        <p class="text-gray-600 mb-4">
+                            The Debuger helper class provides methods for logging exceptions:
+                        </p>
+                        <pre><code class="language-php">// engine/Core/Helpers/Debuger.php
+public static function logException(\Throwable $exception): void
+{
+    if (class_exists(ExceptionCollector::class)) {
+        if (env('APP_ENV', false)) {
+            $exceptionCollector = Container::getInstance()->get(ExceptionCollector::class);
+            $exceptionCollector::instance()->addException($exception);
+        }
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Debug Messages</h3>
+                        <p class="text-gray-600 mb-4">
+                            The Debuger helper class provides a method for adding debug messages:
+                        </p>
+                        <pre><code class="language-php">// engine/Core/Helpers/Debuger.php
+public static function message(mixed $message, string $label = 'info'): void
+{
+    if (class_exists(\App\Modules\ForgeDebugbar\DebugBar::class)) {
+        if (env('APP_ENV', false)) {
+            $messageCollector = Container::getInstance()->get(MessageCollector::class);
+            $messageCollector::instance()->addMessage($message, $label);
+        }
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Request Lifecycle</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeDebugbar hooks into the request lifecycle via lifecycle hooks:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>BEFORE_REQUEST:</strong> Initializes timeline tracking</li>
+                            <li><strong>AFTER_REQUEST:</strong> Collects all data and injects debug bar</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Session Management</h3>
+                        <p class="text-gray-600 mb-4">
+                            SessionCollector automatically collects session data from the active session if available.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Database Queries</h3>
+                        <p class="text-gray-600 mb-4">
+                            DatabaseCollector exists and can track queries, but requires integration with the database layer. The collector expects queries to be added via:
+                        </p>
+                        <pre><code class="language-php">DatabaseCollector::instance()->addQuery(
+    $query,
+    $bindings,
+    $timeInMilliseconds,
+    $connectionName,
+    $origin
+);</code></pre>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+
+                        <h3 class="text-lg font-semibold mb-3">Adding Timeline Events</h3>
+                        <pre><code class="language-php">// Track when a user logs in
+add_timeline_event('user_login', 'info', [
+    'user_id' => $user->id,
+    'method' => 'email'
+]);
+
+// Track start of expensive operation
+add_timeline_event('data_processing', 'start');
+
+// Process data...
+$result = processLargeDataset($data);
+
+// Track end of expensive operation
+add_timeline_event('data_processing', 'end', [
+    'records_processed' => count($result)
+]);</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Adding Debug Messages</h3>
+                        <pre><code class="language-php">use Forge\Core\Helpers\Debuger;
+
+// Add info message
+Debuger::message('User authenticated successfully', 'info');
+
+// Add warning message
+Debuger::message('Cache miss detected', 'warning');
+
+// Add error message
+Debuger::message('Failed to connect to external API', 'error');</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Logging Exceptions</h3>
+                        <pre><code class="language-php">use Forge\Core\Helpers\Debuger;
+
+try {
+    // Some code that might throw an exception
+    $result = riskyOperation();
+} catch (\Exception $e) {
+    // Log exception to debug bar
+    Debuger::logException($e);
+    
+    // Handle exception...
+    throw $e;
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Configuration Example</h3>
+                        <pre><code class="language-php">// .env
+APP_DEBUG=true
+
+// config/forge_debug_bar.php
+return [
+    'enabled' => env('APP_DEBUG', false),
+];</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3">Custom Collector (Advanced)</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can create custom collectors by implementing the CollectorInterface:
+                        </p>
+                        <pre><code class="language-php">use App\Modules\ForgeDebugbar\Collectors\CollectorInterface;
+
+class CustomCollector implements CollectorInterface
+{
+    private array $data = [];
+
+    public static function collect(...$args): array
+    {
+        return self::instance()->data;
+    }
+
+    public static function instance(): self
+    {
+        static $instance = null;
+        if (null === $instance) {
+            $instance = new self();
+        }
+        return $instance;
+    }
+
+    public function addData(string $key, mixed $value): void
+    {
+        $this->data[$key] = $value;
+    }
+}
+
+// Register in DebugBarModule::onAfterRequest()
+$customData = CustomCollector::collect();
+$debugbar->addCollector('custom', function () use ($customData) {
+    return $customData;
+});</code></pre>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+
+                        <h3 class="text-lg font-semibold mb-3">Development Only</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Always disable <code class="bg-gray-100 px-2 py-1 rounded">APP_DEBUG</code> in production</li>
+                            <li>Never deploy with debug bar enabled to production environments</li>
+                            <li>Use environment-specific configuration to ensure debug bar is disabled in production</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Timeline Events</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use timeline events to track performance bottlenecks</li>
+                            <li>Add events at the start and end of expensive operations</li>
+                            <li>Include relevant data in event data for debugging</li>
+                            <li>Use descriptive event names and labels</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Debug Messages</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use messages for important debugging information</li>
+                            <li>Use appropriate labels (info, warning, error)</li>
+                            <li>Keep messages concise but informative</li>
+                            <li>Remove debug messages before committing to production</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Memory Monitoring</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Monitor memory usage during development</li>
+                            <li>Watch for memory leaks in long-running processes</li>
+                            <li>Use memory percentage to identify potential issues</li>
+                            <li>Check peak memory usage for optimization opportunities</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Query Performance</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Review query execution times in the Queries tab</li>
+                            <li>Identify slow queries (marked in red)</li>
+                            <li>Optimize queries that exceed performance thresholds</li>
+                            <li>Use query origin to identify where queries are executed</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Exception Tracking</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Review exceptions in the Exceptions tab</li>
+                            <li>Use stack traces to identify root causes</li>
+                            <li>Check exception types and messages for patterns</li>
+                            <li>Fix exceptions before deploying to production</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">View Tracking</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Review rendered views to understand view hierarchy</li>
+                            <li>Check view data to ensure correct data is passed</li>
+                            <li>Identify unnecessary view renders</li>
+                            <li>Optimize view rendering for performance</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Security Considerations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Never enable debug bar in production</li>
+                            <li>Debug bar exposes sensitive information (session data, request data, etc.)</li>
+                            <li>Use environment variables to control debug bar visibility</li>
+                            <li>Consider IP-based restrictions for development environments</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active nav link
+        const sections = document.querySelectorAll('.section-anchor');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        highlightNav();
+    </script>
+</body>
+
+</html>
+
