@@ -1350,6 +1350,21 @@ if (config('services.stripe.key')) {
                         The kernel provides a powerful CLI system for creating custom commands and automating tasks. Commands can be created in your application or provided by capabilities (modules).
                     </p>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Interactive Command Browser</h3>
+                        <p class="text-gray-600 mb-4">
+                            Forge includes a retro-styled interactive command browser. Simply run <code class="bg-gray-100 px-2 py-1 rounded">php forge.php</code> without arguments to access it. The browser features a splash screen, multi-column command listings, category-based browsing, and allows you to execute commands or view help directly. Use arrow keys (↑↓←→) to navigate and Esc to exit.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Launch interactive browser
+php forge.php
+
+# Skip splash screen
+php forge.php --no-splash
+
+# Show traditional command list
+php forge.php --list</code></pre>
+                        </div>
+
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Creating Custom Commands</h3>
                         <p class="text-gray-600 mb-4">
                             Commands use the <code class="bg-gray-100 px-2 py-1 rounded">#[Cli]</code> attribute to define the command name, description, usage, and examples. Arguments are defined using the <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attribute on class properties.

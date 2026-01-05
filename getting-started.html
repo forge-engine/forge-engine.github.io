@@ -685,6 +685,46 @@ php forge.php dev:registry:init             # Initialize new registry</code></pr
                             Most commands use interactive wizards by default. You can skip wizards by providing options with <code class="bg-gray-100 px-2 py-1 rounded">--option=value</code> flags.
                         </p>
 
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Interactive Command Browser</h3>
+                        <p class="text-gray-600 mb-4">
+                            Forge includes a retro-styled interactive command browser that makes it easy to discover and execute commands. Simply run <code class="bg-gray-100 px-2 py-1 rounded">php forge.php</code> without any arguments to access it.
+                        </p>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-info-circle text-blue-500"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-blue-700">
+                                        <strong>Features:</strong> The interactive browser includes a splash screen (skippable with <code class="bg-blue-100 px-1 py-0.5 rounded text-xs">--no-splash</code>), multi-column command listings that adapt to your terminal width, category-based browsing, and the ability to execute commands or view help directly from the interface. Use arrow keys to navigate and Esc to exit.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Launch interactive command browser
+php forge.php
+
+# Skip splash screen
+php forge.php --no-splash
+
+# Show traditional command list
+php forge.php --list
+
+# Launch interactive browser directly
+php forge.php --interactive</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            The interactive browser allows you to:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 mb-6 space-y-2">
+                            <li>Browse commands by category (General, Database, Modules, etc.)</li>
+                            <li>View all commands in a searchable multi-column layout</li>
+                            <li>Execute commands directly from the browser</li>
+                            <li>View detailed help for any command</li>
+                            <li>Navigate with arrow keys (↑↓←→) and exit with Esc</li>
+                        </ul>
+
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Generate Commands</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Generate files (wizards ask for type: app/module, name, etc.)
@@ -750,8 +790,11 @@ php forge.php package:list-modules</code></pre>
                             <pre><code class="language-bash"># Generate application key
 php forge.php key:generate
 
-# See all available commands
-php forge.php help</code></pre>
+# See all available commands (traditional list)
+php forge.php help
+
+# Launch interactive command browser
+php forge.php</code></pre>
                         </div>
                     </section>
 
