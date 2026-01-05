@@ -637,7 +637,7 @@ final class TodoController
             &lt;/div&gt;
         &lt;?php endif; ?&gt;
 
-        &lt;?= section('content') ?&gt;
+        &lt;?= $content ?&gt;
     &lt;/main&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
@@ -648,7 +648,6 @@ final class TodoController
                         </p>
                         <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php layout('todos'); ?&gt;
 
-&lt;?php section('content'); ?&gt;
 &lt;div class="bg-white rounded-lg shadow p-6"&gt;
     &lt;h1 class="text-2xl font-bold mb-6"&gt;My Todos&lt;/h1&gt;
 
@@ -719,8 +718,7 @@ final class TodoController
             &lt;p class="text-gray-500 text-center py-8"&gt;No todos yet. Create your first todo above!&lt;/p&gt;
         &lt;?php endif; ?&gt;
     &lt;/div&gt;
-&lt;/div&gt;
-&lt;?php section('content'); ?&gt;</code></pre>
+&lt;/div&gt;</code></pre>
                     </section>
 
                     <!-- ForgeWire Components -->
@@ -780,12 +778,12 @@ final class TodoList extends WireComponent
             return;
         }
 
-        $todo = new Todo();
-        $todo->user_id = $user->id;
-        $todo->title = $this->newTodoTitle;
-        $todo->description = $this->newTodoDescription ?: null;
-        $todo->completed = false;
-        $todo->save();
+        $this->repository->create([
+            'user_id' => $user->id,
+            'title' => $this->newTodoTitle,
+            'description' => $this->newTodoDescription ?: null,
+            'completed' => false,
+        ]);
 
         $this->newTodoTitle = '';
         $this->newTodoDescription = '';
@@ -861,28 +859,28 @@ final class TodoList extends WireComponent
     &lt;h2 class="text-xl font-bold mb-4"&gt;Interactive Todo List&lt;/h2&gt;
 
     &lt;!-- Add Todo Form --&gt;
-    &lt;div class="mb-6"&gt;
+    &lt;form wire:submit="addTodo" class="mb-6"&gt;
         &lt;div class="flex gap-4 mb-2"&gt;
             &lt;input 
                 type="text" 
-                wire:model="newTodoTitle"
+                wire:model.lazy="newTodoTitle"
                 placeholder="Todo title..." 
                 class="flex-1 px-4 py-2 border border-gray-300 rounded-md"
             &gt;
             &lt;input 
                 type="text" 
-                wire:model="newTodoDescription"
+                wire:model.lazy="newTodoDescription"
                 placeholder="Description (optional)"
                 class="flex-1 px-4 py-2 border border-gray-300 rounded-md"
             &gt;
             &lt;button 
-                wire:click="addTodo"
+                type="submit"
                 class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             &gt;
                 Add
             &lt;/button&gt;
         &lt;/div&gt;
-    &lt;/div&gt;
+    &lt;/form&gt;
 
     &lt;!-- Todos List --&gt;
     &lt;div class="space-y-3"&gt;
@@ -921,9 +919,12 @@ final class TodoList extends WireComponent
 
                         <h3 class="text-lg font-semibold mb-3 mt-6">Using the Wire Component</h3>
                         <p class="text-gray-600 mb-4">
-                            In your view, use the <code class="bg-gray-100 px-2 py-1 rounded">wire()</code> helper to render the component:
+                            In your view, use the <code class="bg-gray-100 px-2 py-1 rounded">wire_name()</code> helper to render the component:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?= wire('TodoList') ?&gt;</code></pre>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?= wire_name('todo-list') ?&gt;</code></pre>
+                        <p class="text-gray-600 mb-4 mt-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">wire_name()</code> helper automatically converts kebab-case names (like <code class="bg-gray-100 px-2 py-1 rounded">todo-list</code>) to the corresponding component class (<code class="bg-gray-100 px-2 py-1 rounded">App\Components\Wire\TodoList</code>).
+                        </p>
                     </section>
 
                     <!-- Events -->
