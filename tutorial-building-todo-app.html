@@ -373,6 +373,9 @@ class TodoRepository extends RecordRepository
             ->get();
     }
 }</code></pre>
+                        <p class="text-gray-600 mb-4">
+                            The repository extends <code class="bg-gray-100 px-2 py-1 rounded">RecordRepository</code>, which provides a <code class="bg-gray-100 px-2 py-1 rounded">create()</code> method that accepts an array of data and returns the created model instance. This method handles model instantiation, property assignment, saving, and cache invalidation automatically.
+                        </p>
                     </section>
 
                     <!-- Authentication -->
@@ -415,24 +418,91 @@ public function index(): Response
 
                         <h3 class="text-lg font-semibold mb-3 mt-6">Protecting Routes</h3>
                         <p class="text-gray-600 mb-4">
-                            Use the AuthMiddleware to protect routes that require authentication:
+                            Use the AuthMiddleware to protect routes that require authentication. It's best practice to apply middleware at the class level when all methods require the same middleware:
                         </p>
                         <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">use App\Modules\ForgeAuth\Middlewares\AuthMiddleware;
 use Forge\Core\Http\Attributes\Middleware;
 
-#[Route("/todos")]
+#[Service]
+#[Middleware("web")]
 #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
-public function index(): Response
+final class TodoController
 {
-    // This route requires authentication
+    // All methods in this controller require authentication
+    #[Route("/todos")]
+    public function index(): Response
+    {
+        // This route requires authentication
+    }
 }</code></pre>
+                        <p class="text-gray-600 mb-4">
+                            This approach is cleaner than repeating the middleware attribute on each method, and ensures all routes in the controller are protected.
+                        </p>
+                    </section>
+
+                    <!-- Data Transfer Objects -->
+                    <section id="data-transfer-objects" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Data Transfer Objects (DTOs)</h2>
+                        <p class="text-gray-600 mb-6">
+                            Before creating our controller, let's create a DTO (Data Transfer Object) for creating todos. DTOs provide several benefits:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-6">
+                            <li><strong>Type Safety:</strong> DTOs enforce type checking and ensure data integrity</li>
+                            <li><strong>Validation:</strong> Centralized validation logic for input data</li>
+                            <li><strong>Documentation:</strong> Clear contract of what data is expected</li>
+                            <li><strong>Maintainability:</strong> Changes to data structure are isolated to the DTO</li>
+                            <li><strong>Security:</strong> Prevents mass assignment vulnerabilities by explicitly defining allowed fields</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Creating CreateTodoDTO</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/Dto/CreateTodoDTO.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
+
+declare(strict_types=1);
+
+namespace App\Dto;
+
+final class CreateTodoDTO
+{
+    public function __construct(
+        public string $title,
+        public ?string $description = null,
+        public bool $completed = false,
+    ) {
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            title: (string)($data['title'] ?? ''),
+            description: isset($data['description']) && $data['description'] !== '' 
+                ? (string)$data['description'] 
+                : null,
+            completed: isset($data['completed']) && (bool)$data['completed'],
+        );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+            'completed' => $this->completed,
+        ];
+    }
+}</code></pre>
+                        <p class="text-gray-600 mb-4">
+                            This DTO defines the structure for creating a todo. The <code class="bg-gray-100 px-2 py-1 rounded">fromArray()</code> method safely converts request data into a typed DTO instance, while <code class="bg-gray-100 px-2 py-1 rounded">toArray()</code> converts it back to an array for database operations.
+                        </p>
                     </section>
 
                     <!-- Controllers & Routes -->
                     <section id="controllers-routes" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Controllers & Routes</h2>
                         <p class="text-gray-600 mb-6">
-                            Now let's create our TodoController with full CRUD operations.
+                            Now let's create our TodoController with full CRUD operations. We'll use descriptive method names (not Laravel-style) and follow best practices by using DTOs and the repository pattern.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Creating TodoController</h3>
@@ -445,7 +515,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Models\Todo;
+use App\Dto\CreateTodoDTO;
 use App\Modules\ForgeAuth\Middlewares\AuthMiddleware;
 use App\Modules\ForgeAuth\Services\ForgeAuthService;
 use App\Repositories\TodoRepository;
@@ -461,6 +531,7 @@ use Forge\Traits\SecurityHelper;
 
 #[Service]
 #[Middleware("web")]
+#[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
 final class TodoController
 {
     use ControllerHelper;
@@ -472,7 +543,6 @@ final class TodoController
     ) {}
 
     #[Route("/todos")]
-    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
     public function index(): Response
     {
         $user = $this->auth->user();
@@ -485,8 +555,7 @@ final class TodoController
     }
 
     #[Route("/todos", "POST")]
-    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
-    public function store(Request $request): Response
+    public function createTodo(Request $request): Response
     {
         $user = $this->auth->user();
         $data = $this->sanitize($request->postData);
@@ -496,23 +565,24 @@ final class TodoController
             return Redirect::to("/todos");
         }
 
-        $todo = new Todo();
-        $todo->user_id = $user->id;
-        $todo->title = $data['title'];
-        $todo->description = $data['description'] ?? null;
-        $todo->completed = false;
-        $todo->save();
+        $dto = CreateTodoDTO::fromArray($data);
+        
+        $todo = $this->repository->create([
+            'user_id' => $user->id,
+            'title' => $dto->title,
+            'description' => $dto->description,
+            'completed' => $dto->completed,
+        ]);
 
         Flash::set("success", "Todo created successfully");
         return Redirect::to("/todos");
     }
 
     #[Route("/todos/{id}", "PATCH")]
-    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
-    public function update(Request $request, string $id): Response
+    public function updateTodo(Request $request, string $id): Response
     {
         $user = $this->auth->user();
-        $todo = $this->repository->findById((int)$id);
+        $todo = $this->repository->find((int)$id);
 
         if ($todo === null || $todo->user_id !== $user->id) {
             Flash::set("error", "Todo not found");
@@ -521,30 +591,32 @@ final class TodoController
 
         $data = $this->sanitize($request->postData);
         
+        $updateData = [];
         if (isset($data['title'])) {
-            $todo->title = $data['title'];
+            $updateData['title'] = $data['title'];
         }
         
         if (isset($data['description'])) {
-            $todo->description = $data['description'];
+            $updateData['description'] = $data['description'];
         }
         
         if (isset($data['completed'])) {
-            $todo->completed = (bool)$data['completed'];
+            $updateData['completed'] = (bool)$data['completed'];
         }
 
-        $todo->save();
+        if (!empty($updateData)) {
+            $this->repository->update($todo, $updateData);
+        }
 
         Flash::set("success", "Todo updated successfully");
         return Redirect::to("/todos");
     }
 
     #[Route("/todos/{id}/toggle", "POST")]
-    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
     public function toggle(string $id): Response
     {
         $user = $this->auth->user();
-        $todo = $this->repository->findById((int)$id);
+        $todo = $this->repository->find((int)$id);
 
         if ($todo === null || $todo->user_id !== $user->id) {
             Flash::set("error", "Todo not found");
@@ -558,18 +630,17 @@ final class TodoController
     }
 
     #[Route("/todos/{id}", "DELETE")]
-    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
-    public function destroy(string $id): Response
+    public function deleteTodo(string $id): Response
     {
         $user = $this->auth->user();
-        $todo = $this->repository->findById((int)$id);
+        $todo = $this->repository->find((int)$id);
 
         if ($todo === null || $todo->user_id !== $user->id) {
             Flash::set("error", "Todo not found");
             return Redirect::to("/todos");
         }
 
-        $todo->delete();
+        $this->repository->delete($todo);
         Flash::set("success", "Todo deleted successfully");
         
         return Redirect::to("/todos");
@@ -793,7 +864,7 @@ final class TodoList extends WireComponent
     #[Action]
     public function toggleTodo(int $todoId): void
     {
-        $todo = $this->repository->findById($todoId);
+        $todo = $this->repository->find($todoId);
         if ($todo === null) {
             return;
         }
@@ -810,7 +881,7 @@ final class TodoList extends WireComponent
     #[Action]
     public function deleteTodo(int $todoId): void
     {
-        $todo = $this->repository->findById($todoId);
+        $todo = $this->repository->find($todoId);
         if ($todo === null) {
             return;
         }
