@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeMultiTenant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-blue-600 font-medium">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ForgeMultiTenant</h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#architecture" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture & Design</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#strategies" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Multi-Tenancy Strategies</a>
+                        <a href="#tenant-identification" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Tenant Identification</a>
+                        <a href="#tenant-model" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Tenant Model & DTO</a>
+                        <a href="#tenant-scoping" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Tenant Scoping (Models)</a>
+                        <a href="#route-scoping" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Route Scoping (Controllers)</a>
+                        <a href="#middleware" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Middleware</a>
+                        <a href="#connection-management" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Connection Management</a>
+                        <a href="#query-rewriting" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Query Rewriting</a>
+                        <a href="#cli-commands" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">CLI Commands</a>
+                        <a href="#configuration" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Configuration</a>
+                        <a href="#database-schema" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Database Schema</a>
+                        <a href="#examples" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage Examples</a>
+                        <a href="#best-practices" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best Practices</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">ForgeMultiTenant</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Multi-tenancy support for Forge Kernel. Provides multiple database strategies, domain-based tenant identification, automatic tenant scoping, and tenant-specific migrations and seeders.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeMultiTenant provides comprehensive multi-tenancy support for Forge Kernel applications. It enables a single application instance to serve multiple tenants with complete data isolation, automatic tenant resolution, and flexible database strategies.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Multiple database strategies (COLUMN, VIEW, DB)</span></div>
+                                    <div class="flex items-center"><span>Domain and subdomain-based tenant identification</span></div>
+                                    <div class="flex items-center"><span>Central domain support for admin functionality</span></div>
+                                    <div class="flex items-center"><span>Automatic tenant resolution from Host header</span></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Tenant-scoped models with automatic query filtering</span></div>
+                                    <div class="flex items-center"><span>Route scoping (central vs tenant)</span></div>
+                                    <div class="flex items-center"><span>Tenant-specific migrations and seeders</span></div>
+                                    <div class="flex items-center"><span>Automatic connection management</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeMultiTenant Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Multiple Database Strategies:</strong> COLUMN (shared database), VIEW (database views), and DB (separate databases)</li>
+                            <li><strong>Domain-Based Identification:</strong> Automatic tenant resolution from domain or subdomain</li>
+                            <li><strong>Central Domain:</strong> Special handling for admin/central functionality separate from tenants</li>
+                            <li><strong>Automatic Tenant Scoping:</strong> Models and queries automatically filtered to current tenant</li>
+                            <li><strong>Route Scoping:</strong> Controllers can be scoped to central or tenant routes</li>
+                            <li><strong>Connection Management:</strong> Automatic database connection setup based on tenant strategy</li>
+                            <li><strong>Query Rewriting:</strong> Automatic WHERE tenant_id injection for COLUMN strategy</li>
+                            <li><strong>CLI Tools:</strong> Tenant-specific migrations and seeders with preview support</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Generic Module:</strong> ForgeMultiTenant is a generic module (type: 'generic', order: 2), providing multi-tenancy functionality that can be installed as needed. It depends on ForgeDatabaseSql for database operations.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture & Design Philosophy</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeMultiTenant is built with flexibility, performance, and security in mind.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Multi-Tenancy Patterns</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeMultiTenant supports three common multi-tenancy patterns:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Shared Database, Shared Schema (COLUMN):</strong> All tenants share the same database and schema, isolated by tenant_id column</li>
+                            <li><strong>Shared Database, Separate Views (VIEW):</strong> All tenants share the same database, but use database views for isolation</li>
+                            <li><strong>Separate Databases (DB):</strong> Each tenant has its own database with complete isolation</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Strategy-Based Database Isolation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Each tenant can use a different strategy:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Strategy is configured per tenant in the tenants table</li>
+                            <li>Connection factory automatically uses the correct strategy</li>
+                            <li>Query rewriting only active for COLUMN strategy</li>
+                            <li>Different strategies can coexist in the same application</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Domain-Based Tenant Identification</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tenants are identified automatically from the request:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>TenantMiddleware reads Host header</li>
+                            <li>TenantManager resolves tenant from domain/subdomain</li>
+                            <li>Central domain is excluded from tenant resolution</li>
+                            <li>Local development (localhost) is handled gracefully</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Connection Management</h3>
+                        <p class="text-gray-600 mb-4">
+                            Database connections are managed automatically:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>TenantConnectionFactory creates connections based on strategy</li>
+                            <li>Connections are cached per tenant</li>
+                            <li>Container is updated with tenant-specific connection</li>
+                            <li>QueryBuilder is recreated with tenant connection</li>
+                        </ul>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeMultiTenant can be installed via ForgePackageManager.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using ForgePackageManager</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install with wizard (interactive)
+php forge.php package:install-module
+
+# Install directly (skip wizard)
+php forge.php package:install-module --module=ForgeMultiTenant
+
+# Install specific version
+php forge.php package:install-module --module=ForgeMultiTenant@0.1.8</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Dependencies</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeMultiTenant requires:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>ForgeDatabaseSql:</strong> Required for database operations and migrations</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Post-Install Setup</h3>
+                        <p class="text-gray-600 mb-4">
+                            The module automatically runs migrations and seeders on install:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Automatically runs:
+# 1. Module migrations (creates tenants table)
+# 2. Module seeders (creates default tenant)
+# 3. Tenant migrations (runs app/Database/Migrations/Tenants)
+# 4. Tenant seeders (runs app/Database/Seeders/Tenants)</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Configuration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Set the central domain in your environment:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">CENTRAL_DOMAIN=forge-v3.test</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Multi-Tenancy Strategies -->
+                    <section id="strategies" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Multi-Tenancy Strategies</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeMultiTenant supports three database strategies, each with different isolation levels and use cases.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">COLUMN Strategy</h3>
+                        <p class="text-gray-600 mb-4">
+                            Same database, tenant_id column for isolation:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>All tenants share the same database and schema</li>
+                            <li>Data isolation via <code>tenant_id</code> column</li>
+                            <li>Queries automatically filtered by <code>tenant_id</code></li>
+                            <li>Query rewriting via TenantQueryRewriter</li>
+                            <li>Most cost-effective for many tenants</li>
+                            <li>Best for: SaaS applications with many small tenants</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Tenant configuration
+[
+    'id' => 'tenant-1',
+    'domain' => 'example.com',
+    'subdomain' => 'tenant1',
+    'strategy' => 'column',
+    'db_name' => null,  // Uses default database
+    'connection' => null
+]</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">VIEW Strategy</h3>
+                        <p class="text-gray-600 mb-4">
+                            Same database, database views for isolation:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>All tenants share the same database</li>
+                            <li>Uses PostgreSQL/SQLite database views</li>
+                            <li><code>SET app.tenant</code> variable for view filtering</li>
+                            <li>Automatic view-based filtering</li>
+                            <li>Better isolation than COLUMN strategy</li>
+                            <li>Best for: Applications needing better data isolation without separate databases</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Tenant configuration
+[
+    'id' => 'tenant-2',
+    'domain' => 'example.com',
+    'subdomain' => 'tenant2',
+    'strategy' => 'view',
+    'db_name' => null,
+    'connection' => null
+]
+
+// Connection automatically sets:
+// SET app.tenant = 'tenant-2'</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">DB Strategy</h3>
+                        <p class="text-gray-600 mb-4">
+                            Separate database per tenant:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Each tenant has its own database</li>
+                            <li>Complete data isolation</li>
+                            <li>Separate database connections</li>
+                            <li>Connections cached per tenant</li>
+                            <li>Best for: High-security requirements, large tenants, compliance needs</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Tenant configuration
+[
+    'id' => 'tenant-3',
+    'domain' => 'tenant3.com',
+    'subdomain' => null,
+    'strategy' => 'database',
+    'db_name' => 'tenant3_db',  // Separate database name
+    'connection' => null
+]
+
+// SQLite: Creates storage/Database/tenant3_db.sqlite
+// MySQL/PostgreSQL: Uses tenant3_db database</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Strategy Comparison</h3>
+                        <div class="overflow-x-auto mb-6">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Strategy</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Isolation</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cost</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Use Case</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">COLUMN</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Low</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Lowest</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Many small tenants</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">VIEW</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Medium</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Low</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">Better isolation needed</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">DB</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">High</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Higher</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">High security, compliance</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Tenant Identification -->
+                    <section id="tenant-identification" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Tenant Identification</h2>
+                        <p class="text-gray-600 mb-6">
+                            Tenants are automatically identified from the request's Host header.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Domain-Based Identification</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tenants are resolved by matching the request domain:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>TenantMiddleware reads Host header from request</li>
+                            <li>TenantManager resolves tenant from domain/subdomain</li>
+                            <li>Matches against tenants table</li>
+                            <li>Sets tenant in request attributes</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Subdomain Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tenants can be identified by subdomain:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Tenant configuration
+[
+    'id' => 'my-tenant',
+    'domain' => 'forge-v3.test',
+    'subdomain' => 'my-tenant',  // Subdomain
+    'strategy' => 'column'
+]
+
+// Resolves from: my-tenant.forge-v3.test</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Full Domain Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tenants can also use full domains:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Tenant configuration
+[
+    'id' => 'enterprise-tenant',
+    'domain' => 'enterprise.com',
+    'subdomain' => null,  // No subdomain
+    'strategy' => 'database'
+]
+
+// Resolves from: enterprise.com</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Central Domain</h3>
+                        <p class="text-gray-600 mb-4">
+                            The central domain is excluded from tenant resolution:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Environment configuration
+CENTRAL_DOMAIN=forge-v3.test
+
+# Requests to forge-v3.test are NOT resolved as tenants
+# Used for admin/central functionality</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Local Development</h3>
+                        <p class="text-gray-600 mb-4">
+                            Local development hosts are handled gracefully:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>localhost, 127.0.0.1, [::1], ::1 are treated as central domain</li>
+                            <li>No tenant resolution for local development</li>
+                            <li>Allows development without domain configuration</li>
+                        </ul>
+                    </section>
+
+                    <!-- Tenant Model & DTO -->
+                    <section id="tenant-model" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Tenant Model & DTO</h2>
+                        <p class="text-gray-600 mb-6">
+                            Tenants are represented by the Tenant DTO and managed by TenantManager.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Tenant DTO Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">final readonly class Tenant
+{
+    public function __construct(
+        public string $id,           // Unique tenant identifier
+        public string $domain,        // Base domain
+        public ?string $subdomain,    // Optional subdomain
+        public Strategy $strategy,    // COLUMN, VIEW, or DB
+        public ?string $dbName = null, // Database name (for DB strategy)
+        public ?string $connection = null
+    ) {}
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">TenantManager Service</h3>
+                        <p class="text-gray-600 mb-4">
+                            TenantManager provides tenant resolution and access:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Services\TenantManager;
+
+// Resolve tenant from domain
+$tenant = $tenantManager->resolveByDomain('tenant1.example.com');
+
+// Get current tenant
+$current = $tenantManager->current();
+
+// Get current tenant ID
+$tenantId = $tenantManager->tenantId();
+
+// Get all tenants
+$allTenants = $tenantManager->all();
+
+// Find specific tenant
+$tenant = $tenantManager->find('tenant-id');</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">tenant() Helper Function</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use the helper function to get the current tenant:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use function App\Modules\ForgeMultiTenant\helpers\tenant;
+
+// Get current tenant
+$tenant = tenant();
+
+if ($tenant) {
+    echo "Current tenant: {$tenant->id}";
+    echo "Strategy: {$tenant->strategy->value}";
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Tenant Scoping (Models) -->
+                    <section id="tenant-scoping" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Tenant Scoping (Models)</h2>
+                        <p class="text-gray-600 mb-6">
+                            Models can be automatically scoped to the current tenant using the #[TenantScoped] attribute and TenantScopedTrait.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Tenant-Scoped Model</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Attributes\TenantScoped;
+use App\Modules\ForgeMultiTenant\Traits\TenantScopedTrait;
+use App\Modules\ForgeSqlOrm\ORM\Model;
+
+#[TenantScoped]
+#[Table("posts")]
+class Post extends Model
+{
+    use TenantScopedTrait;
+
+    #[Column(cast: Cast::STRING)]
+    public string $tenant_id;  // Required for COLUMN strategy
+
+    // ... other columns
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">How It Works</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>#[TenantScoped] attribute marks the model as tenant-scoped</li>
+                            <li>TenantScopedTrait overrides newQuery() method</li>
+                            <li>TenantQueryRewriter automatically adds WHERE tenant_id = ?</li>
+                            <li>Only active for COLUMN strategy</li>
+                            <li>Works with ModelQuery and QueryBuilder</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Query Filtering</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// This query:
+$posts = Post::query()->where('status', '=', 'active')->get();
+
+// Automatically becomes:
+// SELECT * FROM posts WHERE tenant_id = 'current-tenant-id' AND status = 'active'
+
+// All queries are automatically scoped to current tenant</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Requirements</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Model must have <code>tenant_id</code> column (for COLUMN strategy)</li>
+                            <li>Use #[TenantScoped] attribute on model class</li>
+                            <li>Use TenantScopedTrait in model</li>
+                            <li>Query rewriting only works with COLUMN strategy</li>
+                        </ul>
+                    </section>
+
+                    <!-- Route Scoping (Controllers) -->
+                    <section id="route-scoping" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Route Scoping (Controllers)</h2>
+                        <p class="text-gray-600 mb-6">
+                            Controllers and routes can be scoped to central or tenant contexts using the #[TenantScope] attribute.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Controller-Level Scoping</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Attributes\TenantScope;
+
+#[TenantScope("central")]
+final class HomeController
+{
+    // All routes in this controller are central-only
+    // Not accessible from tenant domains
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Method-Level Scoping</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">class MixedController
+{
+    #[TenantScope("central")]
+    public function adminDashboard(): Response
+    {
+        // Only accessible from central domain
+    }
+
+    #[TenantScope("tenant")]
+    public function tenantDashboard(): Response
+    {
+        // Only accessible from tenant domains
+    }
+
+    public function publicPage(): Response
+    {
+        // Accessible from both central and tenant domains
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Scope Values</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>"central":</strong> Route only accessible from central domain</li>
+                            <li><strong>"tenant":</strong> Route only accessible from tenant domains</li>
+                            <li><strong>No attribute:</strong> Route accessible from both</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">ScopeMiddleware Enforcement</h3>
+                        <p class="text-gray-600 mb-4">
+                            ScopeMiddleware automatically enforces route scoping:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Checks #[TenantScope] attribute on controller or method</li>
+                            <li>Validates current request context (central vs tenant)</li>
+                            <li>Returns 403 error if scope mismatch</li>
+                            <li>Runs after TenantMiddleware (order: 2)</li>
+                        </ul>
+                    </section>
+
+                    <!-- Middleware -->
+                    <section id="middleware" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Middleware</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeMultiTenant provides two middleware for tenant resolution and route scoping.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">TenantMiddleware</h3>
+                        <p class="text-gray-600 mb-4">
+                            Resolves tenant from domain and sets up tenant-specific connection:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Runs first in middleware stack (order: 1)</li>
+                            <li>Reads Host header from request</li>
+                            <li>Resolves tenant via TenantManager</li>
+                            <li>Sets tenant in request attributes</li>
+                            <li>Creates tenant-specific database connection</li>
+                            <li>Updates container with tenant connection</li>
+                            <li>Recreates QueryBuilder with tenant connection</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// TenantMiddleware flow:
+1. Extract Host header
+2. Resolve tenant from domain
+3. If tenant found:
+   - Set tenant in request attributes
+   - Create tenant connection via TenantConnectionFactory
+   - Update DatabaseConnectionInterface in container
+   - Update PDO in container
+   - Recreate QueryBuilderInterface with tenant connection
+4. Continue to next middleware</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">ScopeMiddleware</h3>
+                        <p class="text-gray-600 mb-4">
+                            Enforces route scoping based on #[TenantScope] attributes:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Runs after TenantMiddleware (order: 2)</li>
+                            <li>Extracts #[TenantScope] from controller or method</li>
+                            <li>Checks current request context (central vs tenant)</li>
+                            <li>Returns 403 error if scope mismatch</li>
+                            <li>Allows request to continue if scope matches</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// ScopeMiddleware validation:
+if (scope === 'central' && tenant !== null) {
+    return 403; // Tenant trying to access central route
+}
+
+if (scope === 'tenant' && tenant === null) {
+    return 403; // Central trying to access tenant route
+}
+
+// Otherwise, allow request</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Connection Management -->
+                    <section id="connection-management" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Database Connection Management</h2>
+                        <p class="text-gray-600 mb-6">
+                            TenantConnectionFactory manages database connections based on tenant strategy.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Connection Factory</h3>
+                        <p class="text-gray-600 mb-4">
+                            TenantConnectionFactory creates connections based on strategy:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Services\TenantConnectionFactory;
+
+$connection = $factory->forTenant($tenant);
+
+// Returns appropriate connection based on strategy:
+// - COLUMN: Reuses same connection (cached)
+// - VIEW: Same connection with SET app.tenant
+// - DB: New connection to tenant database (cached)</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">COLUMN Strategy Connection</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Reuses the default database connection</li>
+                            <li>Connection is cached per tenant</li>
+                            <li>Query rewriting handles tenant isolation</li>
+                            <li>No connection changes needed</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">VIEW Strategy Connection</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Uses the same database connection</li>
+                            <li>Executes <code>SET app.tenant = 'tenant-id'</code></li>
+                            <li>Database views filter based on app.tenant variable</li>
+                            <li>Connection reused, variable set per request</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">DB Strategy Connection</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Creates new connection to tenant database</li>
+                            <li>Connection is cached per tenant</li>
+                            <li>SQLite: Creates file at <code>storage/Database/{dbName}.sqlite</code></li>
+                            <li>MySQL/PostgreSQL: Connects to <code>{dbName}</code> database</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// DB Strategy connection creation:
+if (driver === 'sqlite' && dbName !== null) {
+    $dbFile = BASE_PATH . '/storage/Database/' . $dbName . '.sqlite';
+    if (!file_exists($dbFile)) {
+        touch($dbFile);  // Create file if doesn't exist
+    }
+    // Create connection to SQLite file
+} else {
+    // MySQL/PostgreSQL: Connect to {dbName} database
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Connection Caching</h3>
+                        <p class="text-gray-600 mb-4">
+                            Connections are cached per tenant for performance:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>COLUMN strategy: Cached in container with key <code>tenant.conn.{tenant-id}</code></li>
+                            <li>DB strategy: Connections cached per tenant</li>
+                            <li>Reduces connection overhead</li>
+                            <li>Container manages connection lifecycle</li>
+                        </ul>
+                    </section>
+
+                    <!-- Query Rewriting -->
+                    <section id="query-rewriting" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Query Rewriting</h2>
+                        <p class="text-gray-600 mb-6">
+                            TenantQueryRewriter automatically adds tenant_id filtering to queries for COLUMN strategy.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Query Filtering</h3>
+                        <p class="text-gray-600 mb-4">
+                            TenantQueryRewriter injects WHERE clauses:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Original query:
+$builder->table('posts')->where('status', '=', 'active')->get();
+
+// After TenantQueryRewriter (COLUMN strategy):
+// WHERE tenant_id = 'current-tenant-id' AND status = 'active'
+
+// Automatically scoped to current tenant</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">How It Works</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>TenantScopedTrait overrides newQuery() method</li>
+                            <li>Calls TenantQueryRewriter::scope()</li>
+                            <li>TenantQueryRewriter checks if COLUMN strategy</li>
+                            <li>Adds WHERE tenant_id = ? clause</li>
+                            <li>Only active for COLUMN strategy</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">TenantQueryRewriter API</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Services\TenantQueryRewriter;
+
+// Set current tenant (done by TenantMiddleware)
+TenantQueryRewriter::setTenant($tenant);
+
+// Scope a query builder
+$scopedBuilder = TenantQueryRewriter::scope($builder);
+
+// Only adds WHERE clause if:
+// - Tenant is set
+// - Strategy is COLUMN</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- CLI Commands -->
+                    <section id="cli-commands" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Commands</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeMultiTenant provides CLI commands for managing tenants and running tenant-specific migrations and seeders.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">tenant:list</h3>
+                        <p class="text-gray-600 mb-4">
+                            List all configured tenants:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php tenant:list
+
+# Output:
+# +----+------------------+-------------+----------+
+# | ID | Domain           | Sub-Domain  | Strategy |
+# +----+------------------+-------------+----------+
+# | central | forge-v3.test | -          | column   |
+# | my-tenant | forge-v3.test | my-tenant | column   |
+# +----+------------------+-------------+----------+</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">tenant:migrate</h3>
+                        <p class="text-gray-600 mb-4">
+                            Run migrations for one or all tenants:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Run migrations for all tenants
+php forge.php tenant:migrate
+
+# Run migrations for specific tenant
+php forge.php tenant:migrate --tenant=my-tenant
+
+# Preview migrations without executing
+php forge.php tenant:migrate --preview
+
+# Preview for specific tenant
+php forge.php tenant:migrate --tenant=my-tenant --preview</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Migrations are run from <code>app/Database/Migrations/Tenants/</code> directory.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">tenant:seed</h3>
+                        <p class="text-gray-600 mb-4">
+                            Run seeders for one or all tenants:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Run seeders for all tenants
+php forge.php tenant:seed
+
+# Run seeders for specific tenant
+php forge.php tenant:seed --tenant=my-tenant
+
+# Preview seeders without executing
+php forge.php tenant:seed --preview
+
+# Preview for specific tenant
+php forge.php tenant:seed --tenant=my-tenant --preview</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Seeders are run from <code>app/Database/Seeders/Tenants/</code> directory.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">How Tenant Commands Work</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Commands iterate over specified tenants</li>
+                            <li>For each tenant, create tenant-specific connection</li>
+                            <li>Set connection on Migrator/SeederManager</li>
+                            <li>Run migrations/seeders with tenant connection</li>
+                            <li>Each tenant gets its own migration/seed execution</li>
+                        </ul>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeMultiTenant is configured via environment variables and database records.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Environment Variables</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Central domain (admin/central functionality)
+CENTRAL_DOMAIN=forge-v3.test</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Tenant Configuration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tenants are configured in the <code>tenants</code> table:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Example tenant records:
+[
+    'id' => 'central',
+    'domain' => 'forge-v3.test',
+    'subdomain' => null,
+    'strategy' => 'column',
+    'db_name' => null,
+    'connection' => null
+],
+[
+    'id' => 'my-tenant',
+    'domain' => 'forge-v3.test',
+    'subdomain' => 'my-tenant',
+    'strategy' => 'column',
+    'db_name' => null,
+    'connection' => null
+],
+[
+    'id' => 'enterprise',
+    'domain' => 'enterprise.com',
+    'subdomain' => null,
+    'strategy' => 'database',
+    'db_name' => 'enterprise_db',
+    'connection' => null
+]</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Strategy Selection</h3>
+                        <p class="text-gray-600 mb-4">
+                            Choose strategy based on requirements:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>COLUMN:</strong> Set <code>strategy = 'column'</code>, <code>db_name = null</code></li>
+                            <li><strong>VIEW:</strong> Set <code>strategy = 'view'</code>, <code>db_name = null</code></li>
+                            <li><strong>DB:</strong> Set <code>strategy = 'database'</code>, <code>db_name = 'tenant_db_name'</code></li>
+                        </ul>
+                    </section>
+
+                    <!-- Database Schema -->
+                    <section id="database-schema" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Database Schema</h2>
+                        <p class="text-gray-600 mb-6">
+                            The <code>tenants</code> table stores tenant configuration.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Table Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-sql">CREATE TABLE tenants (
+    id VARCHAR(36) PRIMARY KEY,
+    domain VARCHAR(255) NOT NULL,
+    subdomain VARCHAR(255) NULL,
+    strategy VARCHAR(20) DEFAULT 'column',
+    db_name VARCHAR(64) NULL,
+    connection VARCHAR(64) NULL,
+    metadata JSON NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    deleted_at TIMESTAMP NULL
+);</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Columns</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>id:</strong> Unique tenant identifier (primary key)</li>
+                            <li><strong>domain:</strong> Base domain for tenant</li>
+                            <li><strong>subdomain:</strong> Optional subdomain (null for full domain)</li>
+                            <li><strong>strategy:</strong> Multi-tenancy strategy ('column', 'view', 'database')</li>
+                            <li><strong>db_name:</strong> Database name (required for DB strategy)</li>
+                            <li><strong>connection:</strong> Connection name (optional, for future use)</li>
+                            <li><strong>metadata:</strong> JSON metadata (optional)</li>
+                            <li><strong>created_at, updated_at:</strong> Timestamps</li>
+                            <li><strong>deleted_at:</strong> Soft delete timestamp</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Indexes</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-sql">-- Index for domain lookups
+CREATE INDEX idx_tenants_domain ON tenants(domain);
+
+-- Index for subdomain lookups
+CREATE INDEX idx_tenants_subdomain ON tenants(subdomain);</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+                        <p class="text-gray-600 mb-6">
+                            Comprehensive examples demonstrating ForgeMultiTenant usage.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Tenant-Scoped Model</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Attributes\TenantScoped;
+use App\Modules\ForgeMultiTenant\Traits\TenantScopedTrait;
+use App\Modules\ForgeSqlOrm\ORM\Model;
+
+#[TenantScoped]
+#[Table("posts")]
+class Post extends Model
+{
+    use HasTimeStamps;
+    use HasMetaData;
+    use TenantScopedTrait;
+
+    #[Column(primary: true, cast: Cast::STRING)]
+    public int $id;
+
+    #[Column(cast: Cast::STRING)]
+    public string $title;
+
+    #[Column(cast: Cast::STRING)]
+    public string $content;
+
+    #[Column(cast: Cast::STRING)]
+    public string $tenant_id;  // Required for COLUMN strategy
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Controller with Route Scoping</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeMultiTenant\Attributes\TenantScope;
+
+#[TenantScope("central")]
+final class HomeController
+{
+    // All routes in this controller are central-only
+    // Accessible only from central domain (forge-v3.test)
+    
+    #[Route("/")]
+    public function index(): Response
+    {
+        // Central domain functionality
+        return $this->view("pages/home/index");
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Tenant Migration</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeDatabaseSQL\DB\Attributes\GroupMigration;
+use App\Modules\ForgeDatabaseSQL\DB\Migrations\Migration;
+
+#[GroupMigration('tenants')]
+#[Table(name: 'users')]
+class CreateTenantUsersTable extends Migration
+{
+    #[Column(name: 'id', type: ColumnType::INTEGER, primaryKey: true)]
+    public readonly int $id;
+
+    #[Column(name: 'email', type: ColumnType::STRING, unique: true)]
+    public readonly string $email;
+
+    // This migration runs for each tenant
+    // when executing: php forge.php tenant:migrate
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Accessing Current Tenant</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use function App\Modules\ForgeMultiTenant\helpers\tenant;
+
+// Get current tenant
+$tenant = tenant();
+
+if ($tenant) {
+    echo "Tenant ID: {$tenant->id}";
+    echo "Domain: {$tenant->domain}";
+    echo "Strategy: {$tenant->strategy->value}";
+} else {
+    echo "No tenant (central domain)";
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">CLI Command Examples</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># List all tenants
+php forge.php tenant:list
+
+# Run migrations for all tenants
+php forge.php tenant:migrate
+
+# Run migrations for specific tenant
+php forge.php tenant:migrate --tenant=my-tenant
+
+# Preview migrations
+php forge.php tenant:migrate --preview
+
+# Run seeders for all tenants
+php forge.php tenant:seed
+
+# Run seeders for specific tenant
+php forge.php tenant:seed --tenant=my-tenant</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+                        <p class="text-gray-600 mb-6">
+                            Guidelines for using ForgeMultiTenant effectively.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Strategy Selection</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>COLUMN:</strong> Use for many small tenants, cost-effective, acceptable isolation</li>
+                            <li><strong>VIEW:</strong> Use when better isolation needed without separate databases</li>
+                            <li><strong>DB:</strong> Use for high-security requirements, compliance, large tenants</li>
+                            <li>You can mix strategies - different tenants can use different strategies</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Domain/Subdomain Organization</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use subdomains for SaaS applications (tenant1.example.com)</li>
+                            <li>Use full domains for enterprise customers (enterprise.com)</li>
+                            <li>Keep central domain separate for admin functionality</li>
+                            <li>Configure DNS and web server for domain routing</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Central vs Tenant Route Design</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use #[TenantScope("central")] for admin/management routes</li>
+                            <li>Use #[TenantScope("tenant")] for tenant-specific routes</li>
+                            <li>Leave routes unscoped for shared functionality</li>
+                            <li>Design clear separation between central and tenant features</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Migration and Seeding Strategies</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use tenant migrations for tenant-specific schema changes</li>
+                            <li>Use tenant seeders for tenant-specific data</li>
+                            <li>Test migrations with --preview before running</li>
+                            <li>Run migrations for all tenants when adding new tenants</li>
+                            <li>Keep tenant migrations in app/Database/Migrations/Tenants/</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Performance Considerations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>COLUMN strategy is most performant for many tenants</li>
+                            <li>DB strategy has connection overhead per tenant</li>
+                            <li>Connection caching reduces overhead</li>
+                            <li>Index tenant_id column for COLUMN strategy</li>
+                            <li>Monitor query performance per strategy</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Security Considerations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Always use tenant-scoped models for COLUMN strategy</li>
+                            <li>Verify tenant isolation in queries</li>
+                            <li>Use DB strategy for high-security requirements</li>
+                            <li>Validate tenant access in controllers</li>
+                            <li>Never trust client-provided tenant IDs</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active nav link
+        const sections = document.querySelectorAll('.section-anchor');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        highlightNav();
+    </script>
+</body>
+
+</html>
+
