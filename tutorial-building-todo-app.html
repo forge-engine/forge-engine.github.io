@@ -233,7 +233,7 @@ APP_ENV=local</code></pre>
                         <p class="text-gray-600 mb-4">
                             First, we'll create a migration for the todos table. Create <code class="bg-gray-100 px-2 py-1 rounded">app/Database/Migrations/2025_01_01_000000_CreateTodosTable.php</code>:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -279,7 +279,7 @@ class CreateTodosTable extends Migration
                         <p class="text-gray-600 mb-4">
                             Now let's create our Todo model. Create <code class="bg-gray-100 px-2 py-1 rounded">app/Models/Todo.php</code>:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -334,7 +334,7 @@ class Todo extends Model
                         <p class="text-gray-600 mb-4">
                             Let's create a repository for todo operations. Create <code class="bg-gray-100 px-2 py-1 rounded">app/Repositories/TodoRepository.php</code>:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -439,7 +439,7 @@ public function index(): Response
                         <p class="text-gray-600 mb-4">
                             Create <code class="bg-gray-100 px-2 py-1 rounded">app/Controllers/TodoController.php</code>:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -604,10 +604,10 @@ final class TodoController
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;<?= e($title ?? 'Todos') ?&gt;&lt;/title&gt;
+    &lt;title&gt;&lt;?= e($title ?? 'Todos') ?&gt;&lt;/title&gt;
     &lt;link rel="stylesheet" href="/assets/css/app.css"&gt;
-    <?= csrf_meta() ?&gt;
-    <?= window_csrf_token() ?&gt;
+    &lt;?= csrf_meta() ?&gt;
+    &lt;?= window_csrf_token() ?&gt;
 &lt;/head&gt;
 &lt;body class="bg-gray-50"&gt;
     &lt;nav class="bg-white shadow-sm mb-8"&gt;
@@ -617,7 +617,7 @@ final class TodoController
                     &lt;a href="/todos" class="text-xl font-bold text-gray-900"&gt;Todo App&lt;/a&gt;
                 &lt;/div&gt;
                 &lt;div class="flex items-center space-x-4"&gt;
-                    &lt;span class="text-gray-600"&gt;<?= e($user->email ?? 'Guest') ?&gt;&lt;/span&gt;
+                    &lt;span class="text-gray-600"&gt;&lt;?= e($user->email ?? 'Guest') ?&gt;&lt;/span&gt;
                     &lt;a href="/auth/logout" class="text-blue-600 hover:text-blue-800"&gt;Logout&lt;/a&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -625,19 +625,19 @@ final class TodoController
     &lt;/nav&gt;
 
     &lt;main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"&gt;
-        <?php if (Flash::has('success')): ?&gt;
+        &lt;?php if (Flash::has('success')): ?&gt;
             &lt;div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded mb-4"&gt;
-                <?= e(Flash::get('success')) ?&gt;
+                &lt;?= e(Flash::get('success')) ?&gt;
             &lt;/div&gt;
-        <?php endif; ?&gt;
+        &lt;?php endif; ?&gt;
 
-        <?php if (Flash::has('error')): ?&gt;
+        &lt;?php if (Flash::has('error')): ?&gt;
             &lt;div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded mb-4"&gt;
-                <?= e(Flash::get('error')) ?&gt;
+                &lt;?= e(Flash::get('error')) ?&gt;
             &lt;/div&gt;
-        <?php endif; ?&gt;
+        &lt;?php endif; ?&gt;
 
-        <?= section('content') ?&gt;
+        &lt;?= section('content') ?&gt;
     &lt;/main&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
@@ -646,15 +646,15 @@ final class TodoController
                         <p class="text-gray-600 mb-4">
                             Create <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/todos/index.php</code>:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php layout('todos'); ?&gt;
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php layout('todos'); ?&gt;
 
-<?php section('content'); ?&gt;
+&lt;?php section('content'); ?&gt;
 &lt;div class="bg-white rounded-lg shadow p-6"&gt;
     &lt;h1 class="text-2xl font-bold mb-6"&gt;My Todos&lt;/h1&gt;
 
     &lt;!-- Create Todo Form --&gt;
     &lt;form method="POST" action="/todos" class="mb-6"&gt;
-        <?= csrf_input() ?&gt;
+        &lt;?= csrf_input() ?&gt;
         &lt;div class="flex gap-4"&gt;
             &lt;input 
                 type="text" 
@@ -680,29 +680,29 @@ final class TodoController
 
     &lt;!-- Todos List --&gt;
     &lt;div class="space-y-3"&gt;
-        <?php foreach ($todos as $todo): ?&gt;
-            &lt;div class="flex items-center gap-4 p-4 border border-gray-200 rounded-md <?= $todo->completed ? 'bg-gray-50 opacity-75' : 'bg-white' ?&gt;"&gt;
+        &lt;?php foreach ($todos as $todo): ?&gt;
+            &lt;div class="flex items-center gap-4 p-4 border border-gray-200 rounded-md &lt;?= $todo->completed ? 'bg-gray-50 opacity-75' : 'bg-white' ?&gt;"&gt;
                 &lt;div class="flex-1"&gt;
-                    &lt;h3 class="font-semibold <?= $todo->completed ? 'line-through text-gray-500' : 'text-gray-900' ?&gt;"&gt;
-                        <?= e($todo->title) ?&gt;
+                    &lt;h3 class="font-semibold &lt;?= $todo->completed ? 'line-through text-gray-500' : 'text-gray-900' ?&gt;"&gt;
+                        &lt;?= e($todo->title) ?&gt;
                     &lt;/h3&gt;
-                    <?php if ($todo->description): ?&gt;
-                        &lt;p class="text-sm text-gray-600 mt-1"&gt;<?= e($todo->description) ?&gt;&lt;/p&gt;
-                    <?php endif; ?&gt;
+                    &lt;?php if ($todo->description): ?&gt;
+                        &lt;p class="text-sm text-gray-600 mt-1"&gt;&lt;?= e($todo->description) ?&gt;&lt;/p&gt;
+                    &lt;?php endif; ?&gt;
                 &lt;/div&gt;
                 
-                &lt;form method="POST" action="/todos/<?= $todo->id ?&gt;/toggle" class="inline"&gt;
-                    <?= csrf_input() ?&gt;
+                &lt;form method="POST" action="/todos/&lt;?= $todo->id ?&gt;/toggle" class="inline"&gt;
+                    &lt;?= csrf_input() ?&gt;
                     &lt;button 
                         type="submit"
-                        class="px-4 py-2 <?= $todo->completed ? 'bg-yellow-600' : 'bg-green-600' ?&gt; text-white rounded-md hover:opacity-80"
+                        class="px-4 py-2 &lt;?= $todo->completed ? 'bg-yellow-600' : 'bg-green-600' ?&gt; text-white rounded-md hover:opacity-80"
                     &gt;
-                        <?= $todo->completed ? 'Undo' : 'Complete' ?&gt;
+                        &lt;?= $todo->completed ? 'Undo' : 'Complete' ?&gt;
                     &lt;/button&gt;
                 &lt;/form&gt;
 
-                &lt;form method="POST" action="/todos/<?= $todo->id ?&gt;" class="inline"&gt;
-                    <?= csrf_input() ?&gt;
+                &lt;form method="POST" action="/todos/&lt;?= $todo->id ?&gt;" class="inline"&gt;
+                    &lt;?= csrf_input() ?&gt;
                     &lt;input type="hidden" name="_method" value="DELETE"&gt;
                     &lt;button 
                         type="submit"
@@ -713,14 +713,14 @@ final class TodoController
                     &lt;/button&gt;
                 &lt;/form&gt;
             &lt;/div&gt;
-        <?php endforeach; ?&gt;
+        &lt;?php endforeach; ?&gt;
 
-        <?php if (empty($todos)): ?&gt;
+        &lt;?php if (empty($todos)): ?&gt;
             &lt;p class="text-gray-500 text-center py-8"&gt;No todos yet. Create your first todo above!&lt;/p&gt;
-        <?php endif; ?&gt;
+        &lt;?php endif; ?&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-<?php section('content'); ?&gt;</code></pre>
+&lt;?php section('content'); ?&gt;</code></pre>
                     </section>
 
                     <!-- ForgeWire Components -->
@@ -734,7 +734,7 @@ final class TodoController
                         <p class="text-gray-600 mb-4">
                             Create <code class="bg-gray-100 px-2 py-1 rounded">app/Components/Wire/TodoList.php</code>:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -886,36 +886,36 @@ final class TodoList extends WireComponent
 
     &lt;!-- Todos List --&gt;
     &lt;div class="space-y-3"&gt;
-        <?php foreach ($todos as $todo): ?&gt;
-            &lt;div class="flex items-center gap-4 p-4 border border-gray-200 rounded-md <?= $todo['completed'] ? 'bg-gray-50 opacity-75' : 'bg-white' ?&gt;"&gt;
+        &lt;?php foreach ($todos as $todo): ?&gt;
+            &lt;div class="flex items-center gap-4 p-4 border border-gray-200 rounded-md &lt;?= $todo['completed'] ? 'bg-gray-50 opacity-75' : 'bg-white' ?&gt;"&gt;
                 &lt;div class="flex-1"&gt;
-                    &lt;h3 class="font-semibold <?= $todo['completed'] ? 'line-through text-gray-500' : 'text-gray-900' ?&gt;"&gt;
-                        <?= e($todo['title']) ?&gt;
+                    &lt;h3 class="font-semibold &lt;?= $todo['completed'] ? 'line-through text-gray-500' : 'text-gray-900' ?&gt;"&gt;
+                        &lt;?= e($todo['title']) ?&gt;
                     &lt;/h3&gt;
-                    <?php if ($todo['description']): ?&gt;
-                        &lt;p class="text-sm text-gray-600 mt-1"&gt;<?= e($todo['description']) ?&gt;&lt;/p&gt;
-                    <?php endif; ?&gt;
+                    &lt;?php if ($todo['description']): ?&gt;
+                        &lt;p class="text-sm text-gray-600 mt-1"&gt;&lt;?= e($todo['description']) ?&gt;&lt;/p&gt;
+                    &lt;?php endif; ?&gt;
                 &lt;/div&gt;
                 
                 &lt;button 
-                    wire:click="toggleTodo(<?= $todo['id'] ?&gt;)"
-                    class="px-4 py-2 <?= $todo['completed'] ? 'bg-yellow-600' : 'bg-green-600' ?&gt; text-white rounded-md hover:opacity-80"
+                    wire:click="toggleTodo(&lt;?= $todo['id'] ?&gt;)"
+                    class="px-4 py-2 &lt;?= $todo['completed'] ? 'bg-yellow-600' : 'bg-green-600' ?&gt; text-white rounded-md hover:opacity-80"
                 &gt;
-                    <?= $todo['completed'] ? 'Undo' : 'Complete' ?&gt;
+                    &lt;?= $todo['completed'] ? 'Undo' : 'Complete' ?&gt;
                 &lt;/button&gt;
 
                 &lt;button 
-                    wire:click="deleteTodo(<?= $todo['id'] ?&gt;)"
+                    wire:click="deleteTodo(&lt;?= $todo['id'] ?&gt;)"
                     class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
                 &gt;
                     Delete
                 &lt;/button&gt;
             &lt;/div&gt;
-        <?php endforeach; ?&gt;
+        &lt;?php endforeach; ?&gt;
 
-        <?php if (empty($todos)): ?&gt;
+        &lt;?php if (empty($todos)): ?&gt;
             &lt;p class="text-gray-500 text-center py-8"&gt;No todos yet. Add one above!&lt;/p&gt;
-        <?php endif; ?&gt;
+        &lt;?php endif; ?&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
 
@@ -923,7 +923,7 @@ final class TodoList extends WireComponent
                         <p class="text-gray-600 mb-4">
                             In your view, use the <code class="bg-gray-100 px-2 py-1 rounded">wire()</code> helper to render the component:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?= wire('TodoList') ?&gt;</code></pre>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?= wire('TodoList') ?&gt;</code></pre>
                     </section>
 
                     <!-- Events -->
@@ -992,7 +992,7 @@ final readonly class TodoCompletedEvent
                         <p class="text-gray-600 mb-4">
                             Create <code class="bg-gray-100 px-2 py-1 rounded">app/Services/TodoNotificationService.php</code>:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -1089,7 +1089,7 @@ public function toggle(string $id): Response
                         <p class="text-gray-600 mb-4">
                             Create <code class="bg-gray-100 px-2 py-1 rounded">app/tests/TodoTest.php</code>:
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
