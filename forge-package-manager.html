@@ -821,6 +821,7 @@ return [
             'url' => 'https://github.com/forge-engine/modules',
             'branch' => 'main',
             'private' => false,
+            'description' => 'Forge Kernel Official Modules', // Optional: shown in wizard
             'personal_token' => env('GITHUB_TOKEN') // Only needed for private repos
         ],
         // Custom private registry example
@@ -830,11 +831,18 @@ return [
             'url' => 'https://github.com/mycompany/private-modules',
             'branch' => 'main',
             'private' => true,
+            'description' => 'Company Internal Modules', // Optional: shown in wizard
             'personal_token' => env('GITHUB_TOKEN')
         ],
     ],
     'cache_ttl' => 3600, // Cache time-to-live in seconds
 ];</code></pre>
+                        </div>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Registry Descriptions:</strong> You can add an optional <code class="bg-blue-100 px-2 py-1 rounded">description</code> field to each registry entry. This description will be displayed in the interactive wizard when selecting registries, helping users identify the purpose of each registry (e.g., "Forge Kernel Official Modules", "Company Internal Modules").
+                            </p>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Supported Source Types</h3>
@@ -916,29 +924,80 @@ php forge.php dev:registry:init --type=framework</code></pre>
 
                         <h3 class="text-lg font-semibold mb-3">Installing Capabilities</h3>
                         <p class="text-gray-600 mb-3">
-                            Commands use interactive wizards by default. Use the <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> parameter to skip the wizard and specify the module directly.
+                            The <code class="bg-gray-100 px-2 py-1 rounded">package:install-module</code> command features an interactive wizard that guides you through the installation process. Use the <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> parameter to skip the wizard and specify the module directly.
                         </p>
+
+                        <h4 class="text-md font-semibold mb-2 mt-4">Interactive Wizard</h4>
+                        <p class="text-gray-600 mb-3">
+                            When you run <code class="bg-gray-100 px-2 py-1 rounded">package:install-module</code> without arguments, an interactive wizard starts:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Choose installation method:</strong> Select "Enter module name manually" or "Browse available modules"</li>
+                            <li><strong>If browsing:</strong>
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li>Select a registry from the list (registries show descriptions if configured)</li>
+                                    <li>Select a module from the chosen registry</li>
+                                    <li>Select a version (shows commit messages for git-based registries when available)</li>
+                                    <li>Choose whether to force download (bypass cache)</li>
+                                </ul>
+                            </li>
+                            <li><strong>If manual entry:</strong>
+                                <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
+                                    <li>Enter the module name (with optional version, e.g., <code class="bg-gray-100 px-2 py-1 rounded">forge-welcome@1.0.0</code>)</li>
+                                    <li>If no version specified, select from available versions</li>
+                                    <li>Choose whether to force download (bypass cache)</li>
+                                </ul>
+                            </li>
+                        </ol>
+
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Install with wizard (interactive - prompts for module name)
+                            <pre><code class="language-bash"># Install with wizard (interactive)
 php forge.php package:install-module
 
 # Install latest version (skip wizard)
-php forge.php package:install-module --module=ForgeAuth
+php forge.php package:install-module --module=forge-auth
 
 # Install specific version (skip wizard)
-php forge.php package:install-module --module=ForgeAuth@1.2.0
+php forge.php package:install-module --module=forge-auth@1.2.0
+
+# Force download bypassing cache (skip wizard)
+php forge.php package:install-module --module=forge-auth --force
 
 # Install all capabilities from lock file and scaffold app structure
 php forge.php package:install-project</code></pre>
                         </div>
 
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Version Selection:</strong> When browsing modules from git-based registries, version options display commit messages (truncated to 80 characters) to help you understand what changed in each version, similar to <code class="bg-blue-100 px-2 py-1 rounded">dev:modules:list</code>.
+                            </p>
+                        </div>
+
                         <h3 class="text-lg font-semibold mb-3">Removing Capabilities</h3>
+                        <p class="text-gray-600 mb-3">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">package:remove-module</code> command features an interactive wizard that displays all installed modules with their descriptions, making it easy to select which module to remove.
+                        </p>
+
+                        <h4 class="text-md font-semibold mb-2 mt-4">Interactive Wizard</h4>
+                        <p class="text-gray-600 mb-3">
+                            When you run <code class="bg-gray-100 px-2 py-1 rounded">package:remove-module</code> without arguments:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li>A list of all installed modules is displayed</li>
+                            <li>Modules show their descriptions (from their <code class="bg-gray-100 px-2 py-1 rounded">forge.json</code>) if available</li>
+                            <li>Select the module you want to remove</li>
+                            <li>Confirm the removal (with warnings if the module has migrations, seeders, or assets)</li>
+                        </ol>
+
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-bash"># Remove with wizard (interactive)
+                            <pre><code class="language-bash"># Remove with wizard (interactive - shows installed modules with descriptions)
 php forge.php package:remove-module
 
 # Remove a capability (skip wizard)
-php forge.php package:remove-module --module=ForgeAuth</code></pre>
+php forge.php package:remove-module --module=forge-auth
+
+# Skip confirmation prompts (skip wizard)
+php forge.php package:remove-module --module=forge-auth --force</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Listing Capabilities</h3>
@@ -1109,17 +1168,28 @@ return [
                                 <h3 class="font-semibold text-lg mb-2">
                                     <code class="bg-gray-100 px-2 py-1 rounded text-sm">package:install-module</code>
                                 </h3>
-                                <p class="text-gray-600 text-sm mb-3">Install a module from the configured registries. Uses an interactive wizard by default. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
+                                <p class="text-gray-600 text-sm mb-3">Install a module from the configured registries. Features an interactive wizard that allows you to browse registries, select modules, choose versions (with commit messages for git-based registries), and configure installation options. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
                                 </p>
                                 <div class="code-block p-4 text-white rounded-lg">
                                     <pre><code class="language-bash">php forge.php package:install-module [--module=&lt;module-name[@version]&gt;] [--force]</code></pre>
                                 </div>
                                 <div class="mt-3 text-xs text-gray-500">
+                                    <strong>Wizard Features:</strong>
+                                    <ul class="mt-1 space-y-1">
+                                        <li>• Choose between manual entry or browsing available modules</li>
+                                        <li>• Select from configured registries (with descriptions if available)</li>
+                                        <li>• Browse and select modules from chosen registry</li>
+                                        <li>• View versions with commit messages (for git-based registries)</li>
+                                        <li>• Option to force download (bypass cache)</li>
+                                    </ul>
+                                </div>
+                                <div class="mt-3 text-xs text-gray-500">
                                     <strong>Examples:</strong>
                                     <ul class="mt-1 space-y-1">
                                         <li>• <code>php forge.php package:install-module</code> (interactive wizard)</li>
-                                        <li>• <code>php forge.php package:install-module --module=ForgeAuth</code></li>
-                                        <li>• <code>php forge.php package:install-module --module=ForgeAuth@1.2.0</code></li>
+                                        <li>• <code>php forge.php package:install-module --module=forge-auth</code></li>
+                                        <li>• <code>php forge.php package:install-module --module=forge-auth@1.2.0</code></li>
+                                        <li>• <code>php forge.php package:install-module --module=forge-auth --force</code></li>
                                     </ul>
                                 </div>
                             </div>
@@ -1128,16 +1198,26 @@ return [
                                 <h3 class="font-semibold text-lg mb-2">
                                     <code class="bg-gray-100 px-2 py-1 rounded text-sm">package:remove-module</code>
                                 </h3>
-                                <p class="text-gray-600 text-sm mb-3">Remove an installed module from your application. Uses an interactive wizard by default. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
+                                <p class="text-gray-600 text-sm mb-3">Remove an installed module from your application. Features an interactive wizard that displays all installed modules with their descriptions, making it easy to identify and select the module to remove. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
                                 </p>
                                 <div class="code-block p-4 text-white rounded-lg">
                                     <pre><code class="language-bash">php forge.php package:remove-module [--module=&lt;module-name&gt;] [--force]</code></pre>
                                 </div>
                                 <div class="mt-3 text-xs text-gray-500">
+                                    <strong>Wizard Features:</strong>
+                                    <ul class="mt-1 space-y-1">
+                                        <li>• Displays all installed modules in an interactive list</li>
+                                        <li>• Shows module descriptions (from <code>forge.json</code>) when available</li>
+                                        <li>• Format: "Module Name (Description)" or just "Module Name"</li>
+                                        <li>• Confirmation prompts for modules with migrations, seeders, or assets</li>
+                                    </ul>
+                                </div>
+                                <div class="mt-3 text-xs text-gray-500">
                                     <strong>Examples:</strong>
                                     <ul class="mt-1 space-y-1">
                                         <li>• <code>php forge.php package:remove-module</code> (interactive wizard)</li>
-                                        <li>• <code>php forge.php package:remove-module --module=ForgeAuth</code></li>
+                                        <li>• <code>php forge.php package:remove-module --module=forge-auth</code></li>
+                                        <li>• <code>php forge.php package:remove-module --module=forge-auth --force</code></li>
                                     </ul>
                                 </div>
                             </div>

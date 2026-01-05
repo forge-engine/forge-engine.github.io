@@ -709,24 +709,33 @@ public function onAppBooted(): void
                         <p class="text-gray-600 mb-4">
                             Commands use an interactive wizard by default. You can skip the wizard by providing the <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> flag.
                         </p>
+                        <p class="text-gray-600 mb-3">
+                            <strong>Installation Wizard:</strong> When installing, you can choose to enter the module name manually or browse available modules. When browsing, you'll select a registry, then a module, then a version (with commit messages for git-based registries), and finally choose whether to force download.
+                        </p>
+                        <p class="text-gray-600 mb-3">
+                            <strong>Removal Wizard:</strong> When removing, you'll see a list of all installed modules with their descriptions, making it easy to identify which module to remove.
+                        </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Install a capability (wizard-based, interactive)
 php forge.php package:install-module
 
 # Skip wizard and install directly
-php forge.php package:install-module --module=ForgeAuth
+php forge.php package:install-module --module=forge-auth
 
 # Install a specific version (skips version selection in wizard)
-php forge.php package:install-module --module=ForgeAuth@1.2.0
+php forge.php package:install-module --module=forge-auth@1.2.0
+
+# Force download bypassing cache
+php forge.php package:install-module --module=forge-auth --force
 
 # List available capabilities
 php forge.php package:list-modules
 
-# Remove a capability (wizard-based)
+# Remove a capability (wizard-based, shows installed modules with descriptions)
 php forge.php package:remove-module
 
 # Skip wizard and remove directly
-php forge.php package:remove-module --module=ForgeAuth</code></pre>
+php forge.php package:remove-module --module=forge-auth</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Manual Installation</h3>
