@@ -198,17 +198,25 @@
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Service Discovery</h3>
                         <p class="text-gray-600 mb-4">
-                            Services with the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute are automatically discovered from specific directories:
+                            Services are automatically discovered from <strong>any folder</strong> in your application or modules when they have the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> or <code class="bg-gray-100 px-2 py-1 rounded">#[Discoverable]</code> attribute. The framework recursively scans all directories, so you can organize your code however you prefer.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Attributes:</strong>
                         </p>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Services/</code></li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Repositories/</code></li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Middlewares/</code></li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Events/</code></li>
-                            <li>Same structure in modules: <code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Services/</code>, etc.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> - Register a class as a service in the dependency injection container</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">#[Discoverable]</code> - Semantically marks a class as discoverable (same behavior as <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code>, useful for non-service classes that need DI)</li>
                         </ul>
                         <p class="text-gray-600 mb-4">
-                            Service discovery happens once at bootstrap and uses a class map cache for performance. If you add a new service and it's not being discovered, clear the cache with <code class="bg-gray-100 px-2 py-1 rounded">php forge.php cache:flush</code>.
+                            <strong>Discovery Scope:</strong> Services are discovered from:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>All directories under <code class="bg-gray-100 px-2 py-1 rounded">app/</code></li>
+                            <li>All directories under <code class="bg-gray-100 px-2 py-1 rounded">modules/*/src/</code></li>
+                            <li>Engine core directories</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Service discovery happens once at bootstrap and uses an incremental class map cache for performance. The cache automatically updates when files change. If you add a new service and it's not being discovered, clear the cache with <code class="bg-gray-100 px-2 py-1 rounded">php forge.php cache:flush</code>.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Service Registration</h3>

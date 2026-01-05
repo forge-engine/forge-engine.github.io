@@ -316,24 +316,32 @@ final class WelcomeController
                     <section id="services" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Services & Dependency Injection</h2>
                         <p class="text-gray-600 mb-4">
-                            Forge uses attributes for dependency injection. Services are automatically discovered from specific directories when they have the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute.
+                            Forge uses attributes for dependency injection. Services are automatically discovered from <strong>any folder</strong> in your application or modules when they have the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> or <code class="bg-gray-100 px-2 py-1 rounded">#[Discoverable]</code> attribute.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3 text-gray-900">Service Discovery</h3>
                         <p class="text-gray-600 mb-4">
-                            Services are automatically discovered at bootstrap from these directories:
+                            The framework automatically scans all directories recursively, so you can organize your code however you prefer. No specific folder structure is required.
                         </p>
 
+                        <p class="text-gray-600 mb-4">
+                            <strong>Attributes:</strong>
+                        </p>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Services/</code></li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Repositories/</code></li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Middlewares/</code></li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Events/</code></li>
-                            <li>Same structure in modules: <code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Services/</code>, etc.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> - Register a class as a service in the dependency injection container</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">#[Discoverable]</code> - Semantically marks a class as discoverable (same behavior as <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code>)</li>
                         </ul>
 
                         <p class="text-gray-600 mb-4">
-                            <strong>Important:</strong> Services must be placed in these proper directories and have the <code class="bg-gray-100 px-2 py-1 rounded">#[Service]</code> attribute to be automatically discovered. This applies to both app and module (capability) services.
+                            <strong>Discovery Scope:</strong> Services are discovered from all directories under:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/</code> - Any folder structure</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">modules/*/src/</code> - Any folder structure within module source directories</li>
+                        </ul>
+
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> While you can use any folder structure, traditional structures like <code class="bg-gray-100 px-2 py-1 rounded">app/Services/</code> or <code class="bg-gray-100 px-2 py-1 rounded">app/Repositories/</code> still work perfectly. The framework discovers services based on attributes, not folder location.
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">

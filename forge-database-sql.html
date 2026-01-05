@@ -672,12 +672,24 @@ class CreateCircuitBreakerTable extends Migration
                     <section id="migration-scoping" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Migration Scoping</h2>
                         <p class="text-gray-600 mb-6">
-                            Migrations can be organized by scope: app, engine, or module. This allows you to run migrations selectively.
+                            Migrations can be organized by scope: app, engine, or module. The framework supports both <strong>folder-based</strong> and <strong>attribute-based</strong> migration discovery.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Migration Discovery Methods</h3>
+                        <p class="text-gray-600 mb-4">
+                            Migrations are discovered using two methods:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Folder-based:</strong> Migrations in traditional <code class="bg-gray-100 px-2 py-1 rounded">Database/Migrations/</code> directories</li>
+                            <li><strong>Attribute-based:</strong> Any migration class with <code class="bg-gray-100 px-2 py-1 rounded">#[Migration]</code> attribute, regardless of folder location</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Both methods work together - migrations discovered through either method are included when running migrations.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">App Migrations</h3>
                         <p class="text-gray-600 mb-4">
-                            Application-specific migrations in <code class="bg-gray-100 px-2 py-1 rounded">app/Database/migrations/</code>:
+                            Application-specific migrations can be placed in <code class="bg-gray-100 px-2 py-1 rounded">app/Database/migrations/</code> or anywhere in <code class="bg-gray-100 px-2 py-1 rounded">app/</code> with the <code class="bg-gray-100 px-2 py-1 rounded">#[Migration]</code> attribute:
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash">php forge.php db:migrate --type=app</code></pre>
@@ -693,7 +705,7 @@ class CreateCircuitBreakerTable extends Migration
 
                         <h3 class="text-lg font-semibold mb-3">Module Migrations</h3>
                         <p class="text-gray-600 mb-4">
-                            Module-specific migrations in <code class="bg-gray-100 px-2 py-1 rounded">modules/{ModuleName}/src/Database/Migrations/</code>:
+                            Module-specific migrations can be placed in <code class="bg-gray-100 px-2 py-1 rounded">modules/{ModuleName}/src/Database/Migrations/</code> or anywhere in <code class="bg-gray-100 px-2 py-1 rounded">modules/{ModuleName}/src/</code> with the <code class="bg-gray-100 px-2 py-1 rounded">#[Migration]</code> attribute:
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Run all module migrations
@@ -710,6 +722,18 @@ php forge.php db:migrate --type=module --module=ForgeAuth</code></pre>
                         <p class="text-gray-600 mb-4">
                             Automatically discovered when running module migrations.
                         </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Attribute-Based Migration Example</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use Forge\Core\DI\Attributes\Migration;
+use App\Modules\ForgeDatabaseSQL\DB\Migrations\Migration as BaseMigration;
+
+#[Migration(scope: 'app')]
+class CreateCustomTable extends BaseMigration
+{
+    // Migration code here
+}</code></pre>
+                        </div>
                     </section>
 
                     <!-- Migration Grouping -->
