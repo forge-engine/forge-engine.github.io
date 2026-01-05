@@ -927,6 +927,21 @@ php forge.php dev:registry:init --type=framework</code></pre>
                             The <code class="bg-gray-100 px-2 py-1 rounded">package:install-module</code> command features an interactive wizard that guides you through the installation process. Use the <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> parameter to skip the wizard and specify the module directly.
                         </p>
 
+                        <h4 class="text-md font-semibold mb-2 mt-4">Multiple Module Installation</h4>
+                        <p class="text-gray-600 mb-3">
+                            You can install multiple modules at once by providing module names as positional arguments. If no version is specified, the latest version will be installed automatically.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install multiple modules (latest versions)
+php forge.php package:install-module module-one module-two module-three
+
+# Install multiple modules with mixed versions
+php forge.php package:install-module module-one module-two@1.0.0 module-three
+
+# Install multiple modules with force flag
+php forge.php package:install-module module-one module-two --force</code></pre>
+                        </div>
+
                         <h4 class="text-md font-semibold mb-2 mt-4">Interactive Wizard</h4>
                         <p class="text-gray-600 mb-3">
                             When you run <code class="bg-gray-100 px-2 py-1 rounded">package:install-module</code> without arguments, an interactive wizard starts:
@@ -936,8 +951,9 @@ php forge.php dev:registry:init --type=framework</code></pre>
                             <li><strong>If browsing:</strong>
                                 <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
                                     <li>Select a registry from the list (registries show descriptions if configured)</li>
-                                    <li>Select a module from the chosen registry</li>
-                                    <li>Select a version (shows commit messages for git-based registries when available)</li>
+                                    <li>Choose "Select a single module" or "Select multiple modules (latest)"</li>
+                                    <li>If single: Select a module, then select a version (shows commit messages for git-based registries when available)</li>
+                                    <li>If multiple: Use multi-select with checkboxes to select multiple modules (Space to toggle, Enter to confirm) - all install latest version</li>
                                     <li>Choose whether to force download (bypass cache)</li>
                                 </ul>
                             </li>
@@ -960,6 +976,12 @@ php forge.php package:install-module --module=forge-auth
 # Install specific version (skip wizard)
 php forge.php package:install-module --module=forge-auth@1.2.0
 
+# Install multiple modules (skip wizard)
+php forge.php package:install-module forge-auth forge-storage forge-logger
+
+# Install multiple modules with versions (skip wizard)
+php forge.php package:install-module forge-auth@1.2.0 forge-storage forge-logger@0.1.0
+
 # Force download bypassing cache (skip wizard)
 php forge.php package:install-module --module=forge-auth --force
 
@@ -975,18 +997,30 @@ php forge.php package:install-project</code></pre>
 
                         <h3 class="text-lg font-semibold mb-3">Removing Capabilities</h3>
                         <p class="text-gray-600 mb-3">
-                            The <code class="bg-gray-100 px-2 py-1 rounded">package:remove-module</code> command features an interactive wizard that displays all installed modules with their descriptions, making it easy to select which module to remove.
+                            The <code class="bg-gray-100 px-2 py-1 rounded">package:remove-module</code> command features an interactive wizard that displays all installed modules with their descriptions, making it easy to select which module(s) to remove.
                         </p>
+
+                        <h4 class="text-md font-semibold mb-2 mt-4">Multiple Module Removal</h4>
+                        <p class="text-gray-600 mb-3">
+                            You can remove multiple modules at once by providing module names as positional arguments. Each module will prompt for confirmation if it has migrations, seeders, or assets.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Remove multiple modules
+php forge.php package:remove-module module-one module-two module-three
+
+# Remove multiple modules with force flag (skip confirmations)
+php forge.php package:remove-module module-one module-two --force</code></pre>
+                        </div>
 
                         <h4 class="text-md font-semibold mb-2 mt-4">Interactive Wizard</h4>
                         <p class="text-gray-600 mb-3">
                             When you run <code class="bg-gray-100 px-2 py-1 rounded">package:remove-module</code> without arguments:
                         </p>
                         <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
-                            <li>A list of all installed modules is displayed</li>
-                            <li>Modules show their descriptions (from their <code class="bg-gray-100 px-2 py-1 rounded">forge.json</code>) if available</li>
-                            <li>Select the module you want to remove</li>
-                            <li>Confirm the removal (with warnings if the module has migrations, seeders, or assets)</li>
+                            <li>Choose "Select a single module" or "Select multiple modules"</li>
+                            <li><strong>If single:</strong> A list of all installed modules is displayed with descriptions, select one to remove</li>
+                            <li><strong>If multiple:</strong> Use multi-select with checkboxes to select multiple modules (Space to toggle, Enter to confirm)</li>
+                            <li>Confirm the removal for each module (with warnings if the module has migrations, seeders, or assets)</li>
                         </ol>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
@@ -996,8 +1030,14 @@ php forge.php package:remove-module
 # Remove a capability (skip wizard)
 php forge.php package:remove-module --module=forge-auth
 
+# Remove multiple modules (skip wizard)
+php forge.php package:remove-module forge-auth forge-storage forge-logger
+
 # Skip confirmation prompts (skip wizard)
-php forge.php package:remove-module --module=forge-auth --force</code></pre>
+php forge.php package:remove-module --module=forge-auth --force
+
+# Remove multiple modules with force flag (skip wizard)
+php forge.php package:remove-module forge-auth forge-storage --force</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Listing Capabilities</h3>
@@ -1168,18 +1208,19 @@ return [
                                 <h3 class="font-semibold text-lg mb-2">
                                     <code class="bg-gray-100 px-2 py-1 rounded text-sm">package:install-module</code>
                                 </h3>
-                                <p class="text-gray-600 text-sm mb-3">Install a module from the configured registries. Features an interactive wizard that allows you to browse registries, select modules, choose versions (with commit messages for git-based registries), and configure installation options. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
+                                <p class="text-gray-600 text-sm mb-3">Install a module from the configured registries. Features an interactive wizard that allows you to browse registries, select modules (single or multiple), choose versions (with commit messages for git-based registries), and configure installation options. Supports installing multiple modules via command-line arguments or multi-select wizard.
                                 </p>
                                 <div class="code-block p-4 text-white rounded-lg">
-                                    <pre><code class="language-bash">php forge.php package:install-module [--module=&lt;module-name[@version]&gt;] [--force]</code></pre>
+                                    <pre><code class="language-bash">php forge.php package:install-module [--module=&lt;module-name[@version]&gt;] [module-name[@version] ...] [--force]</code></pre>
                                 </div>
                                 <div class="mt-3 text-xs text-gray-500">
                                     <strong>Wizard Features:</strong>
                                     <ul class="mt-1 space-y-1">
                                         <li>• Choose between manual entry or browsing available modules</li>
                                         <li>• Select from configured registries (with descriptions if available)</li>
-                                        <li>• Browse and select modules from chosen registry</li>
-                                        <li>• View versions with commit messages (for git-based registries)</li>
+                                        <li>• Browse and select modules from chosen registry (single or multiple)</li>
+                                        <li>• Multi-select mode: Use checkboxes to select multiple modules (installs latest versions only)</li>
+                                        <li>• Single select mode: Choose version with commit messages (for git-based registries)</li>
                                         <li>• Option to force download (bypass cache)</li>
                                     </ul>
                                 </div>
@@ -1189,6 +1230,8 @@ return [
                                         <li>• <code>php forge.php package:install-module</code> (interactive wizard)</li>
                                         <li>• <code>php forge.php package:install-module --module=forge-auth</code></li>
                                         <li>• <code>php forge.php package:install-module --module=forge-auth@1.2.0</code></li>
+                                        <li>• <code>php forge.php package:install-module forge-auth forge-storage</code> (multiple modules, latest versions)</li>
+                                        <li>• <code>php forge.php package:install-module forge-auth@1.2.0 forge-storage</code> (mixed versions)</li>
                                         <li>• <code>php forge.php package:install-module --module=forge-auth --force</code></li>
                                     </ul>
                                 </div>
@@ -1198,17 +1241,19 @@ return [
                                 <h3 class="font-semibold text-lg mb-2">
                                     <code class="bg-gray-100 px-2 py-1 rounded text-sm">package:remove-module</code>
                                 </h3>
-                                <p class="text-gray-600 text-sm mb-3">Remove an installed module from your application. Features an interactive wizard that displays all installed modules with their descriptions, making it easy to identify and select the module to remove. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
+                                <p class="text-gray-600 text-sm mb-3">Remove an installed module from your application. Features an interactive wizard that displays all installed modules with their descriptions, making it easy to identify and select the module(s) to remove. Supports removing multiple modules via command-line arguments or multi-select wizard. Use <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> to skip the wizard.
                                 </p>
                                 <div class="code-block p-4 text-white rounded-lg">
-                                    <pre><code class="language-bash">php forge.php package:remove-module [--module=&lt;module-name&gt;] [--force]</code></pre>
+                                    <pre><code class="language-bash">php forge.php package:remove-module [--module=&lt;module-name&gt;] [module-name ...] [--force]</code></pre>
                                 </div>
                                 <div class="mt-3 text-xs text-gray-500">
                                     <strong>Wizard Features:</strong>
                                     <ul class="mt-1 space-y-1">
+                                        <li>• Choose between single or multiple module selection</li>
                                         <li>• Displays all installed modules in an interactive list</li>
                                         <li>• Shows module descriptions (from <code>forge.json</code>) when available</li>
                                         <li>• Format: "Module Name (Description)" or just "Module Name"</li>
+                                        <li>• Multi-select mode: Use checkboxes to select multiple modules (Space to toggle, Enter to confirm)</li>
                                         <li>• Confirmation prompts for modules with migrations, seeders, or assets</li>
                                     </ul>
                                 </div>
@@ -1217,7 +1262,9 @@ return [
                                     <ul class="mt-1 space-y-1">
                                         <li>• <code>php forge.php package:remove-module</code> (interactive wizard)</li>
                                         <li>• <code>php forge.php package:remove-module --module=forge-auth</code></li>
+                                        <li>• <code>php forge.php package:remove-module forge-auth forge-storage</code> (multiple modules)</li>
                                         <li>• <code>php forge.php package:remove-module --module=forge-auth --force</code></li>
+                                        <li>• <code>php forge.php package:remove-module forge-auth forge-storage --force</code> (multiple with force)</li>
                                     </ul>
                                 </div>
                             </div>

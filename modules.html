@@ -707,13 +707,16 @@ public function onAppBooted(): void
 
                         <h3 class="text-lg font-semibold mb-3">Using Forge CLI</h3>
                         <p class="text-gray-600 mb-4">
-                            Commands use an interactive wizard by default. You can skip the wizard by providing the <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> flag.
+                            Commands use an interactive wizard by default. You can skip the wizard by providing the <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> flag or by providing module names as positional arguments.
                         </p>
                         <p class="text-gray-600 mb-3">
-                            <strong>Installation Wizard:</strong> When installing, you can choose to enter the module name manually or browse available modules. When browsing, you'll select a registry, then a module, then a version (with commit messages for git-based registries), and finally choose whether to force download.
+                            <strong>Installation Wizard:</strong> When installing, you can choose to enter the module name manually or browse available modules. When browsing, you'll select a registry, then choose between single or multiple module selection. In multi-select mode, use checkboxes to select multiple modules (Space to toggle, Enter to confirm) - all will install latest versions. In single-select mode, you'll choose a version (with commit messages for git-based registries), and finally choose whether to force download.
                         </p>
                         <p class="text-gray-600 mb-3">
-                            <strong>Removal Wizard:</strong> When removing, you'll see a list of all installed modules with their descriptions, making it easy to identify which module to remove.
+                            <strong>Removal Wizard:</strong> When removing, you can choose between single or multiple module selection. You'll see a list of all installed modules with their descriptions. In multi-select mode, use checkboxes to select multiple modules to remove at once.
+                        </p>
+                        <p class="text-gray-600 mb-3">
+                            <strong>Multiple Module Support:</strong> Both commands support installing or removing multiple modules at once via command-line arguments. For installation, if no version is specified, the latest version is installed automatically.
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Install a capability (wizard-based, interactive)
@@ -725,6 +728,12 @@ php forge.php package:install-module --module=forge-auth
 # Install a specific version (skips version selection in wizard)
 php forge.php package:install-module --module=forge-auth@1.2.0
 
+# Install multiple modules (latest versions)
+php forge.php package:install-module forge-auth forge-storage forge-logger
+
+# Install multiple modules with mixed versions
+php forge.php package:install-module forge-auth@1.2.0 forge-storage forge-logger@0.1.0
+
 # Force download bypassing cache
 php forge.php package:install-module --module=forge-auth --force
 
@@ -735,7 +744,10 @@ php forge.php package:list-modules
 php forge.php package:remove-module
 
 # Skip wizard and remove directly
-php forge.php package:remove-module --module=forge-auth</code></pre>
+php forge.php package:remove-module --module=forge-auth
+
+# Remove multiple modules
+php forge.php package:remove-module forge-auth forge-storage forge-logger</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Manual Installation</h3>
