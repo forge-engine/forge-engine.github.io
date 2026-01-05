@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeEvents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-blue-600 font-medium">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ForgeEvents</h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#architecture" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture & Design</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#queue-drivers" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Queue Drivers</a>
+                        <a href="#creating-events" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Creating Events</a>
+                        <a href="#event-attributes" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Event Attributes</a>
+                        <a href="#dispatching-events" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Dispatching Events</a>
+                        <a href="#event-listeners" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Event Listeners</a>
+                        <a href="#queue-workers" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Queue Workers</a>
+                        <a href="#queue-processing" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Queue Processing</a>
+                        <a href="#retry-mechanism" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Retry Mechanism</a>
+                        <a href="#configuration" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Configuration</a>
+                        <a href="#database-schema" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Database Schema</a>
+                        <a href="#examples" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage Examples</a>
+                        <a href="#best-practices" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best Practices</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">ForgeEvents</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Event queue system for Forge Kernel. Provides asynchronous event processing with multiple queue drivers, priority-based processing, retry mechanisms, and scalable worker processes.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeEvents provides a comprehensive event queue system for Forge Kernel applications. It enables asynchronous event processing with support for multiple queues, multiple workers, priority-based processing, and robust retry mechanisms.
+                        </p>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Multiple queue drivers (file, database, in-memory)</span></div>
+                                    <div class="flex items-center"><span>Multiple queues support</span></div>
+                                    <div class="flex items-center"><span>Multiple workers per queue</span></div>
+                                    <div class="flex items-center"><span>Priority-based processing (HIGH, NORMAL, LOW)</span></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center"><span>Automatic retry with exponential backoff</span></div>
+                                    <div class="flex items-center"><span>Delayed processing support</span></div>
+                                    <div class="flex items-center"><span>Graceful shutdown</span></div>
+                                    <div class="flex items-center"><span>Automatic listener discovery</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">What ForgeEvents Provides</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Event-Driven Architecture:</strong> Clean separation of concerns with asynchronous event processing</li>
+                            <li><strong>Multiple Queue Drivers:</strong> File, database, and in-memory options for different use cases</li>
+                            <li><strong>Multiple Queues:</strong> Organize events by type (emails, cache_refresh, page_visits)</li>
+                            <li><strong>Multiple Workers:</strong> Scale processing with parallel workers per queue</li>
+                            <li><strong>Priority Processing:</strong> HIGH, NORMAL, LOW priority support for critical events</li>
+                            <li><strong>Retry Mechanism:</strong> Automatic retries with exponential backoff on failure</li>
+                            <li><strong>Delayed Processing:</strong> Schedule events for future processing with time strings</li>
+                            <li><strong>Graceful Shutdown:</strong> Proper cleanup on worker termination with signal handling</li>
+                            <li><strong>Automatic Listener Discovery:</strong> Listeners are automatically discovered and registered</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Generic Module:</strong> ForgeEvents is a generic module (type: 'generic', order: 99), providing event queue functionality that can be installed as needed. It optionally depends on ForgeDatabaseSql for the database queue driver.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Architecture & Design -->
+                    <section id="architecture" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Architecture & Design Philosophy</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeEvents is built with scalability, reliability, and developer experience in mind.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Event-Driven Architecture</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeEvents implements a clean event-driven architecture:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Events are dispatched asynchronously to queues</li>
+                            <li>Workers process events independently from the main application</li>
+                            <li>Listeners handle events when they are processed</li>
+                            <li>Complete decoupling between event producers and consumers</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Queue-Based Processing</h3>
+                        <p class="text-gray-600 mb-4">
+                            Queue-based processing provides reliability and scalability:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Events are persisted to queues before processing</li>
+                            <li>Workers poll queues for available jobs</li>
+                            <li>Failed jobs can be retried automatically</li>
+                            <li>Multiple queues allow workload separation</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Driver Abstraction</h3>
+                        <p class="text-gray-600 mb-4">
+                            QueueInterface provides driver abstraction:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>FileQueue for file-based storage (development/testing)</li>
+                            <li>DatabaseQueue for database storage (production)</li>
+                            <li>InMemoryQueue for in-memory processing (testing)</li>
+                            <li>Easy to add custom queue drivers</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Multi-Process Worker Architecture</h3>
+                        <p class="text-gray-600 mb-4">
+                            Workers use process forking for parallel processing:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>One process per queue</li>
+                            <li>Multiple worker processes per queue (configurable)</li>
+                            <li>Process isolation for reliability</li>
+                            <li>Graceful shutdown with signal handling</li>
+                        </ul>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Installation</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeEvents can be installed via ForgePackageManager.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using ForgePackageManager</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install with wizard (interactive)
+php forge.php package:install-module
+
+# Install directly (skip wizard)
+php forge.php package:install-module --module=ForgeEvents
+
+# Install specific version
+php forge.php package:install-module --module=ForgeEvents@0.2.3</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Dependencies</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeEvents has optional dependencies:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>ForgeDatabaseSql:</strong> Required only if using the database queue driver</li>
+                            <li>File and in-memory drivers have no dependencies</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Database Migration</h3>
+                        <p class="text-gray-600 mb-4">
+                            If using the database driver, run the migration:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php db:migrate --module=ForgeEvents</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            This creates the <code>queue_jobs</code> table for storing queued events.
+                        </p>
+                    </section>
+
+                    <!-- Queue Drivers -->
+                    <section id="queue-drivers" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Queue Drivers</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeEvents supports three queue drivers, each suited for different use cases.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">FileQueue</h3>
+                        <p class="text-gray-600 mb-4">
+                            File-based queue storage, perfect for development and small applications:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Stores jobs as files in <code>storage/queues/</code></li>
+                            <li>No database required</li>
+                            <li>File locking for concurrent access</li>
+                            <li>Priority-based file sorting</li>
+                            <li>Good for development and testing</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Set in environment
+QUEUE_DRIVER=file</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">DatabaseQueue</h3>
+                        <p class="text-gray-600 mb-4">
+                            Database-based queue storage, ideal for production:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Stores jobs in <code>queue_jobs</code> table</li>
+                            <li>Requires ForgeDatabaseSql module</li>
+                            <li>Transaction support for reliability</li>
+                            <li>SQLite-specific optimizations</li>
+                            <li>Lock-based job reservation</li>
+                            <li>Production-ready for high-traffic applications</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Set in environment
+QUEUE_DRIVER=database</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">InMemoryQueue</h3>
+                        <p class="text-gray-600 mb-4">
+                            In-memory queue, perfect for testing:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Stores jobs in memory (SplPriorityQueue)</li>
+                            <li>No persistence (lost on process exit)</li>
+                            <li>Fastest option for testing</li>
+                            <li>Not suitable for production</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Set in environment
+QUEUE_DRIVER=in-memory</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">QueueInterface Contract</h3>
+                        <p class="text-gray-600 mb-4">
+                            All queue drivers implement QueueInterface:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">interface QueueInterface
+{
+    public function push(
+        string $payload,
+        int $priority = 0,
+        int $delayMilliseconds = 0,
+        int $maxRetries = 3,
+        string $queue = 'default'
+    ): void;
+    
+    public function pop(string $queue = 'default'): ?array;
+    public function count(): int;
+    public function clear(): void;
+    public function release(int $jobId, int $delay = 0): void;
+    public function getNextJobDelay(string $queue = 'default'): ?float;
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Creating Events -->
+                    <section id="creating-events" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Creating Events</h2>
+                        <p class="text-gray-600 mb-6">
+                            Events in ForgeEvents are simple classes decorated with the #[Event] attribute.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Event Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeEvents\Attributes\Event;
+use App\Modules\ForgeEvents\Enums\QueuePriority;
+
+#[Event(
+    queue: "page_visits",
+    maxRetries: 5,
+    delay: "1m",
+    priority: QueuePriority::HIGH,
+)]
+final readonly class TestPageVisitedEvent
+{
+    public function __construct(
+        public int $userId,
+        public string $visitedAt
+    ) {}
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Event Attribute Parameters</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>queue:</strong> Queue name (default: 'default')</li>
+                            <li><strong>maxRetries:</strong> Maximum retry attempts (default: 1)</li>
+                            <li><strong>retryDelay:</strong> Delay between retries in milliseconds (default: 1000)</li>
+                            <li><strong>delay:</strong> Initial delay before processing (e.g., '10m', '30s', '2h') (default: '0s')</li>
+                            <li><strong>priority:</strong> QueuePriority enum (HIGH, NORMAL, LOW) (default: NORMAL)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Delay Format</h3>
+                        <p class="text-gray-600 mb-4">
+                            The delay parameter accepts time strings:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Event(delay: "30s")]  // 30 seconds
+#[Event(delay: "1m")]   // 1 minute
+#[Event(delay: "2h")]   // 2 hours
+#[Event(delay: "1d")]   // 1 day</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Priority Levels</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeEvents\Enums\QueuePriority;
+
+// HIGH priority (processed first)
+#[Event(priority: QueuePriority::HIGH)]
+
+// NORMAL priority (default)
+#[Event(priority: QueuePriority::NORMAL)]
+
+// LOW priority (processed last)
+#[Event(priority: QueuePriority::LOW)]</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Event Attributes -->
+                    <section id="event-attributes" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Event Attributes</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeEvents uses PHP 8 attributes to configure event behavior.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">#[Event]</h3>
+                        <p class="text-gray-600 mb-4">
+                            The #[Event] attribute defines event queue configuration:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Event(
+    queue: "emails",
+    maxRetries: 3,
+    retryDelay: 2000,
+    delay: "5m",
+    priority: QueuePriority::HIGH
+)]
+class EmailSentEvent
+{
+    // ...
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">QueuePriority Enum</h3>
+                        <p class="text-gray-600 mb-4">
+                            QueuePriority defines processing priority:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">enum QueuePriority: int
+{
+    case HIGH = 3;    // Processed first
+    case NORMAL = 2;  // Default priority
+    case LOW = 1;     // Processed last
+}</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Jobs are sorted by priority (ascending), then by creation time.
+                        </p>
+                    </section>
+
+                    <!-- Dispatching Events -->
+                    <section id="dispatching-events" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Dispatching Events</h2>
+                        <p class="text-gray-600 mb-6">
+                            Events are dispatched through the EventDispatcher service.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Basic Dispatching</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeEvents\Services\EventDispatcher;
+use App\Events\TestPageVisitedEvent;
+
+public function __construct(
+    private readonly EventDispatcher $dispatcher
+) {}
+
+public function index(): Response
+{
+    $this->dispatcher->dispatch(
+        new TestPageVisitedEvent(
+            userId: 123456,
+            visitedAt: date("Y-m-d H:i:s")
+        )
+    );
+    
+    return $this->view("pages/test/index");
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">How Dispatching Works</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>EventDispatcher reads #[Event] attribute from event class</li>
+                            <li>Event is serialized with metadata</li>
+                            <li>Event is pushed to the specified queue</li>
+                            <li>Priority and delay are applied</li>
+                            <li>Processing happens asynchronously by workers</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Event Serialization</h3>
+                        <p class="text-gray-600 mb-4">
+                            Events are automatically serialized when queued:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Serialized payload includes:
+[
+    'event' => $event,              // The event instance
+    'class' => $eventClass,         // Event class name
+    'metadata' => $eventMetadata,    // #[Event] attribute instance
+    'attempts' => 0                 // Retry attempt count
+]</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Event Listeners -->
+                    <section id="event-listeners" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Event Listeners</h2>
+                        <p class="text-gray-600 mb-6">
+                            Event listeners handle events when they are processed by workers.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Listener Discovery</h3>
+                        <p class="text-gray-600 mb-4">
+                            Listeners are automatically discovered during application bootstrap:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>ServiceDiscoverSetup scans service directories</li>
+                            <li>Methods with #[EventListener] attribute are registered</li>
+                            <li>Listeners are resolved from the container</li>
+                            <li>No manual registration required</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Creating Listeners</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeEvents\Attributes\EventListener;
+use App\Events\TestPageVisitedEvent;
+use Forge\Core\DI\Attributes\Service;
+
+#[Service]
+class PageVisitLogger
+{
+    #[EventListener(TestPageVisitedEvent::class)]
+    public function handlePageVisit(TestPageVisitedEvent $event): void
+    {
+        // Log the page visit
+        error_log("User {$event->userId} visited at {$event->visitedAt}");
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Multiple Listeners</h3>
+                        <p class="text-gray-600 mb-4">
+                            Multiple listeners can handle the same event:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Service]
+class AnalyticsService
+{
+    #[EventListener(TestPageVisitedEvent::class)]
+    public function trackVisit(TestPageVisitedEvent $event): void
+    {
+        // Track in analytics
+    }
+}
+
+#[Service]
+class NotificationService
+{
+    #[EventListener(TestPageVisitedEvent::class)]
+    public function sendNotification(TestPageVisitedEvent $event): void
+    {
+        // Send notification
+    }
+}</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            All listeners for an event are called when the event is processed.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Manual Listener Registration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Listeners can also be registered manually:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">$dispatcher->addListener(
+    TestPageVisitedEvent::class,
+    function (TestPageVisitedEvent $event) {
+        // Handle event
+    }
+);</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Queue Workers -->
+                    <section id="queue-workers" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Queue Workers</h2>
+                        <p class="text-gray-600 mb-6">
+                            Queue workers process events from queues. They support multiple queues and multiple workers per queue.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Starting Workers</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Start workers for all queues (1 worker per queue)
+php forge.php queue:work
+
+# Start with multiple workers per queue
+php forge.php queue:work --workers=2
+
+# Interactive wizard
+php forge.php queue:work  # (starts wizard)</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Multiple Queues</h3>
+                        <p class="text-gray-600 mb-4">
+                            Workers automatically process all queues defined in QUEUE_LIST:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Environment configuration
+QUEUE_LIST=[emails,cache_refresh,page_visits]
+
+# Workers start for each queue:
+# Worker for queue 'emails' started (PID 39099)
+# Worker for queue 'cache_refresh' started (PID 39100)
+# Worker for queue 'page_visits' started (PID 39101)</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Multiple Workers Per Queue</h3>
+                        <p class="text-gray-600 mb-4">
+                            Scale processing by running multiple workers per queue:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php queue:work --workers=2
+
+# Output:
+# Worker for queue 'cache_refresh' started (PID 39446)
+# Worker for queue 'emails' started (PID 39445)
+# Worker for queue 'page_visits' started (PID 39447)
+# Worker for queue 'emails' started (PID 39448)
+# Worker for queue 'cache_refresh' started (PID 39449)
+# Worker for queue 'page_visits' started (PID 39450)</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Worker Architecture</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>One parent process per queue</li>
+                            <li>Multiple worker processes per queue (forked)</li>
+                            <li>Each worker polls its queue independently</li>
+                            <li>Process isolation for reliability</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Worker Loop</h3>
+                        <p class="text-gray-600 mb-4">
+                            Workers continuously poll queues for jobs:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Poll queue for available jobs</li>
+                            <li>Process job if available</li>
+                            <li>Exponential backoff when no jobs available</li>
+                            <li>Garbage collection every 50 jobs</li>
+                            <li>Check for shutdown signals</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Graceful Shutdown</h3>
+                        <p class="text-gray-600 mb-4">
+                            Workers handle shutdown signals gracefully:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Press Ctrl+C to stop workers
+^CWorker for queue 'cache_refresh' (PID 39449) exiting gracefully.
+Worker for queue 'emails' (PID 39448) exiting gracefully.
+Worker for queue 'cache_refresh' (PID 39446) exiting gracefully.
+Worker for queue 'page_visits' (PID 39447) exiting gracefully.
+Worker for queue 'page_visits' (PID 39450) exiting gracefully.
+Worker for queue 'emails' (PID 39445) exiting gracefully.</code></pre>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>SIGINT (Ctrl+C) and SIGTERM trigger graceful shutdown</li>
+                            <li>Current job is released back to queue</li>
+                            <li>Workers exit cleanly</li>
+                        </ul>
+                    </section>
+
+                    <!-- Queue Processing -->
+                    <section id="queue-processing" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Queue Processing</h2>
+                        <p class="text-gray-600 mb-6">
+                            Queue processing involves priority-based job selection, delayed processing, and job reservation.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Priority-Based Selection</h3>
+                        <p class="text-gray-600 mb-4">
+                            Jobs are selected based on priority and creation time:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Jobs sorted by priority (ascending: LOW, NORMAL, HIGH)</li>
+                            <li>Within same priority, sorted by creation time (oldest first)</li>
+                            <li>HIGH priority jobs processed first</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Delayed Processing</h3>
+                        <p class="text-gray-600 mb-4">
+                            Jobs with delay are scheduled for future processing:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code>process_at</code> timestamp set based on delay</li>
+                            <li>Jobs only processed when <code>process_at</code> has passed</li>
+                            <li>Workers check delay before processing</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Job Reservation</h3>
+                        <p class="text-gray-600 mb-4">
+                            Jobs are reserved when being processed (database driver):
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code>reserved_at</code> timestamp set when job is popped</li>
+                            <li>Prevents multiple workers from processing same job</li>
+                            <li>Transaction-based reservation for reliability</li>
+                            <li>Job deleted after successful processing</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Transaction Support</h3>
+                        <p class="text-gray-600 mb-4">
+                            DatabaseQueue uses transactions for job reservation:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Transaction ensures atomic job reservation
+$this->queryBuilder->beginTransaction();
+try {
+    // Find and reserve job
+    $job = $this->queryBuilder
+        ->where('queue', '=', $queue)
+        ->whereNull('reserved_at')
+        ->lockForUpdate()
+        ->first();
+    
+    if ($job) {
+        $this->queryBuilder
+            ->where('id', '=', $job['id'])
+            ->update(['reserved_at' => $now]);
+    }
+    
+    $this->queryBuilder->commit();
+} catch (\Throwable $e) {
+    $this->queryBuilder->rollback();
+    throw $e;
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">SQLite Optimizations</h3>
+                        <p class="text-gray-600 mb-4">
+                            DatabaseQueue includes SQLite-specific optimizations:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Uses SQLite's RETURNING clause for atomic updates</li>
+                            <li>Single query for find and reserve</li>
+                            <li>Improved performance on SQLite</li>
+                        </ul>
+                    </section>
+
+                    <!-- Retry Mechanism -->
+                    <section id="retry-mechanism" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Retry Mechanism</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeEvents automatically retries failed events with configurable attempts and delays.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Automatic Retry</h3>
+                        <p class="text-gray-600 mb-4">
+                            When a listener throws an exception, the event is automatically retried:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Exception is caught during listener execution</li>
+                            <li>Retry count is incremented</li>
+                            <li>If retries remaining, job is re-queued with delay</li>
+                            <li>If max retries exceeded, job is marked as failed</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Retry Configuration</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Event(
+    maxRetries: 5,        // Maximum retry attempts
+    retryDelay: 2000,     // Delay between retries (ms)
+)]
+class MyEvent
+{
+    // ...
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Retry Process</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// When event fails:
+1. Exception caught
+2. Attempts incremented
+3. If attempts < maxRetries:
+   - Calculate retry delay
+   - Re-queue with LOW priority
+   - Set process_at for delayed retry
+4. If attempts >= maxRetries:
+   - Mark job as failed (failed_at)
+   - Delete job from queue</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Failed Jobs</h3>
+                        <p class="text-gray-600 mb-4">
+                            Jobs that exceed max retries are marked as failed:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code>failed_at</code> timestamp is set</li>
+                            <li>Job is removed from active queue</li>
+                            <li>Failed jobs can be inspected in database</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Exponential Backoff</h3>
+                        <p class="text-gray-600 mb-4">
+                            Retry delay can be configured, and workers use exponential backoff when no jobs available:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Initial backoff: 0.1 seconds</li>
+                            <li>Backoff doubles on each empty poll</li>
+                            <li>Maximum backoff: 5 seconds</li>
+                            <li>Resets when job is processed</li>
+                        </ul>
+                    </section>
+
+                    <!-- Configuration -->
+                    <section id="configuration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeEvents is configured via environment variables.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Queue Driver</h3>
+                        <p class="text-gray-600 mb-4">
+                            Set the queue driver via QUEUE_DRIVER:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># File-based queue (development)
+QUEUE_DRIVER=file
+
+# Database queue (production)
+QUEUE_DRIVER=database
+
+# In-memory queue (testing)
+QUEUE_DRIVER=in-memory</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Queue List</h3>
+                        <p class="text-gray-600 mb-4">
+                            Define queues to process via QUEUE_LIST:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Single queue
+QUEUE_LIST=[default]
+
+# Multiple queues
+QUEUE_LIST=[emails,cache_refresh,page_visits]</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Workers will start for each queue in the list.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Complete Configuration Example</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Queue Configuration
+QUEUE_DRIVER=database
+QUEUE_LIST=[emails,cache_refresh,page_visits]</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Database Schema -->
+                    <section id="database-schema" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Database Schema</h2>
+                        <p class="text-gray-600 mb-6">
+                            The database queue driver uses the <code>queue_jobs</code> table.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Table Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-sql">CREATE TABLE queue_jobs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    queue VARCHAR(255) NOT NULL DEFAULT 'default',
+    payload TEXT NOT NULL,
+    attempts INTEGER DEFAULT 0,
+    max_retries INTEGER DEFAULT 1,
+    priority INTEGER DEFAULT 100,
+    process_at TIMESTAMP NULL,
+    reserved_at TIMESTAMP NULL,
+    failed_at TIMESTAMP NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Columns</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>id:</strong> Primary key</li>
+                            <li><strong>queue:</strong> Queue name</li>
+                            <li><strong>payload:</strong> Serialized event data</li>
+                            <li><strong>attempts:</strong> Current retry attempt count</li>
+                            <li><strong>max_retries:</strong> Maximum retry attempts</li>
+                            <li><strong>priority:</strong> Job priority (1=LOW, 2=NORMAL, 3=HIGH)</li>
+                            <li><strong>process_at:</strong> When to process (for delayed jobs)</li>
+                            <li><strong>reserved_at:</strong> When job was reserved by worker</li>
+                            <li><strong>failed_at:</strong> When job failed (exceeded max retries)</li>
+                            <li><strong>created_at:</strong> Job creation timestamp</li>
+                            <li><strong>updated_at:</strong> Last update timestamp</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Indexes</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-sql">-- Index for queue and process_at (job selection)
+CREATE INDEX idx_queue_process_at ON queue_jobs(queue, process_at);
+
+-- Index for attempts (retry tracking)
+CREATE INDEX idx_attempts ON queue_jobs(attempts);</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Migration</h3>
+                        <p class="text-gray-600 mb-4">
+                            The migration is automatically included with ForgeEvents:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php db:migrate --module=ForgeEvents</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Usage Examples -->
+                    <section id="examples" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
+                        <p class="text-gray-600 mb-6">
+                            Comprehensive examples demonstrating ForgeEvents usage.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Event Definition</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeEvents\Attributes\Event;
+use App\Modules\ForgeEvents\Enums\QueuePriority;
+
+#[Event(
+    queue: "page_visits",
+    maxRetries: 5,
+    delay: "1m",
+    priority: QueuePriority::HIGH,
+)]
+final readonly class TestPageVisitedEvent
+{
+    public function __construct(
+        public int $userId,
+        public string $visitedAt
+    ) {}
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Dispatching Events</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeEvents\Services\EventDispatcher;
+use App\Events\TestPageVisitedEvent;
+
+#[Service]
+final class TestController
+{
+    public function __construct(
+        private readonly EventDispatcher $dispatcher
+    ) {}
+
+    public function index(): Response
+    {
+        $this->dispatcher->dispatch(
+            new TestPageVisitedEvent(
+                userId: $this->session->get("user_id"),
+                visitedAt: date("Y-m-d H:i:s")
+            )
+        );
+
+        return $this->view("pages/test/index");
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Event Listeners</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use App\Modules\ForgeEvents\Attributes\EventListener;
+use App\Events\TestPageVisitedEvent;
+use Forge\Core\DI\Attributes\Service;
+
+#[Service]
+class PageVisitLogger
+{
+    #[EventListener(TestPageVisitedEvent::class)]
+    public function handlePageVisit(TestPageVisitedEvent $event): void
+    {
+        error_log("User {$event->userId} visited at {$event->visitedAt}");
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Starting Workers</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Single worker per queue
+php forge.php queue:work
+
+# Multiple workers per queue
+php forge.php queue:work --workers=2</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Worker Output</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">Process queued events
+
+Worker for queue 'emails' started (PID 39099)
+Worker for queue 'cache_refresh' started (PID 39100)
+Worker for queue 'page_visits' started (PID 39101)
+Handling event: App\Events\TestPageVisitedEvent
+No listeners for event: App\Events\TestPageVisitedEvent
+Queue page_visits processed job 1
+Handling event: App\Events\TestPageVisitedEvent
+No listeners for event: App\Events\TestPageVisitedEvent
+Queue page_visits processed job 2</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Multiple Workers Example</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash">php forge.php queue:work --workers=2
+
+Worker for queue 'cache_refresh' started (PID 39446)
+Worker for queue 'emails' started (PID 39445)
+Worker for queue 'page_visits' started (PID 39447)
+Worker for queue 'emails' started (PID 39448)
+Worker for queue 'cache_refresh' started (PID 39449)
+Worker for queue 'page_visits' started (PID 39450)</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+                        <p class="text-gray-600 mb-6">
+                            Guidelines for using ForgeEvents effectively.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Queue Driver Selection</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>FileQueue:</strong> Use for development and small applications</li>
+                            <li><strong>DatabaseQueue:</strong> Use for production with high reliability requirements</li>
+                            <li><strong>InMemoryQueue:</strong> Use only for testing</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Queue Organization</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Organize queues by event type (emails, cache_refresh, page_visits)</li>
+                            <li>Use separate queues for different priorities</li>
+                            <li>Group related events in the same queue</li>
+                            <li>Consider queue size and processing time when organizing</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Worker Scaling</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Start with 1 worker per queue and scale as needed</li>
+                            <li>Monitor queue depth to determine worker count</li>
+                            <li>Balance worker count with system resources</li>
+                            <li>Use process managers (supervisor, systemd) for production</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Error Handling</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Always handle exceptions in listeners</li>
+                            <li>Set appropriate maxRetries for different event types</li>
+                            <li>Use retryDelay to prevent overwhelming systems</li>
+                            <li>Monitor failed jobs and investigate failures</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Monitoring and Logging</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Log event processing for debugging</li>
+                            <li>Monitor queue depth and processing times</li>
+                            <li>Track failed jobs and retry rates</li>
+                            <li>Set up alerts for queue backlogs</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Performance Considerations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Use appropriate priorities (don't make everything HIGH)</li>
+                            <li>Avoid long-running listeners (delegate to sub-processes if needed)</li>
+                            <li>Batch similar operations when possible</li>
+                            <li>Monitor database queue table size and clean up old jobs</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active nav link
+        const sections = document.querySelectorAll('.section-anchor');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        highlightNav();
+    </script>
+</body>
+
+</html>
+
