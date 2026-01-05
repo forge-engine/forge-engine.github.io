@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Home
+                        </a>
+                        <a href="getting-started.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Getting Started
+                        </a>
+                        <a href="core-concepts.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Core Concepts
+                        </a>
+                        <a href="modules.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            Capabilities
+                        </a>
+                        <a href="api-reference.html"
+                            class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">
+                            API Reference
+                        </a>
+                        <a href="tutorial.html"
+                            class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">
+                            Tutorial
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="sm:hidden hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Home</a>
+                <a href="getting-started.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Getting Started</a>
+                <a href="core-concepts.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Core Concepts</a>
+                <a href="modules.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Capabilities</a>
+                <a href="api-reference.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">API Reference</a>
+                <a href="tutorial.html" class="block px-3 py-2 text-blue-600 font-medium">Tutorial</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Tutorial</h3>
+                    <nav class="space-y-2">
+                        <a href="#introduction" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Introduction</a>
+                        <a href="#project-setup" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Project Setup</a>
+                        <a href="#database-models" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Database & Models</a>
+                        <a href="#authentication" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Authentication</a>
+                        <a href="#controllers-routes" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Controllers & Routes</a>
+                        <a href="#views-layouts" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Views & Layouts</a>
+                        <a href="#forgewire" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">ForgeWire Components</a>
+                        <a href="#events" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Events</a>
+                        <a href="#testing" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Testing</a>
+                        <a href="#putting-together" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Putting It All Together</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">Building a Todo Application</h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        A step-by-step tutorial demonstrating how to combine multiple Forge Kernel features and modules to build a complete application.
+                    </p>
+
+                    <!-- Introduction -->
+                    <section id="introduction" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Introduction</h2>
+                        <p class="text-gray-600 mb-6">
+                            In this tutorial, we'll build a todo application that demonstrates how to use multiple Forge Kernel modules together. This "glorified todo" app will showcase authentication, database operations, interactive components, events, and testing.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">What We're Building</h3>
+                        <p class="text-gray-600 mb-4">
+                            A todo application with the following features:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-6">
+                            <li>User authentication (registration and login)</li>
+                            <li>CRUD operations for todos (Create, Read, Update, Delete)</li>
+                            <li>Interactive todo list with real-time updates (ForgeWire)</li>
+                            <li>Background event processing for notifications</li>
+                            <li>Comprehensive test coverage</li>
+                            <li>User-specific todos (each user sees only their todos)</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Modules We'll Use</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-6">
+                            <li><strong>ForgeAuth:</strong> User authentication and session management</li>
+                            <li><strong>ForgeDatabaseSql:</strong> Database migrations and schema management</li>
+                            <li><strong>ForgeSqlOrm:</strong> Object-Relational Mapping for models</li>
+                            <li><strong>ForgeWire:</strong> Interactive components with real-time updates</li>
+                            <li><strong>ForgeEvents:</strong> Event-driven architecture and background processing</li>
+                            <li><strong>ForgeTesting:</strong> Comprehensive testing framework</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3">Prerequisites</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-6">
+                            <li>PHP 8.3 or higher</li>
+                            <li>Forge Kernel installed and configured</li>
+                            <li>Basic understanding of PHP and object-oriented programming</li>
+                            <li>Familiarity with MVC architecture (helpful but not required)</li>
+                        </ul>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                            <p class="text-sm text-blue-700">
+                                <strong>Note:</strong> This tutorial assumes you have Forge Kernel installed. If not, please refer to the <a href="getting-started.html" class="underline">Getting Started</a> guide first.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Project Setup -->
+                    <section id="project-setup" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Project Setup</h2>
+                        <p class="text-gray-600 mb-6">
+                            Let's start by setting up our project and installing the required modules.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Installing Required Modules</h3>
+                        <p class="text-gray-600 mb-4">
+                            We'll need several modules for our todo application. Install them using ForgePackageManager:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-bash"># Install authentication module
+php forge.php module:package-install --module=forge-auth
+
+# Install database SQL module
+php forge.php module:package-install --module=forge-database-sql
+
+# Install SQL ORM module
+php forge.php module:package-install --module=forge-sql-orm
+
+# Install ForgeWire for interactive components
+php forge.php module:package-install --module=forge-wire
+
+# Install ForgeEvents for background processing
+php forge.php module:package-install --module=forge-events
+
+# Install ForgeTesting for testing
+php forge.php module:package-install --module=forge-testing</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Project Structure</h3>
+                        <p class="text-gray-600 mb-4">
+                            Our application will have the following structure:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-bash">app/
+├── Controllers/
+│   └── TodoController.php
+├── Models/
+│   └── Todo.php
+├── Components/
+│   └── Wire/
+│       └── TodoList.php
+├── Events/
+│   ├── TodoCreatedEvent.php
+│   └── TodoCompletedEvent.php
+├── Database/
+│   └── Migrations/
+│       └── CreateTodosTable.php
+├── Repositories/
+│   └── TodoRepository.php
+└── tests/
+    └── TodoTest.php</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Environment Configuration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Ensure your <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file is configured with database settings:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-bash">DB_DRIVER=sqlite
+DB_DATABASE=storage/database/todos.sqlite
+APP_DEBUG=true
+APP_ENV=local</code></pre>
+                    </section>
+
+                    <!-- Database & Models -->
+                    <section id="database-models" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Database & Models</h2>
+                        <p class="text-gray-600 mb-6">
+                            Let's start by creating our database schema and model for todos.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Creating the Migration</h3>
+                        <p class="text-gray-600 mb-4">
+                            First, we'll create a migration for the todos table. Create <code class="bg-gray-100 px-2 py-1 rounded">app/Database/Migrations/2025_01_01_000000_CreateTodosTable.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Database\Migrations;
+
+use App\Modules\ForgeAuth\Models\User;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\BelongsTo;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Column;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Index;
+use App\Modules\ForgeDatabaseSQL\DB\Attributes\Table;
+use App\Modules\ForgeDatabaseSQL\DB\Enums\ColumnType;
+use App\Modules\ForgeDatabaseSQL\DB\Migrations\Migration;
+
+#[Table(name: 'todos')]
+#[BelongsTo(related: User::class)]
+#[Index(columns: ['user_id'], name: 'idx_todos_user_id')]
+#[Index(columns: ['completed'], name: 'idx_todos_completed')]
+class CreateTodosTable extends Migration
+{
+    #[Column(name: 'id', type: ColumnType::INTEGER, primaryKey: true, autoIncrement: true)]
+    public readonly int $id;
+
+    #[Column(name: 'user_id', type: ColumnType::INTEGER, nullable: false)]
+    public readonly int $userId;
+
+    #[Column(name: 'title', type: ColumnType::STRING, nullable: false, length: 255)]
+    public readonly string $title;
+
+    #[Column(name: 'description', type: ColumnType::TEXT, nullable: true)]
+    public readonly ?string $description;
+
+    #[Column(name: 'completed', type: ColumnType::BOOLEAN, default: false)]
+    public readonly bool $completed;
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Running the Migration</h3>
+                        <p class="text-gray-600 mb-4">
+                            Run the migration to create the todos table:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-bash">php forge.php migrate</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Creating the Todo Model</h3>
+                        <p class="text-gray-600 mb-4">
+                            Now let's create our Todo model. Create <code class="bg-gray-100 px-2 py-1 rounded">app/Models/Todo.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Models;
+
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Column;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\ProtectedFields;
+use App\Modules\ForgeSqlOrm\ORM\Attributes\Table;
+use App\Modules\ForgeSqlOrm\ORM\Model;
+use App\Modules\ForgeSqlOrm\Traits\HasMetaData;
+use App\Modules\ForgeSqlOrm\Traits\HasTimeStamps;
+
+#[Table("todos")]
+#[ProtectedFields("id", "user_id", "created_at", "updated_at")]
+class Todo extends Model
+{
+    use HasTimeStamps;
+    use HasMetaData;
+
+    #[Column]
+    public int $user_id;
+
+    #[Column]
+    public string $title;
+
+    #[Column]
+    public ?string $description;
+
+    #[Column]
+    public bool $completed = false;
+
+    public function toggle(): void
+    {
+        $this->completed = !$this->completed;
+        $this->save();
+    }
+
+    public function markAsComplete(): void
+    {
+        $this->completed = true;
+        $this->save();
+    }
+
+    public function markAsIncomplete(): void
+    {
+        $this->completed = false;
+        $this->save();
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Creating a Repository</h3>
+                        <p class="text-gray-600 mb-4">
+                            Let's create a repository for todo operations. Create <code class="bg-gray-100 px-2 py-1 rounded">app/Repositories/TodoRepository.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Repositories;
+
+use App\Models\Todo;
+use App\Modules\ForgeSqlOrm\ORM\RecordRepository;
+
+class TodoRepository extends RecordRepository
+{
+    protected string $model = Todo::class;
+
+    public function findByUserId(int $userId): array
+    {
+        return $this->query()
+            ->where('user_id', $userId)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
+    public function findIncompleteByUserId(int $userId): array
+    {
+        return $this->query()
+            ->where('user_id', $userId)
+            ->where('completed', false)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
+    public function findCompleteByUserId(int $userId): array
+    {
+        return $this->query()
+            ->where('user_id', $userId)
+            ->where('completed', true)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Authentication -->
+                    <section id="authentication" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Authentication</h2>
+                        <p class="text-gray-600 mb-6">
+                            We'll use ForgeAuth to handle user authentication. The module should already be installed and configured.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Using ForgeAuth</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeAuth provides authentication routes out of the box. Users can register and login at:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">/auth/register</code> - User registration</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">/auth/login</code> - User login</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">/auth/logout</code> - User logout</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Getting the Current User</h3>
+                        <p class="text-gray-600 mb-4">
+                            In your controllers, you can get the current authenticated user using the ForgeAuthService:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">use App\Modules\ForgeAuth\Services\ForgeAuthService;
+
+public function __construct(
+    private readonly ForgeAuthService $auth,
+) {}
+
+public function index(): Response
+{
+    $user = $this->auth->user();
+    
+    if ($user === null) {
+        return Redirect::to('/auth/login');
+    }
+    
+    // Use $user->id to get the user's ID
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Protecting Routes</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use the AuthMiddleware to protect routes that require authentication:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">use App\Modules\ForgeAuth\Middlewares\AuthMiddleware;
+use Forge\Core\Http\Attributes\Middleware;
+
+#[Route("/todos")]
+#[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+public function index(): Response
+{
+    // This route requires authentication
+}</code></pre>
+                    </section>
+
+                    <!-- Controllers & Routes -->
+                    <section id="controllers-routes" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Controllers & Routes</h2>
+                        <p class="text-gray-600 mb-6">
+                            Now let's create our TodoController with full CRUD operations.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Creating TodoController</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/Controllers/TodoController.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Controllers;
+
+use App\Models\Todo;
+use App\Modules\ForgeAuth\Middlewares\AuthMiddleware;
+use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Repositories\TodoRepository;
+use Forge\Core\DI\Attributes\Service;
+use Forge\Core\Helpers\Flash;
+use Forge\Core\Helpers\Redirect;
+use Forge\Core\Http\Attributes\Middleware;
+use Forge\Core\Http\Response;
+use Forge\Core\Routing\Route;
+use Forge\Core\Http\Request;
+use Forge\Traits\ControllerHelper;
+use Forge\Traits\SecurityHelper;
+
+#[Service]
+#[Middleware("web")]
+final class TodoController
+{
+    use ControllerHelper;
+    use SecurityHelper;
+
+    public function __construct(
+        private readonly ForgeAuthService $auth,
+        private readonly TodoRepository $repository,
+    ) {}
+
+    #[Route("/todos")]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+    public function index(): Response
+    {
+        $user = $this->auth->user();
+        $todos = $this->repository->findByUserId($user->id);
+
+        return $this->view("todos/index", [
+            "todos" => $todos,
+            "user" => $user,
+        ]);
+    }
+
+    #[Route("/todos", "POST")]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+    public function store(Request $request): Response
+    {
+        $user = $this->auth->user();
+        $data = $this->sanitize($request->postData);
+
+        if (empty($data['title'])) {
+            Flash::set("error", "Title is required");
+            return Redirect::to("/todos");
+        }
+
+        $todo = new Todo();
+        $todo->user_id = $user->id;
+        $todo->title = $data['title'];
+        $todo->description = $data['description'] ?? null;
+        $todo->completed = false;
+        $todo->save();
+
+        Flash::set("success", "Todo created successfully");
+        return Redirect::to("/todos");
+    }
+
+    #[Route("/todos/{id}", "PATCH")]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+    public function update(Request $request, string $id): Response
+    {
+        $user = $this->auth->user();
+        $todo = $this->repository->findById((int)$id);
+
+        if ($todo === null || $todo->user_id !== $user->id) {
+            Flash::set("error", "Todo not found");
+            return Redirect::to("/todos");
+        }
+
+        $data = $this->sanitize($request->postData);
+        
+        if (isset($data['title'])) {
+            $todo->title = $data['title'];
+        }
+        
+        if (isset($data['description'])) {
+            $todo->description = $data['description'];
+        }
+        
+        if (isset($data['completed'])) {
+            $todo->completed = (bool)$data['completed'];
+        }
+
+        $todo->save();
+
+        Flash::set("success", "Todo updated successfully");
+        return Redirect::to("/todos");
+    }
+
+    #[Route("/todos/{id}/toggle", "POST")]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+    public function toggle(string $id): Response
+    {
+        $user = $this->auth->user();
+        $todo = $this->repository->findById((int)$id);
+
+        if ($todo === null || $todo->user_id !== $user->id) {
+            Flash::set("error", "Todo not found");
+            return Redirect::to("/todos");
+        }
+
+        $todo->toggle();
+        Flash::set("success", "Todo " . ($todo->completed ? "completed" : "marked as incomplete"));
+        
+        return Redirect::to("/todos");
+    }
+
+    #[Route("/todos/{id}", "DELETE")]
+    #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+    public function destroy(string $id): Response
+    {
+        $user = $this->auth->user();
+        $todo = $this->repository->findById((int)$id);
+
+        if ($todo === null || $todo->user_id !== $user->id) {
+            Flash::set("error", "Todo not found");
+            return Redirect::to("/todos");
+        }
+
+        $todo->delete();
+        Flash::set("success", "Todo deleted successfully");
+        
+        return Redirect::to("/todos");
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Route Attributes</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">#[Route]</code> attribute defines routes:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">#[Route("/todos")]</code> - GET route</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">#[Route("/todos", "POST")]</code> - POST route</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">#[Route("/todos/{id}", "PATCH")]</code> - PATCH route with parameter</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">#[Route("/todos/{id}", "DELETE")]</code> - DELETE route</li>
+                        </ul>
+                    </section>
+
+                    <!-- Views & Layouts -->
+                    <section id="views-layouts" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Views & Layouts</h2>
+                        <p class="text-gray-600 mb-6">
+                            Let's create the views for our todo application.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Creating the Layout</h3>
+                        <p class="text-gray-600 mb-4">
+                            First, create a layout file at <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/layouts/todos.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;<?= e($title ?? 'Todos') ?&gt;&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/assets/css/app.css"&gt;
+    <?= csrf_meta() ?&gt;
+    <?= window_csrf_token() ?&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-50"&gt;
+    &lt;nav class="bg-white shadow-sm mb-8"&gt;
+        &lt;div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"&gt;
+            &lt;div class="flex justify-between h-16"&gt;
+                &lt;div class="flex items-center"&gt;
+                    &lt;a href="/todos" class="text-xl font-bold text-gray-900"&gt;Todo App&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class="flex items-center space-x-4"&gt;
+                    &lt;span class="text-gray-600"&gt;<?= e($user->email ?? 'Guest') ?&gt;&lt;/span&gt;
+                    &lt;a href="/auth/logout" class="text-blue-600 hover:text-blue-800"&gt;Logout&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+
+    &lt;main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"&gt;
+        <?php if (Flash::has('success')): ?&gt;
+            &lt;div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded mb-4"&gt;
+                <?= e(Flash::get('success')) ?&gt;
+            &lt;/div&gt;
+        <?php endif; ?&gt;
+
+        <?php if (Flash::has('error')): ?&gt;
+            &lt;div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded mb-4"&gt;
+                <?= e(Flash::get('error')) ?&gt;
+            &lt;/div&gt;
+        <?php endif; ?&gt;
+
+        <?= section('content') ?&gt;
+    &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Creating the Todos Index View</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/todos/index.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php layout('todos'); ?&gt;
+
+<?php section('content'); ?&gt;
+&lt;div class="bg-white rounded-lg shadow p-6"&gt;
+    &lt;h1 class="text-2xl font-bold mb-6"&gt;My Todos&lt;/h1&gt;
+
+    &lt;!-- Create Todo Form --&gt;
+    &lt;form method="POST" action="/todos" class="mb-6"&gt;
+        <?= csrf_input() ?&gt;
+        &lt;div class="flex gap-4"&gt;
+            &lt;input 
+                type="text" 
+                name="title" 
+                placeholder="Todo title..." 
+                required
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            &gt;
+            &lt;input 
+                type="text" 
+                name="description" 
+                placeholder="Description (optional)"
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            &gt;
+            &lt;button 
+                type="submit"
+                class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            &gt;
+                Add Todo
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+
+    &lt;!-- Todos List --&gt;
+    &lt;div class="space-y-3"&gt;
+        <?php foreach ($todos as $todo): ?&gt;
+            &lt;div class="flex items-center gap-4 p-4 border border-gray-200 rounded-md <?= $todo->completed ? 'bg-gray-50 opacity-75' : 'bg-white' ?&gt;"&gt;
+                &lt;div class="flex-1"&gt;
+                    &lt;h3 class="font-semibold <?= $todo->completed ? 'line-through text-gray-500' : 'text-gray-900' ?&gt;"&gt;
+                        <?= e($todo->title) ?&gt;
+                    &lt;/h3&gt;
+                    <?php if ($todo->description): ?&gt;
+                        &lt;p class="text-sm text-gray-600 mt-1"&gt;<?= e($todo->description) ?&gt;&lt;/p&gt;
+                    <?php endif; ?&gt;
+                &lt;/div&gt;
+                
+                &lt;form method="POST" action="/todos/<?= $todo->id ?&gt;/toggle" class="inline"&gt;
+                    <?= csrf_input() ?&gt;
+                    &lt;button 
+                        type="submit"
+                        class="px-4 py-2 <?= $todo->completed ? 'bg-yellow-600' : 'bg-green-600' ?&gt; text-white rounded-md hover:opacity-80"
+                    &gt;
+                        <?= $todo->completed ? 'Undo' : 'Complete' ?&gt;
+                    &lt;/button&gt;
+                &lt;/form&gt;
+
+                &lt;form method="POST" action="/todos/<?= $todo->id ?&gt;" class="inline"&gt;
+                    <?= csrf_input() ?&gt;
+                    &lt;input type="hidden" name="_method" value="DELETE"&gt;
+                    &lt;button 
+                        type="submit"
+                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                        onclick="return confirm('Are you sure?')"
+                    &gt;
+                        Delete
+                    &lt;/button&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+        <?php endforeach; ?&gt;
+
+        <?php if (empty($todos)): ?&gt;
+            &lt;p class="text-gray-500 text-center py-8"&gt;No todos yet. Create your first todo above!&lt;/p&gt;
+        <?php endif; ?&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+<?php section('content'); ?&gt;</code></pre>
+                    </section>
+
+                    <!-- ForgeWire Components -->
+                    <section id="forgewire" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">ForgeWire Components</h2>
+                        <p class="text-gray-600 mb-6">
+                            Let's create an interactive todo list component using ForgeWire for real-time updates without page refreshes.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Creating the TodoList Wire Component</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/Components/Wire/TodoList.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Components\Wire;
+
+use App\Models\Todo;
+use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeWire\Attributes\Action;
+use App\Modules\ForgeWire\Attributes\State;
+use App\Modules\ForgeWire\Core\WireComponent;
+use App\Repositories\TodoRepository;
+
+final class TodoList extends WireComponent
+{
+    #[State]
+    public array $todos = [];
+
+    #[State]
+    public string $newTodoTitle = '';
+
+    #[State]
+    public string $newTodoDescription = '';
+
+    public function __construct(
+        private readonly ForgeAuthService $auth,
+        private readonly TodoRepository $repository,
+    ) {}
+
+    public function mount(): void
+    {
+        $this->loadTodos();
+    }
+
+    #[Action]
+    public function addTodo(): void
+    {
+        if (empty($this->newTodoTitle)) {
+            return;
+        }
+
+        $user = $this->auth->user();
+        if ($user === null) {
+            return;
+        }
+
+        $todo = new Todo();
+        $todo->user_id = $user->id;
+        $todo->title = $this->newTodoTitle;
+        $todo->description = $this->newTodoDescription ?: null;
+        $todo->completed = false;
+        $todo->save();
+
+        $this->newTodoTitle = '';
+        $this->newTodoDescription = '';
+        $this->loadTodos();
+    }
+
+    #[Action]
+    public function toggleTodo(int $todoId): void
+    {
+        $todo = $this->repository->findById($todoId);
+        if ($todo === null) {
+            return;
+        }
+
+        $user = $this->auth->user();
+        if ($user === null || $todo->user_id !== $user->id) {
+            return;
+        }
+
+        $todo->toggle();
+        $this->loadTodos();
+    }
+
+    #[Action]
+    public function deleteTodo(int $todoId): void
+    {
+        $todo = $this->repository->findById($todoId);
+        if ($todo === null) {
+            return;
+        }
+
+        $user = $this->auth->user();
+        if ($user === null || $todo->user_id !== $user->id) {
+            return;
+        }
+
+        $todo->delete();
+        $this->loadTodos();
+    }
+
+    private function loadTodos(): void
+    {
+        $user = $this->auth->user();
+        if ($user === null) {
+            $this->todos = [];
+            return;
+        }
+
+        $todos = $this->repository->findByUserId($user->id);
+        $this->todos = array_map(fn($todo) => [
+            'id' => $todo->id,
+            'title' => $todo->title,
+            'description' => $todo->description,
+            'completed' => $todo->completed,
+        ], $todos);
+    }
+
+    public function render(): string
+    {
+        return raw($this->view('wire/todo-list', [
+            'todos' => $this->todos,
+            'newTodoTitle' => $this->newTodoTitle,
+            'newTodoDescription' => $this->newTodoDescription,
+        ]));
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Creating the Wire Component View</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/resources/views/components/wire/todo-list.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;div class="bg-white rounded-lg shadow p-6"&gt;
+    &lt;h2 class="text-xl font-bold mb-4"&gt;Interactive Todo List&lt;/h2&gt;
+
+    &lt;!-- Add Todo Form --&gt;
+    &lt;div class="mb-6"&gt;
+        &lt;div class="flex gap-4 mb-2"&gt;
+            &lt;input 
+                type="text" 
+                wire:model="newTodoTitle"
+                placeholder="Todo title..." 
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-md"
+            &gt;
+            &lt;input 
+                type="text" 
+                wire:model="newTodoDescription"
+                placeholder="Description (optional)"
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-md"
+            &gt;
+            &lt;button 
+                wire:click="addTodo"
+                class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            &gt;
+                Add
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Todos List --&gt;
+    &lt;div class="space-y-3"&gt;
+        <?php foreach ($todos as $todo): ?&gt;
+            &lt;div class="flex items-center gap-4 p-4 border border-gray-200 rounded-md <?= $todo['completed'] ? 'bg-gray-50 opacity-75' : 'bg-white' ?&gt;"&gt;
+                &lt;div class="flex-1"&gt;
+                    &lt;h3 class="font-semibold <?= $todo['completed'] ? 'line-through text-gray-500' : 'text-gray-900' ?&gt;"&gt;
+                        <?= e($todo['title']) ?&gt;
+                    &lt;/h3&gt;
+                    <?php if ($todo['description']): ?&gt;
+                        &lt;p class="text-sm text-gray-600 mt-1"&gt;<?= e($todo['description']) ?&gt;&lt;/p&gt;
+                    <?php endif; ?&gt;
+                &lt;/div&gt;
+                
+                &lt;button 
+                    wire:click="toggleTodo(<?= $todo['id'] ?&gt;)"
+                    class="px-4 py-2 <?= $todo['completed'] ? 'bg-yellow-600' : 'bg-green-600' ?&gt; text-white rounded-md hover:opacity-80"
+                &gt;
+                    <?= $todo['completed'] ? 'Undo' : 'Complete' ?&gt;
+                &lt;/button&gt;
+
+                &lt;button 
+                    wire:click="deleteTodo(<?= $todo['id'] ?&gt;)"
+                    class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                &gt;
+                    Delete
+                &lt;/button&gt;
+            &lt;/div&gt;
+        <?php endforeach; ?&gt;
+
+        <?php if (empty($todos)): ?&gt;
+            &lt;p class="text-gray-500 text-center py-8"&gt;No todos yet. Add one above!&lt;/p&gt;
+        <?php endif; ?&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Using the Wire Component</h3>
+                        <p class="text-gray-600 mb-4">
+                            In your view, use the <code class="bg-gray-100 px-2 py-1 rounded">wire()</code> helper to render the component:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?= wire('TodoList') ?&gt;</code></pre>
+                    </section>
+
+                    <!-- Events -->
+                    <section id="events" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Events</h2>
+                        <p class="text-gray-600 mb-6">
+                            Let's add event-driven functionality for background processing, like sending notifications when todos are created or completed.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Creating Events</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/Events/TodoCreatedEvent.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Events;
+
+use App\Modules\ForgeEvents\Attributes\Event;
+use App\Modules\ForgeEvents\Enums\QueuePriority;
+
+#[Event(
+    queue: "todos",
+    maxRetries: 3,
+    delay: "0s",
+    priority: QueuePriority::NORMAL,
+)]
+final readonly class TodoCreatedEvent
+{
+    public function __construct(
+        public int $todoId,
+        public int $userId,
+        public string $title,
+    ) {}
+}</code></pre>
+
+                        <p class="text-gray-600 mb-4 mt-6">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/Events/TodoCompletedEvent.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Events;
+
+use App\Modules\ForgeEvents\Attributes\Event;
+use App\Modules\ForgeEvents\Enums\QueuePriority;
+
+#[Event(
+    queue: "todos",
+    maxRetries: 3,
+    delay: "0s",
+    priority: QueuePriority::HIGH,
+)]
+final readonly class TodoCompletedEvent
+{
+    public function __construct(
+        public int $todoId,
+        public int $userId,
+        public string $title,
+    ) {}
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Creating Event Listeners</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/Services/TodoNotificationService.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\Events\TodoCompletedEvent;
+use App\Events\TodoCreatedEvent;
+use App\Modules\ForgeEvents\Attributes\EventListener;
+use Forge\Core\DI\Attributes\Service;
+
+#[Service]
+class TodoNotificationService
+{
+    #[EventListener(TodoCreatedEvent::class)]
+    public function handleTodoCreated(TodoCreatedEvent $event): void
+    {
+        // Log or send notification
+        error_log("Todo created: {$event->title} by user {$event->userId}");
+        
+        // In a real app, you might send an email, push notification, etc.
+    }
+
+    #[EventListener(TodoCompletedEvent::class)]
+    public function handleTodoCompleted(TodoCompletedEvent $event): void
+    {
+        // Log or send notification
+        error_log("Todo completed: {$event->title} by user {$event->userId}");
+        
+        // In a real app, you might send a congratulatory message, etc.
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Dispatching Events</h3>
+                        <p class="text-gray-600 mb-4">
+                            Update your TodoController to dispatch events:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">use App\Events\TodoCreatedEvent;
+use App\Events\TodoCompletedEvent;
+use App\Modules\ForgeEvents\Services\EventDispatcher;
+
+public function __construct(
+    private readonly ForgeAuthService $auth,
+    private readonly TodoRepository $repository,
+    private readonly EventDispatcher $dispatcher,
+) {}
+
+public function store(Request $request): Response
+{
+    // ... create todo ...
+    
+    $this->dispatcher->dispatch(
+        new TodoCreatedEvent(
+            todoId: $todo->id,
+            userId: $user->id,
+            title: $todo->title,
+        )
+    );
+    
+    // ... rest of method ...
+}
+
+public function toggle(string $id): Response
+{
+    // ... toggle todo ...
+    
+    if ($todo->completed) {
+        $this->dispatcher->dispatch(
+            new TodoCompletedEvent(
+                todoId: $todo->id,
+                userId: $user->id,
+                title: $todo->title,
+            )
+        );
+    }
+    
+    // ... rest of method ...
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Running Queue Workers</h3>
+                        <p class="text-gray-600 mb-4">
+                            Start the queue worker to process events:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-bash">php forge.php queue:work --workers=2</code></pre>
+                    </section>
+
+                    <!-- Testing -->
+                    <section id="testing" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Testing</h2>
+                        <p class="text-gray-600 mb-6">
+                            Let's write comprehensive tests for our todo application using ForgeTesting.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Creating Todo Tests</h3>
+                        <p class="text-gray-600 mb-4">
+                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/tests/TodoTest.php</code>:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php"><?php
+
+declare(strict_types=1);
+
+namespace App\Tests;
+
+use App\Models\Todo;
+use App\Modules\ForgeAuth\Models\User;
+use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeTesting\Attributes\Group;
+use App\Modules\ForgeTesting\Attributes\Test;
+use App\Modules\ForgeTesting\TestCase;
+
+#[Group("todos")]
+final class TodoTest extends TestCase
+{
+    #[Test("User can view todos page when authenticated")]
+    public function user_can_view_todos_when_authenticated(): void
+    {
+        $user = $this->createUser();
+        $this->actingAs($user);
+
+        $response = $this->get("/todos");
+        $this->assertHttpStatus(200, $response);
+    }
+
+    #[Test("User cannot view todos page when not authenticated")]
+    public function user_cannot_view_todos_when_not_authenticated(): void
+    {
+        $response = $this->get("/todos");
+        $this->assertHttpStatus(401, $response);
+    }
+
+    #[Test("User can create a todo")]
+    public function user_can_create_todo(): void
+    {
+        $user = $this->createUser();
+        $this->actingAs($user);
+
+        $response = $this->post("/todos", $this->withCsrf([
+            "title" => "Test Todo",
+            "description" => "Test Description",
+        ]));
+
+        $this->assertHttpStatus(302, $response);
+        $this->assertDatabaseHas("todos", [
+            "title" => "Test Todo",
+            "user_id" => $user->id,
+        ]);
+    }
+
+    #[Test("User can toggle todo completion")]
+    public function user_can_toggle_todo(): void
+    {
+        $user = $this->createUser();
+        $this->actingAs($user);
+
+        $todo = new Todo();
+        $todo->user_id = $user->id;
+        $todo->title = "Test Todo";
+        $todo->completed = false;
+        $todo->save();
+
+        $response = $this->post("/todos/{$todo->id}/toggle", $this->withCsrf([]));
+        
+        $this->assertHttpStatus(302, $response);
+        $this->assertDatabaseHas("todos", [
+            "id" => $todo->id,
+            "completed" => true,
+        ]);
+    }
+
+    #[Test("User can delete their own todo")]
+    public function user_can_delete_own_todo(): void
+    {
+        $user = $this->createUser();
+        $this->actingAs($user);
+
+        $todo = new Todo();
+        $todo->user_id = $user->id;
+        $todo->title = "Test Todo";
+        $todo->save();
+
+        $response = $this->delete("/todos/{$todo->id}", $this->withCsrf([]));
+        
+        $this->assertHttpStatus(302, $response);
+        $this->assertDatabaseMissing("todos", [
+            "id" => $todo->id,
+        ]);
+    }
+
+    #[Test("User cannot delete another user's todo")]
+    public function user_cannot_delete_other_user_todo(): void
+    {
+        $user1 = $this->createUser();
+        $user2 = $this->createUser();
+        $this->actingAs($user1);
+
+        $todo = new Todo();
+        $todo->user_id = $user2->id;
+        $todo->title = "Other User's Todo";
+        $todo->save();
+
+        $response = $this->delete("/todos/{$todo->id}", $this->withCsrf([]));
+        
+        $this->assertHttpStatus(302, $response);
+        $this->assertDatabaseHas("todos", [
+            "id" => $todo->id,
+        ]);
+    }
+
+    private function createUser(): User
+    {
+        $auth = $this->container->get(ForgeAuthService::class);
+        return $auth->register([
+            "email" => "test" . uniqid() . "@example.com",
+            "password" => "password123",
+            "identifier" => "testuser" . uniqid(),
+        ]);
+    }
+
+    private function actingAs(User $user): void
+    {
+        $auth = $this->container->get(ForgeAuthService::class);
+        $auth->login([
+            "identifier" => $user->identifier,
+            "password" => "password123",
+        ]);
+    }
+}</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Running Tests</h3>
+                        <p class="text-gray-600 mb-4">
+                            Run your tests:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-bash"># Run all tests
+php forge.php test
+
+# Run only todo tests
+php forge.php test --group=todos
+
+# Run specific test
+php forge.php test --filter=user_can_create_todo</code></pre>
+                    </section>
+
+                    <!-- Putting It All Together -->
+                    <section id="putting-together" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Putting It All Together</h2>
+                        <p class="text-gray-600 mb-6">
+                            Now that we've built all the components, let's see how everything works together.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Final File Structure</h3>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-bash">app/
+├── Controllers/
+│   └── TodoController.php
+├── Models/
+│   └── Todo.php
+├── Components/
+│   └── Wire/
+│       └── TodoList.php
+├── Events/
+│   ├── TodoCreatedEvent.php
+│   └── TodoCompletedEvent.php
+├── Repositories/
+│   └── TodoRepository.php
+├── Services/
+│   └── TodoNotificationService.php
+├── Database/
+│   └── Migrations/
+│       └── 2025_01_01_000000_CreateTodosTable.php
+├── resources/
+│   └── views/
+│       ├── layouts/
+│       │   └── todos.php
+│       ├── todos/
+│       │   └── index.php
+│       └── components/
+│           └── wire/
+│               └── todo-list.php
+└── tests/
+    └── TodoTest.php</code></pre>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Running the Application</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-6">
+                            <li>Start the development server: <code class="bg-gray-100 px-2 py-1 rounded">php forge.php serve</code></li>
+                            <li>Visit <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:8000</code></li>
+                            <li>Register a new user at <code class="bg-gray-100 px-2 py-1 rounded">/auth/register</code></li>
+                            <li>Login at <code class="bg-gray-100 px-2 py-1 rounded">/auth/login</code></li>
+                            <li>Access your todos at <code class="bg-gray-100 px-2 py-1 rounded">/todos</code></li>
+                            <li>Start the queue worker: <code class="bg-gray-100 px-2 py-1 rounded">php forge.php queue:work</code></li>
+                        </ol>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">What We've Built</h3>
+                        <p class="text-gray-600 mb-4">
+                            We've successfully created a todo application that demonstrates:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-6">
+                            <li>Database migrations and models using ForgeDatabaseSql and ForgeSqlOrm</li>
+                            <li>User authentication with ForgeAuth</li>
+                            <li>CRUD operations with controllers and routes</li>
+                            <li>Views and layouts with proper CSRF protection</li>
+                            <li>Interactive components with ForgeWire</li>
+                            <li>Event-driven architecture with ForgeEvents</li>
+                            <li>Comprehensive testing with ForgeTesting</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Next Steps</h3>
+                        <p class="text-gray-600 mb-4">
+                            You can extend this application with:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-6">
+                            <li>Categories or tags for todos</li>
+                            <li>Due dates and reminders</li>
+                            <li>Todo sharing between users</li>
+                            <li>Search and filtering</li>
+                            <li>Pagination for large todo lists</li>
+                            <li>Real-time notifications</li>
+                            <li>Export todos to CSV/JSON</li>
+                        </ul>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Congratulations!</strong> You've built a complete todo application using multiple Forge Kernel modules. This demonstrates how the kernel's modular architecture allows you to combine different capabilities to build powerful applications.
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu?.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active nav link
+        const sections = document.querySelectorAll('.section-anchor');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function highlightNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-600', 'font-semibold');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightNav);
+        highlightNav();
+    </script>
+</body>
+
+</html>
+
