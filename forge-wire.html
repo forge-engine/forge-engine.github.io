@@ -468,7 +468,7 @@ public string $email = '';</code></pre>
 
                         <h3 class="text-lg font-semibold mb-3">Example HTML</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-html">&lt;div fw:id="fw-0b4c5e3d9e83" fw:controller="App\Controllers\CounterController"&gt;
+                            <pre><code class="language-html">&lt;div fw:id="fw-0b4c5e3d9e83" &gt;
     &lt;div class="counter"&gt;
         &lt;button fw:click="decrement"&gt;–&lt;/button&gt;
         &lt;span&gt;2 (even)&lt;/span&gt;
@@ -482,7 +482,7 @@ public string $email = '';</code></pre>
                             Components only poll when visible on screen (performance optimization):
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-html">&lt;div fw:id="..." fw:controller="..." fw:poll.5s&gt;
+                            <pre><code class="language-html">&lt;div fw:id="..." fw:poll.5s&gt;
     &lt;!-- Only polls when visible --&gt;
 &lt;/div&gt;</code></pre>
                         </div>
