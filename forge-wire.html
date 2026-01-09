@@ -272,19 +272,19 @@ class CounterController
                             Applied to the class. Enables ForgeWire to monitor this controller. Controllers without this
                             attribute are ignored by the reactive engine for security.
                         </p>
+                    </section>
 
+                    <section id="state-management" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">State Management</h2>
                         <h3 class="text-lg font-semibold mb-3">#[State]</h3>
                         <p class="text-gray-600 mb-4">
                             Applied to public properties. Tells ForgeWire to persist this value between requests in the
                             session. Supports scalars (int, string, bool) and arrays.
                         </p>
+                    </section>
 
-                        <h3 class="text-lg font-semibold mb-3">#[Action]</h3>
-                        <p class="text-gray-600 mb-4">
-                            Applied to methods. Marks the method as "safe" to be called from the browser. ForgeWire will
-                            refuse to call any method not explicitly marked as an action.
-                        </p>
-
+                    <section id="complex-data" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Complex Data Types</h2>
                         <h3 class="text-lg font-semibold mb-3">#[Model] & #[DTO]</h3>
                         <p class="text-gray-600 mb-4">
                             Use these for complex data types. ForgeWire will handle the serialization/unserialization
@@ -300,7 +300,7 @@ public SearchCriteria $criteria;</code></pre>
                     </section>
 
                     <!-- Frontend Directives -->
-                    <section id="frontend" class="section-anchor mb-12">
+                    <section id="directives" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Frontend Directives</h2>
                         <p class="text-gray-600 mb-6">
                             ForgeWire uses HTML attributes (directives) to bind your UI to your controller.
@@ -354,31 +354,40 @@ public SearchCriteria $criteria;</code></pre>
                                 path to prevent "component injection" or cross-page state reuse.</li>
                         </ul>
                     </section>
-                    The <code class="bg-gray-100 px-2 py-1 rounded">input()</code> action is built-in and handles
-                    wire:model updates:
-                    </p>
-                    <div class="code-block p-6 text-white rounded-lg mb-6">
-                        <pre><code class="language-php">// Automatically called for wire:model
+                    <section id="actions" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Actions & Methods</h2>
+                        <h3 class="text-lg font-semibold mb-3">The #[Action] Attribute</h3>
+                        <p class="text-gray-600 mb-4">
+                            Applied to methods. Marks the method as "safe" to be called from the browser. ForgeWire will
+                            refuse to call any method not explicitly marked as an action.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">input()</code> action is built-in and
+                            handles
+                            <code>fw:model</code> updates:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Automatically called for fw:model
 #[Action]
 public function input(...$keys): void
 {
-    // Called when wire:model values change
+    // Called when fw:model values change
     // $keys contains which properties changed
 }</code></pre>
-                    </div>
+                        </div>
 
-                    <h3 class="text-lg font-semibold mb-3">Calling Actions from Frontend</h3>
-                    <div class="code-block p-6 text-white rounded-lg mb-6">
-                        <pre><code class="language-html"><!-- wire:click -->
-<button wire:click="increment">+</button>
-<button wire:click="update(5, 'New Name')">Update</button>
+                        <h3 class="text-lg font-semibold mb-3">Calling Actions from Frontend</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html">&lt;!-- fw:click --&gt;
+&lt;button fw:click="increment"&gt;+&lt;/button&gt;
+&lt;button fw:click="update(5, 'New Name')"&gt;Update&lt;/button&gt;
 
-<!-- wire:submit -->
-<form wire:submit="save">
-    <input wire:model="name" type="text">
-    <button type="submit">Save</button>
-</form></code></pre>
-                    </div>
+&lt;!-- fw:submit --&gt;
+&lt;form fw:submit="save"&gt;
+    &lt;input fw:model="name" type="text"&gt;
+    &lt;button type="submit"&gt;Save&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                        </div>
                     </section>
 
                     <!-- Computed Properties -->
@@ -431,42 +440,41 @@ public string $email = '';</code></pre>
                         </p>
                     </section>
 
-                    <!-- Frontend Integration -->
                     <section id="frontend" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Frontend Integration</h2>
                         <p class="text-gray-600 mb-6">
                             ForgeWire's JavaScript client handles all frontend interactions automatically.
                         </p>
 
-                        <h3 class="text-lg font-semibold mb-3">Wire Directives</h3>
+                        <h3 class="text-lg font-semibold mb-3">Directives Reference</h3>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:click="method"</code> — Call action on
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:click="method"</code> — Call action on
                                 click</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:model="property"</code> — Two-way
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model="property"</code> — Two-way
                                 binding (immediate)</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:model.lazy</code> — Update on
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model.lazy</code> — Update on
                                 blur/change</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:model.debounce</code> — Debounced
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model.debounce</code> — Debounced
                                 updates (600ms default)</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:model.debounce.300ms</code> — Custom
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model.debounce.300ms</code> — Custom
                                 debounce time</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:submit="method"</code> — Form
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:submit="method"</code> — Form
                                 submission</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:poll</code> — Auto-refresh every 2
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:poll</code> — Auto-refresh every 2
                                 seconds</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">wire:poll.5s</code> — Custom poll interval
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:poll.5s</code> — Custom poll interval
                             </li>
                         </ul>
 
                         <h3 class="text-lg font-semibold mb-3">Example HTML</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-html"><div wire:id="fw-0b4c5e3d9e83" wire:component="App\Components\Wire\Counter">
-    <div class="counter">
-        <button wire:click="decrement">–</button>
-        <span>2 (even)</span>
-        <button wire:click="increment">+</button>
-    </div>
-</div></code></pre>
+                            <pre><code class="language-html">&lt;div fw:id="fw-0b4c5e3d9e83" fw:controller="App\Controllers\CounterController"&gt;
+    &lt;div class="counter"&gt;
+        &lt;button fw:click="decrement"&gt;–&lt;/button&gt;
+        &lt;span&gt;2 (even)&lt;/span&gt;
+        &lt;button fw:click="increment"&gt;+&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Polling with IntersectionObserver</h3>
@@ -474,9 +482,9 @@ public string $email = '';</code></pre>
                             Components only poll when visible on screen (performance optimization):
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-html"><div wire:id="..." wire:component="..." wire:poll.5s>
-    <!-- Only polls when visible -->
-</div></code></pre>
+                            <pre><code class="language-html">&lt;div fw:id="..." fw:controller="..." fw:poll.5s&gt;
+    &lt;!-- Only polls when visible --&gt;
+&lt;/div&gt;</code></pre>
                         </div>
                     </section>
 
@@ -491,7 +499,7 @@ public string $email = '';</code></pre>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-json">{
   "id": "fw-0b4c5e3d9e83",
-  "component": "App\\Components\\Wire\\Counter",
+  "controller": "App\\Components\\Wire\\Counter",
   "action": "increment",
   "args": [],
   "dirty": {},
@@ -505,7 +513,7 @@ public string $email = '';</code></pre>
                         <h3 class="text-lg font-semibold mb-3">Response Format</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-json">{
-  "html": "<div wire:id=\"fw-0b4c5e3d9e83\"...>...</div>",
+  "html": "&lt;div fw:id=\"fw-0b4c5e3d9e83\"...&gt;...&lt;/div&gt;",
   "state": {},
   "checksum": "632b5d500042bb4361657ea9f2991132d8a18208d0e38bf6a801f127f48f4e8c",
   "events": [],
@@ -737,8 +745,8 @@ public string $email = '';</code></pre>
                                     <li>• Use #[Service] for dependency injection</li>
                                     <li>• Keep components focused and single-purpose</li>
                                     <li>• Use computed properties for derived values</li>
-                                    <li>• Leverage wire:model.debounce for search inputs</li>
-                                    <li>• Use wire:poll sparingly (only when needed)</li>
+                                    <li>• Leverage fw:model.debounce for search inputs</li>
+                                    <li>• Use fw:poll sparingly (only when needed)</li>
                                 </ul>
                             </div>
 
