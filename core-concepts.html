@@ -191,7 +191,7 @@
                         </ul>
                     </section>
 
-                    <section id="dependency-injection">
+                    <section id="dependency-injection" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Dependency Injection</h2>
                         <p class="text-gray-600 mb-4">
                             Forge's DI container is like a smart warehouse manager. It knows where everything is stored,
@@ -305,7 +305,7 @@ public function register(Container $container): void
                         </p>
                     </section>
 
-                    <section id="routing-system">
+                    <section id="routing-system" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Routing System</h2>
                         <p class="text-gray-600 mb-4">
                             Attribute-based routing that auto-discovers routes from controllers. No separate route files
@@ -358,7 +358,7 @@ class ApiController
                         </p>
                     </section>
 
-                    <section id="middleware">
+                    <section id="middleware" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Middleware</h2>
                         <p class="text-gray-600 mb-4">
                             Filter HTTP requests before they hit your application.
@@ -520,7 +520,7 @@ class UserController
                         </p>
                     </section>
 
-                    <section id="view-engine">
+                    <section id="view-engine" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">View Engine</h2>
                         <p class="text-gray-600 mb-4">
                             PHP-first templating. No new syntax to learn.
@@ -586,44 +586,49 @@ View::layout(name: "layouts/app", loadFromModule: true);
         &lt;p&gt;&lt;?= $description ?&gt;&lt;/p&gt;
     &lt;/div&gt;
 &lt;?php View::endSection(); ?&gt;</code></pre>
-                            <section id="components">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">Components</h2>
-                                <p class="text-gray-600 mb-4">
-                                    Components in Forge are simple, reusable UI pieces. Unlike other frameworks that
-                                    force you into complex class structures, Forge components are just standard PHP
-                                    templates. They are lightning-fast to render and easy to organize.
-                                </p>
+                        </div>
+                    </section>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Component Locations</h4>
-                                <p class="text-gray-600 mb-4">
-                                    Forge resolutions components from several standard locations:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><strong>App Scope:</strong> <code>app/resources/components/</code></li>
-                                    <li><strong>Module Scope (Standard):</strong>
-                                        <code>modules/ModuleName/src/Resources/components/</code></li>
-                                    <li><strong>Module Scope (Views):</strong>
-                                        <code>modules/ModuleName/src/Resources/views/</code></li>
-                                </ul>
+                    <section id="components" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Components</h2>
+                        <p class="text-gray-600 mb-4">
+                            Components in Forge are simple, reusable UI pieces. Unlike other frameworks that
+                            force you into complex class structures, Forge components are just standard PHP
+                            templates. They are lightning-fast to render and easy to organize.
+                        </p>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Creating a Component</h4>
-                                <p class="text-gray-600 mb-4">
-                                    A component is just a PHP file. Variables passed as props are automatically
-                                    extracted for use in the template.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;!-- app/resources/components/ui/alert.php --&gt;
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Component Locations</h4>
+                        <p class="text-gray-600 mb-4">
+                            Forge resolutions components from several standard locations:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>App Scope:</strong> <code>app/resources/components/</code></li>
+                            <li><strong>Module Scope (Standard):</strong>
+                                <code>modules/ModuleName/src/Resources/components/</code>
+                            </li>
+                            <li><strong>Module Scope (Views):</strong>
+                                <code>modules/ModuleName/src/Resources/views/</code>
+                            </li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Creating a Component</h4>
+                        <p class="text-gray-600 mb-4">
+                            A component is just a PHP file. Variables passed as props are automatically
+                            extracted for use in the template.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;!-- app/resources/components/ui/alert.php --&gt;
 &lt;div class="alert alert-&lt;?= $type ?? 'info' ?&gt;"&gt;
     &lt;?= $message ?&gt;
 &lt;/div&gt;</code></pre>
-                                </div>
+                        </div>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Using Components</h4>
-                                <p class="text-gray-600 mb-4">
-                                    Use the global <code>component()</code> helper to render your UI pieces anywhere.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Using Components</h4>
+                        <p class="text-gray-600 mb-4">
+                            Use the global <code>component()</code> helper to render your UI pieces anywhere.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // Render an app-scope component
 echo component('ui/alert', [
     'type' => 'success',
@@ -636,17 +641,17 @@ echo component('ForgeNexus:sidebar/item', [
     'icon' => 'fa-home'
 ]);
 ?&gt;</code></pre>
-                                </div>
+                        </div>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Automatic Data Extraction</h4>
-                                <p class="text-gray-600 mb-4">
-                                    Forge's view engine is smart. If you pass an array, it extracts its keys. If you
-                                    pass an <strong>object</strong>, it automatically extracts all its public properties
-                                    into local variables. This is perfect for passing DTOs or reactive state objects
-                                    directly to components.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Automatic Data Extraction</h4>
+                        <p class="text-gray-600 mb-4">
+                            Forge's view engine is smart. If you pass an array, it extracts its keys. If you
+                            pass an <strong>object</strong>, it automatically extracts all its public properties
+                            into local variables. This is perfect for passing DTOs or reactive state objects
+                            directly to components.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // Passing an object as props
 $user = new UserDto(name: "John Doe", email: "john@example.com");
 
@@ -658,67 +663,68 @@ echo component('user/card', $user);
     &lt;h3&gt;&lt;?= $name ?&gt;&lt;/h3&gt;
     &lt;p&gt;&lt;?= $email ?&gt;&lt;/p&gt;
 &lt;/div&gt;</code></pre>
-                                </div>
+                        </div>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Key Benefits</h4>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><strong>Pure PHP:</strong> No new syntax to learn, full IDE support.</li>
-                                    <li><strong>No Overheard:</strong> No base component classes or complex lifecycles
-                                        for simple UI.</li>
-                                    <li><strong>Flexible:</strong> Pass arrays or objects seamlessly.</li>
-                                    <li><strong>Namespaced:</strong> Easily share components across modules using the
-                                        <code>Module:path</code> syntax.</li>
-                                </ul>
-                            </section>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Key Benefits</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Pure PHP:</strong> No new syntax to learn, full IDE support.</li>
+                            <li><strong>No Overheard:</strong> No base component classes or complex lifecycles
+                                for simple UI.</li>
+                            <li><strong>Flexible:</strong> Pass arrays or objects seamlessly.</li>
+                            <li><strong>Namespaced:</strong> Easily share components across modules using the
+                                <code>Module:path</code> syntax.
+                            </li>
+                        </ul>
+                    </section>
 
-                            <section id="database-orm">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">Database & ORM (Capabilities)</h2>
-                                <p class="text-gray-600 mb-4">
-                                    Database and ORM are <strong>not built into the kernel</strong>. They're
-                                    capabilities you install when you need them. The kernel provides <strong>contracts
-                                        (interfaces)</strong> for database operations, but these contracts must be
-                                    implemented by a module.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    <strong>Important:</strong> The kernel provides <code
-                                        class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code> and
-                                    <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> contracts,
-                                    but they won't work unless you install a module that implements them. For example:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">ForgeDatabaseSQL</code> implements
-                                        <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code>
-                                    </li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code> implements <code
-                                            class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code></li>
-                                    <li>You can also create your own module that implements these contracts</li>
-                                </ul>
-                                <p class="text-gray-600 mb-4">
-                                    Forge provides <strong>three ways to work with data</strong>:
-                                </p>
-                                <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><strong>Raw SQL Queries:</strong> Use <code
-                                            class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code>
-                                        (requires ForgeDatabaseSQL) or <code
-                                            class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> (requires
-                                        ForgeSqlOrm) for direct database access.</li>
-                                    <li><strong>Query Builder:</strong> Use the fluent query builder interface for
-                                        type-safe database operations (requires ForgeSqlOrm).</li>
-                                    <li><strong>ORM:</strong> Use the ForgeSqlOrm capability for attribute-based models
-                                        and relationships.</li>
-                                </ol>
+                    <section id="database-orm" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Database & ORM (Capabilities)</h2>
+                        <p class="text-gray-600 mb-4">
+                            Database and ORM are <strong>not built into the kernel</strong>. They're
+                            capabilities you install when you need them. The kernel provides <strong>contracts
+                                (interfaces)</strong> for database operations, but these contracts must be
+                            implemented by a module.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Important:</strong> The kernel provides <code
+                                class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code> and
+                            <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> contracts,
+                            but they won't work unless you install a module that implements them. For example:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">ForgeDatabaseSQL</code> implements
+                                <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code>
+                            </li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code> implements <code
+                                    class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code></li>
+                            <li>You can also create your own module that implements these contracts</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Forge provides <strong>three ways to work with data</strong>:
+                        </p>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Raw SQL Queries:</strong> Use <code
+                                    class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code>
+                                (requires ForgeDatabaseSQL) or <code
+                                    class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code> (requires
+                                ForgeSqlOrm) for direct database access.</li>
+                            <li><strong>Query Builder:</strong> Use the fluent query builder interface for
+                                type-safe database operations (requires ForgeSqlOrm).</li>
+                            <li><strong>ORM:</strong> Use the ForgeSqlOrm capability for attribute-based models
+                                and relationships.</li>
+                        </ol>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Raw SQL Queries with
-                                    DatabaseConnectionInterface</h3>
-                                <p class="text-gray-600 mb-4">
-                                    When using <code
-                                        class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code>, you
-                                    have direct access to PDO methods. This requires the <code
-                                        class="bg-gray-100 px-2 py-1 rounded">ForgeDatabaseSQL</code> module to be
-                                    installed.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Raw SQL Queries with
+                            DatabaseConnectionInterface</h3>
+                        <p class="text-gray-600 mb-4">
+                            When using <code class="bg-gray-100 px-2 py-1 rounded">DatabaseConnectionInterface</code>,
+                            you
+                            have direct access to PDO methods. This requires the <code
+                                class="bg-gray-100 px-2 py-1 rounded">ForgeDatabaseSQL</code> module to be
+                            installed.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use Forge\Core\Contracts\Database\DatabaseConnectionInterface;
 
@@ -751,18 +757,18 @@ class MyController
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Raw SQL Queries with
-                                    QueryBuilderInterface</h3>
-                                <p class="text-gray-600 mb-4">
-                                    When using <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code>,
-                                    you can use raw SQL methods or combine them with the query builder. This requires
-                                    the <code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code> module to be
-                                    installed.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Raw SQL Queries with
+                            QueryBuilderInterface</h3>
+                        <p class="text-gray-600 mb-4">
+                            When using <code class="bg-gray-100 px-2 py-1 rounded">QueryBuilderInterface</code>,
+                            you can use raw SQL methods or combine them with the query builder. This requires
+                            the <code class="bg-gray-100 px-2 py-1 rounded">ForgeSqlOrm</code> module to be
+                            installed.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use App\Modules\ForgeSqlOrm\ORM\QueryBuilder;
 
@@ -803,18 +809,18 @@ class MyController
             ->get();
     }
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Transactions</h3>
-                                <p class="text-gray-600 mb-4">
-                                    Both interfaces support database transactions. Here are examples of commit and
-                                    rollback operations:
-                                </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Transactions</h3>
+                        <p class="text-gray-600 mb-4">
+                            Both interfaces support database transactions. Here are examples of commit and
+                            rollback operations:
+                        </p>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Transactions with
-                                    DatabaseConnectionInterface</h4>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Transactions with
+                            DatabaseConnectionInterface</h4>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 // Transaction with commit
 public function transactionCommit(): array
@@ -844,12 +850,12 @@ public function transactionRollback(): array
         return ['status' => 'rolled_back', 'message' => 'Transaction rolled back successfully'];
     }
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Transactions with
-                                    QueryBuilderInterface</h4>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Transactions with
+                            QueryBuilderInterface</h4>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 // Transaction with commit
 public function transactionCommit(): array
@@ -878,16 +884,16 @@ public function transactionRollback(): array
         return ['status' => 'rolled_back', 'message' => 'Transaction rolled back successfully'];
     }
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Model Definition</h3>
-                                <p class="text-gray-600 mb-4">
-                                    Models extend the <code class="bg-gray-100 px-2 py-1 rounded">Model</code> base
-                                    class and use attributes to define table structure, columns, and relationships. You
-                                    can also use traits to add common functionality.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Model Definition</h3>
+                        <p class="text-gray-600 mb-4">
+                            Models extend the <code class="bg-gray-100 px-2 py-1 rounded">Model</code> base
+                            class and use attributes to define table structure, columns, and relationships. You
+                            can also use traits to add common functionality.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use App\Modules\ForgeSqlOrm\ORM\Model;
 use App\Modules\ForgeSqlOrm\ORM\Attributes\Table;
@@ -934,22 +940,22 @@ class User extends Model
         return self::describe(__FUNCTION__);
     }
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Available Traits</h4>
-                                <p class="text-gray-600 mb-4">
-                                    ForgeSqlOrm provides several traits to add common functionality to your models:
-                                </p>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Available Traits</h4>
+                        <p class="text-gray-600 mb-4">
+                            ForgeSqlOrm provides several traits to add common functionality to your models:
+                        </p>
 
-                                <h5 class="text-lg font-semibold mb-3 text-gray-900">HasTimeStamps</h5>
-                                <p class="text-gray-600 mb-4">
-                                    Automatically adds <code class="bg-gray-100 px-2 py-1 rounded">created_at</code> and
-                                    <code class="bg-gray-100 px-2 py-1 rounded">updated_at</code> timestamp columns to
-                                    your model. These are automatically managed by the ORM when creating or updating
-                                    records.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h5 class="text-lg font-semibold mb-3 text-gray-900">HasTimeStamps</h5>
+                        <p class="text-gray-600 mb-4">
+                            Automatically adds <code class="bg-gray-100 px-2 py-1 rounded">created_at</code> and
+                            <code class="bg-gray-100 px-2 py-1 rounded">updated_at</code> timestamp columns to
+                            your model. These are automatically managed by the ORM when creating or updating
+                            records.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use App\Modules\ForgeSqlOrm\Traits\HasTimeStamps;
 
@@ -961,16 +967,16 @@ class User extends Model
     // public ?DateTimeImmutable $created_at = null;
     // public ?DateTimeImmutable $updated_at = null;
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h5 class="text-lg font-semibold mb-3 text-gray-900">HasMetaData</h5>
-                                <p class="text-gray-600 mb-4">
-                                    Adds a <code class="bg-gray-100 px-2 py-1 rounded">metadata</code> column for
-                                    storing JSON data. Useful for flexible, schema-less data that doesn't need its own
-                                    table.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h5 class="text-lg font-semibold mb-3 text-gray-900">HasMetaData</h5>
+                        <p class="text-gray-600 mb-4">
+                            Adds a <code class="bg-gray-100 px-2 py-1 rounded">metadata</code> column for
+                            storing JSON data. Useful for flexible, schema-less data that doesn't need its own
+                            table.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use App\Modules\ForgeSqlOrm\Traits\HasMetaData;
 
@@ -985,29 +991,29 @@ class User extends Model
     // $user->metadata = ['preferences' => ['theme' => 'dark']];
     // $user->save();
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h5 class="text-lg font-semibold mb-3 text-gray-900">CanLoadRelations</h5>
-                                <p class="text-gray-600 mb-4">
-                                    Provides methods for loading and working with relationships. This trait is already
-                                    included in the <code class="bg-gray-100 px-2 py-1 rounded">Model</code> base class,
-                                    but you can use it explicitly if needed.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    Key methods:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">with(string ...$paths)</code> —
-                                        Eager load relationships when querying</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">load(string ...$relations)</code> —
-                                        Lazy load relationships on an existing model instance</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">relation(string $name)</code> — Get
-                                        a query builder for a relationship</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">describe(string $method)</code> —
-                                        Get relationship metadata</li>
-                                </ul>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h5 class="text-lg font-semibold mb-3 text-gray-900">CanLoadRelations</h5>
+                        <p class="text-gray-600 mb-4">
+                            Provides methods for loading and working with relationships. This trait is already
+                            included in the <code class="bg-gray-100 px-2 py-1 rounded">Model</code> base class,
+                            but you can use it explicitly if needed.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Key methods:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">with(string ...$paths)</code> —
+                                Eager load relationships when querying</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">load(string ...$relations)</code> —
+                                Lazy load relationships on an existing model instance</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">relation(string $name)</code> — Get
+                                a query builder for a relationship</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">describe(string $method)</code> —
+                                Get relationship metadata</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 // Eager loading relationships
 $user = User::with('profile')->id(1)->first();
@@ -1018,11 +1024,11 @@ $user->load('profile');
 
 // Using relation() to build queries
 $posts = $user->relation('posts')->where('status', '=', 'published')->get();</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Query Builder</h3>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Query Builder</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 // Get all records
 $users = User::query()->get();
@@ -1055,36 +1061,35 @@ $user->load('profile', 'posts');
 
 // Access relationship using relation() method
 $posts = $user->relation('posts')->where('status', '=', 'published')->get();</code></pre>
-                                </div>
-                                <p class="text-gray-600 mb-4">
-                                    <strong>Note:</strong> Forge uses a query builder pattern. Always start with <code
-                                        class="bg-gray-100 px-2 py-1 rounded">Model::query()</code> to build queries.
-                                    There are no static methods like <code
-                                        class="bg-gray-100 px-2 py-1 rounded">all()</code> or <code
-                                        class="bg-gray-100 px-2 py-1 rounded">find()</code> directly on the Model class.
-                                    Use <code class="bg-gray-100 px-2 py-1 rounded">with()</code> for eager loading
-                                    relationships, or <code class="bg-gray-100 px-2 py-1 rounded">load()</code> for lazy
-                                    loading on existing instances.
-                                </p>
-                            </section>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Note:</strong> Forge uses a query builder pattern. Always start with <code
+                                class="bg-gray-100 px-2 py-1 rounded">Model::query()</code> to build queries.
+                            There are no static methods like <code class="bg-gray-100 px-2 py-1 rounded">all()</code> or
+                            <code class="bg-gray-100 px-2 py-1 rounded">find()</code> directly on the Model class.
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">with()</code> for eager loading
+                            relationships, or <code class="bg-gray-100 px-2 py-1 rounded">load()</code> for lazy
+                            loading on existing instances.
+                        </p>
+                    </section>
 
-                            <section id="capability-system">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">Capability System</h2>
-                                <p class="text-gray-600 mb-4">
-                                    Extend Forge Kernel with self-contained capability modules. Think of capabilities
-                                    like modular additions to a house. The kernel gives you the foundation. Capabilities
-                                    add what you need: database, ORM, authentication, storage — all optional, all
-                                    pluggable.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    Need a database? Install a database capability. Need an ORM? Install an ORM
-                                    capability. Don't need authentication? Don't install it. The kernel stays lean. You
-                                    stay in control.
-                                </p>
+                    <section id="capability-system" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Capability System</h2>
+                        <p class="text-gray-600 mb-4">
+                            Extend Forge Kernel with self-contained capability modules. Think of capabilities
+                            like modular additions to a house. The kernel gives you the foundation. Capabilities
+                            add what you need: database, ORM, authentication, storage — all optional, all
+                            pluggable.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Need a database? Install a database capability. Need an ORM? Install an ORM
+                            capability. Don't need authentication? Don't install it. The kernel stays lean. You
+                            stay in control.
+                        </p>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Capability Structure</h3>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">{
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Capability Structure</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">{
   "$schema": "./../../engine/Core/Schema/module-schema.json",
   "name": "forge-my-module",
   "version": "1.0.0",
@@ -1094,22 +1099,22 @@ $posts = $user->relation('posts')->where('status', '=', 'published')->get();</co
   "author": "Your Name",
   "license": "MIT"
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Capability Class</h3>
-                                <p class="text-gray-600 mb-4">
-                                    The <code class="bg-gray-100 px-2 py-1 rounded">#[Module]</code> attribute supports
-                                    several options to control module behavior:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">core: true</code> — Module won't be
-                                        auto-loaded. You must wire it manually in your bootstrap or service providers.
-                                    </li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">isCli: true</code> — Module won't be
-                                        loaded in web context. Only loaded when running CLI commands.</li>
-                                </ul>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Capability Class</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">#[Module]</code> attribute supports
+                            several options to control module behavior:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">core: true</code> — Module won't be
+                                auto-loaded. You must wire it manually in your bootstrap or service providers.
+                            </li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">isCli: true</code> — Module won't be
+                                loaded in web context. Only loaded when running CLI commands.</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 namespace App\Modules\MyModule;
 
@@ -1158,25 +1163,25 @@ final class MyModule
         // Boot logic after module registration
     }
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Configuration Defaults</h3>
-                                <p class="text-gray-600 mb-4">
-                                    The <code class="bg-gray-100 px-2 py-1 rounded">#[ConfigDefaults]</code> attribute
-                                    allows you to define default configuration values directly in your module class,
-                                    eliminating the need for a separate <code
-                                        class="bg-gray-100 px-2 py-1 rounded">config/</code> folder and config file.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    You can still override these defaults by creating a config file in <code
-                                        class="bg-gray-100 px-2 py-1 rounded">/config/</code> (e.g., <code
-                                        class="bg-gray-100 px-2 py-1 rounded">config/my_module.php</code>). When loading
-                                    configuration in your module, you need to explicitly define that the config can be
-                                    overridden from the <code class="bg-gray-100 px-2 py-1 rounded">/config/</code>
-                                    directory.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Configuration Defaults</h3>
+                        <p class="text-gray-600 mb-4">
+                            The <code class="bg-gray-100 px-2 py-1 rounded">#[ConfigDefaults]</code> attribute
+                            allows you to define default configuration values directly in your module class,
+                            eliminating the need for a separate <code
+                                class="bg-gray-100 px-2 py-1 rounded">config/</code> folder and config file.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            You can still override these defaults by creating a config file in <code
+                                class="bg-gray-100 px-2 py-1 rounded">/config/</code> (e.g., <code
+                                class="bg-gray-100 px-2 py-1 rounded">config/my_module.php</code>). When loading
+                            configuration in your module, you need to explicitly define that the config can be
+                            overridden from the <code class="bg-gray-100 px-2 py-1 rounded">/config/</code>
+                            directory.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 #[ConfigDefaults(defaults: [
     'my_module' => [
@@ -1192,19 +1197,19 @@ class MyModule
     // Config defaults are automatically available
     // Can be overridden in config/my_module.php
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Post-Install and Post-Uninstall
-                                    Hooks</h3>
-                                <p class="text-gray-600 mb-4">
-                                    Use <code class="bg-gray-100 px-2 py-1 rounded">#[PostInstall]</code> and <code
-                                        class="bg-gray-100 px-2 py-1 rounded">#[PostUninstall]</code> attributes to
-                                    automatically run CLI commands after a module is installed or removed. This is
-                                    useful for running migrations, linking assets, seeding data, or performing other
-                                    setup/cleanup tasks.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Post-Install and Post-Uninstall
+                            Hooks</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">#[PostInstall]</code> and <code
+                                class="bg-gray-100 px-2 py-1 rounded">#[PostUninstall]</code> attributes to
+                            automatically run CLI commands after a module is installed or removed. This is
+                            useful for running migrations, linking assets, seeding data, or performing other
+                            setup/cleanup tasks.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 #[PostInstall(command: 'migrate', args: ['--type=module', '--module=my-module'])]
 #[PostInstall(command: 'asset:link', args: ['--type=module', '--module=my-module'])]
@@ -1214,23 +1219,22 @@ class MyModule
 {
     // Commands run automatically after install/uninstall
 }</code></pre>
-                                </div>
-                                <p class="text-gray-600 mb-4">
-                                    You can specify multiple <code
-                                        class="bg-gray-100 px-2 py-1 rounded">#[PostInstall]</code> or <code
-                                        class="bg-gray-100 px-2 py-1 rounded">#[PostUninstall]</code> attributes.
-                                    Commands are executed in the order they appear on the class.
-                                </p>
-                            </section>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            You can specify multiple <code class="bg-gray-100 px-2 py-1 rounded">#[PostInstall]</code>
+                            or <code class="bg-gray-100 px-2 py-1 rounded">#[PostUninstall]</code> attributes.
+                            Commands are executed in the order they appear on the class.
+                        </p>
+                    </section>
 
-                            <section id="configuration">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration Management</h2>
-                                <p class="text-gray-600 mb-4">
-                                    Environment-based configuration that's secure and flexible.
-                                </p>
+                    <section id="configuration" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Configuration Management</h2>
+                        <p class="text-gray-600 mb-4">
+                            Environment-based configuration that's secure and flexible.
+                        </p>
 
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 use Forge\Core\Config\Config;
 use Forge\Core\Config\Environment;
@@ -1254,95 +1258,95 @@ $debugEnabled = $env->isDebugEnabled();
 if (config('services.stripe.key')) {
     // Stripe is configured
 }</code></pre>
-                                </div>
-                            </section>
+                        </div>
+                    </section>
 
-                            <section id="async-processing">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">Asynchronous Processing & Queues</h2>
-                                <p class="text-gray-600 mb-4">
-                                    Understanding when and why to use queues, workers, and asynchronous processing.
-                                </p>
+                    <section id="async-processing" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Asynchronous Processing & Queues</h2>
+                        <p class="text-gray-600 mb-4">
+                            Understanding when and why to use queues, workers, and asynchronous processing.
+                        </p>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">The Cashier & Warehouse Analogy
-                                </h3>
-                                <p class="text-gray-600 mb-4">
-                                    Imagine a store with a cashier taking orders. Most orders are simple — "I want a
-                                    sheet of paper" — and the cashier handles them quickly because the paper is right
-                                    next to them. Everyone in line moves smoothly, no one notices any slowdown.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    But sometimes, someone needs something from the warehouse — like a screw that's 3
-                                    feet away. Now the cashier has to walk, pick up the screw, come back, and deliver
-                                    both items. The person behind has to wait. This is called <strong>latency</strong> —
-                                    the delay caused by the slower operation.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    If it's just one person, nothing bad happens. But what if 4 people in a row each
-                                    need something from the warehouse? Or what if someone needs 2 shovels from deep in
-                                    the warehouse, and the cashier doesn't know where they are? Now the whole process
-                                    stops for everyone.
-                                </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">The Cashier & Warehouse Analogy
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Imagine a store with a cashier taking orders. Most orders are simple — "I want a
+                            sheet of paper" — and the cashier handles them quickly because the paper is right
+                            next to them. Everyone in line moves smoothly, no one notices any slowdown.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            But sometimes, someone needs something from the warehouse — like a screw that's 3
+                            feet away. Now the cashier has to walk, pick up the screw, come back, and deliver
+                            both items. The person behind has to wait. This is called <strong>latency</strong> —
+                            the delay caused by the slower operation.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            If it's just one person, nothing bad happens. But what if 4 people in a row each
+                            need something from the warehouse? Or what if someone needs 2 shovels from deep in
+                            the warehouse, and the cashier doesn't know where they are? Now the whole process
+                            stops for everyone.
+                        </p>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">The Solution: Workers</h3>
-                                <p class="text-gray-600 mb-4">
-                                    To solve this, you hire a warehouse worker. The cashier handles simple orders
-                                    (synchronous — fast). The warehouse worker handles complex orders (asynchronous —
-                                    doesn't block the cashier). When an order needs something from the warehouse, the
-                                    cashier writes it down and puts it in a queue. The warehouse worker picks up
-                                    multiple orders at once (batch processing), goes to the warehouse, brings back all
-                                    the items, and delivers them.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    If you need more capacity, you hire more workers. You can plan ahead — before a big
-                                    sale or holiday, you allocate more workers a few hours before the rush. Everything
-                                    feels smooth.
-                                </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">The Solution: Workers</h3>
+                        <p class="text-gray-600 mb-4">
+                            To solve this, you hire a warehouse worker. The cashier handles simple orders
+                            (synchronous — fast). The warehouse worker handles complex orders (asynchronous —
+                            doesn't block the cashier). When an order needs something from the warehouse, the
+                            cashier writes it down and puts it in a queue. The warehouse worker picks up
+                            multiple orders at once (batch processing), goes to the warehouse, brings back all
+                            the items, and delivers them.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            If you need more capacity, you hire more workers. You can plan ahead — before a big
+                            sale or holiday, you allocate more workers a few hours before the rush. Everything
+                            feels smooth.
+                        </p>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">In Your Application</h3>
-                                <p class="text-gray-600 mb-4">
-                                    <strong>Synchronous (Cashier):</strong> Simple operations that are fast — rendering
-                                    a view, returning JSON, simple database queries. These happen immediately and don't
-                                    need queues.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    <strong>Asynchronous (Warehouse Worker):</strong> Complex operations that take time
-                                    — sending emails, processing images, generating reports, calling external APIs.
-                                    These go into a queue and are processed by workers.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    <strong>Batch Processing:</strong> Workers can process multiple jobs at once, like
-                                    the warehouse worker bringing back multiple items in one trip.
-                                </p>
-                                <p class="text-gray-600 mb-4">
-                                    <strong>Scaling:</strong> Add more workers before peak times (holidays, promotions,
-                                    scheduled events) to handle increased load smoothly.
-                                </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">In Your Application</h3>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Synchronous (Cashier):</strong> Simple operations that are fast — rendering
+                            a view, returning JSON, simple database queries. These happen immediately and don't
+                            need queues.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Asynchronous (Warehouse Worker):</strong> Complex operations that take time
+                            — sending emails, processing images, generating reports, calling external APIs.
+                            These go into a queue and are processed by workers.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Batch Processing:</strong> Workers can process multiple jobs at once, like
+                            the warehouse worker bringing back multiple items in one trip.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Scaling:</strong> Add more workers before peak times (holidays, promotions,
+                            scheduled events) to handle increased load smoothly.
+                        </p>
 
-                                <p class="text-gray-600 mb-4">
-                                    <strong>Key Takeaway:</strong> Not every task needs to go to a queue or be processed
-                                    by a worker. Use queues for operations that would block or slow down your main
-                                    application flow. Keep simple operations synchronous.
-                                </p>
-                            </section>
+                        <p class="text-gray-600 mb-4">
+                            <strong>Key Takeaway:</strong> Not every task needs to go to a queue or be processed
+                            by a worker. Use queues for operations that would block or slow down your main
+                            application flow. Keep simple operations synchronous.
+                        </p>
+                    </section>
 
-                            <section id="cli-kernel">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Kernel</h2>
-                                <p class="text-gray-600 mb-4">
-                                    The kernel provides a powerful CLI system for creating custom commands and
-                                    automating tasks. Commands can be created in your application or provided by
-                                    capabilities (modules).
-                                </p>
+                    <section id="cli-kernel" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Kernel</h2>
+                        <p class="text-gray-600 mb-4">
+                            The kernel provides a powerful CLI system for creating custom commands and
+                            automating tasks. Commands can be created in your application or provided by
+                            capabilities (modules).
+                        </p>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Interactive Command Browser</h3>
-                                <p class="text-gray-600 mb-4">
-                                    Forge includes a retro-styled interactive command browser. Simply run <code
-                                        class="bg-gray-100 px-2 py-1 rounded">php forge.php</code> without arguments to
-                                    access it. The browser features a splash screen, multi-column command listings,
-                                    category-based browsing, and allows you to execute commands or view help directly.
-                                    Use arrow keys (↑↓←→) to navigate and Esc to exit.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-bash"># Launch interactive browser
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Interactive Command Browser</h3>
+                        <p class="text-gray-600 mb-4">
+                            Forge includes a retro-styled interactive command browser. Simply run <code
+                                class="bg-gray-100 px-2 py-1 rounded">php forge.php</code> without arguments to
+                            access it. The browser features a splash screen, multi-column command listings,
+                            category-based browsing, and allows you to execute commands or view help directly.
+                            Use arrow keys (↑↓←→) to navigate and Esc to exit.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Launch interactive browser
 php forge.php
 
 # Skip splash screen
@@ -1350,17 +1354,17 @@ php forge.php --no-splash
 
 # Show traditional command list
 php forge.php --list</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Creating Custom Commands</h3>
-                                <p class="text-gray-600 mb-4">
-                                    Commands use the <code class="bg-gray-100 px-2 py-1 rounded">#[Cli]</code> attribute
-                                    to define the command name, description, usage, and examples. Arguments are defined
-                                    using the <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attribute on
-                                    class properties.
-                                </p>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Creating Custom Commands</h3>
+                        <p class="text-gray-600 mb-4">
+                            Commands use the <code class="bg-gray-100 px-2 py-1 rounded">#[Cli]</code> attribute
+                            to define the command name, description, usage, and examples. Arguments are defined
+                            using the <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attribute on
+                            class properties.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -1411,162 +1415,160 @@ final class MyCommand extends Command
         return 0;
     }
 }</code></pre>
-                                </div>
+                        </div>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Command Discovery</h3>
-                                <p class="text-gray-600 mb-4">
-                                    Commands are automatically discovered from:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">app/Commands/</code> —
-                                        Application-scoped commands</li>
-                                    <li><code
-                                            class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Commands/</code>
-                                        — Module-scoped commands</li>
-                                </ul>
-                                <p class="text-gray-600 mb-4">
-                                    Commands must:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li>Extend the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base class
-                                    </li>
-                                    <li>Use the <code class="bg-gray-100 px-2 py-1 rounded">#[Cli]</code> attribute</li>
-                                    <li>Implement the <code
-                                            class="bg-gray-100 px-2 py-1 rounded">execute(array $args): int</code>
-                                        method</li>
-                                </ul>
-                                <p class="text-gray-600 mb-4">
-                                    Commands are cached for performance. If you add a new command and it's not
-                                    discovered, clear the cache with <code
-                                        class="bg-gray-100 px-2 py-1 rounded">php forge.php cache:flush</code>.
-                                </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Command Discovery</h3>
+                        <p class="text-gray-600 mb-4">
+                            Commands are automatically discovered from:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">app/Commands/</code> —
+                                Application-scoped commands</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Commands/</code>
+                                — Module-scoped commands</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Commands must:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Extend the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base class
+                            </li>
+                            <li>Use the <code class="bg-gray-100 px-2 py-1 rounded">#[Cli]</code> attribute</li>
+                            <li>Implement the <code
+                                    class="bg-gray-100 px-2 py-1 rounded">execute(array $args): int</code>
+                                method</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Commands are cached for performance. If you add a new command and it's not
+                            discovered, clear the cache with <code
+                                class="bg-gray-100 px-2 py-1 rounded">php forge.php cache:flush</code>.
+                        </p>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Kernel-Provided Commands</h3>
-                                <p class="text-gray-600 mb-4">
-                                    The kernel comes with a comprehensive set of built-in commands:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><strong>Generate commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:controller</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:model</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:migration</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:service</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:component</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:command</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:test</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:trait</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:enum</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:dto</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:event</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:middleware</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:seeder</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">generate:module</code></li>
-                                    <li><strong>Asset commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">asset:link</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">asset:unlink</code></li>
-                                    <li><strong>Storage commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">storage:link</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">storage:unlink</code></li>
-                                    <li><strong>Cache commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">cache:flush</code></li>
-                                    <li><strong>Server commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">serve</code></li>
-                                    <li><strong>Key commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">key:generate</code></li>
-                                    <li><strong>Maintenance commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">maintenance:up</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">maintenance:down</code></li>
-                                    <li><strong>Help commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">help</code></li>
-                                    <li><strong>Stats commands:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">stats</code></li>
-                                    <li><strong>Registry commands</strong> (developer mode): <code
-                                            class="bg-gray-100 px-2 py-1 rounded">dev:registry:init</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">dev:registry:list</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">dev:registry:publish</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">dev:registry:version</code></li>
-                                </ul>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Kernel-Provided Commands</h3>
+                        <p class="text-gray-600 mb-4">
+                            The kernel comes with a comprehensive set of built-in commands:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Generate commands:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:controller</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:model</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:migration</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:service</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:component</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:command</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:test</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:trait</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:enum</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:dto</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:event</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:middleware</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:seeder</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">generate:module</code></li>
+                            <li><strong>Asset commands:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">asset:link</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">asset:unlink</code></li>
+                            <li><strong>Storage commands:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">storage:link</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">storage:unlink</code></li>
+                            <li><strong>Cache commands:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">cache:flush</code></li>
+                            <li><strong>Server commands:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">serve</code></li>
+                            <li><strong>Key commands:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">key:generate</code></li>
+                            <li><strong>Maintenance commands:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">maintenance:up</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">maintenance:down</code></li>
+                            <li><strong>Help commands:</strong> <code class="bg-gray-100 px-2 py-1 rounded">help</code>
+                            </li>
+                            <li><strong>Stats commands:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">stats</code></li>
+                            <li><strong>Registry commands</strong> (developer mode): <code
+                                    class="bg-gray-100 px-2 py-1 rounded">dev:registry:init</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">dev:registry:list</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">dev:registry:publish</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">dev:registry:version</code></li>
+                        </ul>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Module-Provided Commands</h3>
-                                <p class="text-gray-600 mb-4">
-                                    Capabilities (modules) can provide their own commands. These commands are
-                                    automatically discovered and work just like kernel commands:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><strong>ForgePackageManager:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">package:install-module</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">package:remove-module</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">package:list-modules</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">package:install-project</code></li>
-                                    <li><strong>ForgeDatabaseSQL:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">migrate</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">migrate:rollback</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">seed</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">seed:rollback</code></li>
-                                    <li><strong>ForgeTesting:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">test</code></li>
-                                    <li><strong>ForgeStorage:</strong> <code
-                                            class="bg-gray-100 px-2 py-1 rounded">storage:*</code> commands</li>
-                                </ul>
-                                <p class="text-gray-600 mb-4">
-                                    Module commands are placed in <code
-                                        class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Commands/</code>
-                                    and follow the same structure as app commands.
-                                </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Module-Provided Commands</h3>
+                        <p class="text-gray-600 mb-4">
+                            Capabilities (modules) can provide their own commands. These commands are
+                            automatically discovered and work just like kernel commands:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>ForgePackageManager:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">package:install-module</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">package:remove-module</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">package:list-modules</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">package:install-project</code></li>
+                            <li><strong>ForgeDatabaseSQL:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">migrate</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">migrate:rollback</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">seed</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">seed:rollback</code></li>
+                            <li><strong>ForgeTesting:</strong> <code class="bg-gray-100 px-2 py-1 rounded">test</code>
+                            </li>
+                            <li><strong>ForgeStorage:</strong> <code
+                                    class="bg-gray-100 px-2 py-1 rounded">storage:*</code> commands</li>
+                        </ul>
+                        <p class="text-gray-600 mb-4">
+                            Module commands are placed in <code
+                                class="bg-gray-100 px-2 py-1 rounded">modules/ModuleName/src/Commands/</code>
+                            and follow the same structure as app commands.
+                        </p>
 
-                                <h3 class="text-lg font-semibold mb-3 text-gray-900">Available Traits</h3>
-                                <p class="text-gray-600 mb-4">
-                                    Commands can use various traits to add functionality:
-                                </p>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-900">Available Traits</h3>
+                        <p class="text-gray-600 mb-4">
+                            Commands can use various traits to add functionality:
+                        </p>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">OutputHelper</h4>
-                                <p class="text-gray-600 mb-4">
-                                    Included in the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base
-                                    class. Provides colored output methods:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">info($message)</code> — Blue
-                                        informational messages</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">error($message)</code> — Red error
-                                        messages</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">warning($message)</code> — Yellow
-                                        warning messages</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">success($message)</code> — Green
-                                        success messages</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">comment($message)</code> — Yellow
-                                        comment messages</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">debug($message)</code> — Magenta
-                                        debug messages</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">line($message)</code> — Simple line
-                                        output</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">log($message, $context)</code> —
-                                        Timestamped logging</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">table($headers, $rows)</code> —
-                                        Display tabular data</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">array($data, $title)</code> —
-                                        Display array data</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">clearScreen()</code> — Clear
-                                        terminal screen</li>
-                                </ul>
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">OutputHelper</h4>
+                        <p class="text-gray-600 mb-4">
+                            Included in the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base
+                            class. Provides colored output methods:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">info($message)</code> — Blue
+                                informational messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">error($message)</code> — Red error
+                                messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">warning($message)</code> — Yellow
+                                warning messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">success($message)</code> — Green
+                                success messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">comment($message)</code> — Yellow
+                                comment messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">debug($message)</code> — Magenta
+                                debug messages</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">line($message)</code> — Simple line
+                                output</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">log($message, $context)</code> —
+                                Timestamped logging</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">table($headers, $rows)</code> —
+                                Display tabular data</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">array($data, $title)</code> —
+                                Display array data</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">clearScreen()</code> — Clear
+                                terminal screen</li>
+                        </ul>
 
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">Wizard</h4>
-                                <p class="text-gray-600 mb-4">
-                                    Provides interactive prompts for missing required arguments. Automatically prompts
-                                    users when arguments are not provided via command line:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">wizard($args)</code> — Automatically
-                                        prompts for missing required arguments</li>
-                                    <li>Uses <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attributes to
-                                        determine what to prompt</li>
-                                    <li>Validates input based on <code
-                                            class="bg-gray-100 px-2 py-1 rounded">validate</code> parameter in <code
-                                            class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code></li>
-                                    <li>Supports default values — if a default is provided and user presses Enter, the
-                                        default is used</li>
-                                </ul>
-                                <div class="code-block p-6 text-white rounded-lg mb-6">
-                                    <pre><code class="language-php">&lt;?php
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">Wizard</h4>
+                        <p class="text-gray-600 mb-4">
+                            Provides interactive prompts for missing required arguments. Automatically prompts
+                            users when arguments are not provided via command line:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">wizard($args)</code> — Automatically
+                                prompts for missing required arguments</li>
+                            <li>Uses <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attributes to
+                                determine what to prompt</li>
+                            <li>Validates input based on <code class="bg-gray-100 px-2 py-1 rounded">validate</code>
+                                parameter in <code class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code></li>
+                            <li>Supports default values — if a default is provided and user presses Enter, the
+                                default is used</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
 // In your execute() method
 public function execute(array $args): int
 {
@@ -1575,182 +1577,180 @@ public function execute(array $args): int
     // Your command logic here
     return 0;
 }</code></pre>
-                                </div>
-
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">CliGenerator</h4>
-                                <p class="text-gray-600 mb-4">
-                                    Used by code generation commands (all <code
-                                        class="bg-gray-100 px-2 py-1 rounded">generate:*</code> commands). Provides
-                                    methods for generating files from stub templates:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code
-                                            class="bg-gray-100 px-2 py-1 rounded">generateFromStub($stub, $targetPath, $tokens, $force)</code>
-                                        — Generate files from stub templates</li>
-                                    <li>Helper methods for resolving paths: <code
-                                            class="bg-gray-100 px-2 py-1 rounded">controllerPath()</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">modelPath()</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">migrationPath()</code>, etc.</li>
-                                    <li>Helper methods for resolving namespaces: <code
-                                            class="bg-gray-100 px-2 py-1 rounded">controllerNamespace()</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">modelNamespace()</code>, etc.</li>
-                                    <li>Automatically handles app vs module scope</li>
-                                    <li>Creates parent directories if they don't exist</li>
-                                </ul>
-
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">StringHelper</h4>
-                                <p class="text-gray-600 mb-4">
-                                    Provides string transformation methods useful for code generation and formatting:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">toCamelCase($string)</code> —
-                                        Convert to camelCase</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">toPascalCase($string)</code> —
-                                        Convert to PascalCase</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">toSnakeCase($string)</code> —
-                                        Convert to snake_case</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">toKebabCase($string)</code> —
-                                        Convert to kebab-case</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">toTitleCase($string)</code> —
-                                        Convert to Title Case</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">isCamelCase($string)</code>, <code
-                                            class="bg-gray-100 px-2 py-1 rounded">isPascalCase($string)</code>, etc. —
-                                        Validation methods</li>
-                                    <li><code
-                                            class="bg-gray-100 px-2 py-1 rounded">truncate($string, $length, $suffix)</code>
-                                        — Truncate strings</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">slugify($string)</code> — Create
-                                        URL-friendly slugs</li>
-                                </ul>
-
-                                <h4 class="text-lg font-semibold mb-3 text-gray-900">CommandOptionTrait</h4>
-                                <p class="text-gray-600 mb-4">
-                                    Included in the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base
-                                    class. Provides methods for parsing command-line arguments:
-                                </p>
-                                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">option($name, $args)</code> — Get
-                                        option value (e.g., <code
-                                            class="bg-gray-100 px-2 py-1 rounded">--option=value</code>)</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">flag($name, $args)</code> — Check if
-                                        flag is present (e.g., <code
-                                            class="bg-gray-100 px-2 py-1 rounded">--flag</code>)</li>
-                                    <li><code class="bg-gray-100 px-2 py-1 rounded">argument($name, $args)</code> — Get
-                                        argument value (legacy method, prefer <code
-                                            class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attributes)</li>
-                                </ul>
-                            </section>
                         </div>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">CliGenerator</h4>
+                        <p class="text-gray-600 mb-4">
+                            Used by code generation commands (all <code
+                                class="bg-gray-100 px-2 py-1 rounded">generate:*</code> commands). Provides
+                            methods for generating files from stub templates:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code
+                                    class="bg-gray-100 px-2 py-1 rounded">generateFromStub($stub, $targetPath, $tokens, $force)</code>
+                                — Generate files from stub templates</li>
+                            <li>Helper methods for resolving paths: <code
+                                    class="bg-gray-100 px-2 py-1 rounded">controllerPath()</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">modelPath()</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">migrationPath()</code>, etc.</li>
+                            <li>Helper methods for resolving namespaces: <code
+                                    class="bg-gray-100 px-2 py-1 rounded">controllerNamespace()</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">modelNamespace()</code>, etc.</li>
+                            <li>Automatically handles app vs module scope</li>
+                            <li>Creates parent directories if they don't exist</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">StringHelper</h4>
+                        <p class="text-gray-600 mb-4">
+                            Provides string transformation methods useful for code generation and formatting:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toCamelCase($string)</code> —
+                                Convert to camelCase</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toPascalCase($string)</code> —
+                                Convert to PascalCase</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toSnakeCase($string)</code> —
+                                Convert to snake_case</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toKebabCase($string)</code> —
+                                Convert to kebab-case</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">toTitleCase($string)</code> —
+                                Convert to Title Case</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">isCamelCase($string)</code>, <code
+                                    class="bg-gray-100 px-2 py-1 rounded">isPascalCase($string)</code>, etc. —
+                                Validation methods</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">truncate($string, $length, $suffix)</code>
+                                — Truncate strings</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">slugify($string)</code> — Create
+                                URL-friendly slugs</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold mb-3 text-gray-900">CommandOptionTrait</h4>
+                        <p class="text-gray-600 mb-4">
+                            Included in the <code class="bg-gray-100 px-2 py-1 rounded">Command</code> base
+                            class. Provides methods for parsing command-line arguments:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">option($name, $args)</code> — Get
+                                option value (e.g., <code class="bg-gray-100 px-2 py-1 rounded">--option=value</code>)
+                            </li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">flag($name, $args)</code> — Check if
+                                flag is present (e.g., <code class="bg-gray-100 px-2 py-1 rounded">--flag</code>)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">argument($name, $args)</code> — Get
+                                argument value (legacy method, prefer <code
+                                    class="bg-gray-100 px-2 py-1 rounded">#[Arg]</code> attributes)</li>
+                        </ul>
+                    </section>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Footer -->
-        <footer class="bg-gray-900 text-white py-8 mt-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <div class="mb-4">
-                    <span class="text-lg font-bold">Forge Kernel</span>
-                </div>
-                <p class="text-gray-400">
-                    A toolbox for builders who like to do things their way.
-                </p>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <span class="text-lg font-bold">Forge Kernel</span>
             </div>
-        </footer>
+            <p class="text-gray-400">
+                A toolbox for builders who like to do things their way.
+            </p>
+        </div>
+    </footer>
 
-        <script>
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
+        });
 
-            // Mobile menu toggle
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileSidebarButton = document.getElementById('mobile-sidebar-button');
-            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-            const sidebar = document.getElementById('sidebar-nav');
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileSidebarButton = document.getElementById('mobile-sidebar-button');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const sidebar = document.getElementById('sidebar-nav');
 
-            function toggleMobileMenu() {
-                mobileMenu.classList.toggle('hidden');
-            }
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
 
-            function openMobileSidebar() {
-                sidebar.classList.add('mobile-menu-open');
-                mobileMenuOverlay.classList.add('active');
-            }
+        function openMobileSidebar() {
+            sidebar.classList.add('mobile-menu-open');
+            mobileMenuOverlay.classList.add('active');
+        }
 
-            function closeMobileSidebar() {
-                sidebar.classList.remove('mobile-menu-open');
-                mobileMenuOverlay.classList.remove('active');
-            }
+        function closeMobileSidebar() {
+            sidebar.classList.remove('mobile-menu-open');
+            mobileMenuOverlay.classList.remove('active');
+        }
 
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', toggleMobileMenu);
-            }
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        }
 
-            if (mobileSidebarButton) {
-                mobileSidebarButton.addEventListener('click', openMobileSidebar);
-            }
+        if (mobileSidebarButton) {
+            mobileSidebarButton.addEventListener('click', openMobileSidebar);
+        }
 
-            if (mobileMenuOverlay) {
-                mobileMenuOverlay.addEventListener('click', closeMobileSidebar);
-            }
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileSidebar);
+        }
 
-            // Close mobile menu when clicking on a link
-            document.querySelectorAll('#mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
             });
+        });
 
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', function (event) {
-                const isClickInsideMenu = mobileMenu && mobileMenu.contains(event.target);
-                const isClickOnMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInsideMenu = mobileMenu && mobileMenu.contains(event.target);
+            const isClickOnMenuButton = mobileMenuButton && mobileMenuButton.contains(event.target);
 
-                if (mobileMenu && !mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
-                    mobileMenu.classList.add('hidden');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !isClickInsideMenu && !isClickOnMenuButton) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu and sidebar on window resize if above mobile breakpoint
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 640) {
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                closeMobileSidebar();
+            }
+        });
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-anchor');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
                 }
             });
 
-            // Close mobile menu and sidebar on window resize if above mobile breakpoint
-            window.addEventListener('resize', function () {
-                if (window.innerWidth >= 640) {
-                    if (mobileMenu) mobileMenu.classList.add('hidden');
-                    closeMobileSidebar();
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
                 }
             });
-
-            // Update active navigation on scroll
-            window.addEventListener('scroll', function () {
-                const sections = document.querySelectorAll('.section-anchor');
-                const navLinks = document.querySelectorAll('.nav-link');
-
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    if (window.pageYOffset >= sectionTop) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + current) {
-                        link.classList.add('active');
-                    }
-                });
-            });
-        </script>
+        });
+    </script>
 </body>
 
 </html>
