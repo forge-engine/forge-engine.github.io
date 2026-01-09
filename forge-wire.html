@@ -158,7 +158,7 @@
                         </p>
 
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                            <h2 class="font-semibold text-lg mb-4 text-blue-900">Livewire Power, Standard Controller
+                            <h2 class="font-semibold text-lg mb-4 text-blue-900">ForgeWire Power, Standard Controller
                                 Simplicity</h2>
                             <div class="grid md:grid-cols-2 gap-4">
                                 <div class="space-y-2">
@@ -380,7 +380,7 @@ public function input(...$keys): void
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-html">&lt;!-- fw:click --&gt;
 &lt;button fw:click="increment"&gt;+&lt;/button&gt;
-&lt;button fw:click="update(5, 'New Name')"&gt;Update&lt;/button&gt;
+&lt;button fw:click="update" fw:param-id="5" fw:param-name="New Name"&gt;Update&lt;/button&gt;
 
 &lt;!-- fw:submit --&gt;
 &lt;form fw:submit="save"&gt;
@@ -448,8 +448,8 @@ public string $email = '';</code></pre>
 
                         <h3 class="text-lg font-semibold mb-3">Directives Reference</h3>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:click="method"</code> — Call action on
-                                click</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:click="save"</code> — Call action on
+                                click (use <code>fw:param-*</code> for arguments)</li>
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model="property"</code> — Two-way
                                 binding (immediate)</li>
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model.lazy</code> — Update on
@@ -458,8 +458,8 @@ public string $email = '';</code></pre>
                                 updates (600ms default)</li>
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model.debounce.300ms</code> — Custom
                                 debounce time</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:submit="method"</code> — Form
-                                submission</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:submit="save"</code> — Form
+                                submission (auto-prevents refresh)</li>
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:poll</code> — Auto-refresh every 2
                                 seconds</li>
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:poll.5s</code> — Custom poll interval
@@ -652,14 +652,21 @@ public string $email = '';</code></pre>
 
                         <h3 class="text-lg font-semibold mb-3">Simple Counter</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">final class Counter extends WireComponent
+                            <pre><code class="language-php">#[Reactive]
+final class CounterController
 {
+    use ControllerHelper;
+
     #[State]
     public int $count = 0;
 
-    public function mount(array $props = []): void
+    #[Route("/counter")]
+    public function index(): Response
     {
-        $this->count = (int)($props['start'] ?? 0);
+        return $this->view('pages/counter', [
+            'count' => $this->count,
+            'parity' => $this->count % 2 ? 'odd' : 'even',
+        ]);
     }
 
     #[Action]
