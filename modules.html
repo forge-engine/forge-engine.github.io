@@ -143,40 +143,39 @@
                     <div class="mt-6 pt-6 border-t border-gray-200">
                         <h4 class="font-semibold text-sm mb-3 text-blue-600">Module Documentation</h4>
                         <nav class="space-y-2">
-                                <a href="forge-package-manager.html"
-                                    class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgePackageManager
-                                </a>
-                                <a href="forge-auth.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeAuth
-                                </a>
-                                <a href="forge-wire.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeWire
-                                </a>
-                                <a href="forge-testing.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeTesting
-                                </a>
-                                <a href="forge-database-sql.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeDatabaseSql
-                                </a>
-                                <a href="forge-sql-orm.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeSqlOrm
-                                </a>
-                                <a href="forge-events.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeEvents
-                                </a>
-                                <a href="forge-multi-tenant.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeMultiTenant
-                                </a>
-                                <a href="forge-debugbar.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeDebugbar
-                                </a>
-                                <a href="forge-error-handler.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeErrorHandler
-                                </a>
-                                <a href="forge-tailwind.html" class="block text-gray-600 hover:text-blue-600 py-1">
-                                    ForgeTailwind
-                                </a>
+                            <a href="forge-package-manager.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgePackageManager
+                            </a>
+                            <a href="forge-auth.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeAuth
+                            </a>
+                            <a href="forge-wire.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeWire
+                            </a>
+                            <a href="forge-testing.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeTesting
+                            </a>
+                            <a href="forge-database-sql.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeDatabaseSql
+                            </a>
+                            <a href="forge-sql-orm.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeSqlOrm
+                            </a>
+                            <a href="forge-events.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeEvents
+                            </a>
+                            <a href="forge-multi-tenant.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeMultiTenant
+                            </a>
+                            <a href="forge-debugbar.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeDebugbar
+                            </a>
+                            <a href="forge-error-handler.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeErrorHandler
+                            </a>
+                            <a href="forge-tailwind.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeTailwind
+                            </a>
                         </nav>
                     </div>
 
@@ -191,7 +190,9 @@
                         Capabilities
                     </h1>
                     <p class="text-xl text-gray-600 mb-8">
-                        Extend Forge Kernel with self-contained capability modules. Think of capabilities like modular additions to a house. The kernel gives you the foundation. Capabilities add what you need: database, ORM, authentication, storage — all optional, all pluggable.
+                        Extend Forge Kernel with self-contained capability modules. Think of capabilities like modular
+                        additions to a house. The kernel gives you the foundation. Capabilities add what you need:
+                        database, ORM, authentication, storage — all optional, all pluggable.
                     </p>
 
                     <!-- Overview -->
@@ -200,8 +201,11 @@
                             Capability System Overview
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            Package functionality into reusable capability modules. Capabilities provide services, controllers,
-                            views, CLI commands, and more. Need a database? Install a database capability. Need an ORM? Install an ORM capability. Don't need authentication? Don't install it. The kernel stays lean. You stay in control.
+                            Package functionality into reusable capability modules. Capabilities provide services,
+                            controllers,
+                            views, CLI commands, and more. Need a database? Install a database capability. Need an ORM?
+                            Install an ORM capability. Don't need authentication? Don't install it. The kernel stays
+                            lean. You stay in control.
                         </p>
 
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
@@ -239,12 +243,17 @@
                             Forge Developer Mode
                         </h2>
                         <p class="text-gray-600 mb-4">
-                            Developer mode unlocks additional CLI commands for managing module registries, creating versions, and publishing capabilities. These commands replace the old <code class="bg-gray-100 px-2 py-1 rounded">php modules.php</code> tooling.
+                            Developer mode unlocks additional CLI commands for managing module registries, creating
+                            versions, and publishing capabilities. These commands replace the old <code
+                                class="bg-gray-100 px-2 py-1 rounded">php modules.php</code> tooling.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Enabling Developer Mode</h3>
                         <p class="text-gray-600 mb-4">
-                            Enable developer mode by setting <code class="bg-gray-100 px-2 py-1 rounded">FORGE_DEVELOPER_MODE=true</code> in your <code class="bg-gray-100 px-2 py-1 rounded">.env</code> file or <code class="bg-gray-100 px-2 py-1 rounded">config/app.php</code>:
+                            Enable developer mode by setting <code
+                                class="bg-gray-100 px-2 py-1 rounded">FORGE_DEVELOPER_MODE=true</code> in your <code
+                                class="bg-gray-100 px-2 py-1 rounded">.env</code> file or <code
+                                class="bg-gray-100 px-2 py-1 rounded">config/app.php</code>:
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># In .env file
@@ -264,7 +273,8 @@ return [
 
                         <h4 class="text-lg font-semibold mb-3">Registry Management</h4>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:registry:init</code> — Initialize a new module or framework registry. Wizard asks for:
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:registry:init</code> — Initialize a new
+                                module or framework registry. Wizard asks for:
                                 <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
                                     <li>Registry type (framework or modules)</li>
                                     <li>Git repository URL</li>
@@ -272,36 +282,50 @@ return [
                                     <li>Whether it's a private repository</li>
                                 </ul>
                             </li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:registry:config</code> — Configure registry settings</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:registry:config</code> — Configure
+                                registry settings</li>
                         </ul>
 
                         <h4 class="text-lg font-semibold mb-3">Module Registry Commands</h4>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:module:list</code> — <strong>User-friendly dropdown interface</strong> to browse all available modules. Select any module from an interactive menu to view its versions with the last commit message for each version.</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:module:version</code> — <strong>Create version wizard</strong> that:
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:module:list</code> —
+                                <strong>User-friendly dropdown interface</strong> to browse all available modules.
+                                Select any module from an interactive menu to view its versions with the last commit
+                                message for each version.</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:module:version</code> — <strong>Create
+                                    version wizard</strong> that:
                                 <ul class="list-disc list-inside ml-6 mt-2 space-y-1">
-                                    <li>Prompts for module name (or use <code class="bg-gray-100 px-2 py-1 rounded">--name=ModuleName</code>)</li>
-                                    <li>Detects current version or asks for version increment type (patch/minor/major)</li>
+                                    <li>Prompts for module name (or use <code
+                                            class="bg-gray-100 px-2 py-1 rounded">--name=ModuleName</code>)</li>
+                                    <li>Detects current version or asks for version increment type (patch/minor/major)
+                                    </li>
                                     <li>Automatically updates module version in source files</li>
                                     <li>Creates ZIP file of the module</li>
                                     <li>Calculates SHA-256 integrity hash</li>
-                                    <li>Updates <code class="bg-gray-100 px-2 py-1 rounded">modules.json</code> manifest</li>
+                                    <li>Updates <code class="bg-gray-100 px-2 py-1 rounded">modules.json</code> manifest
+                                    </li>
                                     <li>Commits changes to registry (if in git repository)</li>
                                 </ul>
                             </li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:module:publish</code> — Publish module registry changes to remote repository</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:module:publish</code> — Publish module
+                                registry changes to remote repository</li>
                         </ul>
 
                         <h4 class="text-lg font-semibold mb-3">Framework Registry Commands</h4>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:framework:list</code> — List available framework versions</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:framework:version</code> — Manage framework versions</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:framework:publish</code> — Publish framework version to registry</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:framework:list</code> — List available
+                                framework versions</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:framework:version</code> — Manage
+                                framework versions</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">dev:framework:publish</code> — Publish
+                                framework version to registry</li>
                         </ul>
 
                         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
                             <p class="text-sm text-blue-700">
-                                <strong>Note:</strong> All <code class="bg-blue-100 px-2 py-1 rounded">dev:*</code> commands are only available when developer mode is enabled. This keeps the CLI clean for regular users while providing powerful tools for developers and maintainers.
+                                <strong>Note:</strong> All <code class="bg-blue-100 px-2 py-1 rounded">dev:*</code>
+                                commands are only available when developer mode is enabled. This keeps the CLI clean for
+                                regular users while providing powerful tools for developers and maintainers.
                             </p>
                         </div>
                     </section>
@@ -383,17 +407,18 @@ public function onAppBooted(): void
                                     class="module-card bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 hover:shadow-lg">
                                     <h3 class="text-lg font-semibold mb-3">ForgeAuth</h3>
                                     <p class="text-gray-600 text-sm mb-4">
-                                        Complete authentication system with user registration, login, password management, and session handling. Provides middleware, validation, and user management services. Includes optional JWT support for mobile applications when enabled via configuration.
+                                        Complete authentication system with user registration, login, password
+                                        management, and session handling. Provides middleware, validation, and user
+                                        management services. Includes optional JWT support for mobile applications when
+                                        enabled via configuration.
                                     </p>
                                     <div class="flex flex-wrap gap-2">
                                         <span
                                             class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Authentication</span>
                                         <span
                                             class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Sessions</span>
-                                        <span
-                                            class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">JWT</span>
-                                        <span
-                                            class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Mobile</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">JWT</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Mobile</span>
                                     </div>
                                 </div>
                             </a>
@@ -403,12 +428,14 @@ public function onAppBooted(): void
                                 class="module-card bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6 hover:shadow-lg">
                                 <h3 class="text-lg font-semibold mb-3">ForgeUI</h3>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Example module demonstrating how to create your own design system as a module capability. Shows that you can package UI components, styles, and design patterns as a reusable module that can be shared across Forge applications.
+                                    Example module demonstrating how to create your own design system as a module
+                                    capability. Shows that you can package UI components, styles, and design patterns as
+                                    a reusable module that can be shared across Forge applications.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
-                                    <span
-                                        class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Example</span>
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Design System</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Example</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Design
+                                        System</span>
                                     <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Template</span>
                                 </div>
                             </div>
@@ -418,13 +445,15 @@ public function onAppBooted(): void
                                 class="module-card bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-200 rounded-lg p-6 hover:shadow-lg block">
                                 <h3 class="text-lg font-semibold mb-3">ForgeWire</h3>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Lightweight Livewire-like reactive components for building dynamic interfaces without JavaScript or WebSockets. Enables server-side interactivity with minimal overhead.
+                                    Adds reactivity directly to your Controllers. Build dynamic, real-time interfaces
+                                    with #[Reactive] attributes and simple PHP templates — no JavaScript frameworks or
+                                    separate component classes required.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span
                                         class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Reactive</span>
                                     <span
-                                        class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Components</span>
+                                        class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Controllers</span>
                                     <span
                                         class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Server-Side</span>
                                 </div>
@@ -437,7 +466,9 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeStorage</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Flexible file storage system with multiple driver support. Handles local filesystem, cloud storage providers, and custom storage backends. Includes bucket management and file operations.
+                                    Flexible file storage system with multiple driver support. Handles local filesystem,
+                                    cloud storage providers, and custom storage backends. Includes bucket management and
+                                    file operations.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Storage</span>
@@ -453,7 +484,9 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeDebugBar</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Development debugging toolbar with query logging, performance metrics, timeline tracking, memory usage, request/response inspection, and exception details. Only active in development environments.
+                                    Development debugging toolbar with query logging, performance metrics, timeline
+                                    tracking, memory usage, request/response inspection, and exception details. Only
+                                    active in development environments.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">Debug</span>
@@ -471,7 +504,9 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeTesting</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Complete testing framework with unit tests, integration tests, and test utilities. Supports testing in app, engine, and module scopes with test grouping and filtering capabilities.
+                                    Complete testing framework with unit tests, integration tests, and test utilities.
+                                    Supports testing in app, engine, and module scopes with test grouping and filtering
+                                    capabilities.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-teal-100 text-teal-800 text-xs rounded">Testing</span>
@@ -511,7 +546,8 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeMarkDown</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Markdown processing and rendering with syntax highlighting support. Converts markdown text to HTML with code block highlighting and extended markdown features.
+                                    Markdown processing and rendering with syntax highlighting support. Converts
+                                    markdown text to HTML with code block highlighting and extended markdown features.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded">Markdown</span>
@@ -527,7 +563,8 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeLogger</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Advanced logging system with multiple drivers (file, database, syslog), log channels, log levels, and structured logging. Supports log rotation and filtering.
+                                    Advanced logging system with multiple drivers (file, database, syslog), log
+                                    channels, log levels, and structured logging. Supports log rotation and filtering.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Logging</span>
@@ -545,7 +582,9 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeTailwind</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Tailwind CSS integration with build tools, asset compilation, and development server support. Provides utilities for managing Tailwind configuration and purging unused styles.
+                                    Tailwind CSS integration with build tools, asset compilation, and development server
+                                    support. Provides utilities for managing Tailwind configuration and purging unused
+                                    styles.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-cyan-100 text-cyan-800 text-xs rounded">CSS</span>
@@ -561,7 +600,9 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeErrorHandler</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Comprehensive error handling and exception management for production applications. Provides custom error pages, exception logging, error reporting, and graceful error recovery.
+                                    Comprehensive error handling and exception management for production applications.
+                                    Provides custom error pages, exception logging, error reporting, and graceful error
+                                    recovery.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">Error</span>
@@ -577,7 +618,8 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeEvents</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Event-driven architecture system with event listeners, event queues, and async event processing. Supports event broadcasting, queued listeners, and event subscribers.
+                                    Event-driven architecture system with event listeners, event queues, and async event
+                                    processing. Supports event broadcasting, queued listeners, and event subscribers.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Events</span>
@@ -633,15 +675,16 @@ public function onAppBooted(): void
                                         <h3 class="text-lg font-semibold">ForgePackageManager</h3>
                                     </div>
                                     <p class="text-gray-600 text-sm mb-4">
-                                        Package and capability management system with registry support, integrity verification, and multiple source types (Git, SFTP, FTP, HTTP, Local, Network). Manages capability installation, removal, and project scaffolding.
+                                        Package and capability management system with registry support, integrity
+                                        verification, and multiple source types (Git, SFTP, FTP, HTTP, Local, Network).
+                                        Manages capability installation, removal, and project scaffolding.
                                     </p>
                                     <div class="flex flex-wrap gap-2">
                                         <span class="px-2 py-1 bg-violet-100 text-violet-800 text-xs rounded">Package
                                             Manager</span>
                                         <span
                                             class="px-2 py-1 bg-violet-100 text-violet-800 text-xs rounded">Registry</span>
-                                        <span
-                                            class="px-2 py-1 bg-violet-100 text-violet-800 text-xs rounded">CLI</span>
+                                        <span class="px-2 py-1 bg-violet-100 text-violet-800 text-xs rounded">CLI</span>
                                     </div>
                                 </div>
                             </a>
@@ -653,7 +696,8 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeDatabaseSQL</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    SQL database support implementing the kernel's DatabaseConnectionInterface. Supports SQLite, MySQL, and PostgreSQL with PDO-based connections, migrations, and seeders.
+                                    SQL database support implementing the kernel's DatabaseConnectionInterface. Supports
+                                    SQLite, MySQL, and PostgreSQL with PDO-based connections, migrations, and seeders.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-slate-100 text-slate-800 text-xs rounded">Database</span>
@@ -669,12 +713,15 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeSqlOrm</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    SQL ORM implementing the kernel's QueryBuilderInterface. Provides attribute-based models, relationships, query builder, and supports SQLite, MySQL, and PostgreSQL. Includes traits like HasTimeStamps and HasMetaData.
+                                    SQL ORM implementing the kernel's QueryBuilderInterface. Provides attribute-based
+                                    models, relationships, query builder, and supports SQLite, MySQL, and PostgreSQL.
+                                    Includes traits like HasTimeStamps and HasMetaData.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
                                     <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded">ORM</span>
                                     <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded">Models</span>
-                                    <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded">Relationships</span>
+                                    <span
+                                        class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded">Relationships</span>
                                 </div>
                             </div>
 
@@ -685,10 +732,14 @@ public function onAppBooted(): void
                                     <h3 class="text-lg font-semibold">ForgeMultiTenant</h3>
                                 </div>
                                 <p class="text-gray-600 text-sm mb-4">
-                                    Multi-tenant database isolation capability. Automatically resolves tenants by domain/subdomain, provides separate database connections per tenant, and includes <code class="bg-pink-100 px-2 py-1 rounded">#[TenantScope]</code> attribute for controllers. Supports tenant-specific migrations and seeders.
+                                    Multi-tenant database isolation capability. Automatically resolves tenants by
+                                    domain/subdomain, provides separate database connections per tenant, and includes
+                                    <code class="bg-pink-100 px-2 py-1 rounded">#[TenantScope]</code> attribute for
+                                    controllers. Supports tenant-specific migrations and seeders.
                                 </p>
                                 <div class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 bg-pink-100 text-pink-800 text-xs rounded">Multi-Tenant</span>
+                                    <span
+                                        class="px-2 py-1 bg-pink-100 text-pink-800 text-xs rounded">Multi-Tenant</span>
                                     <span class="px-2 py-1 bg-pink-100 text-pink-800 text-xs rounded">Isolation</span>
                                     <span class="px-2 py-1 bg-pink-100 text-pink-800 text-xs rounded">SaaS</span>
                                 </div>
@@ -707,16 +758,27 @@ public function onAppBooted(): void
 
                         <h3 class="text-lg font-semibold mb-3">Using Forge CLI</h3>
                         <p class="text-gray-600 mb-4">
-                            Commands use an interactive wizard by default. You can skip the wizard by providing the <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> flag or by providing module names as positional arguments.
+                            Commands use an interactive wizard by default. You can skip the wizard by providing the
+                            <code class="bg-gray-100 px-2 py-1 rounded">--module=</code> flag or by providing module
+                            names as positional arguments.
                         </p>
                         <p class="text-gray-600 mb-3">
-                            <strong>Installation Wizard:</strong> When installing, you can choose to enter the module name manually or browse available modules. When browsing, you'll select a registry, then choose between single or multiple module selection. In multi-select mode, use checkboxes to select multiple modules (Space to toggle, Enter to confirm) - all will install latest versions. In single-select mode, you'll choose a version (with commit messages for git-based registries), and finally choose whether to force download.
+                            <strong>Installation Wizard:</strong> When installing, you can choose to enter the module
+                            name manually or browse available modules. When browsing, you'll select a registry, then
+                            choose between single or multiple module selection. In multi-select mode, use checkboxes to
+                            select multiple modules (Space to toggle, Enter to confirm) - all will install latest
+                            versions. In single-select mode, you'll choose a version (with commit messages for git-based
+                            registries), and finally choose whether to force download.
                         </p>
                         <p class="text-gray-600 mb-3">
-                            <strong>Removal Wizard:</strong> When removing, you can choose between single or multiple module selection. You'll see a list of all installed modules with their descriptions. In multi-select mode, use checkboxes to select multiple modules to remove at once.
+                            <strong>Removal Wizard:</strong> When removing, you can choose between single or multiple
+                            module selection. You'll see a list of all installed modules with their descriptions. In
+                            multi-select mode, use checkboxes to select multiple modules to remove at once.
                         </p>
                         <p class="text-gray-600 mb-3">
-                            <strong>Multiple Module Support:</strong> Both commands support installing or removing multiple modules at once via command-line arguments. For installation, if no version is specified, the latest version is installed automatically.
+                            <strong>Multiple Module Support:</strong> Both commands support installing or removing
+                            multiple modules at once via command-line arguments. For installation, if no version is
+                            specified, the latest version is installed automatically.
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Install a capability (wizard-based, interactive)
@@ -763,7 +825,8 @@ unzip main.zip -d ForgeAuth/</code></pre>
 
                         <div class="bg-green-50 border-l-4 border-green-400 p-4">
                             <p class="text-sm text-green-700">
-                                <strong>Auto-Discovery:</strong> Capabilities auto-load when placed in the modules directory.
+                                <strong>Auto-Discovery:</strong> Capabilities auto-load when placed in the modules
+                                directory.
                             </p>
                         </div>
                     </section>
@@ -903,11 +966,17 @@ final class MyCustomModule
                                 <strong>Module Attributes:</strong>
                             </p>
                             <ul class="list-disc list-inside text-sm text-blue-700 mt-2 space-y-1">
-                                <li><code class="bg-blue-100 px-2 py-1 rounded">core: true</code> — Module won't be auto-loaded. You must wire it manually.</li>
-                                <li><code class="bg-blue-100 px-2 py-1 rounded">isCli: true</code> — Module only loads in CLI context, not in web requests.</li>
-                                <li><code class="bg-blue-100 px-2 py-1 rounded">#[ConfigDefaults]</code> — Define default configuration directly in the module class. You can still override these in <code class="bg-blue-100 px-2 py-1 rounded">config/</code>.</li>
-                                <li><code class="bg-blue-100 px-2 py-1 rounded">#[PostInstall]</code> — Automatically run CLI commands after module installation.</li>
-                                <li><code class="bg-blue-100 px-2 py-1 rounded">#[PostUninstall]</code> — Automatically run CLI commands after module uninstallation.</li>
+                                <li><code class="bg-blue-100 px-2 py-1 rounded">core: true</code> — Module won't be
+                                    auto-loaded. You must wire it manually.</li>
+                                <li><code class="bg-blue-100 px-2 py-1 rounded">isCli: true</code> — Module only loads
+                                    in CLI context, not in web requests.</li>
+                                <li><code class="bg-blue-100 px-2 py-1 rounded">#[ConfigDefaults]</code> — Define
+                                    default configuration directly in the module class. You can still override these in
+                                    <code class="bg-blue-100 px-2 py-1 rounded">config/</code>.</li>
+                                <li><code class="bg-blue-100 px-2 py-1 rounded">#[PostInstall]</code> — Automatically
+                                    run CLI commands after module installation.</li>
+                                <li><code class="bg-blue-100 px-2 py-1 rounded">#[PostUninstall]</code> — Automatically
+                                    run CLI commands after module uninstallation.</li>
                             </ul>
                         </div>
                     </section>
@@ -918,7 +987,10 @@ final class MyCustomModule
                             Lifecycle Hooks
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            Modules can hook into the application lifecycle at various points using the <code class="bg-gray-100 px-2 py-1 rounded">#[LifecycleHook]</code> attribute. The only method you implement in your module class is <code class="bg-gray-100 px-2 py-1 rounded">register()</code> for service registration.
+                            Modules can hook into the application lifecycle at various points using the <code
+                                class="bg-gray-100 px-2 py-1 rounded">#[LifecycleHook]</code> attribute. The only method
+                            you implement in your module class is <code
+                                class="bg-gray-100 px-2 py-1 rounded">register()</code> for service registration.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Available Lifecycle Hooks</h3>
@@ -1002,12 +1074,14 @@ final class MyCustomModule
                             Publishing Capabilities
                         </h2>
                         <p class="text-gray-600 mb-4">
-                            Publish your capabilities to a registry for distribution. This requires Forge developer mode to be enabled.
+                            Publish your capabilities to a registry for distribution. This requires Forge developer mode
+                            to be enabled.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Initializing a Registry</h3>
                         <p class="text-gray-600 mb-4">
-                            Before publishing, you need to initialize a registry. Use the <code class="bg-gray-100 px-2 py-1 rounded">dev:registry:init</code> command:
+                            Before publishing, you need to initialize a registry. Use the <code
+                                class="bg-gray-100 px-2 py-1 rounded">dev:registry:init</code> command:
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Initialize a modules registry (wizard-based)
@@ -1028,7 +1102,8 @@ php forge.php dev:registry:init --type=modules</code></pre>
 
                         <h3 class="text-lg font-semibold mb-3">Browsing Available Modules</h3>
                         <p class="text-gray-600 mb-4">
-                            Use <code class="bg-gray-100 px-2 py-1 rounded">dev:module:list</code> to browse all available modules in your registry:
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">dev:module:list</code> to browse all
+                            available modules in your registry:
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Browse modules with interactive dropdown
@@ -1045,7 +1120,8 @@ php forge.php dev:module:list</code></pre>
 
                         <h3 class="text-lg font-semibold mb-3">Creating a Module Version</h3>
                         <p class="text-gray-600 mb-4">
-                            Use <code class="bg-gray-100 px-2 py-1 rounded">dev:module:version</code> to create a new version of your module:
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">dev:module:version</code> to create a new
+                            version of your module:
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-bash"># Create version (wizard-based)
@@ -1059,9 +1135,12 @@ php forge.php dev:module:version --name=MyCustomModule --version=1.2.0</code></p
                             The <strong>create version wizard</strong> will:
                         </p>
                         <ol class="list-decimal list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Prompt for module name (or use <code class="bg-gray-100 px-2 py-1 rounded">--name=ModuleName</code>)</li>
-                            <li>Detect current version from <code class="bg-gray-100 px-2 py-1 rounded">forge.json</code></li>
-                            <li>If version needs incrementing, ask for increment type (patch/minor/major) or use <code class="bg-gray-100 px-2 py-1 rounded">--type=</code></li>
+                            <li>Prompt for module name (or use <code
+                                    class="bg-gray-100 px-2 py-1 rounded">--name=ModuleName</code>)</li>
+                            <li>Detect current version from <code
+                                    class="bg-gray-100 px-2 py-1 rounded">forge.json</code></li>
+                            <li>If version needs incrementing, ask for increment type (patch/minor/major) or use <code
+                                    class="bg-gray-100 px-2 py-1 rounded">--type=</code></li>
                             <li>Automatically update module version in source files</li>
                             <li>Create ZIP file of the module</li>
                             <li>Calculate SHA-256 integrity hash</li>
@@ -1085,7 +1164,8 @@ php forge.php dev:module:publish --name=MyCustomModule</code></pre>
                         <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-center">
-                                    Complete <code class="bg-yellow-100 px-2 py-1 rounded">forge.json</code> with all metadata
+                                    Complete <code class="bg-yellow-100 px-2 py-1 rounded">forge.json</code> with all
+                                    metadata
                                 </li>
                                 <li class="flex items-center">
                                     Write comprehensive documentation
@@ -1110,7 +1190,9 @@ php forge.php dev:module:publish --name=MyCustomModule</code></pre>
 
                         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mt-6">
                             <p class="text-sm text-blue-700">
-                                <strong>Registry Workflow:</strong> For detailed information about registry structure, integrity hashes, and source types, see the <a href="forge-package-manager.html" class="text-blue-600 underline">ForgePackageManager documentation</a>.
+                                <strong>Registry Workflow:</strong> For detailed information about registry structure,
+                                integrity hashes, and source types, see the <a href="forge-package-manager.html"
+                                    class="text-blue-600 underline">ForgePackageManager documentation</a>.
                             </p>
                         </div>
                     </section>
@@ -1121,7 +1203,8 @@ php forge.php dev:module:publish --name=MyCustomModule</code></pre>
                             Some Suggestions
                         </h2>
                         <p class="text-gray-600 mb-6">
-                            These are just suggestions based on what tends to work well. You do you. Build modules however makes sense for your project.
+                            These are just suggestions based on what tends to work well. You do you. Build modules
+                            however makes sense for your project.
                         </p>
 
                         <div class="grid md:grid-cols-2 gap-6">

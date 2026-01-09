@@ -211,6 +211,21 @@ php forge.php module:package-install --module=forge-events
 # Install ForgeTesting for testing
 php forge.php module:package-install --module=forge-testing</code></pre>
 
+                        <h3 class="text-lg font-semibold mb-3 mt-6">Configuring Middleware</h3>
+                        <p class="text-gray-600 mb-4">
+                            After installing ForgeWire, you must register its middleware in
+                            <code>config/middlewares.php</code> to enable the reactive engine:
+                        </p>
+                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
+
+return [
+    'global' => [],
+    'web' => [
+        \App\Modules\ForgeWire\Middlewares\ForgeWireMiddleware::class,
+    ],
+    'api' => []
+];</code></pre>
+
                         <h3 class="text-lg font-semibold mb-3 mt-6">Project Structure</h3>
                         <p class="text-gray-600 mb-4">
                             Our application will have the following structure:
@@ -220,9 +235,6 @@ php forge.php module:package-install --module=forge-testing</code></pre>
 │   └── TodoController.php
 ├── Models/
 │   └── Todo.php
-├── Components/
-│   └── Wire/
-│       └── TodoList.php
 ├── Events/
 │   ├── TodoCreatedEvent.php
 │   └── TodoCompletedEvent.php
@@ -575,20 +587,26 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Dto\CreateTodoDTO;
+use App\Events\TodoCompletedEvent;
+use App\Events\TodoCreatedEvent;
 use App\Modules\ForgeAuth\Middlewares\AuthMiddleware;
 use App\Modules\ForgeAuth\Services\ForgeAuthService;
+use App\Modules\ForgeEvents\Services\EventDispatcher;
+use App\Modules\ForgeWire\Attributes\Action;
+use App\Modules\ForgeWire\Attributes\Reactive;
+use App\Modules\ForgeWire\Attributes\State;
 use App\Repositories\TodoRepository;
 use Forge\Core\DI\Attributes\Service;
 use Forge\Core\Helpers\Flash;
 use Forge\Core\Helpers\Redirect;
 use Forge\Core\Http\Attributes\Middleware;
+use Forge\Core\Http\Request;
 use Forge\Core\Http\Response;
 use Forge\Core\Routing\Route;
-use Forge\Core\Http\Request;
 use Forge\Traits\ControllerHelper;
 use Forge\Traits\SecurityHelper;
 
-#[Service]
+#[Reactive]
 #[Middleware("web")]
 #[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
 final class TodoController
@@ -596,10 +614,74 @@ final class TodoController
     use ControllerHelper;
     use SecurityHelper;
 
+    #[State]
+    public string $newTodoTitle = '';
+
+    #[State]
+    public string $newTodoDescription = '';
+
     public function __construct(
         private readonly ForgeAuthService $auth,
         private readonly TodoRepository $repository,
+        private readonly EventDispatcher $dispatcher,
     ) {}
+
+    #[Action]
+    public function addTodoReactive(): void
+    {
+        if (trim($this->newTodoTitle) === '') return;
+
+        $user = $this->auth->user();
+        $dto = new CreateTodoDTO(
+            title: $this->newTodoTitle,
+            description: $this->newTodoDescription ?: null
+        );
+
+        $todo = $this->repository->create($dto, $user->id);
+
+        $this->dispatcher->dispatch(
+            new TodoCreatedEvent(
+                todoId: $todo->id,
+                userId: $user->id,
+                title: $todo->title
+            )
+        );
+
+        $this->newTodoTitle = '';
+        $this->newTodoDescription = '';
+    }
+
+    #[Action]
+    public function toggleTodoReactive(int $id): void
+    {
+        $user = $this->auth->user();
+        $todo = $this->repository->find($id);
+
+        if ($todo && $todo->user_id === $user->id) {
+            $todo->toggle();
+            
+            if ($todo->completed) {
+                $this->dispatcher->dispatch(
+                    new TodoCompletedEvent(
+                        todoId: $todo->id,
+                        userId: $user->id,
+                        title: $todo->title
+                    )
+                );
+            }
+        }
+    }
+
+    #[Action]
+    public function deleteTodoReactive(int $id): void
+    {
+        $user = $this->auth->user();
+        $todo = $this->repository->find($id);
+
+        if ($todo && $todo->user_id === $user->id) {
+            $this->repository->delete($todo);
+        }
+    }
 
     #[Route("/todos")]
     public function index(): Response
@@ -610,6 +692,9 @@ final class TodoController
         return $this->view("todos/index", [
             "todos" => $todos,
             "user" => $user,
+            "total" => $this->total,
+            "number1" => $this->number1,
+            "number2" => $this->number2,
         ]);
     }
 
@@ -617,7 +702,11 @@ final class TodoController
     public function createTodo(Request $request): Response
     {
         $user = $this->auth->user();
-        $data = $this->sanitize($request->postData);
+        $todoData = $this->sanitize($request->postData);
+        $data = [
+            'user_id' => $user->id,
+            ...$todoData
+        ];
 
         if (empty($data['title'])) {
             Flash::set("error", "Title is required");
@@ -629,6 +718,15 @@ final class TodoController
         $todo = $this->repository->create($dto, $user->id);
 
         Flash::set("success", "Todo created successfully");
+
+        $this->dispatcher->dispatch(
+            new TodoCreatedEvent(
+                todoId: $todo->id,
+                userId: $user->id,
+                title: $todo->title
+            )
+        );
+
         return Redirect::to("/todos");
     }
 
@@ -680,6 +778,16 @@ final class TodoController
         $todo->toggle();
         Flash::set("success", "Todo " . ($todo->completed ? "completed" : "marked as incomplete"));
         
+        if ($todo->completed) {
+            $this->dispatcher->dispatch(
+                new TodoCompletedEvent(
+                    todoId: $todo->id,
+                    userId: $user->id,
+                    title: $todo->title
+                )
+            );
+        }
+
         return Redirect::to("/todos");
     }
 
@@ -853,217 +961,153 @@ final class TodoController
 
                     <!-- ForgeWire Components -->
                     <section id="forgewire" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">ForgeWire Components</h2>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">ForgeWire: Real-Time Reactivity</h2>
                         <p class="text-gray-600 mb-6">
-                            Let's create an interactive todo list component using ForgeWire for real-time updates
-                            without page refreshes.
+                            Now for the magic. We'll add ForgeWire to our <code>TodoController</code> to make it
+                            reactive. This means changes will happen instantly in the browser without full page
+                            refreshes, yet all logic remains securely on the server.
                         </p>
 
-                        <h3 class="text-lg font-semibold mb-3">Creating the TodoList Wire Component</h3>
+                        <h3 class="text-lg font-semibold mb-3">1. Making the Controller Reactive</h3>
                         <p class="text-gray-600 mb-4">
-                            Create <code class="bg-gray-100 px-2 py-1 rounded">app/Components/Wire/TodoList.php</code>:
+                            We don't need to create a new class. We simply add the <code>#[Reactive]</code> attribute to
+                            our existing <code>TodoController</code> and mark the data we want to persist between
+                            updates with <code>#[State]</code>.
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?php
-
-declare(strict_types=1);
-
-namespace App\Components\Wire;
-
-use App\Dto\CreateTodoDTO;
-use App\Models\Todo;
-use App\Modules\ForgeAuth\Services\ForgeAuthService;
-use App\Modules\ForgeWire\Attributes\Action;
-use App\Modules\ForgeWire\Attributes\State;
-use App\Modules\ForgeWire\Core\WireComponent;
-use App\Repositories\TodoRepository;
-
-final class TodoList extends WireComponent
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Reactive] // Enable reactivity
+#[Service]
+#[Middleware("web")]
+#[Middleware("App\Modules\ForgeAuth\Middlewares\AuthMiddleware")]
+final class TodoController
 {
-    #[State]
-    public array $todos = [];
+    use ControllerHelper;
 
+    // These values will be preserved in the session between reactive updates
     #[State]
     public string $newTodoTitle = '';
 
     #[State]
     public string $newTodoDescription = '';
 
-    public function __construct(
-        private readonly ForgeAuthService $auth,
-        private readonly TodoRepository $repository,
-    ) {}
-
-    public function mount(): void
+    #[Action] // Can be called from the frontend via fw:click
+    public function addTodoReactive(): void
     {
-        $this->loadTodos();
-    }
-
-    #[Action]
-    public function addTodo(): void
-    {
-        if (empty($this->newTodoTitle)) {
-            return;
-        }
+        if (empty($this->newTodoTitle)) return;
 
         $user = $this->auth->user();
-        if ($user === null) {
-            return;
-        }
-
         $dto = new CreateTodoDTO(
             title: $this->newTodoTitle,
-            description: $this->newTodoDescription ?: null,
-            completed: false,
+            description: $this->newTodoDescription ?: null
         );
 
         $this->repository->create($dto, $user->id);
-
+        
+        // Clear inputs after success
         $this->newTodoTitle = '';
         $this->newTodoDescription = '';
-        $this->loadTodos();
-    }
-
-    #[Action]
-    public function toggleTodo(int $todoId): void
-    {
-        $todo = $this->repository->find($todoId);
-        if ($todo === null) {
-            return;
-        }
-
-        $user = $this->auth->user();
-        if ($user === null || $todo->user_id !== $user->id) {
-            return;
-        }
-
-        $todo->toggle();
-        $this->loadTodos();
-    }
-
-    #[Action]
-    public function deleteTodo(int $todoId): void
-    {
-        $todo = $this->repository->find($todoId);
-        if ($todo === null) {
-            return;
-        }
-
-        $user = $this->auth->user();
-        if ($user === null || $todo->user_id !== $user->id) {
-            return;
-        }
-
-        $todo->delete();
-        $this->loadTodos();
-    }
-
-    private function loadTodos(): void
-    {
-        $user = $this->auth->user();
-        if ($user === null) {
-            $this->todos = [];
-            return;
-        }
-
-        $todos = $this->repository->findByUserId($user->id);
-        $this->todos = array_map(fn($todo) => [
-            'id' => $todo->id,
-            'title' => $todo->title,
-            'description' => $todo->description,
-            'completed' => $todo->completed,
-        ], $todos);
-    }
-
-    public function render(): string
-    {
-        return raw($this->view('wire/todo-list', [
-            'todos' => $this->todos,
-            'newTodoTitle' => $this->newTodoTitle,
-            'newTodoDescription' => $this->newTodoDescription,
-        ]));
     }
 }</code></pre>
+                        </div>
 
-                        <h3 class="text-lg font-semibold mb-3 mt-6">Creating the Wire Component View</h3>
+                        <h3 class="text-lg font-semibold mb-3">2. Updating the View with Directives</h3>
                         <p class="text-gray-600 mb-4">
-                            Create <code
-                                class="bg-gray-100 px-2 py-1 rounded">app/resources/views/components/wire/todo-list.php</code>:
+                            Now we wrap the todo list in a reactive container using <code>fw_id()</code> and bind our
+                            inputs using <code>fw:model</code>. We also use <code>fw:target</code> to optimize DOM
+                            updates.
                         </p>
-                        <pre class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;div class="bg-white rounded-lg shadow p-6"&gt;
-    &lt;h2 class="text-xl font-bold mb-4"&gt;Interactive Todo List&lt;/h2&gt;
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;!-- app/resources/views/todos/index.php --&gt;
+&lt;div &lt;?= fw_id('todo-app') ?&gt; class="bg-white rounded-lg shadow p-6"&gt;
+    &lt;h1 class="text-2xl font-bold mb-6"&gt;My Reactive Todos&lt;/h1&gt;
 
-    &lt;!-- Add Todo Form --&gt;
-    &lt;form wire:submit="addTodo" class="mb-6"&gt;
-        &lt;div class="flex gap-4 mb-2"&gt;
-            &lt;input 
-                type="text" 
-                wire:model.lazy="newTodoTitle"
-                placeholder="Todo title..." 
-                class="flex-1 px-4 py-2 border border-gray-300 rounded-md"
-            &gt;
-            &lt;input 
-                type="text" 
-                wire:model.lazy="newTodoDescription"
-                placeholder="Description (optional)"
-                class="flex-1 px-4 py-2 border border-gray-300 rounded-md"
-            &gt;
-            &lt;button 
-                type="submit"
-                class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            &gt;
-                Add
-            &lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/form&gt;
+    &lt;div class="flex gap-4 mb-8"&gt;
+        &lt;input 
+            type="text" 
+            fw:model.defer="newTodoTitle" 
+            placeholder="What needs doing?"
+            fw:keydown.enter="addTodoReactive"
+            class="flex-1 px-4 py-2 border rounded-md"
+        &gt;
+        &lt;button 
+            fw:click="addTodoReactive"
+            class="px-6 py-2 bg-blue-600 text-white rounded-md"
+        &gt;
+            Add Instantly
+        &lt;/button&gt;
+    &lt;/div&gt;
 
-    &lt;!-- Todos List --&gt;
-    &lt;div class="space-y-3"&gt;
-        &lt;?php foreach ($todos as $todo): ?&gt;
-            &lt;div class="flex items-center gap-4 p-4 border border-gray-200 rounded-md &lt;?= $todo['completed'] ? 'bg-gray-50 opacity-75' : 'bg-white' ?&gt;"&gt;
-                &lt;div class="flex-1"&gt;
-                    &lt;h3 class="font-semibold &lt;?= $todo['completed'] ? 'line-through text-gray-500' : 'text-gray-900' ?&gt;"&gt;
-                        &lt;?= e($todo['title']) ?&gt;
-                    &lt;/h3&gt;
-                    &lt;?php if ($todo['description']): ?&gt;
-                        &lt;p class="text-sm text-gray-600 mt-1"&gt;&lt;?= e($todo['description']) ?&gt;&lt;/p&gt;
-                    &lt;?php endif; ?&gt;
+    &lt;div fw:target&gt;
+        &lt;div class="space-y-3"&gt;
+            &lt;?php foreach ($todos as $todo): ?&gt;
+                &lt;div class="flex items-center gap-4 p-4 border rounded-md"&gt;
+                    &lt;div class="flex-1"&gt;
+                        &lt;input type="checkbox" &lt;?= $todo->completed ? 'checked' : '' ?&gt; 
+                            fw:click="toggleTodoReactive" 
+                            fw:param-id="&lt;?= $todo->id ?&gt;"
+                            class="form-check-input"
+                        &gt;
+                        &lt;span class="&lt;?= $todo->completed ? 'line-through text-gray-500' : '' ?&gt;"&gt;
+                            &lt;?= e($todo->title) ?&gt;
+                        &lt;/span&gt;
+                    &lt;/div&gt;
+                    &lt;button 
+                        fw:click="deleteTodoReactive" 
+                        fw:param-id="&lt;?= $todo->id ?&gt;"
+                        class="text-red-600"
+                    &gt;
+                        &amp;times;
+                    &lt;/button&gt;
                 &lt;/div&gt;
-                
-                &lt;button 
-                    wire:click="toggleTodo(&lt;?= $todo['id'] ?&gt;)"
-                    class="px-4 py-2 &lt;?= $todo['completed'] ? 'bg-yellow-600' : 'bg-green-600' ?&gt; text-white rounded-md hover:opacity-80"
-                &gt;
-                    &lt;?= $todo['completed'] ? 'Undo' : 'Complete' ?&gt;
-                &lt;/button&gt;
+            &lt;?php endforeach; ?&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 
-                &lt;button 
-                    wire:click="deleteTodo(&lt;?= $todo['id'] ?&gt;)"
-                    class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-                &gt;
-                    Delete
-                &lt;/button&gt;
-            &lt;/div&gt;
-        &lt;?php endforeach; ?&gt;
-
-        &lt;?php if (empty($todos)): ?&gt;
-            &lt;p class="text-gray-500 text-center py-8"&gt;No todos yet. Add one above!&lt;/p&gt;
-        &lt;?php endif; ?&gt;
+    &lt;div fw:loading class="text-blue-600 mt-4"&gt;
+        Updating...
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
+                        </div>
 
-                        <h3 class="text-lg font-semibold mb-3 mt-6">Using the Wire Component</h3>
+                        <h3 class="text-lg font-semibold mb-3">3. Using Components with ForgeWire</h3>
                         <p class="text-gray-600 mb-4">
-                            In your view, use the <code class="bg-gray-100 px-2 py-1 rounded">wire_name()</code> helper
-                            to render the component:
+                            For better organization, you can extract parts of your UI into reusable components.
+                            Create <code>app/resources/components/todo-item.php</code>:
                         </p>
-                        <pre
-                            class="bg-gray-100 p-4 rounded mb-4"><code class="language-php">&lt;?= wire_name('todo-list') ?&gt;</code></pre>
-                        <p class="text-gray-600 mb-4 mt-4">
-                            The <code class="bg-gray-100 px-2 py-1 rounded">wire_name()</code> helper automatically
-                            converts kebab-case names (like <code
-                                class="bg-gray-100 px-2 py-1 rounded">todo-list</code>) to the corresponding component
-                            class (<code class="bg-gray-100 px-2 py-1 rounded">App\Components\Wire\TodoList</code>).
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;!-- app/resources/components/todo-item.php --&gt;
+&lt;div class="flex items-center gap-4 p-4 border rounded-md"&gt;
+    &lt;div class="flex-1"&gt;
+        &lt;input type="checkbox" &lt;?= $todo->completed ? 'checked' : '' ?&gt; 
+            fw:click="toggleTodoReactive" 
+            fw:param-id="&lt;?= $todo->id ?&gt;"
+        &gt;
+        &lt;span class="&lt;?= $todo->completed ? 'line-through text-gray-500' : '' ?&gt;"&gt;
+            &lt;?= e($todo->title) ?&gt;
+        &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;button fw:click="deleteTodoReactive" fw:param-id="&lt;?= $todo->id ?&gt;"&gt;
+        &amp;times;
+    &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Then in your index view:
                         </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php foreach ($todos as $todo): ?&gt;
+    &lt;?= component('todo-item', ['todo' => $todo]) ?&gt;
+&lt;?php endforeach; ?&gt;</code></pre>
+                        </div>
+
+                        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                            <p class="text-sm text-green-700">
+                                <strong>Pro Tip:</strong> When using ForgeWire directives inside components, they
+                                automatically
+                                reference the parent reactive controller. This makes building complex, modular UIs
+                                incredibly simple.
+                            </p>
+                        </div>
                     </section>
 
                     <!-- Events -->
@@ -1392,9 +1436,6 @@ php forge.php test --filter=user_can_create_todo</code></pre>
 │   └── Todo.php
 ├── Dto/
 │   └── CreateTodoDTO.php
-├── Components/
-│   └── Wire/
-│       └── TodoList.php
 ├── Events/
 │   ├── TodoCreatedEvent.php
 │   └── TodoCompletedEvent.php
@@ -1409,11 +1450,8 @@ php forge.php test --filter=user_can_create_todo</code></pre>
 │   └── views/
 │       ├── layouts/
 │       │   └── todos.php
-│       ├── todos/
-│       │   └── index.php
-│       └── components/
-│           └── wire/
-│               └── todo-list.php
+│       └── todos/
+│           └── index.php
 └── tests/
     └── TodoTest.php</code></pre>
 
