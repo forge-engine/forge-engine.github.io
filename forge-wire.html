@@ -735,9 +735,8 @@ final class CounterController
                         </div>
                     </section>
 
-                    <!-- Best Practices -->
                     <section id="best-practices" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices</h2>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Some Suggestions</h2>
                         <p class="text-gray-600 mb-6">
                             Recommendations for using ForgeWire effectively.
                         </p>
@@ -747,9 +746,6 @@ final class CounterController
                                 <h3 class="font-semibold text-lg mb-3 text-green-600">Things That Often Help</h3>
                                 <ul class="space-y-2 text-sm text-gray-600">
                                     <li>• Use #[State] for simple scalar/array values</li>
-                                    <li>• Use #[DTO] for complex form data</li>
-                                    <li>• Use #[Model] for database entities</li>
-                                    <li>• Use #[Service] for dependency injection</li>
                                     <li>• Keep components focused and single-purpose</li>
                                     <li>• Use computed properties for derived values</li>
                                     <li>• Leverage fw:model.debounce for search inputs</li>
@@ -763,25 +759,11 @@ final class CounterController
                                     <li>• Don't expose sensitive data without attributes</li>
                                     <li>• Don't use complex objects with #[State]</li>
                                     <li>• Don't forget #[Action] on callable methods</li>
-                                    <li>• Don't pass arrays/objects to action methods</li>
                                     <li>• Don't poll too frequently (performance impact)</li>
                                     <li>• Don't store large amounts of state in session</li>
-                                    <li>• Don't forget to implement toArray()/fromArray() for DTOs</li>
                                     <li>• Don't skip validation for user input</li>
                                 </ul>
                             </div>
-                        </div>
-
-                        <h3 class="text-lg font-semibold mb-3">When to Use State vs DTO vs Model</h3>
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                            <ul class="space-y-2 text-sm text-gray-600">
-                                <li>• <strong>#[State]:</strong> Simple values (strings, numbers, arrays) that change
-                                    frequently</li>
-                                <li>• <strong>#[DTO]:</strong> Complex form data with multiple related fields</li>
-                                <li>• <strong>#[Model]:</strong> Database entities that need to be loaded/saved</li>
-                                <li>• <strong>#[Service]:</strong> Business logic services, repositories, external APIs
-                                </li>
-                            </ul>
                         </div>
                     </section>
                 </div>
