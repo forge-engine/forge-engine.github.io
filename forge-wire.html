@@ -1019,7 +1019,7 @@ final class QueueController
                         </div>
 
                         <h3 class="text-lg font-semibold mb-3">Standard PHP Controller</h3>
-                        <p class="text-gray-600 mb-4">ForgeWire works with standard PHP controllers - just add attributes and islands:</p>
+                        <p class="text-gray-600 mb-4">ForgeWire works with standard PHP controllers - no special component classes required:</p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">#[Middleware("web")]
 #[Reactive]
@@ -1073,6 +1073,21 @@ forgewire:island --type=app --name=interactive-counter --kind=component
 forgewire:island --type=app --name=admin/dashboard --kind=page
 forgewire:island --type=module --module=ForgeEvents --name=queue-stats --kind=component</code></pre>
                         </div>
+                        
+                        <h3 class="text-lg font-semibold mb-3">Production Minification</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Generate minified production version
+forgewire:minify
+
+# Custom input/output paths
+forgewire:minify --input=custom/path/forgewire.js --output=production/forgewire.min.js</code></pre>
+                        </div>
+                        
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm text-blue-800">
+                                <strong>Optimization:</strong> Removes comments, unnecessary whitespace, and optimizes JavaScript patterns for production deployment.
+                            </p>
+                        </div>
 
                         <h3 class="text-lg font-semibold mb-3">Generated Structure</h3>
                         <p class="text-gray-600 mb-4">
@@ -1124,8 +1139,59 @@ final class InteractiveCounterController
                             <li><strong>Reactive Setup:</strong> How to add #[Reactive] and why it's required</li>
                             <li><strong>Action Exposure:</strong> How to use #[Action] to expose methods to browser</li>
                             <li><strong>State Management:</strong> How to use #[State] for property persistence</li>
-                            <li><strong>Normal PHP:</strong> Everything else works like regular PHP - no special syntax needed</li>
+                            <li><strong>Normal PHP:</strong> Everything else works like regular PHP</li>
                         </ul>
+                        
+                        <h3 class="text-lg font-semibold mb-3">Modular Organization</h3>
+                        <p class="text-gray-600 mb-4">
+                            ForgeWire works with any PHP organization pattern - modules, traits, standard controllers:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Example from ForgeEvents module
+namespace App\Modules\ForgeEvents\Controllers\Hub;
+
+use App\Modules\ForgeEvents\Controllers\Hub\Traits\QueueJobActions;
+use App\Modules\ForgeEvents\Controllers\Hub\Traits\QueueBulkActions;
+use App\Modules\ForgeEvents\Services\QueueHubService;
+use App\Modules\ForgeWire\Attributes\Reactive;
+use App\Modules\ForgeWire\Traits\ReactiveControllerHelper;
+
+#[Reactive]
+#[Middleware('web')]
+#[Middleware('auth')]
+final class QueueController
+{
+    use ControllerHelper;
+    use ReactiveControllerHelper;
+    use QueueJobActions;
+    use QueueBulkActions;
+
+    #[State(shared: true)]
+    public array $jobs = [];
+
+    #[Route("/hub/queues")]
+    public function index(): Response
+    {
+        // Standard PHP controller logic
+        $this->loadJobs();
+        return $this->view("pages/hub/queues", [
+            'jobs' => $this->jobs,
+            // All other data passed explicitly
+        ]);
+    }
+
+    #[Action]
+    public function bulkDelete(): void
+    {
+        // Standard method implementation
+        foreach ($this->selectedJobs as $jobId) {
+            $this->queueService->deleteJob($jobId);
+        }
+        $this->selectedJobs = [];
+        $this->loadJobs();
+    }
+}</code></pre>
+                        </div>
                     </section>
 
                     <!-- Suggestions -->
@@ -1159,7 +1225,7 @@ final class InteractiveCounterController
                                     <li>• Consider session size with large state objects</li>
                                     <li>• Don't forget #[Action] on callable methods</li>
                                     <li>• Polling frequency affects performance</li>
-                                    <li>• Mixing reactive and non-reactive controllers can get confusing</li>
+
                                     <li>• Security matters with shared state</li>
                                     <li>• Validation helps catch issues early</li>
                                     <li>• CLI generators save time and provide structure</li>
