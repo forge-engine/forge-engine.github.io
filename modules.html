@@ -164,6 +164,9 @@
                             <a href="forge-events.html" class="block text-gray-600 hover:text-blue-600 py-1">
                                 ForgeEvents
                             </a>
+                            <a href="forge-deployment.html" class="block text-gray-600 hover:text-blue-600 py-1">
+                                ForgeDeployment
+                            </a>
                             <a href="forge-multi-tenant.html" class="block text-gray-600 hover:text-blue-600 py-1">
                                 ForgeMultiTenant
                             </a>
@@ -192,7 +195,7 @@
                     <p class="text-xl text-gray-600 mb-8">
                         Extend Forge Kernel with self-contained capability modules. Think of capabilities like modular
                         additions to a house. The kernel gives you the foundation. Capabilities add what you need:
-                        database, ORM, authentication, storage — all optional, all pluggable.
+                        database, ORM, authentication, storage, deployment — all optional, all pluggable.
                     </p>
 
                     <!-- Overview -->
@@ -423,39 +426,41 @@ public function onAppBooted(): void
                                 </div>
                             </a>
 
-                            <!-- ForgeUI -->
+                        <!-- ForgeDeployment -->
+                        <a href="#forge-deployment" class="block">
                             <div
-                                class="module-card bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6 hover:shadow-lg">
-                                <h3 class="text-lg font-semibold mb-3">ForgeUI</h3>
-                                <p class="text-gray-600 text-sm mb-4">
-                                    Example module demonstrating how to create your own design system as a module
-                                    capability. Shows that you can package UI components, styles, and design patterns as
-                                    a reusable module that can be shared across Forge applications.
-                                </p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Example</span>
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Design
-                                        System</span>
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Template</span>
+                                    class="module-card bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-lg p-6 hover:shadow-lg">
+                                    <h3 class="text-lg font-semibold mb-3">ForgeDeployment</h3>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Complete deployment automation system. Deploy applications to cloud providers
+                                        (DigitalOcean, custom providers) with automated provisioning, rollback, and zero-downtime
+                                        deployments. Includes SSH key management, SSL configuration, and deployment state tracking.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Cloud</span>
+                                        <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Automation</span>
+                                        <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Provisioning</span>
+                                        <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Rollback</span>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <!-- ForgeWire -->
-                            <a href="forge-wire.html"
-                                class="module-card bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-200 rounded-lg p-6 hover:shadow-lg block">
-                                <h3 class="text-lg font-semibold mb-3">ForgeWire</h3>
-                                <p class="text-gray-600 text-sm mb-4">
-                                    Adds reactivity directly to your Controllers. Build dynamic, real-time interfaces
-                                    with #[Reactive] attributes and simple PHP templates — no JavaScript frameworks or
-                                    separate component classes required.
-                                </p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span
-                                        class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Reactive</span>
-                                    <span
-                                        class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Controllers</span>
-                                    <span
-                                        class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Server-Side</span>
+                            </a>
+                        
+                        <!-- ForgeUI -->
+                            <a href="forge-ui.html" class="block">
+                                <div
+                                    class="module-card bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6 hover:shadow-lg">
+                                    <h3 class="text-lg font-semibold mb-3">ForgeUI</h3>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Example module demonstrating how to create your own design system as a module
+                                        capability. Shows that you can package UI components, styles, and design
+                                        patterns as a reusable module that can be shared across Forge applications.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Example</span>
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Design
+                                            System</span>
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Template</span>
+                                    </div>
                                 </div>
                             </a>
 
