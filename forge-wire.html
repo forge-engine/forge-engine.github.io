@@ -1238,9 +1238,16 @@ final class QueueController
                             <li><strong>Targeted Updates:</strong> fw:target can reduce HTML payload</li>
                             <li><strong>Input Strategies:</strong> fw:model.lazy and fw:model.debounce for different use cases</li>
                             <li><strong>Polling Impact:</strong> Intersection observer helps with visibility-based polling</li>
-                            <li><strong>Shared State:</strong> fw:depends helps avoid unnecessary re-renders</li>
+                            <li><strong>Shared State Efficiency:</strong> All dependent islands update in <strong>single request</strong> - no multiple HTTP requests needed</li>
+                            <li><strong>No Event Dispatching:</strong> Shared state changes don't need manual event dispatching - ForgeWire handles coordination automatically</li>
                             <li><strong>Session Size:</strong> Large state objects affect session storage</li>
                         </ul>
+                        
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm text-green-800">
+                                <strong>Performance Win:</strong> Shared state updates are highly efficient - one server call updates all dependent islands simultaneously.
+                            </p>
+                        </div>
                     </section>
                 </div>
             </div>
