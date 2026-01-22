@@ -115,11 +115,23 @@
                         <a href="#computed"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Computed
                             Properties</a>
-                        <a href="#validation"
-                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Validation</a>
-                        <a href="#frontend"
-                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Frontend
-                            Integration</a>
+                         <a href="#validation"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Validation</a>
+                         <a href="#frontend"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Frontend
+                             Integration</a>
+                         <a href="#architecture-features"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Architecture
+                             & Features</a>
+                         <a href="#wire-protocol"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Wire
+                             Protocol</a>
+                         <a href="#performance"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Performance
+                             Optimizations</a>
+                         <a href="#cli-commands"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">CLI
+                             Commands</a>
                         <a href="#wire-protocol"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Wire
                             Protocol</a>
@@ -219,14 +231,14 @@
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Basic Usage</h2>
                         <p class="text-gray-600 mb-6">
                             Creating a reactive feature requires three steps: mark the controller, mark the state, and
-                            wrap the view.
+                            wrap the view with island identifiers.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">1. The Controller</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">#[Reactive]
-#[Service]
-class CounterController
+                            <pre><code class="language-php">#[Middleware("web")]
+#[Reactive]
+final class CounterController
 {
     use ControllerHelper;
 
@@ -247,20 +259,32 @@ class CounterController
 }</code></pre>
                         </div>
 
-                        <h3 class="text-lg font-semibold mb-3">2. The View</h3>
+                        <h3 class="text-lg font-semibold mb-3">2. The View with Islands</h3>
                         <p class="text-gray-600 mb-4">
-                            Crucially, you must use the <code class="bg-gray-100 px-2 py-1 rounded">fw_id()</code>
-                            helper on the root element of your reactive area. This tells the JS client where to track
-                            changes.
+                            Use the <code class="bg-gray-100 px-2 py-1 rounded">fw_id()</code> helper to create island boundaries. Each island can have its own reactive area, and you can have multiple islands per page.
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;!-- resources/views/pages/counter.php --&gt;
-&lt;div &lt;?= fw_id() ?&gt; class="counter-box"&gt;
+&lt;div &lt;?= fw_id('main-counter') ?&gt; class="counter-box"&gt;
     &lt;h1&gt;Count: &lt;?= $count ?&gt;&lt;/h1&gt;
     
     &lt;button fw:click="increment"&gt;Add One&lt;/button&gt;
+    &lt;div fw:target&gt;Result: &lt;?= $count ?&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Another island on same page --&gt;
+&lt;div &lt;?= fw_id('info-panel') ?&gt; class="info-box"&gt;
+    &lt;p fw:poll.5s&gt;Updated at: &lt;?= date('H:i:s') ?&gt;&lt;/p&gt;
 &lt;/div&gt;</code></pre>
                         </div>
+
+                        <h3 class="text-lg font-semibold mb-3">3. Island Architecture Benefits</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Multiple Islands:</strong> Create independent reactive areas on the same page</li>
+                            <li><strong>Targeted Updates:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">fw:target</code> for efficient partial updates</li>
+                            <li><strong>Shared State:</strong> Islands can share state using <code class="bg-gray-100 px-2 py-1 rounded">#[State(shared: true)]</code></li>
+                            <li><strong>Independent Polling:</strong> Each island can have its own polling interval</li>
+                        </ul>
                     </section>
 
                     <!-- Attributes System -->
@@ -272,15 +296,98 @@ class CounterController
                             Applied to the class. Enables ForgeWire to monitor this controller. Controllers without this
                             attribute are ignored by the reactive engine for security.
                         </p>
+                        
+                        <h3 class="text-lg font-semibold mb-3">#[Action(submit: bool)]</h3>
+                        <p class="text-gray-600 mb-4">
+                            Applied to methods. Marks the method as callable from browser. The optional <code class="bg-gray-100 px-2 py-1 rounded">submit</code> parameter indicates this action handles form submissions.
+                        </p>
+                        
+                        <h3 class="text-lg font-semibold mb-3">#[Computed]</h3>
+                        <p class="text-gray-600 mb-4">
+                            Applied to methods. Marks method as computed property that gets cached between requests. Useful for derived values that don't change frequently.
+                        </p>
                     </section>
 
                     <section id="state-management" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">State Management</h2>
                         <h3 class="text-lg font-semibold mb-3">#[State]</h3>
                         <p class="text-gray-600 mb-4">
-                            Applied to public properties. Tells ForgeWire to persist this value between requests in the
+                            Applied to public properties. Tells ForgeWire to persist this value between requests in
                             session. Supports scalars (int, string, bool) and arrays.
                         </p>
+                        
+                        <h3 class="text-lg font-semibold mb-3">Shared State Across Islands</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">#[State(shared: true)]</code> to share state across multiple islands on the same page. Islands must opt-in to shared dependencies using <code class="bg-gray-100 px-2 py-1 rounded">fw:depends</code> or be wrapped in <code class="bg-gray-100 px-2 py-1 rounded">fw:shared</code>.
+                        </p>
+                        
+                        <h4 class="text-md font-semibold mb-3 mt-4">Opt-in Methods for Shared State</h4>
+                        
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm text-yellow-800 mb-2">
+                                <strong>⚠️ Important:</strong> Islands <strong>must</strong> opt-in to shared state dependencies. Without fw:depends or fw:shared, islands will not receive shared state updates even if marked with #[State(shared: true)].
+                            </p>
+                        </div>
+                        
+                        <h5 class="text-sm font-semibold mb-2">Method 1: Individual Dependencies with fw:depends</h5>
+                        <div class="code-block p-6 text-white rounded-lg mb-4">
+                            <pre><code class="language-php">// Controller
+#[State(shared: true)]
+public int $counter = 0;</code></pre>
+                        </div>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html">&lt;!-- View - Island depends on specific shared state --&gt;
+&lt;div fw:shared&gt;
+    &lt;div &lt;?= fw_id('todo-app') ?&gt; fw:depends="counter"&gt;
+        &lt;h1&gt;Reactive Todo List counter: &lt;?= $counter ?&gt;&lt;/h1&gt;
+        &lt;!-- Content that uses $counter --&gt;
+    &lt;/div&gt;
+    
+    &lt;div &lt;?= fw_id('counter-app') ?&gt; fw:depends="counter"&gt;
+        &lt;h1&gt;Counter&lt;/h1&gt;
+        &lt;button fw:click="increment"&gt;Increment&lt;/button&gt;
+        &lt;div&gt;&lt;?= $counter ?&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                        
+                        <h5 class="text-sm font-semibold mb-2">Method 2: Shared Group with fw:shared</h5>
+                        <div class="code-block p-6 text-white rounded-lg mb-4">
+                            <pre><code class="language-php">// Controller
+#[State(shared: true)]
+public array $jobs = [];</code></pre>
+                        </div>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html">&lt;!-- View - All islands in fw:shared container share state --&gt;
+&lt;div fw:shared&gt;
+    &lt;!-- Stats island --&gt;
+    &lt;div &lt;?= fw_id('queue-stats') ?&gt; fw:depends="jobs"&gt;
+        &lt;h2&gt;Statistics&lt;/h2&gt;
+        &lt;p fw:target&gt;Total Jobs: &lt;?= count($jobs) ?&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- Table island --&gt;
+    &lt;div &lt;?= fw_id('queue-table') ?&gt;&gt;
+        &lt;!-- Will automatically receive jobs updates --&gt;
+        &lt;table&gt;
+            &lt;?php foreach ($jobs as $job): ?&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;?= $job['id'] ?&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;?php endforeach; ?&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                        
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm text-blue-800">
+                                <strong>Use Cases:</strong> Perfect for shopping carts, user notifications, queue dashboards, or any data that needs to stay synchronized across different components on same page.
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm text-blue-800">
+                                <strong>Use Case:</strong> Perfect for shopping carts, user notifications, or any data that needs to stay synchronized across different components on the same page.
+                            </p>
+                        </div>
                     </section>
 
                     <section id="complex-data" class="section-anchor mb-12">
@@ -418,23 +525,27 @@ public function render(): string
                     <section id="validation" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Validation</h2>
                         <p class="text-gray-600 mb-6">
-                            Add validation rules to properties using #[Validate] attribute.
+                            Add validation rules to properties using #[Validate] attribute. Validation supports both array and JSON message formats for backward compatibility.
                         </p>
 
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">use App\Modules\ForgeWire\Attributes\Validate;
+                            <pre><code class="language-php">#[State]
+#[Validate('required|min:3', messages: ['required' => 'Name is required', 'min' => 'Name must be at least :value characters'])]
+public string $formName = '';
 
 #[State]
-#[Validate(rules: 'required|min:3')]
-public string $name = '';
-
-#[State]
-#[Validate(
-    rules: 'required|email',
-    messages: '{"required": "Email is required", "email": "Invalid email"}'
-)]
-public string $email = '';</code></pre>
+#[Validate('required|email', messages: ['required' => 'Email is required', 'email' => 'Please enter a valid email address'])]
+public string $formEmail = '';</code></pre>
                         </div>
+                        
+                        <h3 class="text-lg font-semibold mb-3">Validation Features</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Automatic Validation:</strong> Runs when properties marked with #[Validate] are updated</li>
+                            <li><strong>Custom Messages:</strong> Provide user-friendly error messages for each rule</li>
+                            <li><strong>Parameter Replacement:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">:value</code> placeholders in messages</li>
+                            <li><strong>Form Submission:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">#[Action(submit: true)]</code> for form handling</li>
+                        </ul>
+                        
                         <p class="text-gray-600 mb-4">
                             Validation runs automatically when dirty state includes the property.
                         </p>
@@ -447,9 +558,19 @@ public string $email = '';</code></pre>
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Directives Reference</h3>
+                        
+                        <h4 class="text-md font-semibold mb-2">Event Handling</h4>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:click="save"</code> — Call action on
                                 click (use <code>fw:param-*</code> for arguments)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:submit="save"</code> — Form
+                                submission (auto-prevents refresh)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:keydown.enter="submit"</code> — Call action on Enter key</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:keydown.escape="cancel"</code> — Call action on Escape key</li>
+                        </ul>
+                        
+                        <h4 class="text-md font-semibold mb-2">Data Binding</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model="property"</code> — Two-way
                                 binding (immediate)</li>
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model.lazy</code> — Update on
@@ -458,13 +579,58 @@ public string $email = '';</code></pre>
                                 updates (600ms default)</li>
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:model.debounce.300ms</code> — Custom
                                 debounce time</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:submit="save"</code> — Form
-                                submission (auto-prevents refresh)</li>
+                        </ul>
+                        
+                        <h4 class="text-md font-semibold mb-2">Polling & Updates</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:poll</code> — Auto-refresh every 2
                                 seconds</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:poll.5s</code> — Custom poll interval
-                            </li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:poll.5s</code> — Custom poll interval</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:poll.3s fw:action="onPoll"</code> — Custom action on poll</li>
                         </ul>
+                        
+                        <h4 class="text-md font-semibold mb-2">Island Management</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:id("name")</code> — PHP helper to create unique island identifier</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:target</code> — Marks element for partial updates (performance optimization)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:loading</code> — Shows content during action processing</li>
+                        </ul>
+                        
+                        <h4 class="text-md font-semibold mb-2">Shared State</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:shared</code> — Container for shared state groups</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:depends="prop1,prop2"</code> — Opt-in to shared state dependencies</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:validation-error="fieldName"</code> — Display validation errors</li>
+                        </ul>
+                        
+                        <h4 class="text-md font-semibold mb-2">Arguments & Parameters</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:param-id="123"</code> — Pass parameters to actions</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:param-name="value"</code> — String parameters</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:param-count="5"</code> — Numeric parameters</li>
+                        </ul>
+                        
+                        <h3 class="text-lg font-semibold mb-3">Island Management</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:id("name")</code> — PHP helper to create unique island identifier</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:target</code> — Marks element for partial updates (performance optimization)</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:loading</code> — Shows content during action processing</li>
+                        </ul>
+                        
+                        <h3 class="text-lg font-semibold mb-3">Advanced Directives</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html">&lt;!-- Multiple islands on same page --&gt;
+&lt;div &lt;?= fw_id('counter-1') ?&gt;&gt;
+    &lt;button fw:click="increment"&gt;+1&lt;/button&gt;
+    &lt;div fw:target&gt;Count: &lt;?= $count ?&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div &lt;?= fw_id('search-box') ?&gt;&gt;
+    &lt;input fw:model.debounce="query" placeholder="Search..."&gt;
+    &lt;div fw:loading&gt;Searching...&lt;/div&gt;
+    &lt;div fw:target&gt;&lt;?= $results ?&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
 
                         <h3 class="text-lg font-semibold mb-3">Example HTML</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
@@ -488,24 +654,82 @@ public string $email = '';</code></pre>
                         </div>
                     </section>
 
+                    <!-- ForgeWire Architecture -->
+                    <section id="architecture-features" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">ForgeWire Architecture & Unique Features</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire is fundamentally different from other reactive frameworks. It's not Livewire - it's a unique system built specifically for Forge's architecture.
+                        </p>
+                        
+                        <h3 class="text-lg font-semibold mb-3">Core Principles</h3>
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h4 class="font-semibold text-lg mb-3">Standard Controllers</h4>
+                                <p class="text-sm text-gray-600 mb-2">No separate component classes needed - any controller can become reactive</p>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Apply #[Reactive] to any controller</li>
+                                    <li>• Use existing Forge patterns</li>
+                                    <li>• No framework lock-in</li>
+                                </ul>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-6">
+                                <h4 class="font-semibold text-lg mb-3">Island Architecture</h4>
+                                <p class="text-sm text-gray-600 mb-2">Multiple reactive areas per page with independent state</p>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Multiple islands per page</li>
+                                    <li>• Shared state between islands</li>
+                                    <li>• Partial updates with fw:target</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-semibold mb-3">CLI Tools & Generation</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Generate new ForgeWire island
+forgewire:island --type=app --name=interactive-counter --kind=component
+
+# Generate for module
+forgewire:island --type=module --module=ForgeEvents --name=queue-dashboard --kind=page
+
+# Interactive wizard
+forgewire:island</code></pre>
+                        </div>
+                        
+                        <h3 class="text-lg font-semibold mb-3">ReactiveControllerHelper Trait</h3>
+                        <p class="text-gray-600 mb-4">
+                            Use this trait for enhanced reactive functionality:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">use ReactiveControllerHelper;
+
+// Available methods
+public function redirect(string $url, int $delay = 0): void
+public function flash(string $type, string $message): void  
+public function dispatch(string $event, array $data = []): void
+public function isWireRequest(Request $request): bool
+public function isReactive(): bool</code></pre>
+                        </div>
+                    </section>
+
                     <!-- Wire Protocol -->
                     <section id="wire-protocol" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Wire Protocol</h2>
                         <p class="text-gray-600 mb-6">
-                            ForgeWire uses a JSON-based protocol for client-server communication.
+                            ForgeWire uses a JSON-based protocol for client-server communication with advanced features like shared state updates.
                         </p>
 
                         <h3 class="text-lg font-semibold mb-3">Request Format</h3>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-json">{
   "id": "fw-0b4c5e3d9e83",
-  "controller": "App\\Components\\Wire\\Counter",
-  "action": "increment",
+  "controller": "App\\Controllers\\ForgeWireExamplesController",
+  "action": "incrementShared",
   "args": [],
   "dirty": {},
+  "depends": ["counter"],
   "checksum": "632b5d500042bb4361657ea9f2991132d8a18208d0e38bf6a801f127f48f4e8c",
   "fingerprint": {
-    "path": "/"
+    "path": "/forge-wire-examples"
   }
 }</code></pre>
                         </div>
@@ -516,23 +740,27 @@ public string $email = '';</code></pre>
   "html": "&lt;div fw:id=\"fw-0b4c5e3d9e83\"...&gt;...&lt;/div&gt;",
   "state": {},
   "checksum": "632b5d500042bb4361657ea9f2991132d8a18208d0e38bf6a801f127f48f4e8c",
-  "events": [],
+  "events": [{"name": "counterUpdated", "data": {"value": 5}}],
   "redirect": null,
-  "flash": []
+  "flash": [{"type": "success", "message": "Counter updated"}],
+  "updates": [
+    {
+      "id": "fw-secondary-island",
+      "html": "&lt;div fw:id=\"fw-secondary-island\"&gt;Updated content&lt;/div&gt;",
+      "state": {},
+      "checksum": "abc123..."
+    }
+  ]
 }</code></pre>
                         </div>
 
-                        <h3 class="text-lg font-semibold mb-3">Checksum Calculation</h3>
-                        <p class="text-gray-600 mb-4">
-                            Checksum is HMAC-SHA256 of canonicalized JSON containing:
-                        </p>
+                        <h3 class="text-lg font-semibold mb-3">Advanced Protocol Features</h3>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Component class name</li>
-                            <li>Current path</li>
-                            <li>Session ID</li>
-                            <li>State bag (scalar values)</li>
-                            <li>Models bag (references)</li>
-                            <li>DTOs bag (arrays)</li>
+                            <li><strong>Shared State Updates:</strong> Multiple islands can update simultaneously when shared state changes</li>
+                            <li><strong>Partial Updates:</strong> <code class="bg-gray-100 px-2 py-1 rounded">updates</code> array contains HTML for affected islands</li>
+                            <li><strong>Event Dispatching:</strong> Client-side events can be triggered from server</li>
+                            <li><strong>Flash Messages:</strong> Session-based flash messages for user feedback</li>
+                            <li><strong>Redirect Support:</strong> Server-initiated redirects with optional delays</li>
                         </ul>
                     </section>
 
@@ -540,8 +768,46 @@ public string $email = '';</code></pre>
                     <section id="performance" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Performance Optimizations</h2>
                         <p class="text-gray-600 mb-6">
-                            ForgeWire includes several performance optimizations.
+                            ForgeWire includes several performance optimizations for production use.
                         </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Targeted Updates with fw:target</h3>
+                        <p class="text-gray-600 mb-4">
+                            Instead of re-rendering entire islands, use <code class="bg-gray-100 px-2 py-1 rounded">fw:target</code> for partial updates:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Only the marked element gets updated on server response</li>
+                            <li>Dramatically reduces HTML payload size</li>
+                            <li>Perfect for counters, status messages, progress indicators</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html">&lt;div &lt;?= fw_id('counter') ?&gt;&gt;
+    &lt;button fw:click="increment"&gt;+&lt;/button&gt;
+    &lt;!-- Only this div updates --&gt;
+    &lt;div fw:target&gt;Count: &lt;?= $count ?&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Loading States</h3>
+                        <p class="text-gray-600 mb-4">
+                            Show loading indicators during long-running actions using <code class="bg-gray-100 px-2 py-1 rounded">fw:loading</code>:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li>Automatically shows during action execution</li>
+                            <li>Hidden when action completes</li>
+                            <li>Provides immediate user feedback</li>
+                        </ul>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-html">&lt;div &lt;?= fw_id('uploader') ?&gt;&gt;
+    &lt;button fw:click="upload"&gt;Upload File&lt;/button&gt;
+    
+    &lt;div fw:loading class="loading-spinner"&gt;
+        Processing... Please wait
+    &lt;/div&gt;
+    
+    &lt;div fw:target&gt;&lt;?= $status ?&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
 
                         <h3 class="text-lg font-semibold mb-3">Recipe Caching</h3>
                         <p class="text-gray-600 mb-4">
@@ -552,17 +818,6 @@ public string $email = '';</code></pre>
                             <li>Recipe defines hydration/dehydration strategy</li>
                             <li>Cached in static array: <code
                                     class="bg-gray-100 px-2 py-1 rounded">self::$recipe[$class]</code></li>
-                        </ul>
-
-                        <h3 class="text-lg font-semibold mb-3">Lazy Model Loading</h3>
-                        <p class="text-gray-600 mb-4">
-                            Models are stored as references, not fully serialized:
-                        </p>
-                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Stored as: <code
-                                    class="bg-gray-100 px-2 py-1 rounded">[RepositoryClass, idField, id]</code></li>
-                            <li>Loaded from database only when needed</li>
-                            <li>More efficient than full serialization</li>
                         </ul>
 
                         <h3 class="text-lg font-semibold mb-3">IntersectionObserver Polling</h3>
@@ -647,25 +902,246 @@ public string $email = '';</code></pre>
                     <section id="examples" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Usage Examples</h2>
                         <p class="text-gray-600 mb-6">
-                            Complete examples of ForgeWire components.
+                            Complete examples of ForgeWire components based on real implementations.
                         </p>
 
-                        <h3 class="text-lg font-semibold mb-3">Simple Counter</h3>
+                        <h3 class="text-lg font-semibold mb-3">Comprehensive Example Controller</h3>
+                        <p class="text-gray-600 mb-4">Based on ForgeWireExamplesController - shows all major features:</p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">#[Reactive]
-final class CounterController
+                            <pre><code class="language-php">#[Middleware("web")]
+#[Reactive]
+final class ForgeWireExamplesController
 {
     use ControllerHelper;
 
     #[State]
-    public int $count = 0;
+    public int $pollCount = 0;
 
-    #[Route("/counter")]
+    #[State]
+    public int $counter = 0;
+
+    #[State(shared: true)]
+    public int $sharedCounter = 0;
+
+    #[State]
+    public string $immediateValue = '';
+
+    #[State]
+    public string $lazyValue = '';
+
+    #[State]
+    public string $debounceValue = '';
+
+    #[State]
+    #[Validate('required|min:3', messages: ['required' => 'Name is required', 'min' => 'Name must be at least :value characters'])]
+    public string $formName = '';
+
+    #[State]
+    #[Validate('required|email', messages: ['required' => 'Email is required', 'email' => 'Please enter a valid email address'])]
+    public string $formEmail = '';
+
+    #[Action]
+    public function onPoll(): void
+    {
+        $this->pollCount++;
+    }
+
+    #[Action]
+    public function increment(): void
+    {
+        $this->counter += $this->step;
+    }
+
+    #[Action(submit: true)]
+    public function saveForm(): void
+    {
+        $this->formMessage = 'Form saved successfully at ' . date('H:i:s');
+    }
+
+    #[Action]
+    public function handleEnter(): void
+    {
+        $this->lastKey = 'Enter pressed at ' . date('H:i:s');
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Complex Reactive Controller - Queue Management</h3>
+                        <p class="text-gray-600 mb-4">Real-world example from ForgeEvents module showing advanced patterns:</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">#[Reactive]
+#[Middleware('web')]
+#[Middleware('auth')]
+final class QueueController
+{
+    use ControllerHelper;
+    use ReactiveControllerHelper;
+
+    #[State(shared: true)]
+    public array $jobs = [];
+
+    #[State]
+    public string $statusFilter = '';
+
+    #[State]
+    public string $queueFilter = '';
+
+    #[State]
+    public string $search = '';
+
+    #[State]
+    public int $currentPage = 1;
+
+    #[State]
+    public array $selectedJobs = [];
+
+    #[State]
+    public bool $showJobModal = false;
+
+    public function __construct(
+        private readonly QueueHubService $queueService
+    ) {}
+
+    #[Route("/hub/queues")]
     public function index(): Response
     {
-        return $this->view('pages/counter', [
+        $this->loadJobs();
+        $this->loadStats();
+
+        return $this->view("pages/hub/queues", [
+            'jobs' => $this->jobs,
+            'selectedJobs' => $this->selectedJobs,
+            'filters' => [
+                'status' => $this->statusFilter,
+                'queue' => $this->queueFilter,
+                'search' => $this->search,
+            ],
+        ]);
+    }
+
+    #[Action]
+    public function filterJobs(string $status, string $queue): void
+    {
+        $this->statusFilter = $status;
+        $this->queueFilter = $queue;
+        $this->currentPage = 1;
+        $this->loadJobs();
+    }
+
+    #[Action]
+    public function selectJob(int $jobId): void
+    {
+        $this->selectedJobs[] = $jobId;
+    }
+
+    #[Action]
+    public function bulkDelete(): void
+    {
+        foreach ($this->selectedJobs as $jobId) {
+            $this->queueService->deleteJob($jobId);
+        }
+        $this->selectedJobs = [];
+        $this->loadJobs();
+    }
+
+    private function loadJobs(): void
+    {
+        $filters = [
+            'status' => $this->statusFilter,
+            'queue' => $this->queueFilter,
+            'search' => $this->search,
+        ];
+
+        $this->paginator = $this->queueService->getJobs(
+            $filters,
+            $this->sortColumn,
+            $this->sortDirection,
+            $this->currentPage,
+            $this->perPage
+        );
+
+        $this->jobs = $this->paginator->items();
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Multi-Island View Architecture</h3>
+                        <p class="text-gray-600 mb-4">Example showing multiple islands on one page with shared state:</p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;!-- Shared State Demo --&gt;
+&lt;section class="p-6"&gt;
+    &lt;p&gt;These islands share counter state using #[State(shared: true)]&lt;/p&gt;
+    
+    &lt;div class="grid grid-cols-2 gap-4"&gt;
+        &lt;!-- Island 1 --&gt;
+        &lt;div &lt;?= fw_id('shared-counter-1') ?&gt; class="p-6 bg-gray-50 rounded-lg"&gt;
+            &lt;h3&gt;Island 1&lt;/h3&gt;
+            &lt;div class="flex gap-2 mb-4"&gt;
+                &lt;button fw:click="incrementShared"&gt;+&lt;/button&gt;
+                &lt;button fw:click="decrementShared"&gt;-&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div fw:target class="text-center"&gt;
+                &lt;p&gt;Shared Counter&lt;/p&gt;
+                &lt;p class="text-3xl font-bold"&gt;&lt;?= $sharedCounter ?&gt;&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Island 2 --&gt;
+        &lt;div &lt;?= fw_id('shared-counter-2') ?&gt; class="p-6 bg-gray-50 rounded-lg"&gt;
+            &lt;h3&gt;Island 2&lt;/h3&gt;
+            &lt;div class="flex gap-2 mb-4"&gt;
+                &lt;button fw:click="incrementShared"&gt;+&lt;/button&gt;
+                &lt;button fw:click="decrementShared"&gt;-&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div fw:target class="text-center"&gt;
+                &lt;p&gt;Shared Counter&lt;/p&gt;
+                &lt;p class="text-3xl font-bold"&gt;&lt;?= $sharedCounter ?&gt;&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- CLI Commands -->
+                    <section id="cli-commands" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">CLI Commands & Tools</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire includes powerful CLI tools for rapid development.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3">Generate Islands</h3>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Interactive wizard
+forgewire:island
+
+# Direct generation
+forgewire:island --type=app --name=interactive-counter --kind=component
+forgewire:island --type=app --name=admin/dashboard --kind=page
+forgewire:island --type=module --module=ForgeEvents --name=queue-stats --kind=component</code></pre>
+                        </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Generated Structure</h3>
+                        <p class="text-gray-600 mb-4">
+                            The CLI generates complete reactive controller and view templates with proper attributes already in place:
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// Generated Controller
+#[Middleware("web")]
+#[Reactive]
+final class InteractiveCounterController
+{
+    use ControllerHelper;
+    use ReactiveControllerHelper;
+
+    #[State]
+    public int $count = 0;
+
+    #[Route("/interactive-counter")]
+    public function index(): Response
+    {
+        return $this->view("pages/interactive-counter", [
             'count' => $this->count,
-            'parity' => $this->count % 2 ? 'odd' : 'even',
         ]);
     }
 
@@ -674,97 +1150,68 @@ final class CounterController
     {
         $this->count++;
     }
-
-    #[Action]
-    public function decrement(): void
-    {
-        $this->count--;
-    }
-
-    #[Computed]
-    public function parity(): string
-    {
-        return $this->count % 2 ? 'odd' : 'even';
-    }
-
-    public function render(): string
-    {
-        return raw($this->view('wire/counter', [
-            'count' => $this->count,
-            'parity' => $this->parity(),
-        ]));
-    }
 }</code></pre>
                         </div>
 
-                        <h3 class="text-lg font-semibold mb-3">Component with Service</h3>
-                        <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">final class ProductSearch extends WireComponent
-{
-    #[State]
-    public string $query = '';
-
-    #[Service(ProductService::class)]
-    public ProductService $products;
-
-    #[Action]
-    public function input(): void
-    {
-        // Called when query changes
-        $results = $this->products->list($this->query);
-    }
-}</code></pre>
-                        </div>
-
-                        <h3 class="text-lg font-semibold mb-3">Component with DTO</h3>
-                        <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">final class SignupWizard extends WireComponent
-{
-    #[DTO(SignupDTO::class)]
-    public SignupDTO $form;
-
-    #[Service(SignupService::class)]
-    public SignupService $signup;
-
-    #[Action]
-    public function submit(): void
-    {
-        $id = $this->signup->register($this->form);
-    }
-}</code></pre>
-                        </div>
+                        <h3 class="text-lg font-semibold mb-3">Setup Guide</h3>
+                        <p class="text-gray-600 mb-4">
+                            The CLI provides comprehensive setup guidance:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Reactive Setup:</strong> How to add #[Reactive] and why it's required</li>
+                            <li><strong>Action Exposure:</strong> How to use #[Action] to expose methods to browser</li>
+                            <li><strong>Data Binding:</strong> How to use #[State] for two-way binding</li>
+                            <li><strong>Visibility Rules:</strong> Understanding public vs private properties</li>
+                        </ul>
                     </section>
 
+                    <!-- Best Practices -->
                     <section id="best-practices" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Some Suggestions</h2>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices & Patterns</h2>
                         <p class="text-gray-600 mb-6">
-                            Recommendations for using ForgeWire effectively.
+                            Production-ready patterns and recommendations for ForgeWire development.
                         </p>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3 text-green-600">Things That Often Help</h3>
+                                <h3 class="font-semibold text-lg mb-3 text-green-600">Recommended Patterns</h3>
                                 <ul class="space-y-2 text-sm text-gray-600">
                                     <li>• Use #[State] for simple scalar/array values</li>
-                                    <li>• Keep components focused and single-purpose</li>
-                                    <li>• Use computed properties for derived values</li>
+                                    <li>• Keep islands focused and single-purpose</li>
+                                    <li>• Use #[Computed] for derived values</li>
                                     <li>• Leverage fw:model.debounce for search inputs</li>
-                                    <li>• Use fw:poll sparingly (only when needed)</li>
+                                    <li>• Use fw:target for performance optimization</li>
+                                    <li>• Always use fw:depends with shared state</li>
+                                    <li>• Use ReactiveControllerHelper trait</li>
+                                    <li>• Validate all user input with #[Validate]</li>
+                                    <li>• Use CLI generators for consistent structure</li>
                                 </ul>
                             </div>
 
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3 text-orange-600">Things to Consider</h3>
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">Common Pitfalls</h3>
                                 <ul class="space-y-2 text-sm text-gray-600">
+                                    <li>• Don't forget fw:depends for shared state</li>
                                     <li>• Don't expose sensitive data without attributes</li>
                                     <li>• Don't use complex objects with #[State]</li>
                                     <li>• Don't forget #[Action] on callable methods</li>
                                     <li>• Don't poll too frequently (performance impact)</li>
                                     <li>• Don't store large amounts of state in session</li>
+                                    <li>• Don't mix reactive and non-reactive controllers</li>
                                     <li>• Don't skip validation for user input</li>
+                                    <li>• Don't ignore security implications of shared state</li>
                                 </ul>
                             </div>
                         </div>
+
+                        <h3 class="text-lg font-semibold mb-3">Performance Optimization</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Targeted Updates:</strong> Use fw:target to update only changed elements</li>
+                            <li><strong>Lazy Loading:</strong> Use fw:model.lazy for non-critical inputs</li>
+                            <li><strong>Debouncing:</strong> Use fw:model.debounce for search/filter inputs</li>
+                            <li><strong>Polling Wisely:</strong> Use intersection observer for visibility-based polling</li>
+                            <li><strong>Shared State:</strong> Use fw:depends to avoid unnecessary re-renders</li>
+                        </ul>
                     </section>
                 </div>
             </div>
