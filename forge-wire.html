@@ -106,15 +106,9 @@
                         <a href="#state-management"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">State
                             Management</a>
-                        <a href="#complex-data"
-                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Complex
-                            Data Types</a>
-                        <a href="#actions"
-                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Actions
-                            & Methods</a>
-                        <a href="#computed"
-                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Computed
-                            Properties</a>
+                         <a href="#actions"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Actions
+                             & Methods</a>
                          <a href="#validation"
                              class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Validation</a>
                          <a href="#frontend"
@@ -137,15 +131,14 @@
                             Protocol</a>
                         <a href="#performance"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Performance</a>
-                        <a href="#vs-livewire"
-                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Differences
-                            from Livewire</a>
+                         <a href="#design-philosophy"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Design
+                             Philosophy</a>
                         <a href="#examples"
                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Usage
                             Examples</a>
-                        <a href="#best-practices"
-                            class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Best
-                            Practices</a>
+                         <a href="#suggestions"
+                             class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Suggestions</a>
                     </nav>
                 </div>
             </div>
@@ -261,7 +254,7 @@ final class CounterController
 
                         <h3 class="text-lg font-semibold mb-3">2. The View with Islands</h3>
                         <p class="text-gray-600 mb-4">
-                            Use the <code class="bg-gray-100 px-2 py-1 rounded">fw_id()</code> helper to create island boundaries. Each island can have its own reactive area, and you can have multiple islands per page.
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">fw_id()</code> helper to create reactive islands. <strong>Without this helper, there is no reactivity - the island boundary is required for ForgeWire to work.</strong> You can have multiple islands per page, each with its own reactive state.
                         </p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
                             <pre><code class="language-php">&lt;!-- resources/views/pages/counter.php --&gt;
@@ -280,9 +273,10 @@ final class CounterController
 
                         <h3 class="text-lg font-semibold mb-3">3. Island Architecture Benefits</h3>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><strong>Multiple Islands:</strong> Create independent reactive areas on the same page</li>
+                            <li><strong>Required Boundaries:</strong> <code class="bg-gray-100 px-2 py-1 rounded">fw_id()</code> creates the reactive boundary - no reactivity without it</li>
+                            <li><strong>Multiple Islands:</strong> Create independent reactive areas on same page</li>
                             <li><strong>Targeted Updates:</strong> Use <code class="bg-gray-100 px-2 py-1 rounded">fw:target</code> for efficient partial updates</li>
-                            <li><strong>Shared State:</strong> Islands can share state using <code class="bg-gray-100 px-2 py-1 rounded">#[State(shared: true)]</code></li>
+                            <li><strong>Shared State:</strong> Islands can share state using <code class="bg-gray-100 px-2 py-1 rounded">#[State(shared: true)]</code> with <code class="bg-gray-100 px-2 py-1 rounded">fw:depends</code></li>
                             <li><strong>Independent Polling:</strong> Each island can have its own polling interval</li>
                         </ul>
                     </section>
@@ -290,93 +284,87 @@ final class CounterController
                     <!-- Attributes System -->
                     <section id="attributes" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">Attributes System</h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeWire attributes function as <strong>permissions and behavior modifiers</strong>, not data exposure. No data is automatically exposed to views - you explicitly pass data in your controller methods.
+                        </p>
 
                         <h3 class="text-lg font-semibold mb-3">#[Reactive]</h3>
                         <p class="text-gray-600 mb-4">
-                            Applied to the class. Enables ForgeWire to monitor this controller. Controllers without this
-                            attribute are ignored by the reactive engine for security.
+                            Applied to the class. <strong>Permission gate</strong> - enables ForgeWire to monitor this controller. Controllers without this attribute are completely ignored by the reactive engine for security.
+                        </p>
+                        
+                        <h3 class="text-lg font-semibold mb-3">#[State(shared: bool)]</h3>
+                        <p class="text-gray-600 mb-4">
+                            Applied to properties. <strong>Permission to persist</strong> - marks properties that should be tracked between requests. The <code class="bg-gray-100 px-2 py-1 rounded">shared: true</code> option allows multiple islands to access the same state value.
                         </p>
                         
                         <h3 class="text-lg font-semibold mb-3">#[Action(submit: bool)]</h3>
                         <p class="text-gray-600 mb-4">
-                            Applied to methods. Marks the method as callable from browser. The optional <code class="bg-gray-100 px-2 py-1 rounded">submit</code> parameter indicates this action handles form submissions.
+                            Applied to methods. <strong>Permission to call</strong> - marks the method as callable from browser. Without this attribute, methods cannot be invoked from frontend. The optional <code class="bg-gray-100 px-2 py-1 rounded">submit</code> parameter indicates this action handles form submissions.
                         </p>
                         
-                        <h3 class="text-lg font-semibold mb-3">#[Computed]</h3>
+                        <h3 class="text-lg font-semibold mb-3">#[Validate]</h3>
                         <p class="text-gray-600 mb-4">
-                            Applied to methods. Marks method as computed property that gets cached between requests. Useful for derived values that don't change frequently.
+                            Applied to properties. <strong>Validation rules</strong> - defines validation rules and custom error messages for properties that receive user input.
                         </p>
+                        
+
                     </section>
 
                     <section id="state-management" class="section-anchor mb-12">
                         <h2 class="text-2xl font-bold text-gray-900 mb-4">State Management</h2>
-                        <h3 class="text-lg font-semibold mb-3">#[State]</h3>
+                        <h3 class="text-lg font-semibold mb-3">#[State(shared: bool)]</h3>
                         <p class="text-gray-600 mb-4">
-                            Applied to public properties. Tells ForgeWire to persist this value between requests in
-                            session. Supports scalars (int, string, bool) and arrays.
+                            Applied to public properties. <strong>Permission to persist</strong> - marks properties that should be tracked between requests. Supports scalars (int, string, bool), arrays, and objects. The <code class="bg-gray-100 px-2 py-1 rounded">shared: true</code> option allows multiple islands to access the same state value.
                         </p>
                         
                         <h3 class="text-lg font-semibold mb-3">Shared State Across Islands</h3>
                         <p class="text-gray-600 mb-4">
-                            Use <code class="bg-gray-100 px-2 py-1 rounded">#[State(shared: true)]</code> to share state across multiple islands on the same page. Islands must opt-in to shared dependencies using <code class="bg-gray-100 px-2 py-1 rounded">fw:depends</code> or be wrapped in <code class="bg-gray-100 px-2 py-1 rounded">fw:shared</code>.
+                            Use <code class="bg-gray-100 px-2 py-1 rounded">#[State(shared: true)]</code> to share state across multiple islands on the same page. Islands must opt-in to shared dependencies using <code class="bg-gray-100 px-2 py-1 rounded">fw:depends</code> to receive updates when shared state changes.
                         </p>
-                        
-                        <h4 class="text-md font-semibold mb-3 mt-4">Opt-in Methods for Shared State</h4>
                         
                         <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
                             <p class="text-sm text-yellow-800 mb-2">
-                                <strong>⚠️ Important:</strong> Islands <strong>must</strong> opt-in to shared state dependencies. Without fw:depends or fw:shared, islands will not receive shared state updates even if marked with #[State(shared: true)].
+                                <strong>⚠️ Important:</strong> Islands <strong>must</strong> opt-in to shared state dependencies using <code class="bg-gray-100 px-2 py-1 rounded">fw:depends</code>. Without this directive, islands will not receive shared state updates even if marked with #[State(shared: true)].
                             </p>
                         </div>
                         
-                        <h5 class="text-sm font-semibold mb-2">Method 1: Individual Dependencies with fw:depends</h5>
+                        <h4 class="text-md font-semibold mb-3 mt-4">Shared State Implementation</h4>
                         <div class="code-block p-6 text-white rounded-lg mb-4">
                             <pre><code class="language-php">// Controller
 #[State(shared: true)]
-public int $counter = 0;</code></pre>
-                        </div>
-                        <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-html">&lt;!-- View - Island depends on specific shared state --&gt;
-&lt;div fw:shared&gt;
-    &lt;div &lt;?= fw_id('todo-app') ?&gt; fw:depends="counter"&gt;
-        &lt;h1&gt;Reactive Todo List counter: &lt;?= $counter ?&gt;&lt;/h1&gt;
-        &lt;!-- Content that uses $counter --&gt;
-    &lt;/div&gt;
-    
-    &lt;div &lt;?= fw_id('counter-app') ?&gt; fw:depends="counter"&gt;
-        &lt;h1&gt;Counter&lt;/h1&gt;
-        &lt;button fw:click="increment"&gt;Increment&lt;/button&gt;
-        &lt;div&gt;&lt;?= $counter ?&gt;&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-                        </div>
-                        
-                        <h5 class="text-sm font-semibold mb-2">Method 2: Shared Group with fw:shared</h5>
-                        <div class="code-block p-6 text-white rounded-lg mb-4">
-                            <pre><code class="language-php">// Controller
+public int $counter = 0;
+
 #[State(shared: true)]
 public array $jobs = [];</code></pre>
                         </div>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-html">&lt;!-- View - All islands in fw:shared container share state --&gt;
-&lt;div fw:shared&gt;
-    &lt;!-- Stats island --&gt;
-    &lt;div &lt;?= fw_id('queue-stats') ?&gt; fw:depends="jobs"&gt;
-        &lt;h2&gt;Statistics&lt;/h2&gt;
-        &lt;p fw:target&gt;Total Jobs: &lt;?= count($jobs) ?&gt;&lt;/p&gt;
-    &lt;/div&gt;
-    
-    &lt;!-- Table island --&gt;
-    &lt;div &lt;?= fw_id('queue-table') ?&gt;&gt;
-        &lt;!-- Will automatically receive jobs updates --&gt;
-        &lt;table&gt;
-            &lt;?php foreach ($jobs as $job): ?&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;?= $job['id'] ?&gt;&lt;/td&gt;&lt;/tr&gt;
-            &lt;?php endforeach; ?&gt;
-        &lt;/table&gt;
-    &lt;/div&gt;
+                            <pre><code class="language-html">&lt;!-- View - Islands opt-in to specific shared state properties --&gt;
+&lt;div &lt;?= fw_id('todo-app') ?&gt; fw:depends="counter"&gt;
+    &lt;h1&gt;Reactive Todo List counter: &lt;?= $counter ?&gt;&lt;/h1&gt;
+    &lt;!-- Content that uses $counter --&gt;
+&lt;/div&gt;
+
+&lt;div &lt;?= fw_id('counter-app') ?&gt; fw:depends="counter"&gt;
+    &lt;h1&gt;Counter&lt;/h1&gt;
+    &lt;button fw:click="increment"&gt;Increment&lt;/button&gt;
+    &lt;div fw:target&gt;&lt;?= $counter ?&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Multiple dependencies separated by comma --&gt;
+&lt;div &lt;?= fw_id('queue-stats') ?&gt; fw:depends="jobs,stats"&gt;
+    &lt;h2&gt;Statistics&lt;/h2&gt;
+    &lt;p fw:target&gt;Total Jobs: &lt;?= count($jobs) ?&gt;&lt;/p&gt;
 &lt;/div&gt;</code></pre>
                         </div>
+                        
+                        <h4 class="text-md font-semibold mb-3">How Shared State Works</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
+                            <li><strong>Mark Shared:</strong> Add <code class="bg-gray-100 px-2 py-1 rounded">#[State(shared: true)</code> to properties that should be shared</li>
+                            <li><strong>Opt-In Dependencies:</strong> Islands use <code class="bg-gray-100 px-2 py-1 rounded">fw:depends="prop1,prop2"</code> to specify which shared properties they need</li>
+                            <li><strong>Automatic Updates:</strong> When shared state changes, only islands that depend on that property are re-rendered</li>
+                            <li><strong>Multiple Dependencies:</strong> Islands can depend on multiple shared properties separated by commas</li>
+                        </ul>
                         
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                             <p class="text-sm text-blue-800">
@@ -390,21 +378,7 @@ public array $jobs = [];</code></pre>
                         </div>
                     </section>
 
-                    <section id="complex-data" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Complex Data Types</h2>
-                        <h3 class="text-lg font-semibold mb-3">#[Model] & #[DTO]</h3>
-                        <p class="text-gray-600 mb-4">
-                            Use these for complex data types. ForgeWire will handle the serialization/unserialization
-                            automatically.
-                        </p>
-                        <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">#[Model(User::class)]
-public ?User $user;
 
-#[DTO(SearchCriteria::class)]
-public SearchCriteria $criteria;</code></pre>
-                        </div>
-                    </section>
 
                     <!-- Frontend Directives -->
                     <section id="directives" class="section-anchor mb-12">
@@ -497,29 +471,7 @@ public function input(...$keys): void
                         </div>
                     </section>
 
-                    <!-- Computed Properties -->
-                    <section id="computed" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Computed Properties</h2>
-                        <p class="text-gray-600 mb-6">
-                            Use #[Computed] for derived values that are cached.
-                        </p>
 
-                        <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">#[Computed]
-public function parity(): string
-{
-    return $this->count % 2 ? 'odd' : 'even';
-}
-
-public function render(): string
-{
-    return raw($this->view('wire/counter', [
-        'count' => $this->count,
-        'parity' => $this->parity(), // Cached
-    ]));
-}</code></pre>
-                        </div>
-                    </section>
 
                     <!-- Validation -->
                     <section id="validation" class="section-anchor mb-12">
@@ -598,10 +550,15 @@ public string $formEmail = '';</code></pre>
                         
                         <h4 class="text-md font-semibold mb-2">Shared State</h4>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:shared</code> — Container for shared state groups</li>
-                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:depends="prop1,prop2"</code> — Opt-in to shared state dependencies</li>
+                            <li><code class="bg-gray-100 px-2 py-1 rounded">fw:depends="prop1,prop2"</code> — Opt-in to shared state dependencies (comma-separated)</li>
                             <li><code class="bg-gray-100 px-2 py-1 rounded">fw:validation-error="fieldName"</code> — Display validation errors</li>
                         </ul>
+                        
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                            <p class="text-sm text-red-800">
+                                <strong>⚠️ Deprecated:</strong> <code class="bg-gray-100 px-2 py-1 rounded">fw:shared</code> is deprecated and should not be used. Use <code class="bg-gray-100 px-2 py-1 rounded">fw:depends</code> to opt-in to shared state dependencies.
+                            </p>
+                        </div>
                         
                         <h4 class="text-md font-semibold mb-2">Arguments & Parameters</h4>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
@@ -656,29 +613,31 @@ public string $formEmail = '';</code></pre>
 
                     <!-- ForgeWire Architecture -->
                     <section id="architecture-features" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">ForgeWire Architecture & Unique Features</h2>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">ForgeWire Architecture & Reactive Protocol</h2>
                         <p class="text-gray-600 mb-6">
-                            ForgeWire is fundamentally different from other reactive frameworks. It's not Livewire - it's a unique system built specifically for Forge's architecture.
+                            ForgeWire implements a <strong>reactive protocol for PHP</strong> that enables server-side interactivity without WebSockets or complex client-side state management. It's built specifically for Forge's architecture and follows PHP conventions.
                         </p>
                         
                         <h3 class="text-lg font-semibold mb-3">Core Principles</h3>
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h4 class="font-semibold text-lg mb-3">Standard Controllers</h4>
-                                <p class="text-sm text-gray-600 mb-2">No separate component classes needed - any controller can become reactive</p>
+                                <h4 class="font-semibold text-lg mb-3">Permission-Based Attributes</h4>
+                                <p class="text-sm text-gray-600 mb-2">Attributes work as permissions, not data exposure</p>
                                 <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Apply #[Reactive] to any controller</li>
-                                    <li>• Use existing Forge patterns</li>
-                                    <li>• No framework lock-in</li>
+                                    <li>• #[Reactive] = Permission to monitor</li>
+                                    <li>• #[Action] = Permission to call</li>
+                                    <li>• #[State] = Permission to persist</li>
+                                    <li>• No automatic data exposure</li>
                                 </ul>
                             </div>
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h4 class="font-semibold text-lg mb-3">Island Architecture</h4>
-                                <p class="text-sm text-gray-600 mb-2">Multiple reactive areas per page with independent state</p>
+                                <h4 class="font-semibold text-lg mb-3">Island Boundaries Required</h4>
+                                <p class="text-sm text-gray-600 mb-2">Reactivity only works with explicit island boundaries</p>
                                 <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• fw_id() creates reactive boundary</li>
+                                    <li>• No reactivity without fw_id()</li>
                                     <li>• Multiple islands per page</li>
-                                    <li>• Shared state between islands</li>
-                                    <li>• Partial updates with fw:target</li>
+                                    <li>• Explicit data passing required</li>
                                 </ul>
                             </div>
                         </div>
@@ -836,64 +795,58 @@ public function isReactive(): bool</code></pre>
                             Input events have lower priority than actions:
                         </p>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li>Actions (priority 2) can cancel input requests (priority 1)</li>
-                            <li>Prevents race conditions</li>
-                            <li>Ensures actions execute first</li>
+                            <li><strong>Permission-Based Attributes:</strong> Attributes work as permissions, not data exposure</li>
+                            <li>• #[Reactive] = Permission to monitor</li>
+                            <li>• #[Action] = Permission to call</li>
+                            <li>• #[State] = Permission to persist</li>
+                            <li>• #[Validate] = Validation rules</li>
+                            <li>• No automatic data exposure</li>
                         </ul>
                     </section>
 
-                    <!-- Differences from Livewire -->
-                    <section id="vs-livewire" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Differences from Livewire</h2>
+                    <!-- Design Philosophy -->
+                    <section id="design-philosophy" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Design Philosophy & Principles</h2>
                         <p class="text-gray-600 mb-6">
-                            ForgeWire takes a different approach than Laravel Livewire in several key areas.
+                            ForgeWire follows PHP conventions and explicit permission patterns for secure, predictable server-side reactivity.
                         </p>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3">Security</h3>
-                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Explicit attributes
-                                    required (#[State], #[Action])</p>
-                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> All public properties
-                                    accessible</p>
-                                <p class="text-xs text-gray-500">ForgeWire is secure by default</p>
+                                <h3 class="font-semibold text-lg mb-3">Security by Default</h3>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li><strong>Explicit Permissions:</strong> Attributes act as permission gates</li>
+                                    <li><strong>No Auto-Exposure:</strong> Nothing is exposed without explicit attributes</li>
+                                    <li><strong>Checksum Protection:</strong> All state transfers are signed and verified</li>
+                                    <li><strong>Action Whitelisting:</strong> Only #[Action] methods can be called</li>
+                                </ul>
                             </div>
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3">Complex Data</h3>
-                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Native DTO/Model
-                                    support</p>
-                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Serialization-based</p>
-                                <p class="text-xs text-gray-500">ForgeWire handles complex objects natively</p>
+                                <h3 class="font-semibold text-lg mb-3">PHP Conventions</h3>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li><strong>Standard Controllers:</strong> No special component classes needed</li>
+                                    <li><strong>Explicit Data Flow:</strong> You control what data reaches views</li>
+                                    <li><strong>Native PHP Types:</strong> Works with PHP 8.3+ type system</li>
+                                    <li><strong>Framework Agnostic:</strong> Built for Forge, follows PHP standards</li>
+                                </ul>
                             </div>
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3">State Storage</h3>
-                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Session-based with
-                                    references</p>
-                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Full serialization</p>
-                                <p class="text-xs text-gray-500">ForgeWire is more efficient</p>
+                                <h3 class="font-semibold text-lg mb-3">Performance Focused</h3>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li><strong>Island Boundaries:</strong> Only re-render what changes</li>
+                                    <li><strong>Targeted Updates:</strong> fw:target for partial updates</li>
+                                    <li><strong>Recipe Caching:</strong> No repeated reflection overhead</li>
+                                    <li><strong>Intersection Observer:</strong> Smart polling when visible</li>
+                                </ul>
                             </div>
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3">Performance</h3>
-                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Recipe caching, lazy
-                                    loading</p>
-                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Reflection on every
-                                    request</p>
-                                <p class="text-xs text-gray-500">ForgeWire caches component recipes</p>
-                            </div>
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3">Protocol</h3>
-                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Custom JSON protocol
-                                </p>
-                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Different format</p>
-                                <p class="text-xs text-gray-500">Optimized for Forge's architecture</p>
-                            </div>
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3">Checksum</h3>
-                                <p class="text-sm text-gray-600 mb-2"><strong>ForgeWire:</strong> Built-in tamper
-                                    detection</p>
-                                <p class="text-sm text-gray-600 mb-2"><strong>Livewire:</strong> Different verification
-                                </p>
-                                <p class="text-xs text-gray-500">ForgeWire verifies every request</p>
+                                <h3 class="font-semibold text-lg mb-3">Developer Experience</h3>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li><strong>CLI Generation:</strong> forgewire:island command for scaffolding</li>
+                                    <li><strong>Clear Errors:</strong> Validation with custom messages</li>
+                                    <li><strong>Reactive Helper:</strong> Built-in methods for common patterns</li>
+                                    <li><strong>Debug Support:</strong> Comprehensive debugging and error handling</li>
+                                </ul>
                             </div>
                         </div>
                     </section>
@@ -1065,41 +1018,41 @@ final class QueueController
 }</code></pre>
                         </div>
 
-                        <h3 class="text-lg font-semibold mb-3">Multi-Island View Architecture</h3>
-                        <p class="text-gray-600 mb-4">Example showing multiple islands on one page with shared state:</p>
+                        <h3 class="text-lg font-semibold mb-3">Standard PHP Controller</h3>
+                        <p class="text-gray-600 mb-4">ForgeWire works with standard PHP controllers - just add attributes and islands:</p>
                         <div class="code-block p-6 text-white rounded-lg mb-6">
-                            <pre><code class="language-php">&lt;!-- Shared State Demo --&gt;
-&lt;section class="p-6"&gt;
-    &lt;p&gt;These islands share counter state using #[State(shared: true)]&lt;/p&gt;
-    
-    &lt;div class="grid grid-cols-2 gap-4"&gt;
-        &lt;!-- Island 1 --&gt;
-        &lt;div &lt;?= fw_id('shared-counter-1') ?&gt; class="p-6 bg-gray-50 rounded-lg"&gt;
-            &lt;h3&gt;Island 1&lt;/h3&gt;
-            &lt;div class="flex gap-2 mb-4"&gt;
-                &lt;button fw:click="incrementShared"&gt;+&lt;/button&gt;
-                &lt;button fw:click="decrementShared"&gt;-&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div fw:target class="text-center"&gt;
-                &lt;p&gt;Shared Counter&lt;/p&gt;
-                &lt;p class="text-3xl font-bold"&gt;&lt;?= $sharedCounter ?&gt;&lt;/p&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
+                            <pre><code class="language-php">#[Middleware("web")]
+#[Reactive]
+final class CounterController
+{
+    use ControllerHelper;
 
-        &lt;!-- Island 2 --&gt;
-        &lt;div &lt;?= fw_id('shared-counter-2') ?&gt; class="p-6 bg-gray-50 rounded-lg"&gt;
-            &lt;h3&gt;Island 2&lt;/h3&gt;
-            &lt;div class="flex gap-2 mb-4"&gt;
-                &lt;button fw:click="incrementShared"&gt;+&lt;/button&gt;
-                &lt;button fw:click="decrementShared"&gt;-&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div fw:target class="text-center"&gt;
-                &lt;p&gt;Shared Counter&lt;/p&gt;
-                &lt;p class="text-3xl font-bold"&gt;&lt;?= $sharedCounter ?&gt;&lt;/p&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;</code></pre>
+    #[State]
+    public int $count = 0;
+
+    #[Route("/counter")]
+    public function index(): Response
+    {
+        return $this->view("pages/counter", [
+            'count' => $this->count,
+            // Normal PHP works perfectly
+            'doubled' => $this->count * 2,
+            'status' => $this->getStatus(),
+        ]);
+    }
+
+    #[Action]
+    public function increment(): void
+    {
+        $this->count++;
+    }
+
+    // Normal PHP method - no special attributes needed
+    private function getStatus(): string
+    {
+        return $this->count > 10 ? 'high' : 'normal';
+    }
+}</code></pre>
                         </div>
                     </section>
 
@@ -1140,8 +1093,12 @@ final class InteractiveCounterController
     #[Route("/interactive-counter")]
     public function index(): Response
     {
+        // Pass data to view explicitly - just like normal PHP
         return $this->view("pages/interactive-counter", [
             'count' => $this->count,
+            // Any computed values work normally
+            'doubled' => $this->count * 2,
+            'items' => $this->getItems(),
         ]);
     }
 
@@ -1149,6 +1106,12 @@ final class InteractiveCounterController
     public function increment(): void
     {
         $this->count++;
+    }
+
+    // Normal PHP methods work normally
+    private function getItems(): array
+    {
+        return ['item1', 'item2'];
     }
 }</code></pre>
                         </div>
@@ -1160,57 +1123,57 @@ final class InteractiveCounterController
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
                             <li><strong>Reactive Setup:</strong> How to add #[Reactive] and why it's required</li>
                             <li><strong>Action Exposure:</strong> How to use #[Action] to expose methods to browser</li>
-                            <li><strong>Data Binding:</strong> How to use #[State] for two-way binding</li>
-                            <li><strong>Visibility Rules:</strong> Understanding public vs private properties</li>
+                            <li><strong>State Management:</strong> How to use #[State] for property persistence</li>
+                            <li><strong>Normal PHP:</strong> Everything else works like regular PHP - no special syntax needed</li>
                         </ul>
                     </section>
 
-                    <!-- Best Practices -->
-                    <section id="best-practices" class="section-anchor mb-12">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices & Patterns</h2>
+                    <!-- Suggestions -->
+                    <section id="suggestions" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Suggestions</h2>
                         <p class="text-gray-600 mb-6">
-                            Production-ready patterns and recommendations for ForgeWire development.
+                            Here are some approaches that work well with ForgeWire. Feel free to use whatever works best for you.
                         </p>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3 text-green-600">Recommended Patterns</h3>
+                                <h3 class="font-semibold text-lg mb-3 text-green-600">Things That Often Help</h3>
                                 <ul class="space-y-2 text-sm text-gray-600">
-                                    <li>• Use #[State] for simple scalar/array values</li>
+                                    <li>• Use #[State] for property persistence</li>
                                     <li>• Keep islands focused and single-purpose</li>
-                                    <li>• Use #[Computed] for derived values</li>
+                                    <li>• Write normal PHP for derived values (no special attributes needed)</li>
                                     <li>• Leverage fw:model.debounce for search inputs</li>
                                     <li>• Use fw:target for performance optimization</li>
                                     <li>• Always use fw:depends with shared state</li>
-                                    <li>• Use ReactiveControllerHelper trait</li>
+                                    <li>• Use ReactiveControllerHelper trait for helper methods</li>
                                     <li>• Validate all user input with #[Validate]</li>
                                     <li>• Use CLI generators for consistent structure</li>
                                 </ul>
                             </div>
 
                             <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="font-semibold text-lg mb-3 text-orange-600">Common Pitfalls</h3>
+                                <h3 class="font-semibold text-lg mb-3 text-orange-600">Things to Consider</h3>
                                 <ul class="space-y-2 text-sm text-gray-600">
-                                    <li>• Don't forget fw:depends for shared state</li>
-                                    <li>• Don't expose sensitive data without attributes</li>
-                                    <li>• Don't use complex objects with #[State]</li>
+                                    <li>• Remember fw:depends for shared state</li>
+                                    <li>• Be mindful of sensitive data exposure</li>
+                                    <li>• Consider session size with large state objects</li>
                                     <li>• Don't forget #[Action] on callable methods</li>
-                                    <li>• Don't poll too frequently (performance impact)</li>
-                                    <li>• Don't store large amounts of state in session</li>
-                                    <li>• Don't mix reactive and non-reactive controllers</li>
-                                    <li>• Don't skip validation for user input</li>
-                                    <li>• Don't ignore security implications of shared state</li>
+                                    <li>• Polling frequency affects performance</li>
+                                    <li>• Mixing reactive and non-reactive controllers can get confusing</li>
+                                    <li>• Security matters with shared state</li>
+                                    <li>• Validation helps catch issues early</li>
+                                    <li>• CLI generators save time and provide structure</li>
                                 </ul>
                             </div>
                         </div>
 
-                        <h3 class="text-lg font-semibold mb-3">Performance Optimization</h3>
+                        <h3 class="text-lg font-semibold mb-3">Performance Considerations</h3>
                         <ul class="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                            <li><strong>Targeted Updates:</strong> Use fw:target to update only changed elements</li>
-                            <li><strong>Lazy Loading:</strong> Use fw:model.lazy for non-critical inputs</li>
-                            <li><strong>Debouncing:</strong> Use fw:model.debounce for search/filter inputs</li>
-                            <li><strong>Polling Wisely:</strong> Use intersection observer for visibility-based polling</li>
-                            <li><strong>Shared State:</strong> Use fw:depends to avoid unnecessary re-renders</li>
+                            <li><strong>Targeted Updates:</strong> fw:target can reduce HTML payload</li>
+                            <li><strong>Input Strategies:</strong> fw:model.lazy and fw:model.debounce for different use cases</li>
+                            <li><strong>Polling Impact:</strong> Intersection observer helps with visibility-based polling</li>
+                            <li><strong>Shared State:</strong> fw:depends helps avoid unnecessary re-renders</li>
+                            <li><strong>Session Size:</strong> Large state objects affect session storage</li>
                         </ul>
                     </section>
                 </div>
