@@ -198,27 +198,7 @@
                         database, ORM, authentication, storage, deployment — all optional, all pluggable.
                     </p>
                     
-                    <!-- New ForgeDeployment Card -->
-                    <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
-                        <!-- ForgeDeployment -->
-                        <a href="forge-deployment.html" class="block">
-                            <div
-                                class="module-card bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-lg p-6 hover:shadow-lg">
-                                <h3 class="text-lg font-semibold mb-3">ForgeDeployment</h3>
-                                <p class="text-gray-600 text-sm mb-4">
-                                    Complete deployment automation system. Deploy applications to cloud providers
-                                    (DigitalOcean, custom providers) with automated provisioning, rollback, and zero-downtime
-                                    deployments. Includes SSH key management, SSL configuration, and deployment state tracking.
-                                </p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Cloud</span>
-                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Automation</span>
-                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Provisioning</span>
-                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Rollback</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+
 
                     <!-- Overview -->
                     <section id="overview" class="section-anchor mb-12">
@@ -426,17 +406,73 @@ public function onAppBooted(): void
                         </h2>
 
                         <div class="grid md:grid-cols-2 gap-6 mb-8">
-                            <!-- ForgeAuth -->
-                            <a href="forge-auth.html" class="block">
-                                <div
-                                    class="module-card bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 hover:shadow-lg">
-                                    <h3 class="text-lg font-semibold mb-3">ForgeAuth</h3>
-                                    <p class="text-gray-600 text-sm mb-4">
-                                        Complete authentication system with user registration, login, password
-                                        management, and session handling. Provides middleware, validation, and user
-                                        management services. Includes optional JWT support for mobile applications when
-                                        enabled via configuration.
-                                    </p>
+                    <!-- ForgeAuth -->
+                    <a href="forge-auth.html" class="block">
+                        <div
+                            class="module-card bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 hover:shadow-lg">
+                            <h3 class="text-lg font-semibold mb-3">ForgeAuth</h3>
+                            <p class="text-gray-600 text-sm mb-4">
+                                Complete authentication system with user registration, login, password
+                                management, and session handling. Provides middleware, validation, and user
+                                management services. Includes optional JWT support for mobile applications when
+                                enabled via configuration.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Authentication</span>
+                                <span
+                                    class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Sessions</span>
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">JWT</span>
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Mobile</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- ForgeDeployment -->
+                    <a href="forge-deployment.html" class="block">
+                        <div
+                                class="module-card bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-lg p-6 hover:shadow-lg">
+                                <h3 class="text-lg font-semibold mb-3">ForgeDeployment</h3>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    Complete deployment automation system. Deploy applications to cloud providers
+                                    (DigitalOcean, custom providers) with automated provisioning, rollback, and zero-downtime
+                                    deployments. Includes SSH key management, SSL configuration, and deployment state tracking.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Cloud</span>
+                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Automation</span>
+                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Provisioning</span>
+                                    <span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Rollback</span>
+                                </div>
+                            </div>
+                        </a>
+
+                    <!-- ForgeUI -->
+                    <div
+                        class="module-card bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6 hover:shadow-lg">
+                        <h3 class="text-lg font-semibold mb-3">ForgeUI</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Example module demonstrating how to create your own design system as a module
+                            capability. Shows that you can package UI components, styles, and design
+                            patterns as a reusable module that can be shared across Forge applications.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Example</span>
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Design
+                                System</span>
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Template</span>
+                        </div>
+                    </div>
+
+                    <!-- ForgeWire -->
+                    <a href="forge-wire.html"
+                        class="module-card bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-200 rounded-lg p-6 hover:shadow-lg block">
+                        <h3 class="text-lg font-semibold mb-3">ForgeWire</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            Reactive protocol for PHP. Build dynamic interfaces with standard PHP controllers,
+                            island boundaries, and permission-based attributes. No JavaScript frameworks or
+                            separate component classes needed.
+                        </p>
                                     <div class="flex flex-wrap gap-2">
                                         <span
                                             class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Authentication</span>
