@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Kernel - ForgeLanguage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900">
+                            Forge Kernel
+                        </h1>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html" class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">Home</a>
+                        <a href="getting-started.html" class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">Getting Started</a>
+                        <a href="core-concepts.html" class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">Core Concepts</a>
+                        <a href="modules.html" class="text-blue-600 inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 border-blue-600">Capabilities</a>
+                        <a href="api-reference.html" class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">API Reference</a>
+                        <a href="tutorial.html" class="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium hover:text-blue-600">Tutorials</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <div id="sidebar-nav" class="lg:w-1/4">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        ForgeLanguage
+                    </h3>
+                    <nav class="space-y-2">
+                        <a href="#overview" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Overview</a>
+                        <a href="#installation" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Installation</a>
+                        <a href="#helpers" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Available Helpers</a>
+                        <a href="#components" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Language Component</a>
+                        <a href="#adding-languages" class="nav-link block px-3 py-2 text-sm text-gray-700 rounded-md hover:text-blue-600">Adding Languages</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:w-3/4">
+                <div class="bg-white rounded-lg shadow-sm p-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-6">
+                        ForgeLanguage
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Optional capability module that extends forge kernel to have language capabilities, providing an easy-to-use localization system.
+                    </p>
+
+                    <!-- Overview -->
+                    <section id="overview" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Overview
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            ForgeLanguage provides a complete localization system for Forge Kernel applications. It offers a convenient way to retrieve language-specific strings, manage available languages, and present a language switcher component to your users.
+                        </p>
+                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-6 mb-6">
+                            <h3 class="font-semibold text-lg mb-4">Key Features</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>Global helper functions for translations</li>
+                                <li>Pre-built interactive Language Switcher UI Component</li>
+                                <li>Easy file-based language definition</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Installation
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            Install ForgeLanguage using ForgePackageManager.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-bash"># Install module
+php forge.php package:install-module --module=ForgeLanguage</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Helpers -->
+                    <section id="helpers" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Available Helpers
+                        </h2>
+                        <p class="text-gray-600 mb-6">
+                            The module registers global helpers (located in <code class="bg-gray-100 px-2 py-1 rounded">modules/ForgeLanguage/src/Support/helpers.php</code>) that you can use anywhere in your application, especially in views.
+                        </p>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2"><code class="bg-gray-100 px-2 py-1 rounded">languageTerm()</code></h3>
+                                <p class="text-gray-600 mb-2">Fetches a translated string for a given key.</p>
+                                <div class="code-block p-4 text-white rounded-lg">
+                                    <pre><code class="language-php">&lt;?= languageTerm('welcome', 'Welcome to Forge Kernel', ['name' => 'John']) ?&gt;</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2"><code class="bg-gray-100 px-2 py-1 rounded">current_language()</code></h3>
+                                <p class="text-gray-600 mb-2">Returns the current active language code (e.g., 'en', 'es').</p>
+                                <div class="code-block p-4 text-white rounded-lg">
+                                    <pre><code class="language-php">&lt;?php $current = current_language(); ?&gt;</code></pre>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2"><code class="bg-gray-100 px-2 py-1 rounded">available_languages()</code></h3>
+                                <p class="text-gray-600 mb-2">Returns an array of available languages defined in your app.</p>
+                                <div class="code-block p-4 text-white rounded-lg">
+                                    <pre><code class="language-php">&lt;?php $languages = available_languages(); ?&gt;</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Component -->
+                    <section id="components" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Language Switcher Component
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            The module includes a ready-to-use Language Switcher component to let users easily swap languages. Use it directly in your views.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">&lt;?php
+use App\Modules\ForgeLanguage\Definitions\LanguageSwitcherDefinition;
+?&gt;
+
+&lt;?= component(
+    name: 'ForgeLanguage:language-switcher',
+    props: [
+        'definition' => new LanguageSwitcherDefinition(
+            showFlags: true,
+            showLabels: true,
+            showCodes: false,
+        )
+    ]
+) ?&gt;</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Adding Languages -->
+                    <section id="adding-languages" class="section-anchor mb-12">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                            Adding Languages
+                        </h2>
+                        <p class="text-gray-600 mb-4">
+                            To add new languages to your application, simply create a PHP file in the <code class="bg-gray-100 px-2 py-1 rounded">app/Languages/</code> directory. For example, for English create <code class="bg-gray-100 px-2 py-1 rounded">en.php</code>, and for Spanish create <code class="bg-gray-100 px-2 py-1 rounded">es.php</code>.
+                        </p>
+                        <p class="text-gray-600 mb-4">
+                            Each file should return an associative array of keys and their translations.
+                        </p>
+                        <div class="code-block p-6 text-white rounded-lg mb-6">
+                            <pre><code class="language-php">// app/Languages/en.php
+&lt;?php
+return [
+    'welcome' => 'Welcome to Forge Kernel',
+    'description' => 'Welcome to your development playground'
+];</code></pre>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
